@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rahul Chauhan | Doc & Data Studio</title>
+  <meta name="description" content="A private, client-side spreadsheet & document utility. View and convert between Excel, CSV, JSON, Markdown, and PDF without server uploads." />
 
-  <!-- Reliable SheetJS CDN for Excel processing -->
+  <!-- SheetJS CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <style>
@@ -18,6 +19,7 @@
       --text: #f8fafc;
       --muted: #94a3b8;
       --row-hover: #273549;
+      --success: #10b981;
     }
 
     * {
@@ -58,19 +60,20 @@
     }
 
     .container {
-      max-width: 1050px;
+      max-width: 1100px;
       width: 90%;
       margin: 30px auto;
       flex: 1;
     }
 
-    /* Tab Switcher */
+    /* Tabs */
     .tab-nav {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 24px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 12px;
+      flex-wrap: wrap;
     }
 
     .tab-btn {
@@ -79,7 +82,7 @@
       color: var(--muted);
       font-size: 14px;
       font-weight: 600;
-      padding: 10px 22px;
+      padding: 10px 20px;
       cursor: pointer;
       border-radius: 8px;
       transition: all 0.2s ease;
@@ -120,8 +123,8 @@
     }
 
     .btn {
-      padding: 10px 20px;
-      font-size: 14px;
+      padding: 9px 18px;
+      font-size: 13px;
       font-weight: 500;
       border-radius: 8px;
       cursor: pointer;
@@ -169,8 +172,30 @@
     .button-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
+    }
+
+    /* Search & Filter Bar */
+    .filter-bar {
+      display: none;
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      width: 100%;
+      max-width: 320px;
+      padding: 8px 14px;
+      font-size: 13px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
     }
 
     /* Data Table */
@@ -180,13 +205,13 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow-x: auto;
-      max-height: 70vh;
+      max-height: 60vh;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     thead {
@@ -197,8 +222,8 @@
     }
 
     th {
-      padding: 14px 18px;
-      font-size: 12px;
+      padding: 12px 16px;
+      font-size: 11px;
       text-transform: uppercase;
       color: var(--muted);
       text-align: left;
@@ -207,7 +232,7 @@
     }
 
     td {
-      padding: 12px 18px;
+      padding: 10px 16px;
       border-bottom: 1px solid var(--border);
       color: var(--text);
       white-space: nowrap;
@@ -217,7 +242,52 @@
       background-color: var(--row-hover);
     }
 
-    /* Native PDF Container */
+    /* Output Modals / Boxes */
+    .output-panel {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .output-area {
+      width: 100%;
+      height: 200px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+      padding: 12px;
+      resize: vertical;
+    }
+
+    /* JSON-to-Sheet Editor Pane */
+    .json-input-box {
+      width: 100%;
+      height: 220px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #a5f3fc;
+      font-family: monospace;
+      font-size: 13px;
+      padding: 14px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+
+    /* PDF View */
     .pdf-viewer-box {
       display: none;
       width: 100%;
@@ -228,8 +298,7 @@
       border: 1px solid var(--border);
     }
 
-    .pdf-viewer-box embed, 
-    .pdf-viewer-box object {
+    .pdf-viewer-box embed {
       width: 100%;
       height: 100%;
     }
@@ -247,50 +316,88 @@
 
   <header>
     <h1 class="brand-title">Rahul's <span>Doc & Data Studio</span></h1>
-    <p class="subtitle">Secure In-Browser Excel & PDF Workspace</p>
+    <p class="subtitle">100% In-Browser Excel, CSV, JSON, Markdown & PDF Utility</p>
   </header>
 
   <main class="container">
-    <!-- Navigation Tabs -->
+    <!-- Nav Tabs -->
     <div class="tab-nav">
-      <button class="tab-btn active" id="btnTabExcel" type="button">📊 Excel & CSV Studio</button>
-      <button class="tab-btn" id="btnTabPdf" type="button">📄 PDF Viewer</button>
+      <button class="tab-btn active" id="tabBtnExcel" type="button">📊 Sheet Studio</button>
+      <button class="tab-btn" id="tabBtnJson" type="button">🔄 JSON ➔ Excel/CSV</button>
+      <button class="tab-btn" id="tabBtnPdf" type="button">📄 PDF Viewer</button>
     </div>
 
-    <!-- Error Alert Message -->
+    <!-- Alert Box -->
     <div id="alertBox" class="alert-banner"></div>
 
-    <!-- EXCEL PANE -->
-    <section id="sectionExcel">
+    <!-- TAB 1: SHEET STUDIO (Excel, CSV, Export JSON, Export MD, Export PDF) -->
+    <section id="paneExcel">
       <div class="dropzone" id="excelDropzone">
-        <label for="inputExcel" class="btn btn-primary">Choose Excel or CSV</label>
+        <label for="inputExcel" class="btn btn-primary">Select Excel or CSV File</label>
         <input type="file" id="inputExcel" accept=".xlsx, .xls, .csv" />
-        <p>Supports .xlsx, .xls, and .csv files (runs 100% locally)</p>
+        <p>Supports .xlsx, .xls, and .csv files. Runs completely locally.</p>
       </div>
 
       <div class="control-bar" id="excelControls">
         <div class="button-group">
           <label for="inputExcel" class="btn btn-outline">Change File</label>
-          <button class="btn btn-primary" id="btnExportExcel" type="button">Export to Excel</button>
-          <button class="btn btn-outline" id="btnExportPdf" type="button">Save as PDF</button>
+          <button class="btn btn-outline" id="btnExportXlsx" type="button">Export .XLSX</button>
+          <button class="btn btn-outline" id="btnExportCsv" type="button">Export .CSV</button>
+          <button class="btn btn-outline" id="btnExportJson" type="button">Convert to JSON</button>
+          <button class="btn btn-outline" id="btnExportMarkdown" type="button">Convert to Markdown</button>
+          <button class="btn btn-outline" id="btnExportPdf" type="button">Print / PDF</button>
         </div>
         <span id="excelFileInfo" style="font-size: 13px; color: var(--muted);"></span>
       </div>
 
+      <!-- Live Search -->
+      <div class="filter-bar" id="filterBar">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Live search rows..." />
+      </div>
+
+      <!-- Rendered Table -->
       <div class="table-wrapper" id="tableWrapper">
         <table id="mainTable">
           <thead id="tblHead"></thead>
           <tbody id="tblBody"></tbody>
         </table>
       </div>
+
+      <!-- Dynamic Output Box for JSON / Markdown view -->
+      <div class="output-panel" id="outputPanel">
+        <div class="output-header">
+          <strong id="outputTitle" style="font-size: 13px;">Converted Result</strong>
+          <div>
+            <button class="btn btn-outline" id="btnCopyOutput" style="padding: 4px 10px;">📋 Copy Text</button>
+            <button class="btn btn-outline" id="btnCloseOutput" style="padding: 4px 10px;">Close</button>
+          </div>
+        </div>
+        <textarea id="outputArea" class="output-area" readonly></textarea>
+      </div>
     </section>
 
-    <!-- PDF PANE -->
-    <section id="sectionPdf" style="display: none;">
+    <!-- TAB 2: JSON TO EXCEL/CSV -->
+    <section id="paneJson" style="display: none;">
+      <p style="font-size: 14px; color: var(--muted); margin-bottom: 12px;">
+        Paste your JSON array or object below to convert it into an Excel spreadsheet or CSV:
+      </p>
+      <textarea id="jsonInput" class="json-input-box" placeholder='[
+  { "id": 101, "name": "Wireless Mouse", "price": 29.99, "stock": 45 },
+  { "id": 102, "name": "Mechanical Keyboard", "price": 89.00, "stock": 12 }
+]'></textarea>
+      <div class="button-group">
+        <button class="btn btn-primary" id="btnJsonToExcel">Download as Excel (.xlsx)</button>
+        <button class="btn btn-outline" id="btnJsonToCsv">Download as CSV</button>
+        <button class="btn btn-outline" id="btnJsonFormat">Auto-Format JSON</button>
+      </div>
+    </section>
+
+    <!-- TAB 3: PDF VIEWER -->
+    <section id="panePdf" style="display: none;">
       <div class="dropzone" id="pdfDropzone">
         <label for="inputPdf" class="btn btn-primary">Choose PDF File</label>
         <input type="file" id="inputPdf" accept="application/pdf, .pdf" />
-        <p>Uses your browser's native hardware-accelerated PDF viewer</p>
+        <p>Uses native browser hardware acceleration without external cloud processing</p>
       </div>
 
       <div class="control-bar" id="pdfControls">
@@ -305,15 +412,18 @@
   </main>
 
   <footer>
-    Built by Rahul Chauhan • Client-Side Security
+    Built by Rahul Chauhan • 100% Client-Side Privacy
   </footer>
 
   <script>
     // Tab Elements
-    const btnTabExcel = document.getElementById("btnTabExcel");
-    const btnTabPdf = document.getElementById("btnTabPdf");
-    const sectionExcel = document.getElementById("sectionExcel");
-    const sectionPdf = document.getElementById("sectionPdf");
+    const tabBtnExcel = document.getElementById("tabBtnExcel");
+    const tabBtnJson = document.getElementById("tabBtnJson");
+    const tabBtnPdf = document.getElementById("tabBtnPdf");
+
+    const paneExcel = document.getElementById("paneExcel");
+    const paneJson = document.getElementById("paneJson");
+    const panePdf = document.getElementById("panePdf");
     const alertBox = document.getElementById("alertBox");
 
     function showAlert(msg) {
@@ -326,24 +436,19 @@
       alertBox.style.display = "none";
     }
 
-    // Direct tab toggling
-    btnTabExcel.onclick = function() {
-      btnTabExcel.classList.add("active");
-      btnTabPdf.classList.remove("active");
-      sectionExcel.style.display = "block";
-      sectionPdf.style.display = "none";
+    function switchTab(btn, pane) {
+      [tabBtnExcel, tabBtnJson, tabBtnPdf].forEach(b => b.classList.remove("active"));
+      [paneExcel, paneJson, panePdf].forEach(p => p.style.display = "none");
+      btn.classList.add("active");
+      pane.style.display = "block";
       clearAlert();
-    };
+    }
 
-    btnTabPdf.onclick = function() {
-      btnTabPdf.classList.add("active");
-      btnTabExcel.classList.remove("active");
-      sectionPdf.style.display = "block";
-      sectionExcel.style.display = "none";
-      clearAlert();
-    };
+    tabBtnExcel.onclick = () => switchTab(tabBtnExcel, paneExcel);
+    tabBtnJson.onclick = () => switchTab(tabBtnJson, paneJson);
+    tabBtnPdf.onclick = () => switchTab(tabBtnPdf, panePdf);
 
-    // ================= EXCEL MODULE =================
+    // ================= TAB 1: SHEET STUDIO =================
     let parsedRows = [];
     const inputExcel = document.getElementById("inputExcel");
     const tblHead = document.getElementById("tblHead");
@@ -352,120 +457,223 @@
     const excelControls = document.getElementById("excelControls");
     const excelDropzone = document.getElementById("excelDropzone");
     const excelFileInfo = document.getElementById("excelFileInfo");
-    const btnExportExcel = document.getElementById("btnExportExcel");
-    const btnExportPdf = document.getElementById("btnExportPdf");
+    const filterBar = document.getElementById("filterBar");
+    const searchInput = document.getElementById("searchInput");
+
+    const outputPanel = document.getElementById("outputPanel");
+    const outputTitle = document.getElementById("outputTitle");
+    const outputArea = document.getElementById("outputArea");
+    const btnCopyOutput = document.getElementById("btnCopyOutput");
+    const btnCloseOutput = document.getElementById("btnCloseOutput");
+
+    function renderTable(rows) {
+      tblHead.innerHTML = "";
+      tblBody.innerHTML = "";
+
+      if (!rows || rows.length === 0) return;
+
+      const keys = Array.from(new Set(parsedRows.flatMap(row => Object.keys(row))));
+      
+      const trHead = document.createElement("tr");
+      keys.forEach(k => {
+        const th = document.createElement("th");
+        th.textContent = k;
+        trHead.appendChild(th);
+      });
+      tblHead.appendChild(trHead);
+
+      rows.forEach(row => {
+        const tr = document.createElement("tr");
+        keys.forEach(k => {
+          const td = document.createElement("td");
+          td.textContent = row[k] !== undefined ? row[k] : "";
+          tr.appendChild(td);
+        });
+        tblBody.appendChild(tr);
+      });
+    }
 
     inputExcel.onchange = function(e) {
       clearAlert();
       const file = e.target.files[0];
       if (!file) return;
 
-      if (typeof XLSX === "undefined") {
-        showAlert("XLSX parsing library was blocked by an extension or network rule. Please disable adblockers and refresh.");
-        return;
-      }
-
       const reader = new FileReader();
       reader.onload = function(evt) {
         try {
           const data = new Uint8Array(evt.target.result);
           const workbook = XLSX.read(data, { type: "array" });
-          
-          if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
-            throw new Error("No worksheets found in this workbook.");
-          }
-
           const sheet = workbook.Sheets[workbook.SheetNames[0]];
           parsedRows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
           if (!parsedRows || parsedRows.length === 0) {
-            showAlert("The sheet has no readable data rows.");
+            showAlert("The sheet has no readable rows.");
             return;
           }
 
-          // Render Headers
-          tblHead.innerHTML = "";
-          tblBody.innerHTML = "";
-          const keys = Array.from(new Set(parsedRows.flatMap(row => Object.keys(row))));
-          
-          const trHead = document.createElement("tr");
-          keys.forEach(k => {
-            const th = document.createElement("th");
-            th.textContent = k;
-            trHead.appendChild(th);
-          });
-          tblHead.appendChild(trHead);
-
-          // Render Rows
-          parsedRows.forEach(row => {
-            const tr = document.createElement("tr");
-            keys.forEach(k => {
-              const td = document.createElement("td");
-              td.textContent = (row[k] !== undefined && row[k] !== null) ? row[k] : "";
-              tr.appendChild(td);
-            });
-            tblBody.appendChild(tr);
-          });
-
-          // Show UI
+          renderTable(parsedRows);
           tableWrapper.style.display = "block";
           excelControls.style.display = "flex";
+          filterBar.style.display = "block";
           excelDropzone.style.display = "none";
           excelFileInfo.textContent = `${file.name} (${parsedRows.length} rows)`;
         } catch (err) {
-          showAlert("Error parsing Excel file: " + err.message);
+          showAlert("Error reading spreadsheet: " + err.message);
         } finally {
           inputExcel.value = "";
         }
       };
-
       reader.readAsArrayBuffer(file);
     };
 
-    // Export to Excel (.xlsx)
-    btnExportExcel.onclick = function() {
-      if (!parsedRows.length) return;
-      const worksheet = XLSX.utils.json_to_sheet(parsedRows);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-      XLSX.writeFile(workbook, "exported-data.xlsx");
+    // Live search filter
+    searchInput.oninput = function() {
+      const term = this.value.toLowerCase().trim();
+      if (!term) {
+        renderTable(parsedRows);
+        return;
+      }
+      const filtered = parsedRows.filter(row => 
+        Object.values(row).some(val => String(val).toLowerCase().includes(term))
+      );
+      renderTable(filtered);
     };
 
-    // Export to PDF (Native, Clean, Responsive)
-    btnExportPdf.onclick = function() {
+    // Export .XLSX
+    document.getElementById("btnExportXlsx").onclick = function() {
       if (!parsedRows.length) return;
+      const ws = XLSX.utils.json_to_sheet(parsedRows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Data");
+      XLSX.writeFile(wb, "exported.xlsx");
+    };
 
+    // Export .CSV
+    document.getElementById("btnExportCsv").onclick = function() {
+      if (!parsedRows.length) return;
+      const ws = XLSX.utils.json_to_sheet(parsedRows);
+      const csv = XLSX.utils.sheet_to_csv(ws);
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "exported.csv";
+      link.click();
+    };
+
+    // Convert to JSON view
+    document.getElementById("btnExportJson").onclick = function() {
+      if (!parsedRows.length) return;
+      outputTitle.textContent = "JSON Output";
+      outputArea.value = JSON.stringify(parsedRows, null, 2);
+      outputPanel.style.display = "block";
+    };
+
+    // Convert to Markdown table
+    document.getElementById("btnExportMarkdown").onclick = function() {
+      if (!parsedRows.length) return;
+      const keys = Array.from(new Set(parsedRows.flatMap(row => Object.keys(row))));
+      let md = `| ${keys.join(" | ")} |\n`;
+      md += `| ${keys.map(() => "---").join(" | ")} |\n`;
+      
+      parsedRows.forEach(row => {
+        md += `| ${keys.map(k => String(row[k] || "")).join(" | ")} |\n`;
+      });
+
+      outputTitle.textContent = "Markdown Table Output";
+      outputArea.value = md;
+      outputPanel.style.display = "block";
+    };
+
+    // Print / PDF via Native View
+    document.getElementById("btnExportPdf").onclick = function() {
+      if (!parsedRows.length) return;
       const printWindow = window.open('', '_blank');
       const tableHtml = document.getElementById("tableWrapper").innerHTML;
 
       printWindow.document.write(`
         <html>
           <head>
-            <title>Exported PDF Report</title>
+            <title>Spreadsheet Report</title>
             <style>
-              body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; color: #111; }
+              body { font-family: system-ui, sans-serif; padding: 20px; }
               table { width: 100%; border-collapse: collapse; font-size: 12px; }
-              th, td { border: 1px solid #ccc; padding: 8px 10px; text-align: left; }
-              th { background-color: #f3f4f6; font-weight: bold; }
-              tr:nth-child(even) { background-color: #fafafa; }
-              @media print {
-                @page { size: landscape; margin: 10mm; }
-              }
+              th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
+              th { background: #f1f5f9; }
+              @media print { @page { size: landscape; margin: 10mm; } }
             </style>
           </head>
           <body>
-            <h2 style="margin-bottom: 12px;">Spreadsheet Report</h2>
+            <h2>Data Report</h2>
             ${tableHtml}
-            <script>
-              window.onload = function() { window.print(); }
-            <\/script>
+            <script>window.onload = function() { window.print(); }<\/script>
           </body>
         </html>
       `);
       printWindow.document.close();
     };
 
-    // ================= PDF MODULE =================
+    btnCopyOutput.onclick = function() {
+      outputArea.select();
+      navigator.clipboard.writeText(outputArea.value);
+      btnCopyOutput.textContent = "✅ Copied!";
+      setTimeout(() => btnCopyOutput.textContent = "📋 Copy Text", 2000);
+    };
+
+    btnCloseOutput.onclick = function() {
+      outputPanel.style.display = "none";
+    };
+
+    // ================= TAB 2: JSON ➔ EXCEL/CSV =================
+    const jsonInput = document.getElementById("jsonInput");
+
+    function getJsonData() {
+      try {
+        let text = jsonInput.value.trim();
+        if (!text) throw new Error("Please paste JSON array text first.");
+        const parsed = JSON.parse(text);
+        return Array.isArray(parsed) ? parsed : [parsed];
+      } catch (err) {
+        showAlert("Invalid JSON syntax: " + err.message);
+        return null;
+      }
+    }
+
+    document.getElementById("btnJsonToExcel").onclick = function() {
+      clearAlert();
+      const data = getJsonData();
+      if (!data) return;
+
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, "json-converted.xlsx");
+    };
+
+    document.getElementById("btnJsonToCsv").onclick = function() {
+      clearAlert();
+      const data = getJsonData();
+      if (!data) return;
+
+      const ws = XLSX.utils.json_to_sheet(data);
+      const csv = XLSX.utils.sheet_to_csv(ws);
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "json-converted.csv";
+      link.click();
+    };
+
+    document.getElementById("btnJsonFormat").onclick = function() {
+      clearAlert();
+      try {
+        const parsed = JSON.parse(jsonInput.value.trim());
+        jsonInput.value = JSON.stringify(parsed, null, 2);
+      } catch (err) {
+        showAlert("Cannot format: " + err.message);
+      }
+    };
+
+    // ================= TAB 3: PDF VIEWER =================
     const inputPdf = document.getElementById("inputPdf");
     const pdfViewerBox = document.getElementById("pdfViewerBox");
     const pdfEmbed = document.getElementById("pdfEmbed");
@@ -487,7 +695,7 @@
         pdfDropzone.style.display = "none";
         pdfFileInfo.textContent = file.name;
       } catch (err) {
-        showAlert("Failed to display PDF: " + err.message);
+        showAlert("Failed to open PDF: " + err.message);
       } finally {
         inputPdf.value = "";
       }
