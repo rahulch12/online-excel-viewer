@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DataGrid Pro | Excel Viewer</title>
-  <!-- More reliable CDN via Cloudflare / cdnjs -->
+  <title>Rahul Chauhan | Free Online Excel & CSV Viewer</title>
+  <meta name="description" content="A fast, private, and free browser-based Excel viewer created by Rahul Chauhan. Open, read, and export XLSX, XLS, and CSV files instantly without installing software." />
+  <meta name="keywords" content="excel viewer online, open xlsx free, read excel online, view csv without excel, rahul chauhan" />
+
+  <!-- SheetJS library via Cloudflare CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     :root {
@@ -60,7 +63,7 @@
     .container {
       max-width: 1000px;
       width: 90%;
-      margin: 40px auto;
+      margin: 30px auto;
       flex: 1;
     }
 
@@ -147,6 +150,7 @@
       transition: all 0.2s ease;
       border: 1px solid transparent;
       user-select: none;
+      text-decoration: none;
     }
 
     .btn-primary {
@@ -177,13 +181,42 @@
       font-size: 13px;
       color: var(--text-muted);
     }
+
+    /* Privacy Banner & Support Footer */
+    .privacy-notice {
+      margin-top: 25px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1 class="brand-title">DataGrid<span>.io</span></h1>
-    <p class="subtitle">Fast in-browser spreadsheet preview & editor</p>
+    <h1 class="brand-title">Rahul's <span>Excel Studio</span></h1>
+    <p class="subtitle">Secure in-browser spreadsheet previewer & converter</p>
   </header>
 
   <main class="container">
@@ -203,7 +236,7 @@
             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
             <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
           </svg>
-          Upload Excel
+          Upload Excel / CSV
         </label>
         <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" />
 
@@ -216,15 +249,28 @@
         </button>
       </div>
 
-      <span class="file-status" id="fileName">No file loaded (showing sample data)</span>
+      <span class="file-status" id="fileName">Ready to load file</span>
     </div>
+
+    <p class="privacy-notice">
+      🔒 <strong>100% Client-Side Privacy:</strong> Your spreadsheets are parsed locally in your browser. No files or data are ever uploaded to an external server.
+    </p>
   </main>
+
+  <footer>
+    <span>Built by Rahul Chauhan</span>
+    <span>•</span>
+    <a href="https://buymeacoffee.com" target="_blank" rel="noopener">Support this tool ☕</a>
+    <span>•</span>
+    <a href="https://github.com/rahulch12/excel-viewer" target="_blank" rel="noopener">GitHub</a>
+  </footer>
 
   <script>
     let tableData = [
-      { "ID": "#101", "Item": "Wireless Mouse", "Category": "Hardware", "Stock": 142, "Price ($)": 29.99 },
-      { "ID": "#102", "Item": "Mechanical Keyboard", "Category": "Hardware", "Stock": 64, "Price ($)": 89.00 },
-      { "ID": "#103", "Item": "Cloud Subscription", "Category": "Services", "Stock": 980, "Price ($)": 12.50 }
+      { "ID": "TC-01", "Module": "Authentication", "Test Case": "Verify Login with Valid Credentials", "Status": "Passed" },
+      { "ID": "TC-02", "Module": "Checkout", "Test Case": "Verify Discount Coupon Calculation", "Status": "Passed" },
+      { "ID": "TC-03", "Module": "Reporting", "Test Case": "Validate Daily Sales Excel Export", "Status": "Passed" },
+      { "ID": "TC-04", "Module": "Profile", "Test Case": "Verify Password Reset Link Expiry", "Status": "Passed" }
     ];
 
     const thead = document.getElementById("tableHead");
@@ -249,11 +295,10 @@
       tbody.innerHTML = "";
 
       if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="100%" style="text-align:center; padding: 30px; color: var(--text-muted);">The uploaded sheet is empty</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="100%" style="text-align:center; padding: 30px; color: var(--text-muted);">Empty sheet</td></tr>';
         return;
       }
 
-      // Collect unique keys across all rows in case some records have missing keys
       const columns = Array.from(new Set(data.flatMap(row => Object.keys(row))));
 
       const trHead = document.createElement("tr");
@@ -280,16 +325,14 @@
       const file = e.target.files[0];
       if (!file) return;
 
-      // Verify library availability
       if (typeof XLSX === "undefined") {
-        showError("Excel parser library (XLSX) failed to load. Check your internet connection or ad-blocker.");
+        showError("Excel engine failed to load. Check your network connection.");
         return;
       }
 
       fileName.textContent = `Loading ${file.name}...`;
 
       const reader = new FileReader();
-      
       reader.onload = (evt) => {
         try {
           const data = new Uint8Array(evt.target.result);
@@ -299,26 +342,22 @@
             throw new Error("No worksheets found in this workbook.");
           }
 
-          const sheetName = workbook.SheetNames[0];
-          const sheet = workbook.Sheets[sheetName];
-          
-          // defval: "" ensures cells with blank values don't break columns
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
           tableData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
           
           renderTable(tableData);
           fileName.textContent = `Loaded: ${file.name} (${tableData.length} rows)`;
         } catch (err) {
           console.error(err);
-          showError(`Failed to parse file: ${err.message}`);
-          fileName.textContent = "Error loading file";
+          showError(`Failed to load file: ${err.message}`);
+          fileName.textContent = "Error reading file";
         } finally {
-          // Reset file input value so re-uploading the exact same file fires 'change' again
           fileInput.value = "";
         }
       };
 
       reader.onerror = () => {
-        showError("FileReader failed to read the file from disk.");
+        showError("Unable to read file.");
         fileName.textContent = "Error reading file";
       };
 
@@ -327,7 +366,7 @@
 
     downloadBtn.addEventListener("click", () => {
       if (typeof XLSX === "undefined") {
-        showError("Excel library not loaded.");
+        showError("Excel engine not available.");
         return;
       }
       const worksheet = XLSX.utils.json_to_sheet(tableData);
