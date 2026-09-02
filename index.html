@@ -20,13 +20,13 @@
   <!-- Primary Meta Tags -->
   <title>SheetBox — Free In-Browser Spreadsheet & PDF Studio</title>
   <meta name="title" content="SheetBox — Free In-Browser Spreadsheet & PDF Studio" />
-  <meta name="description" content="Open, view, compare, and merge Excel, CSV, and PDF files directly in your browser. 100% free and client-side private." />
+  <meta name="description" content="Open, view, compare, and convert Excel, CSV, PDF, and Images directly in your browser. 100% free, client-side private, zero file uploads." />
 
   <!-- Open Graph / WhatsApp / Facebook / LinkedIn -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sheetbox.in/" />
   <meta property="og:title" content="SheetBox — Fast In-Browser Spreadsheet & PDF Studio" />
-  <meta property="og:description" content="Open, view, compare, and merge Excel, CSV, and PDF files directly in your browser. Zero file uploads, 100% private." />
+  <meta property="og:description" content="Open, view, compare, and convert Excel, CSV, PDF, and Images directly in your browser. Zero file uploads, 100% private." />
   <meta property="og:image" content="https://sheetbox.in/preview.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -35,11 +35,13 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://sheetbox.in/" />
   <meta name="twitter:title" content="SheetBox — In-Browser Spreadsheet & PDF Studio" />
-  <meta name="twitter:description" content="Open, view, compare, and merge Excel, CSV, and PDF files directly in your browser. 100% private." />
+  <meta name="twitter:description" content="Open, view, compare, and convert Excel, CSV, PDF, and Images directly in your browser. 100% private." />
   <meta name="twitter:image" content="https://sheetbox.in/preview.png" />
 
   <!-- SheetJS CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- PDF-Lib CDN for Client-Side PDF Generation and Merging -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 
   <style>
     :root {
@@ -213,8 +215,10 @@
     }
 
     .nav-tab.active[data-tool="excel"] { color: var(--excel-green); }
+    .nav-tab.active[data-tool="imgpdf"] { color: #ea580c; }
+    .nav-tab.active[data-tool="pdfmerge"] { color: #0284c7; }
     .nav-tab.active[data-tool="pdf"] { color: #dc2626; }
-    .nav-tab.active[data-tool="diff"] { color: #0284c7; }
+    .nav-tab.active[data-tool="diff"] { color: #2563eb; }
     .nav-tab.active[data-tool="merge"] { color: #7c3aed; }
     .nav-tab.active[data-tool="json"] { color: #059669; }
 
@@ -307,6 +311,8 @@
     }
     .btn-excel { background: var(--excel-green); color: #fff; }
     .btn-primary { background: #2563eb; color: #fff; }
+    .btn-orange { background: #ea580c; color: #fff; }
+    .btn-sky { background: #0284c7; color: #fff; }
 
     input[type="file"] { display: none; }
 
@@ -381,7 +387,6 @@
       min-width: 100%;
     }
 
-    /* Frozen Sticky Corner */
     .corner-header {
       background: #e2e8f0;
       border-right: 1px solid var(--excel-border);
@@ -394,7 +399,6 @@
       z-index: 25;
     }
 
-    /* Frozen Sticky Column Headers */
     th.excel-header {
       background: var(--excel-header-bg);
       border-right: 1px solid var(--excel-border);
@@ -408,7 +412,6 @@
       z-index: 20;
     }
 
-    /* Frozen Sticky Row Numbers */
     td.row-indexer {
       background: var(--excel-header-bg);
       border-right: 1px solid var(--excel-border);
@@ -435,7 +438,6 @@
       background: #f0fdf4 !important;
     }
 
-    /* Excel Bottom Status Bar */
     .excel-footer-bar {
       display: none;
       background: #f8fafc;
@@ -461,7 +463,6 @@
       font-size: 11px;
     }
 
-    /* PDF Responsive Viewport */
     .pdf-viewer-frame {
       display: none;
       width: 100%;
@@ -472,7 +473,59 @@
       background: #1e293b;
     }
 
-    /* Contextual Affiliate Callout Boxes */
+    /* Thumbnail Gallery for Image -> PDF */
+    .img-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .img-preview-item {
+      position: relative;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 4px;
+      background: #f8fafc;
+      text-align: center;
+    }
+
+    .img-preview-item img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .img-preview-item span {
+      display: block;
+      font-size: 10px;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 4px;
+    }
+
+    /* List view for PDF Merger */
+    .pdf-file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .pdf-file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
     .affiliate-banner {
       margin-top: 18px;
       padding: 12px 16px;
@@ -509,7 +562,6 @@
       text-decoration: underline;
     }
 
-    /* JSON Textarea */
     .json-textarea {
       width: 100%;
       height: 200px;
@@ -574,20 +626,22 @@
     </div>
     <div class="header-actions">
       <div class="privacy-badge">🔒 100% In-Browser Privacy</div>
-      <a href="https://buymeacoffee.com/docforge" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">
         ☕ <span>Buy me a coffee</span>
       </a>
     </div>
   </header>
 
   <main class="container">
-    <!-- Horizontal Swipeable Tabs on Mobile -->
+    <!-- Horizontal Swipeable Navigation Ribbon -->
     <div class="suite-nav-container">
       <nav class="suite-nav">
         <button class="nav-tab active" id="tabStudio" data-tool="excel" type="button">📊 Excel & CSV</button>
+        <button class="nav-tab" id="tabImgPdf" data-tool="imgpdf" type="button">🖼️ Images ➔ PDF</button>
+        <button class="nav-tab" id="tabPdfMerge" data-tool="pdfmerge" type="button">📑 Merge PDFs</button>
         <button class="nav-tab" id="tabPdf" data-tool="pdf" type="button">📄 PDF Viewer</button>
         <button class="nav-tab" id="tabCompare" data-tool="diff" type="button">⚖️ Compare / Diff</button>
-        <button class="nav-tab" id="tabMerge" data-tool="merge" type="button">📑 Merge Files</button>
+        <button class="nav-tab" id="tabMerge" data-tool="merge" type="button">📊 Merge Sheets</button>
         <button class="nav-tab" id="tabJson" data-tool="json" type="button">🔄 JSON ➔ Excel</button>
       </nav>
     </div>
@@ -612,19 +666,17 @@
             <button class="btn btn-default" id="btnDedupe" type="button">🧹 Dedupe</button>
             <button class="btn btn-default" id="btnTrim" type="button">✂️ Trim</button>
             <button class="btn btn-default" id="btnExportJson" type="button">JSON</button>
-            <button class="btn btn-default" id="btnExportPdf" type="button">PDF</button>
+            <button class="btn btn-default" id="btnExportPdf" type="button">📄 Export PDF</button>
           </div>
           <input type="text" id="studioSearch" class="search-box" placeholder="🔍 Search rows..." />
         </div>
 
-        <!-- Formula Bar -->
         <div class="excel-formula-bar" id="formulaBar">
           <div class="cell-coordinate" id="activeCellName">A1</div>
           <span class="fx-label">fx</span>
           <input type="text" class="formula-display" id="formulaInput" readonly placeholder="Select cell" />
         </div>
 
-        <!-- Sticky Excel Mobile Grid -->
         <div class="excel-grid-container" id="studioTableWrapper">
           <table class="excel-sheet-table">
             <thead id="studioTblHead"></thead>
@@ -641,19 +693,57 @@
           </div>
         </div>
 
-        <!-- Contextual Excel/Database Affiliate Callout -->
         <div class="affiliate-banner">
           <div class="affiliate-banner-text">
             <span>⚡ Need automated workflows, team sharing, or relational databases?</span>
           </div>
-          <!-- Replace YOUR_AIRTABLE_AFFILIATE_LINK when registered -->
           <a href="https://airtable.com" target="_blank" rel="noopener sponsored" class="affiliate-link" style="color: var(--excel-green);">
             Explore Airtable for free &rarr;
           </a>
         </div>
       </section>
 
-      <!-- ================= 2. PDF VIEWER ================= -->
+      <!-- ================= 2. IMAGES ➔ PDF (GROUP 1 FEATURE) ================= -->
+      <section id="paneImgPdf" style="display: none;">
+        <div class="dropzone" id="imgPdfDropzone">
+          <div class="dropzone-icon" style="color: #ea580c; background: #fff7ed;">🖼️</div>
+          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Select Images to Convert</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Drop JPG, JPEG, or PNG files to package into a single A4 PDF</p>
+          <input type="file" id="inputImgPdf" accept="image/jpeg, image/jpg, image/png" multiple />
+        </div>
+
+        <div class="toolbar" id="imgPdfControls">
+          <div class="button-group">
+            <button class="btn btn-orange" id="btnConvertImgPdf" type="button">⬇️ Download A4 PDF</button>
+            <label for="inputImgPdf" class="btn btn-default">Add More Images</label>
+            <button class="btn btn-default" id="btnClearImgPdf" type="button">Clear All</button>
+          </div>
+        </div>
+
+        <div class="img-preview-grid" id="imgPreviewGrid"></div>
+      </section>
+
+      <!-- ================= 3. MERGE PDFS (GROUP 1 FEATURE) ================= -->
+      <section id="panePdfMerge" style="display: none;">
+        <div class="dropzone" id="pdfMergeDropzone">
+          <div class="dropzone-icon" style="color: #0284c7; background: #f0f9ff;">📑</div>
+          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Combine Multiple PDF Documents</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Drop 2 or more PDF files to merge into a single PDF document</p>
+          <input type="file" id="inputPdfMerge" accept="application/pdf" multiple />
+        </div>
+
+        <div class="toolbar" id="pdfMergeControls">
+          <div class="button-group">
+            <button class="btn btn-sky" id="btnRunPdfMerge" type="button">⬇️ Merge & Download PDF</button>
+            <label for="inputPdfMerge" class="btn btn-default">Add More PDFs</label>
+            <button class="btn btn-default" id="btnClearPdfMerge" type="button">Clear All</button>
+          </div>
+        </div>
+
+        <div class="pdf-file-list" id="pdfMergeList"></div>
+      </section>
+
+      <!-- ================= 4. PDF VIEWER ================= -->
       <section id="panePdf" style="display: none;">
         <div class="dropzone" id="pdfDropzone">
           <div class="dropzone-icon" style="color: #dc2626; background: #fef2f2;">📄</div>
@@ -671,19 +761,17 @@
           <embed id="pdfEmbed" src="" type="application/pdf" width="100%" height="100%" />
         </div>
 
-        <!-- Contextual PDF Affiliate Callout -->
         <div class="affiliate-banner">
           <div class="affiliate-banner-text">
             <span>🔍 Need advanced OCR text recognition, PDF compression, or file editing?</span>
           </div>
-          <!-- Replace YOUR_SMALLPDF_AFFILIATE_LINK when registered -->
           <a href="https://smallpdf.com" target="_blank" rel="noopener sponsored" class="affiliate-link" style="color: #dc2626;">
             Try Smallpdf Pro &rarr;
           </a>
         </div>
       </section>
 
-      <!-- ================= 3. COMPARE / DIFF ================= -->
+      <!-- ================= 5. COMPARE / DIFF ================= -->
       <section id="paneCompare" style="display: none;">
         <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
           Compare two versions of an Excel file to see additions (<span style="color:#15803d; font-weight:bold;">green</span>) and removals (<span style="color:#b91c1c; font-weight:bold;">red</span>):
@@ -714,12 +802,12 @@
         </div>
       </section>
 
-      <!-- ================= 4. MERGE FILES ================= -->
+      <!-- ================= 6. MERGE SHEETS ================= -->
       <section id="paneMerge" style="display: none;">
         <div class="dropzone" id="mergeDropzone">
-          <div class="dropzone-icon" style="color: #7c3aed; background: #f5f3ff;">📑</div>
-          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Merge Multiple Files</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Select 2 or more files to combine</p>
+          <div class="dropzone-icon" style="color: #7c3aed; background: #f5f3ff;">📊</div>
+          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Merge Multiple Spreadsheets</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Select 2 or more Excel/CSV files to combine rows</p>
           <input type="file" id="inputMergeFiles" accept=".xlsx, .xls, .csv" multiple />
         </div>
 
@@ -736,7 +824,7 @@
         </div>
       </section>
 
-      <!-- ================= 5. JSON TO EXCEL ================= -->
+      <!-- ================= 7. JSON TO EXCEL ================= -->
       <section id="paneJson" style="display: none;">
         <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
           Paste JSON array to convert into a spreadsheet:
@@ -753,13 +841,13 @@
     </div>
   </main>
 
- <footer>
+  <footer>
     <div style="margin-bottom: 6px; font-weight: 500;">
       SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
     </div>
     <div style="font-size: 11px; color: var(--text-muted);">
       Zero server tracking. If this tool helped your workflow, consider supporting via 
-      <a href="https://buymeacoffee.com/docforge" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">Buy Me a Coffee ☕</a> 
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">Buy Me a Coffee ☕</a> 
       • <a href="/privacy.html" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">Privacy Policy</a>.
     </div>
   </footer>
@@ -767,6 +855,8 @@
   <script>
     const tabs = [
       { btn: document.getElementById("tabStudio"), pane: document.getElementById("paneStudio") },
+      { btn: document.getElementById("tabImgPdf"), pane: document.getElementById("paneImgPdf") },
+      { btn: document.getElementById("tabPdfMerge"), pane: document.getElementById("panePdfMerge") },
       { btn: document.getElementById("tabPdf"), pane: document.getElementById("panePdf") },
       { btn: document.getElementById("tabCompare"), pane: document.getElementById("paneCompare") },
       { btn: document.getElementById("tabMerge"), pane: document.getElementById("paneMerge") },
@@ -853,7 +943,6 @@
 
       const keys = Array.from(new Set(parsedRows.flatMap(r => Object.keys(r))));
 
-      // Sticky Top Header (Corner + A, B, C...)
       const trLetters = document.createElement("tr");
       const cornerTh = document.createElement("th");
       cornerTh.className = "corner-header";
@@ -867,7 +956,6 @@
       });
       studioTblHead.appendChild(trLetters);
 
-      // Sticky Row Index (1, 2, 3...)
       rows.forEach((row, rowIdx) => {
         const tr = document.createElement("tr");
 
@@ -1015,28 +1103,212 @@
       a.click();
     };
 
+    // Refined Spreadsheet -> Landscape PDF Print
     document.getElementById("btnExportPdf").onclick = () => {
-      if (!parsedRows.length) return;
+      if (!parsedRows.length) return showAlert("Open a spreadsheet first.");
       const printWindow = window.open('', '_blank');
       const tableHtml = document.getElementById("studioTableWrapper").innerHTML;
       printWindow.document.write(`
+        <!DOCTYPE html>
         <html>
-          <head><title>Print Report</title>
-          <style>
-            body { font-family: -apple-system, sans-serif; padding: 15px; }
-            table { width: 100%; border-collapse: collapse; font-size: 11px; }
-            th, td { border: 1px solid #ccc; padding: 5px 8px; text-align: left; }
-            th { background: #f3f3f3; }
-            @media print { @page { size: landscape; margin: 6mm; } }
-          </style>
+          <head>
+            <title>SheetBox Spreadsheet Report</title>
+            <style>
+              @page { size: landscape; margin: 8mm; }
+              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 10px; color: #1e293b; }
+              h2 { font-size: 16px; margin-bottom: 8px; }
+              table { width: 100%; border-collapse: collapse; font-size: 10px; }
+              th, td { border: 1px solid #cbd5e1; padding: 5px 8px; text-align: left; }
+              th { background-color: #f1f5f9; font-weight: bold; }
+              .corner-header, .row-indexer { display: none; }
+            </style>
           </head>
-          <body>${tableHtml}<script>window.onload=()=>window.print();<\/script></body>
+          <body>
+            <h2>SheetBox Report &bull; ${sheetTabName.textContent}</h2>
+            ${tableHtml}
+            <script>
+              window.onload = () => {
+                window.print();
+                setTimeout(() => window.close(), 1000);
+              };
+            <\/script>
+          </body>
         </html>
       `);
       printWindow.document.close();
     };
 
-    // ================= 2. PDF VIEWER =================
+    // ================= 2. IMAGES ➔ PDF (GROUP 1) =================
+    let imageFiles = [];
+    const inputImgPdf = document.getElementById("inputImgPdf");
+    const imgPdfDropzone = document.getElementById("imgPdfDropzone");
+    const imgPreviewGrid = document.getElementById("imgPreviewGrid");
+    const imgPdfControls = document.getElementById("imgPdfControls");
+
+    setupDropzone(imgPdfDropzone, inputImgPdf);
+
+    inputImgPdf.onchange = function(e) {
+      clearAlert();
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+
+      imageFiles = imageFiles.concat(files);
+      renderImageThumbnails();
+    };
+
+    function renderImageThumbnails() {
+      imgPreviewGrid.innerHTML = "";
+      if (imageFiles.length === 0) {
+        imgPdfControls.style.display = "none";
+        imgPdfDropzone.style.display = "block";
+        return;
+      }
+
+      imgPdfDropzone.style.display = "none";
+      imgPdfControls.style.display = "flex";
+
+      imageFiles.forEach((file, idx) => {
+        const item = document.createElement("div");
+        item.className = "img-preview-item";
+
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+
+        const label = document.createElement("span");
+        label.textContent = `${idx + 1}. ${file.name}`;
+
+        item.appendChild(img);
+        item.appendChild(label);
+        imgPreviewGrid.appendChild(item);
+      });
+    }
+
+    document.getElementById("btnClearImgPdf").onclick = function() {
+      imageFiles = [];
+      inputImgPdf.value = "";
+      renderImageThumbnails();
+      clearAlert();
+    };
+
+    document.getElementById("btnConvertImgPdf").onclick = async function() {
+      if (imageFiles.length === 0) return showAlert("Select at least one image.");
+
+      showAlert("Converting images to PDF in your browser...", "info");
+
+      try {
+        const pdfDoc = await PDFLib.PDFDocument.create();
+
+        for (const file of imageFiles) {
+          const buffer = await file.arrayBuffer();
+          let embeddedImage;
+
+          if (file.type === "image/png") {
+            embeddedImage = await pdfDoc.embedPng(buffer);
+          } else {
+            embeddedImage = await pdfDoc.embedJpg(buffer);
+          }
+
+          // A4 dimensions in points: 595.28 x 841.89
+          const page = pdfDoc.addPage([595.28, 841.89]);
+          const dims = embeddedImage.scaleToFit(555.28, 801.89);
+
+          page.drawImage(embeddedImage, {
+            x: (595.28 - dims.width) / 2,
+            y: (841.89 - dims.height) / 2,
+            width: dims.width,
+            height: dims.height,
+          });
+        }
+
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `SheetBox-Images-${Date.now()}.pdf`;
+        a.click();
+
+        showAlert("Images successfully converted into PDF!", "success");
+      } catch (err) {
+        showAlert("Failed to convert images: " + err.message);
+      }
+    };
+
+    // ================= 3. MERGE PDFS (GROUP 1) =================
+    let pdfMergeFiles = [];
+    const inputPdfMerge = document.getElementById("inputPdfMerge");
+    const pdfMergeDropzone = document.getElementById("pdfMergeDropzone");
+    const pdfMergeList = document.getElementById("pdfMergeList");
+    const pdfMergeControls = document.getElementById("pdfMergeControls");
+
+    setupDropzone(pdfMergeDropzone, inputPdfMerge);
+
+    inputPdfMerge.onchange = function(e) {
+      clearAlert();
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+
+      pdfMergeFiles = pdfMergeFiles.concat(files);
+      renderPdfMergeList();
+    };
+
+    function renderPdfMergeList() {
+      pdfMergeList.innerHTML = "";
+      if (pdfMergeFiles.length === 0) {
+        pdfMergeControls.style.display = "none";
+        pdfMergeDropzone.style.display = "block";
+        return;
+      }
+
+      pdfMergeDropzone.style.display = "none";
+      pdfMergeControls.style.display = "flex";
+
+      pdfMergeFiles.forEach((f, idx) => {
+        const item = document.createElement("div");
+        item.className = "pdf-file-item";
+        item.innerHTML = `
+          <span><strong>${idx + 1}.</strong> ${f.name}</span>
+          <span style="color: var(--text-muted); font-size: 11px;">(${(f.size / 1024).toFixed(1)} KB)</span>
+        `;
+        pdfMergeList.appendChild(item);
+      });
+    }
+
+    document.getElementById("btnClearPdfMerge").onclick = function() {
+      pdfMergeFiles = [];
+      inputPdfMerge.value = "";
+      renderPdfMergeList();
+      clearAlert();
+    };
+
+    document.getElementById("btnRunPdfMerge").onclick = async function() {
+      if (pdfMergeFiles.length < 2) return showAlert("Please select at least 2 PDF files to combine.");
+
+      showAlert("Merging PDF files directly in your browser...", "info");
+
+      try {
+        const mergedPdf = await PDFLib.PDFDocument.create();
+
+        for (const file of pdfMergeFiles) {
+          const buffer = await file.arrayBuffer();
+          const srcPdf = await PDFLib.PDFDocument.load(buffer);
+          const copiedPages = await mergedPdf.copyPages(srcPdf, srcPdf.getPageIndices());
+          copiedPages.forEach(p => mergedPdf.addPage(p));
+        }
+
+        const mergedBytes = await mergedPdf.save();
+        const blob = new Blob([mergedBytes], { type: "application/pdf" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `SheetBox-Merged-Document-${Date.now()}.pdf`;
+        a.click();
+
+        showAlert(`Successfully merged ${pdfMergeFiles.length} PDF files!`, "success");
+      } catch (err) {
+        showAlert("Failed to merge PDFs: " + err.message);
+      }
+    };
+
+    // ================= 4. PDF VIEWER =================
     const inputPdf = document.getElementById("inputPdf");
     const pdfDropzone = document.getElementById("pdfDropzone");
     const pdfViewerBox = document.getElementById("pdfViewerBox");
@@ -1064,7 +1336,7 @@
       }
     };
 
-    // ================= 3. DIFF CHECKER =================
+    // ================= 5. DIFF CHECKER =================
     let diffA = null, diffB = null;
     const inputDiffA = document.getElementById("inputDiffA");
     const inputDiffB = document.getElementById("inputDiffB");
@@ -1110,7 +1382,7 @@
       document.getElementById("diffTableWrapper").style.display = "block";
     };
 
-    // ================= 4. MERGE =================
+    // ================= 6. MERGE SPREADSHEETS =================
     let mergedData = [];
     const inputMerge = document.getElementById("inputMergeFiles");
     setupDropzone(document.getElementById("mergeDropzone"), inputMerge);
@@ -1147,7 +1419,7 @@
       XLSX.writeFile(wb, "Merged-Spreadsheet.xlsx");
     };
 
-    // ================= 5. JSON ➔ EXCEL =================
+    // ================= 7. JSON ➔ EXCEL =================
     document.getElementById("btnJsonToExcel").onclick = () => {
       try {
         const d = JSON.parse(document.getElementById("jsonInput").value.trim());
