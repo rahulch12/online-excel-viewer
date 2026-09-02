@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rahul Chauhan | Doc & Data Studio</title>
-  <meta name="description" content="All-in-one private in-browser document utility: View, clean, compare, merge, and convert Excel, CSV, JSON, Markdown, and PDF." />
+  <meta name="description" content="All-in-one private browser document utility: View, clean, compare, merge, and convert Excel, CSV, JSON, Markdown, and PDF." />
 
   <!-- SheetJS CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -13,12 +13,15 @@
     :root {
       --primary: #6366f1;
       --primary-hover: #4f46e5;
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --border: #334155;
+      --primary-glow: rgba(99, 102, 241, 0.25);
+      --bg: #090d16;
+      --card-bg: rgba(22, 30, 46, 0.75);
+      --card-solid: #151d2e;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.18);
       --text: #f8fafc;
       --muted: #94a3b8;
-      --row-hover: #273549;
+      --row-hover: rgba(255, 255, 255, 0.03);
       --success: #10b981;
       --danger: #ef4444;
       --warning: #f59e0b;
@@ -28,106 +31,188 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, sans-serif;
     }
 
     body {
       background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%);
+      background-attachment: fixed;
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      -webkit-font-smoothing: antialiased;
     }
 
+    /* Clean Modern Header */
     header {
-      background-color: var(--card-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 24px 20px;
+      padding: 36px 20px 24px 20px;
       text-align: center;
     }
 
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #a5b4fc;
+      margin-bottom: 12px;
+    }
+
     .brand-title {
-      font-size: 22px;
-      font-weight: 700;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
     }
 
     .brand-title span {
-      color: var(--primary);
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .subtitle {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
-      margin-top: 4px;
+      margin-top: 6px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1120px;
       width: 92%;
-      margin: 25px auto;
+      margin: 15px auto 40px auto;
       flex: 1;
     }
 
-    /* Tabs */
-    .tab-nav {
+    /* Modern Pill Tab Switcher */
+    .tab-nav-wrapper {
       display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .tab-nav {
+      display: inline-flex;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border);
+      padding: 4px;
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      gap: 4px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .tab-btn {
       background: transparent;
-      border: 1px solid var(--border);
+      border: none;
       color: var(--muted);
       font-size: 13px;
       font-weight: 600;
-      padding: 9px 16px;
+      padding: 8px 16px;
       cursor: pointer;
       border-radius: 8px;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
     }
 
     .tab-btn.active {
-      background-color: var(--primary);
-      border-color: var(--primary);
+      background: var(--primary);
       color: #fff;
+      box-shadow: 0 4px 12px var(--primary-glow);
     }
 
     /* Alert Banner */
     .alert-banner {
       display: none;
-      padding: 12px 16px;
-      border-radius: 8px;
+      padding: 12px 18px;
+      border-radius: 10px;
       margin-bottom: 20px;
-      font-size: 14px;
-      background-color: rgba(239, 68, 68, 0.2);
-      border: 1px solid #ef4444;
+      font-size: 13px;
+      line-height: 1.4;
+      backdrop-filter: blur(8px);
+    }
+
+    .alert-error {
+      background-color: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
       color: #fca5a5;
     }
 
-    /* Upload Box */
+    .alert-success {
+      background-color: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    .alert-info {
+      background-color: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #c7d2fe;
+    }
+
+    /* Premium Drag & Drop Area */
     .dropzone {
       background: var(--card-bg);
-      border: 2px dashed var(--border);
-      border-radius: 12px;
-      padding: 35px 20px;
+      border: 1.5px dashed var(--border);
+      border-radius: 16px;
+      padding: 50px 20px;
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.04);
+      transform: translateY(-2px);
+    }
+
+    .dropzone-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 14px auto;
+      background: rgba(99, 102, 241, 0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #818cf8;
+    }
+
+    .dropzone h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
     }
 
     .dropzone p {
       font-size: 13px;
       color: var(--muted);
-      margin-top: 10px;
     }
 
+    /* Buttons */
     .btn {
       padding: 8px 16px;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       border-radius: 8px;
       cursor: pointer;
       display: inline-flex;
@@ -135,34 +220,48 @@
       gap: 6px;
       border: 1px solid transparent;
       user-select: none;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
     }
 
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary { 
+      background: var(--primary); 
+      color: #fff; 
+      box-shadow: 0 2px 8px var(--primary-glow);
+    }
+    .btn-primary:hover { 
+      background: var(--primary-hover); 
+      transform: translateY(-1px);
+    }
 
     .btn-outline {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.03);
       border-color: var(--border);
       color: var(--text);
     }
-    .btn-outline:hover { background: var(--card-bg); border-color: var(--muted); }
+    .btn-outline:hover { 
+      background: rgba(255, 255, 255, 0.08); 
+      border-color: var(--border-hover); 
+    }
 
     .btn-clean {
-      background: rgba(16, 185, 129, 0.15);
-      border-color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.25);
       color: #6ee7b7;
     }
-    .btn-clean:hover { background: var(--success); color: #fff; }
+    .btn-clean:hover { 
+      background: var(--success); 
+      color: #fff; 
+    }
 
     input[type="file"] { display: none; }
 
+    /* Control Toolbar */
     .control-bar {
       display: none;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -176,42 +275,50 @@
 
     .search-input {
       width: 100%;
-      max-width: 280px;
-      padding: 8px 12px;
+      max-width: 260px;
+      padding: 8px 14px;
       font-size: 13px;
       border-radius: 8px;
       border: 1px solid var(--border);
-      background: var(--card-bg);
+      background: rgba(15, 23, 42, 0.8);
       color: var(--text);
       outline: none;
+      transition: border-color 0.2s;
     }
-    .search-input:focus { border-color: var(--primary); }
+    .search-input:focus { 
+      border-color: var(--primary); 
+    }
 
-    /* Quick Stats Bar */
+    /* Stats Banner */
     .stats-bar {
       display: none;
-      background: rgba(99, 102, 241, 0.12);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 10px 16px;
-      border-radius: 8px;
-      margin-bottom: 14px;
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      padding: 12px 18px;
+      border-radius: 10px;
+      margin-bottom: 16px;
       font-size: 13px;
       color: #c7d2fe;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
-    .stats-bar span strong { color: #fff; }
+    .stats-bar span strong { 
+      color: #fff; 
+      font-weight: 700;
+    }
 
-    /* Table */
+    /* Glassmorphic Table Container */
     .table-wrapper {
       display: none;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       overflow-x: auto;
-      max-height: 60vh;
+      max-height: 62vh;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     }
 
     table {
@@ -223,91 +330,98 @@
     thead {
       position: sticky;
       top: 0;
-      background-color: #172033;
+      background-color: #111827;
       z-index: 10;
     }
 
     th {
-      padding: 12px 16px;
+      padding: 13px 18px;
       font-size: 11px;
       text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--muted);
       text-align: left;
-      border-bottom: 2px solid var(--border);
+      border-bottom: 1px solid var(--border);
       white-space: nowrap;
       cursor: pointer;
       user-select: none;
     }
 
-    th:hover { color: var(--primary); }
+    th:hover { 
+      color: var(--text); 
+    }
 
     td {
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
+      padding: 11px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       color: var(--text);
       white-space: nowrap;
     }
 
-    tbody tr:hover { background-color: var(--row-hover); }
+    tbody tr:hover { 
+      background-color: var(--row-hover); 
+    }
 
-    /* Diff Checker Visuals */
-    tr.diff-added { background-color: rgba(16, 185, 129, 0.15); }
-    tr.diff-removed { background-color: rgba(239, 68, 68, 0.15); }
-    tr.diff-modified { background-color: rgba(245, 158, 11, 0.15); }
+    /* Diff Row Colors */
+    tr.diff-added { background-color: rgba(16, 185, 129, 0.12); }
+    tr.diff-removed { background-color: rgba(239, 68, 68, 0.12); }
 
-    /* Output Panel */
+    /* Output Modals */
     .output-panel {
       display: none;
-      background: var(--card-bg);
+      background: var(--card-solid);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
-      margin-top: 16px;
+      padding: 18px;
+      margin-top: 18px;
     }
 
     .output-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .output-area {
       width: 100%;
       height: 180px;
-      background: #0f172a;
+      background: #090d16;
       border: 1px solid var(--border);
       border-radius: 8px;
       color: #38bdf8;
-      font-family: monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 12px;
-      padding: 12px;
+      padding: 14px;
       resize: vertical;
+      outline: none;
     }
 
     .json-input-box {
       width: 100%;
       height: 220px;
-      background: var(--card-bg);
+      background: var(--card-solid);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 12px;
       color: #a5f3fc;
-      font-family: monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 13px;
-      padding: 14px;
-      margin-bottom: 16px;
+      padding: 16px;
+      margin-bottom: 18px;
       resize: vertical;
+      outline: none;
     }
 
-    /* PDF View */
+    /* Native PDF Viewer */
     .pdf-viewer-box {
       display: none;
       width: 100%;
       height: 75vh;
-      background: #334155;
-      border-radius: 12px;
+      background: #1e293b;
+      border-radius: 14px;
       overflow: hidden;
       border: 1px solid var(--border);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
     }
 
     .pdf-viewer-box embed {
@@ -315,62 +429,116 @@
       height: 100%;
     }
 
+    /* Feature Highlight Badges on Empty State */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: left;
+    }
+
+    .feature-card strong {
+      display: block;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .feature-card span {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
     footer {
       border-top: 1px solid var(--border);
-      padding: 20px;
+      padding: 24px;
       text-align: center;
       font-size: 13px;
       color: var(--muted);
+      background: rgba(9, 13, 22, 0.5);
+      backdrop-filter: blur(8px);
     }
   </style>
 </head>
 <body>
 
   <header>
+    <div class="brand-badge">⚡ 100% Client-Side Privacy • Zero Server Uploads</div>
     <h1 class="brand-title">Rahul's <span>Doc & Data Studio</span></h1>
-    <p class="subtitle">Complete Spreadsheet & Document Swiss Army Knife — 100% In-Browser</p>
+    <p class="subtitle">A fast, private toolkit to preview, clean, diff, merge, and convert your Excel, CSV, JSON, and PDF files directly in your browser.</p>
   </header>
 
   <main class="container">
-    <!-- Navigation Tabs -->
-    <div class="tab-nav">
-      <button class="tab-btn active" id="tabBtnStudio" type="button">📊 Sheet Studio & Cleaner</button>
-      <button class="tab-btn" id="tabBtnCompare" type="button">⚖️ Compare / Diff Checker</button>
-      <button class="tab-btn" id="tabBtnMerge" type="button">📑 Merge Files</button>
-      <button class="tab-btn" id="tabBtnJson" type="button">🔄 JSON ➔ Excel</button>
-      <button class="tab-btn" id="tabBtnPdf" type="button">📄 PDF Viewer</button>
+    <!-- Segmented Navigation Tabs -->
+    <div class="tab-nav-wrapper">
+      <nav class="tab-nav">
+        <button class="tab-btn active" id="tabBtnStudio" type="button">📊 Studio & Clean</button>
+        <button class="tab-btn" id="tabBtnCompare" type="button">⚖️ Compare / Diff</button>
+        <button class="tab-btn" id="tabBtnMerge" type="button">📑 Multi-File Merge</button>
+        <button class="tab-btn" id="tabBtnJson" type="button">🔄 JSON ➔ Excel</button>
+        <button class="tab-btn" id="tabBtnPdf" type="button">📄 PDF Viewer</button>
+      </nav>
     </div>
 
-    <!-- Alert Box -->
+    <!-- Alert / Status Toast -->
     <div id="alertBox" class="alert-banner"></div>
 
-    <!-- ================= TAB 1: SHEET STUDIO & CLEANER ================= -->
+    <!-- ================= TAB 1: STUDIO & CLEANER ================= -->
     <section id="paneStudio">
       <div class="dropzone" id="studioDropzone">
-        <label for="inputStudio" class="btn btn-primary">Choose Excel or CSV</label>
+        <div class="dropzone-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+          </svg>
+        </div>
+        <h3>Drop your Excel or CSV file here</h3>
+        <p>Supports .xlsx, .xls, and .csv files or click to browse</p>
         <input type="file" id="inputStudio" accept=".xlsx, .xls, .csv" />
-        <p>Supports .xlsx, .xls, and .csv. Files are processed locally with zero uploads.</p>
+
+        <div class="feature-grid" style="margin-top: 30px;">
+          <div class="feature-card">
+            <strong>🧹 Data Cleaner</strong>
+            <span>One-click deduplication & cell whitespace trimming.</span>
+          </div>
+          <div class="feature-card">
+            <strong>📈 Instant Column Stats</strong>
+            <span>Click any numeric cell to see Sum, Avg, Min, and Max.</span>
+          </div>
+          <div class="feature-card">
+            <strong>🔄 Multi-Format Export</strong>
+            <span>Save out as Excel, CSV, formatted JSON, Markdown, or PDF.</span>
+          </div>
+        </div>
       </div>
 
       <!-- Controls & Cleaners -->
       <div class="control-bar" id="studioControls">
         <div class="button-group">
           <label for="inputStudio" class="btn btn-outline">Change File</label>
-          <button class="btn btn-clean" id="btnDedupe" type="button" title="Remove duplicate rows">🧹 Deduplicate</button>
-          <button class="btn btn-clean" id="btnTrim" type="button" title="Trim extra spaces from cells and headers">✂️ Trim Spaces</button>
+          <button class="btn btn-clean" id="btnDedupe" type="button">🧹 Deduplicate</button>
+          <button class="btn btn-clean" id="btnTrim" type="button">✂️ Trim Spaces</button>
           <button class="btn btn-outline" id="btnExportXlsx" type="button">Export .XLSX</button>
           <button class="btn btn-outline" id="btnExportCsv" type="button">Export .CSV</button>
           <button class="btn btn-outline" id="btnExportJson" type="button">JSON</button>
           <button class="btn btn-outline" id="btnExportMd" type="button">Markdown</button>
           <button class="btn btn-outline" id="btnExportPdf" type="button">Print / PDF</button>
         </div>
-        <span id="studioFileInfo" style="font-size: 13px; color: var(--muted);"></span>
+        <span id="studioFileInfo" style="font-size: 13px; color: var(--muted); font-weight: 500;"></span>
       </div>
 
-      <!-- Live Search & Helper Hint -->
-      <div class="control-bar" id="searchBar" style="margin-bottom: 10px;">
-        <input type="text" id="studioSearch" class="search-input" placeholder="🔍 Search rows instantly..." />
-        <span style="font-size: 12px; color: var(--muted);">💡 Click any column header to sort. Click numeric cells for stats.</span>
+      <!-- Search & Helper Hint -->
+      <div class="control-bar" id="searchBar" style="margin-bottom: 12px;">
+        <input type="text" id="studioSearch" class="search-input" placeholder="🔍 Search rows in real time..." />
+        <span style="font-size: 12px; color: var(--muted);">💡 Click any header to sort. Click numeric cells for math stats.</span>
       </div>
 
       <!-- Instant Numeric Column Stats Bar -->
@@ -406,24 +574,24 @@
 
     <!-- ================= TAB 2: DIFF CHECKER (COMPARE FILES) ================= -->
     <section id="paneCompare" style="display: none;">
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 16px;">
-        Upload two versions of an Excel or CSV file to identify additions (<span style="color:#6ee7b7">green</span>), removals (<span style="color:#fca5a5">red</span>), and modifications (<span style="color:#fde68a">yellow</span>).
+      <p style="font-size: 13px; color: var(--muted); margin-bottom: 18px;">
+        Upload two versions of a spreadsheet to automatically detect added (<span style="color:#6ee7b7; font-weight: 600;">green</span>) and removed (<span style="color:#fca5a5; font-weight: 600;">red</span>) rows.
       </p>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-        <div class="dropzone" style="padding: 20px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+        <div class="dropzone" id="dropzoneA" style="padding: 28px 16px;">
           <label for="inputDiffA" class="btn btn-outline">Select Original File (A)</label>
           <input type="file" id="inputDiffA" accept=".xlsx, .xls, .csv" />
-          <p id="diffNameA" style="margin-top: 8px;">No file chosen</p>
+          <p id="diffNameA" style="margin-top: 10px; font-weight: 500;">No file chosen</p>
         </div>
-        <div class="dropzone" style="padding: 20px;">
+        <div class="dropzone" id="dropzoneB" style="padding: 28px 16px;">
           <label for="inputDiffB" class="btn btn-outline">Select Updated File (B)</label>
           <input type="file" id="inputDiffB" accept=".xlsx, .xls, .csv" />
-          <p id="diffNameB" style="margin-top: 8px;">No file chosen</p>
+          <p id="diffNameB" style="margin-top: 10px; font-weight: 500;">No file chosen</p>
         </div>
       </div>
 
-      <div style="text-align: center; margin-bottom: 16px;">
+      <div style="text-align: center; margin-bottom: 20px;">
         <button class="btn btn-primary" id="btnRunDiff">Compare Spreadsheets</button>
       </div>
 
@@ -437,15 +605,20 @@
 
     <!-- ================= TAB 3: FILE MERGER ================= -->
     <section id="paneMerge" style="display: none;">
-      <div class="dropzone">
-        <label for="inputMergeFiles" class="btn btn-primary">Choose 2 or More Spreadsheets</label>
+      <div class="dropzone" id="mergeDropzone">
+        <div class="dropzone-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+          </svg>
+        </div>
+        <h3>Select 2 or More Spreadsheets to Combine</h3>
+        <p>Drag multiple Excel or CSV files with matching headers to merge into a single workbook.</p>
         <input type="file" id="inputMergeFiles" accept=".xlsx, .xls, .csv" multiple />
-        <p>Select multiple Excel or CSV files with similar headers to merge into a single workbook.</p>
       </div>
 
       <div class="control-bar" id="mergeControls">
         <button class="btn btn-primary" id="btnDownloadMerged">Download Merged Spreadsheet (.xlsx)</button>
-        <span id="mergeStatus" style="font-size: 13px; color: var(--muted);"></span>
+        <span id="mergeStatus" style="font-size: 13px; color: var(--muted); font-weight: 500;"></span>
       </div>
 
       <div class="table-wrapper" id="mergeTableWrapper">
@@ -458,12 +631,12 @@
 
     <!-- ================= TAB 4: JSON ➔ EXCEL ================= -->
     <section id="paneJson" style="display: none;">
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">
-        Paste JSON array text to generate a clean downloadable spreadsheet:
+      <p style="font-size: 13px; color: var(--muted); margin-bottom: 14px;">
+        Paste raw JSON array text below to instantly convert it into an Excel spreadsheet or CSV:
       </p>
       <textarea id="jsonInput" class="json-input-box" placeholder='[
-  { "id": 101, "name": "Wireless Mouse", "price": 29.99, "stock": 45 },
-  { "id": 102, "name": "Mechanical Keyboard", "price": 89.00, "stock": 12 }
+  { "id": 101, "item": "Wireless Mouse", "price": 29.99, "stock": 45 },
+  { "id": 102, "item": "Mechanical Keyboard", "price": 89.00, "stock": 12 }
 ]'></textarea>
       <div class="button-group">
         <button class="btn btn-primary" id="btnJsonToExcel">Download as Excel (.xlsx)</button>
@@ -475,14 +648,19 @@
     <!-- ================= TAB 5: PDF VIEWER ================= -->
     <section id="panePdf" style="display: none;">
       <div class="dropzone" id="pdfDropzone">
-        <label for="inputPdf" class="btn btn-primary">Choose PDF Document</label>
+        <div class="dropzone-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <h3>Select a PDF file to preview</h3>
+        <p>Hardware-accelerated native PDF viewer. 100% private and runs locally.</p>
         <input type="file" id="inputPdf" accept="application/pdf, .pdf" />
-        <p>Hardware-accelerated native PDF viewer. 100% private.</p>
       </div>
 
       <div class="control-bar" id="pdfControls">
         <label for="inputPdf" class="btn btn-outline">Change PDF File</label>
-        <span id="pdfFileInfo" style="font-size: 13px; color: var(--muted);"></span>
+        <span id="pdfFileInfo" style="font-size: 13px; color: var(--muted); font-weight: 500;"></span>
       </div>
 
       <div class="pdf-viewer-box" id="pdfViewerBox">
@@ -492,7 +670,7 @@
   </main>
 
   <footer>
-    Built by Rahul Chauhan • 100% Client-Side Privacy
+    Designed & Developed by Rahul Chauhan • Completely Secure & Client-Side
   </footer>
 
   <script>
@@ -507,8 +685,9 @@
 
     const alertBox = document.getElementById("alertBox");
 
-    function showAlert(msg) {
+    function showAlert(msg, type = "error") {
       alertBox.textContent = msg;
+      alertBox.className = "alert-banner " + (type === "success" ? "alert-success" : type === "info" ? "alert-info" : "alert-error");
       alertBox.style.display = "block";
     }
 
@@ -529,16 +708,40 @@
       };
     });
 
+    // Setup drag-and-drop triggers on dropzones
+    function setupDropzone(dropzoneEl, inputEl) {
+      dropzoneEl.onclick = (e) => {
+        if (e.target.tagName !== "INPUT" && e.target.tagName !== "LABEL") {
+          inputEl.click();
+        }
+      };
+      dropzoneEl.ondragover = (e) => {
+        e.preventDefault();
+        dropzoneEl.classList.add("dragover");
+      };
+      dropzoneEl.ondragleave = () => {
+        dropzoneEl.classList.remove("dragover");
+      };
+      dropzoneEl.ondrop = (e) => {
+        e.preventDefault();
+        dropzoneEl.classList.remove("dragover");
+        if (e.dataTransfer.files.length) {
+          inputEl.files = e.dataTransfer.files;
+          inputEl.dispatchEvent(new Event("change"));
+        }
+      };
+    }
+
     // ================= 1. SHEET STUDIO LOGIC =================
     let parsedRows = [];
     let currentSort = { col: null, asc: true };
 
     const inputStudio = document.getElementById("inputStudio");
+    const studioDropzone = document.getElementById("studioDropzone");
     const studioTblHead = document.getElementById("studioTblHead");
     const studioTblBody = document.getElementById("studioTblBody");
     const studioTableWrapper = document.getElementById("studioTableWrapper");
     const studioControls = document.getElementById("studioControls");
-    const studioDropzone = document.getElementById("studioDropzone");
     const studioFileInfo = document.getElementById("studioFileInfo");
     const searchBar = document.getElementById("searchBar");
     const studioSearch = document.getElementById("studioSearch");
@@ -554,6 +757,8 @@
     const outputPanel = document.getElementById("outputPanel");
     const outputTitle = document.getElementById("outputTitle");
     const outputArea = document.getElementById("outputArea");
+
+    setupDropzone(studioDropzone, inputStudio);
 
     function renderStudioTable(rows) {
       studioTblHead.innerHTML = "";
@@ -621,7 +826,6 @@
       reader.readAsArrayBuffer(file);
     };
 
-    // Sort Column
     function sortColumn(col) {
       if (currentSort.col === col) {
         currentSort.asc = !currentSort.asc;
@@ -655,10 +859,7 @@
       });
       const removed = initialCount - parsedRows.length;
       renderStudioTable(parsedRows);
-      showAlert(`Cleaned! Removed ${removed} duplicate row(s). Total: ${parsedRows.length} rows remaining.`);
-      alertBox.style.backgroundColor = "rgba(16, 185, 129, 0.2)";
-      alertBox.style.borderColor = "#10b981";
-      alertBox.style.color = "#6ee7b7";
+      showAlert(`Cleaned! Removed ${removed} duplicate row(s). Total: ${parsedRows.length} rows remaining.`, "success");
     };
 
     // Trim Spaces & Clean Headers
@@ -674,13 +875,9 @@
         return cleaned;
       });
       renderStudioTable(parsedRows);
-      showAlert("Trimmed leading/trailing whitespace across all cells and headers.");
-      alertBox.style.backgroundColor = "rgba(16, 185, 129, 0.2)";
-      alertBox.style.borderColor = "#10b981";
-      alertBox.style.color = "#6ee7b7";
+      showAlert("Trimmed leading/trailing whitespace across all cells and headers.", "success");
     };
 
-    // Quick Stats Calculation
     function calculateStats(col) {
       const nums = parsedRows.map(r => Number(r[col])).filter(n => !isNaN(n) && n !== 0);
       if (nums.length === 0) {
@@ -702,7 +899,6 @@
       statsBar.style.display = "flex";
     }
 
-    // Search filter
     studioSearch.oninput = function() {
       const term = this.value.toLowerCase().trim();
       if (!term) {
@@ -715,7 +911,7 @@
       renderStudioTable(filtered);
     };
 
-    // Studio Exports
+    // Exports
     document.getElementById("btnExportXlsx").onclick = () => {
       if (!parsedRows.length) return;
       const ws = XLSX.utils.json_to_sheet(parsedRows);
@@ -762,7 +958,7 @@
         <html>
           <head><title>Data Report</title>
           <style>
-            body { font-family: system-ui, sans-serif; padding: 20px; }
+            body { font-family: -apple-system, system-ui, sans-serif; padding: 20px; color: #111; }
             table { width: 100%; border-collapse: collapse; font-size: 11px; }
             th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
             th { background: #f1f5f9; font-weight: bold; }
@@ -790,6 +986,14 @@
     let diffDataA = null;
     let diffDataB = null;
 
+    const inputDiffA = document.getElementById("inputDiffA");
+    const inputDiffB = document.getElementById("inputDiffB");
+    const dropzoneA = document.getElementById("dropzoneA");
+    const dropzoneB = document.getElementById("dropzoneB");
+
+    setupDropzone(dropzoneA, inputDiffA);
+    setupDropzone(dropzoneB, inputDiffB);
+
     function readDiffFile(file, callback) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -801,7 +1005,7 @@
       reader.readAsArrayBuffer(file);
     }
 
-    document.getElementById("inputDiffA").onchange = (e) => {
+    inputDiffA.onchange = (e) => {
       const f = e.target.files[0];
       if (f) {
         document.getElementById("diffNameA").textContent = f.name;
@@ -809,7 +1013,7 @@
       }
     };
 
-    document.getElementById("inputDiffB").onchange = (e) => {
+    inputDiffB.onchange = (e) => {
       const f = e.target.files[0];
       if (f) {
         document.getElementById("diffNameB").textContent = f.name;
@@ -833,10 +1037,9 @@
       const keysB = diffDataB.length ? Object.keys(diffDataB[0]) : [];
       const allKeys = Array.from(new Set([...keysA, ...keysB]));
 
-      // Headers
       const trHead = document.createElement("tr");
       const thStatus = document.createElement("th");
-      thStatus.textContent = "Diff Status";
+      thStatus.textContent = "Status";
       trHead.appendChild(thStatus);
       allKeys.forEach(k => {
         const th = document.createElement("th");
@@ -850,45 +1053,45 @@
 
       let diffCount = 0;
 
-      // Rows in B not in A (Added)
+      // Additions
       diffDataB.forEach(rowB => {
         const sig = JSON.stringify(rowB);
         if (!mapA.has(sig)) {
           diffCount++;
           const tr = document.createElement("tr");
           tr.className = "diff-added";
-          tr.innerHTML = `<td><strong>+ Added</strong></td>` + allKeys.map(k => `<td>${rowB[k] ?? ""}</td>`).join("");
+          tr.innerHTML = `<td style="color:#6ee7b7; font-weight:bold;">+ Added</td>` + allKeys.map(k => `<td>${rowB[k] ?? ""}</td>`).join("");
           diffBody.appendChild(tr);
         }
       });
 
-      // Rows in A not in B (Removed)
+      // Removals
       diffDataA.forEach(rowA => {
         const sig = JSON.stringify(rowA);
         if (!mapB.has(sig)) {
           diffCount++;
           const tr = document.createElement("tr");
           tr.className = "diff-removed";
-          tr.innerHTML = `<td><strong>- Removed</strong></td>` + allKeys.map(k => `<td>${rowA[k] ?? ""}</td>`).join("");
+          tr.innerHTML = `<td style="color:#fca5a5; font-weight:bold;">- Removed</td>` + allKeys.map(k => `<td>${rowA[k] ?? ""}</td>`).join("");
           diffBody.appendChild(tr);
         }
       });
 
       document.getElementById("diffTableWrapper").style.display = "block";
-      showAlert(`Comparison complete! Found ${diffCount} differences between the two versions.`);
-      alertBox.style.backgroundColor = "rgba(99, 102, 241, 0.2)";
-      alertBox.style.borderColor = "#6366f1";
-      alertBox.style.color = "#c7d2fe";
+      showAlert(`Comparison complete: Found ${diffCount} differences between the two versions.`, "info");
     };
 
     // ================= 3. MULTI-FILE MERGER =================
     let mergedRows = [];
     const inputMergeFiles = document.getElementById("inputMergeFiles");
+    const mergeDropzone = document.getElementById("mergeDropzone");
     const mergeTblHead = document.getElementById("mergeTblHead");
     const mergeTblBody = document.getElementById("mergeTblBody");
     const mergeControls = document.getElementById("mergeControls");
     const mergeStatus = document.getElementById("mergeStatus");
     const mergeTableWrapper = document.getElementById("mergeTableWrapper");
+
+    setupDropzone(mergeDropzone, inputMergeFiles);
 
     inputMergeFiles.onchange = async function(e) {
       clearAlert();
@@ -919,7 +1122,6 @@
       });
       mergeTblHead.appendChild(trHead);
 
-      // Render first 100 preview rows
       mergedRows.slice(0, 100).forEach(r => {
         const tr = document.createElement("tr");
         keys.forEach(k => {
@@ -993,11 +1195,13 @@
 
     // ================= 5. PDF VIEWER =================
     const inputPdf = document.getElementById("inputPdf");
+    const pdfDropzone = document.getElementById("pdfDropzone");
     const pdfViewerBox = document.getElementById("pdfViewerBox");
     const pdfEmbed = document.getElementById("pdfEmbed");
-    const pdfDropzone = document.getElementById("pdfDropzone");
     const pdfControls = document.getElementById("pdfControls");
     const pdfFileInfo = document.getElementById("pdfFileInfo");
+
+    setupDropzone(pdfDropzone, inputPdf);
 
     inputPdf.onchange = function(e) {
       clearAlert();
