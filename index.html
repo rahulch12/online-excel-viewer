@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>Rahul Chauhan | DocForge Utility Studio</title>
-  <meta name="description" content="A private, in-browser workspace for spreadsheets, PDFs, and developer data utilities. Zero server uploads." />
+  <meta name="description" content="A fast, mobile-friendly in-browser workspace for spreadsheets, PDFs, and developer data utilities." />
 
   <!-- SheetJS CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <style>
     :root {
-      /* Universal Clean SaaS Palette */
       --header-bg: #0f172a;
       --page-bg: #f8fafc;
       --card-bg: #ffffff;
@@ -20,9 +19,9 @@
       --text-muted: #64748b;
       --primary-accent: #3b82f6;
 
-      /* Excel Specific (Scoped only to spreadsheet viewer) */
+      /* Excel Colors */
       --excel-green: #107c41;
-      --excel-header-bg: #f8fafc;
+      --excel-header-bg: #f1f5f9;
       --excel-border: #d4d4d4;
       --excel-active: #107c41;
     }
@@ -32,6 +31,7 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -42,22 +42,23 @@
       flex-direction: column;
     }
 
-    /* Universal Professional Header */
+    /* Universal Responsive Header */
     header {
       background-color: var(--header-bg);
       color: #fff;
-      padding: 14px 28px;
+      padding: 12px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .brand-logo {
@@ -71,49 +72,62 @@
       font-weight: 800;
       font-size: 15px;
       color: #fff;
+      flex-shrink: 0;
     }
 
     .brand-title {
       font-size: 16px;
       font-weight: 700;
       letter-spacing: -0.2px;
+      line-height: 1.2;
     }
 
     .brand-subtitle {
-      font-size: 12px;
+      font-size: 11px;
       color: #94a3b8;
-      font-weight: 400;
-      margin-left: 6px;
+      display: block;
     }
 
     .privacy-badge {
-      font-size: 12px;
+      font-size: 11px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: #cbd5e1;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
+      white-space: nowrap;
     }
 
     .container {
       max-width: 1240px;
-      width: 94%;
-      margin: 22px auto;
+      width: 100%;
+      padding: 16px;
+      margin: 0 auto;
       flex: 1;
     }
 
-    /* Ordered Navigation Tabs based on User Demand */
+    /* Mobile Swipeable Navigation Ribbon */
+    .suite-nav-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 16px;
+      padding-bottom: 4px;
+      scrollbar-width: none; /* Firefox */
+    }
+    .suite-nav-container::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
+
     .suite-nav {
-      display: flex;
+      display: inline-flex;
       gap: 6px;
       background: #e2e8f0;
-      padding: 5px;
+      padding: 4px;
       border-radius: 10px;
-      margin-bottom: 20px;
-      overflow-x: auto;
+      min-width: max-content;
     }
 
     .nav-tab {
@@ -122,27 +136,22 @@
       color: var(--text-muted);
       font-size: 13px;
       font-weight: 600;
-      padding: 9px 18px;
+      padding: 8px 14px;
       cursor: pointer;
       border-radius: 7px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       white-space: nowrap;
-    }
-
-    .nav-tab:hover {
-      color: var(--text-main);
     }
 
     .nav-tab.active {
       background: #fff;
       color: var(--text-main);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
     }
 
-    /* Active tab contextual indicators */
     .nav-tab.active[data-tool="excel"] { color: var(--excel-green); }
     .nav-tab.active[data-tool="pdf"] { color: #dc2626; }
     .nav-tab.active[data-tool="diff"] { color: #0284c7; }
@@ -154,62 +163,56 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      padding: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     }
 
-    /* Feedback Alert */
     .alert-banner {
       display: none;
-      padding: 12px 18px;
+      padding: 10px 14px;
       border-radius: 8px;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       font-size: 13px;
-      font-weight: 500;
+      word-break: break-word;
     }
     .alert-error { background: #fee2e2; border: 1px solid #f87171; color: #b91c1c; }
     .alert-success { background: #dcfce7; border: 1px solid #4ade80; color: #15803d; }
     .alert-info { background: #e0f2fe; border: 1px solid #38bdf8; color: #0369a1; }
 
-    /* Clean Neutral Dropzone */
+    /* Dropzone */
     .dropzone {
       background: #f8fafc;
       border: 2px dashed #cbd5e1;
       border-radius: 10px;
-      padding: 44px 20px;
+      padding: 32px 16px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
-    }
-    .dropzone:hover {
-      border-color: #64748b;
-      background: #f1f5f9;
     }
 
     .dropzone-icon {
       width: 44px;
       height: 44px;
-      margin: 0 auto 12px auto;
+      margin: 0 auto 10px auto;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      background: #e2e8f0;
     }
 
-    /* Toolbars & Controls */
+    /* Toolbars & Action Buttons */
     .toolbar {
       display: none;
       background: #f8fafc;
       border: 1px solid var(--border-color);
-      padding: 10px 14px;
+      padding: 10px;
       border-radius: 8px;
       margin-bottom: 12px;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .button-group {
@@ -217,21 +220,24 @@
       align-items: center;
       gap: 6px;
       flex-wrap: wrap;
+      width: 100%;
     }
 
     .btn {
-      padding: 7px 14px;
-      font-size: 13px;
+      padding: 8px 12px;
+      font-size: 12px;
       font-weight: 600;
       border-radius: 6px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 5px;
       border: 1px solid transparent;
       user-select: none;
       transition: all 0.15s ease;
-      text-decoration: none;
+      white-space: nowrap;
+      min-height: 36px;
     }
 
     .btn-default {
@@ -239,37 +245,42 @@
       border-color: #cbd5e1;
       color: #334155;
     }
-    .btn-default:hover { background: #f8fafc; border-color: #94a3b8; }
-
     .btn-excel { background: var(--excel-green); color: #fff; }
-    .btn-excel:hover { background: #0c6333; }
-
     .btn-primary { background: #2563eb; color: #fff; }
-    .btn-primary:hover { background: #1d4ed8; }
 
     input[type="file"] { display: none; }
 
-    /* ================= IMMERSIVE EXCEL WORKSPACE ================= */
+    .search-box {
+      padding: 8px 12px;
+      font-size: 13px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      outline: none;
+      width: 100%;
+    }
+
+    /* Excel Formula Bar */
     .excel-formula-bar {
       display: none;
       align-items: center;
       background: #f8fafc;
       border: 1px solid var(--excel-border);
       border-bottom: none;
-      padding: 6px 12px;
-      gap: 12px;
+      padding: 6px 10px;
+      gap: 8px;
     }
 
     .cell-coordinate {
-      width: 65px;
+      width: 55px;
       background: #fff;
       border: 1px solid var(--excel-border);
-      padding: 4px 8px;
+      padding: 5px 6px;
       font-weight: 700;
-      font-size: 12px;
+      font-size: 11px;
       text-align: center;
       color: var(--excel-green);
-      border-radius: 3px;
+      border-radius: 4px;
+      flex-shrink: 0;
     }
 
     .fx-label {
@@ -283,41 +294,47 @@
       flex: 1;
       background: #fff;
       border: 1px solid var(--excel-border);
-      padding: 4px 10px;
-      font-size: 13px;
+      padding: 5px 8px;
+      font-size: 12px;
       color: #1e293b;
       outline: none;
-      border-radius: 3px;
+      border-radius: 4px;
+      min-width: 0;
     }
 
+    /* Mobile Sticky Grid Viewport */
     .excel-grid-container {
       display: none;
       overflow: auto;
-      max-height: 60vh;
+      max-height: 55vh;
       border: 1px solid var(--excel-border);
       background: #fff;
+      -webkit-overflow-scrolling: touch;
     }
 
     table.excel-sheet-table {
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       font-size: 12px;
       color: #1e293b;
       white-space: nowrap;
       min-width: 100%;
     }
 
+    /* Frozen Sticky Corner (Top Left) */
     .corner-header {
-      background: #f1f5f9;
+      background: #e2e8f0;
       border-right: 1px solid var(--excel-border);
       border-bottom: 1px solid var(--excel-border);
-      width: 44px;
-      min-width: 44px;
+      width: 38px;
+      min-width: 38px;
       position: sticky;
       top: 0;
       left: 0;
-      z-index: 20;
+      z-index: 25;
     }
 
+    /* Frozen Sticky Column Headers */
     th.excel-header {
       background: var(--excel-header-bg);
       border-right: 1px solid var(--excel-border);
@@ -328,12 +345,10 @@
       text-align: center;
       position: sticky;
       top: 0;
-      z-index: 10;
-      cursor: pointer;
-      user-select: none;
+      z-index: 20;
     }
-    th.excel-header:hover { background: #e2e8f0; }
 
+    /* Frozen Sticky Row Numbers */
     td.row-indexer {
       background: var(--excel-header-bg);
       border-right: 1px solid var(--excel-border);
@@ -341,17 +356,16 @@
       text-align: center;
       color: #64748b;
       font-weight: 600;
-      padding: 5px 8px;
+      padding: 6px 6px;
       position: sticky;
       left: 0;
-      z-index: 5;
-      user-select: none;
+      z-index: 15;
     }
 
     td.data-cell {
       border-right: 1px solid #e2e8f0;
       border-bottom: 1px solid #e2e8f0;
-      padding: 6px 12px;
+      padding: 6px 10px;
       background: #fff;
       outline: none;
     }
@@ -361,22 +375,25 @@
       background: #f0fdf4 !important;
     }
 
+    /* Excel Bottom Status Bar */
     .excel-footer-bar {
       display: none;
       background: #f8fafc;
       border: 1px solid var(--excel-border);
       border-top: none;
-      padding: 6px 16px;
+      padding: 8px 12px;
       font-size: 11px;
       color: #64748b;
       justify-content: space-between;
       align-items: center;
       border-radius: 0 0 6px 6px;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .sheet-tab-tag {
       background: #fff;
-      padding: 4px 14px;
+      padding: 3px 10px;
       font-weight: 700;
       color: var(--excel-green);
       border: 1px solid #cbd5e1;
@@ -384,66 +401,88 @@
       font-size: 11px;
     }
 
-    /* PDF Viewer Container */
+    /* PDF Responsive Viewport */
     .pdf-viewer-frame {
       display: none;
       width: 100%;
-      height: 72vh;
+      height: 65vh;
       border: 1px solid var(--border-color);
       border-radius: 8px;
       overflow: hidden;
       background: #1e293b;
     }
 
-    /* JSON Workspace */
+    /* JSON Textarea */
     .json-textarea {
       width: 100%;
-      height: 230px;
+      height: 200px;
       background: #0f172a;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 14px;
+      padding: 12px;
       font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-      font-size: 13px;
+      font-size: 12px;
       color: #38bdf8;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       outline: none;
       resize: vertical;
     }
 
     footer {
-      padding: 22px;
+      padding: 18px;
       text-align: center;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
       border-top: 1px solid var(--border-color);
       background: #fff;
+      margin-top: auto;
+    }
+
+    /* Screen Queries for Small Mobiles */
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .privacy-badge {
+        align-self: flex-start;
+      }
+      .workspace-card {
+        padding: 12px;
+      }
+      .button-group .btn {
+        flex: 1 1 calc(50% - 6px); /* 2 buttons per row */
+      }
+      .excel-grid-container {
+        max-height: 48vh;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Universal Executive Header -->
   <header>
     <div class="brand-group">
       <div class="brand-logo">D</div>
       <div>
-        <span class="brand-title">DocForge</span>
+        <span class="brand-title">DocForge Studio</span>
         <span class="brand-subtitle">by Rahul Chauhan</span>
       </div>
     </div>
-    <div class="privacy-badge">🔒 In-Browser Privacy • Zero Data Sent to Servers</div>
+    <div class="privacy-badge">🔒 100% In-Browser Privacy</div>
   </header>
 
   <main class="container">
-    <!-- Functional Navigation (Ordered by User Utility Demand) -->
-    <nav class="suite-nav">
-      <button class="nav-tab active" id="tabStudio" data-tool="excel" type="button">📊 Excel & CSV Studio</button>
-      <button class="nav-tab" id="tabPdf" data-tool="pdf" type="button">📄 PDF Viewer</button>
-      <button class="nav-tab" id="tabCompare" data-tool="diff" type="button">⚖️ Compare / Diff</button>
-      <button class="nav-tab" id="tabMerge" data-tool="merge" type="button">📑 Merge Spreadsheets</button>
-      <button class="nav-tab" id="tabJson" data-tool="json" type="button">🔄 JSON ➔ Excel</button>
-    </nav>
+    <!-- Horizontal Swipeable Tabs on Mobile -->
+    <div class="suite-nav-container">
+      <nav class="suite-nav">
+        <button class="nav-tab active" id="tabStudio" data-tool="excel" type="button">📊 Excel & CSV</button>
+        <button class="nav-tab" id="tabPdf" data-tool="pdf" type="button">📄 PDF Viewer</button>
+        <button class="nav-tab" id="tabCompare" data-tool="diff" type="button">⚖️ Compare / Diff</button>
+        <button class="nav-tab" id="tabMerge" data-tool="merge" type="button">📑 Merge Files</button>
+        <button class="nav-tab" id="tabJson" data-tool="json" type="button">🔄 JSON ➔ Excel</button>
+      </nav>
+    </div>
 
     <div class="workspace-card">
       <div id="alertBox" class="alert-banner"></div>
@@ -452,33 +491,32 @@
       <section id="paneStudio">
         <div class="dropzone" id="studioDropzone">
           <div class="dropzone-icon" style="color: var(--excel-green); background: #f0fdf4;">📊</div>
-          <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Open Excel or CSV Spreadsheet</h3>
-          <p style="font-size: 13px; color: var(--text-muted);">Drop your spreadsheet here or click to browse</p>
+          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Open Spreadsheet</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Tap to upload or drop .xlsx / .csv</p>
           <input type="file" id="inputStudio" accept=".xlsx, .xls, .csv" />
         </div>
 
-        <!-- Excel Action Toolbar -->
         <div class="toolbar" id="studioControls">
           <div class="button-group">
-            <label for="inputStudio" class="btn btn-default">Change File</label>
+            <label for="inputStudio" class="btn btn-default">Change</label>
             <button class="btn btn-excel" id="btnExportXlsx" type="button">Export .XLSX</button>
-            <button class="btn btn-default" id="btnExportCsv" type="button">Export .CSV</button>
-            <button class="btn btn-default" id="btnDedupe" type="button">🧹 Deduplicate</button>
-            <button class="btn btn-default" id="btnTrim" type="button">✂️ Trim Spaces</button>
+            <button class="btn btn-default" id="btnExportCsv" type="button">CSV</button>
+            <button class="btn btn-default" id="btnDedupe" type="button">🧹 Dedupe</button>
+            <button class="btn btn-default" id="btnTrim" type="button">✂️ Trim</button>
             <button class="btn btn-default" id="btnExportJson" type="button">JSON</button>
-            <button class="btn btn-default" id="btnExportPdf" type="button">Print / PDF</button>
+            <button class="btn btn-default" id="btnExportPdf" type="button">PDF</button>
           </div>
-          <input type="text" id="studioSearch" placeholder="🔍 Find in rows..." style="padding: 6px 12px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 6px; outline: none; width: 180px;" />
+          <input type="text" id="studioSearch" class="search-box" placeholder="🔍 Search rows..." />
         </div>
 
-        <!-- Immersive Excel Formula Bar -->
+        <!-- Formula Bar -->
         <div class="excel-formula-bar" id="formulaBar">
           <div class="cell-coordinate" id="activeCellName">A1</div>
           <span class="fx-label">fx</span>
-          <input type="text" class="formula-display" id="formulaInput" readonly placeholder="Click any cell to inspect its value" />
+          <input type="text" class="formula-display" id="formulaInput" readonly placeholder="Select cell" />
         </div>
 
-        <!-- Authentically Styled Excel Grid -->
+        <!-- Sticky Excel Mobile Grid -->
         <div class="excel-grid-container" id="studioTableWrapper">
           <table class="excel-sheet-table">
             <thead id="studioTblHead"></thead>
@@ -486,13 +524,12 @@
           </table>
         </div>
 
-        <!-- Excel Footer & Stats -->
         <div class="excel-footer-bar" id="excelStatusBar">
           <span class="sheet-tab-tag" id="sheetTabName">Sheet1</span>
-          <div style="display: flex; gap: 14px; font-size: 11px;">
+          <div style="display: flex; gap: 10px; font-size: 11px;">
             <span id="excelStatCount">Count: 0</span>
             <span id="excelStatSum" style="display:none; font-weight: 700; color: var(--excel-green);">Sum: 0</span>
-            <span id="excelStatAvg" style="display:none;">Average: 0</span>
+            <span id="excelStatAvg" style="display:none;">Avg: 0</span>
           </div>
         </div>
       </section>
@@ -501,14 +538,14 @@
       <section id="panePdf" style="display: none;">
         <div class="dropzone" id="pdfDropzone">
           <div class="dropzone-icon" style="color: #dc2626; background: #fef2f2;">📄</div>
-          <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Choose a PDF Document</h3>
-          <p style="font-size: 13px; color: var(--text-muted);">Hardware-accelerated native PDF preview running purely on your computer</p>
+          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Choose a PDF File</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Tap to preview locally</p>
           <input type="file" id="inputPdf" accept="application/pdf, .pdf" />
         </div>
 
         <div class="toolbar" id="pdfControls">
-          <label for="inputPdf" class="btn btn-default">Change PDF File</label>
-          <span id="pdfFileName" style="font-size: 13px; color: var(--text-muted); font-weight: 600;"></span>
+          <label for="inputPdf" class="btn btn-default">Change PDF</label>
+          <span id="pdfFileName" style="font-size: 12px; color: var(--text-muted); font-weight: 600;"></span>
         </div>
 
         <div class="pdf-viewer-frame" id="pdfViewerBox">
@@ -516,27 +553,27 @@
         </div>
       </section>
 
-      <!-- ================= 3. COMPARE / DIFF CHECKER ================= -->
+      <!-- ================= 3. COMPARE / DIFF ================= -->
       <section id="paneCompare" style="display: none;">
-        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-          Compare two versions of an Excel file to highlight additions (<span style="color:#15803d; font-weight:bold;">green</span>) and removals (<span style="color:#b91c1c; font-weight:bold;">red</span>):
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+          Compare two versions of an Excel file to see additions (<span style="color:#15803d; font-weight:bold;">green</span>) and removals (<span style="color:#b91c1c; font-weight:bold;">red</span>):
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 18px;">
-          <div class="dropzone" id="dropzoneA" style="padding: 24px 12px;">
-            <label for="inputDiffA" class="btn btn-default">Original File (A)</label>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 14px;">
+          <div class="dropzone" id="dropzoneA" style="padding: 20px 10px;">
+            <label for="inputDiffA" class="btn btn-default">Original (A)</label>
             <input type="file" id="inputDiffA" accept=".xlsx, .xls, .csv" />
-            <p id="diffNameA" style="margin-top: 10px; font-size: 12px; font-weight: 500;">No file chosen</p>
+            <p id="diffNameA" style="margin-top: 6px; font-size: 11px;">No file</p>
           </div>
-          <div class="dropzone" id="dropzoneB" style="padding: 24px 12px;">
-            <label for="inputDiffB" class="btn btn-default">Updated File (B)</label>
+          <div class="dropzone" id="dropzoneB" style="padding: 20px 10px;">
+            <label for="inputDiffB" class="btn btn-default">Updated (B)</label>
             <input type="file" id="inputDiffB" accept=".xlsx, .xls, .csv" />
-            <p id="diffNameB" style="margin-top: 10px; font-size: 12px; font-weight: 500;">No file chosen</p>
+            <p id="diffNameB" style="margin-top: 6px; font-size: 11px;">No file</p>
           </div>
         </div>
 
-        <div style="text-align: center; margin-bottom: 18px;">
-          <button class="btn btn-primary" id="btnRunDiff">Compare Spreadsheets</button>
+        <div style="text-align: center; margin-bottom: 14px;">
+          <button class="btn btn-primary" id="btnRunDiff" style="width: 100%; max-width: 260px;">Compare Sheets</button>
         </div>
 
         <div class="excel-grid-container" id="diffTableWrapper" style="display:none;">
@@ -547,18 +584,18 @@
         </div>
       </section>
 
-      <!-- ================= 4. MERGE SPREADSHEETS ================= -->
+      <!-- ================= 4. MERGE FILES ================= -->
       <section id="paneMerge" style="display: none;">
         <div class="dropzone" id="mergeDropzone">
           <div class="dropzone-icon" style="color: #7c3aed; background: #f5f3ff;">📑</div>
-          <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Select 2 or More Spreadsheets to Merge</h3>
-          <p style="font-size: 13px; color: var(--text-muted);">Combines multiple files with matching headers into a single consolidated Excel file</p>
+          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Merge Multiple Files</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Select 2 or more files to combine</p>
           <input type="file" id="inputMergeFiles" accept=".xlsx, .xls, .csv" multiple />
         </div>
 
         <div class="toolbar" id="mergeBar">
           <button class="btn btn-excel" id="btnDownloadMerged">Download Combined .XLSX</button>
-          <span id="mergeStatus" style="font-size: 12px; color: var(--text-muted); font-weight: 600;"></span>
+          <span id="mergeStatus" style="font-size: 11px; color: var(--text-muted); font-weight: 600;"></span>
         </div>
 
         <div class="excel-grid-container" id="mergeTableWrapper" style="display:none;">
@@ -571,16 +608,16 @@
 
       <!-- ================= 5. JSON TO EXCEL ================= -->
       <section id="paneJson" style="display: none;">
-        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
-          Paste a JSON array or object to convert it instantly into an Excel spreadsheet or CSV:
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+          Paste JSON array to convert into a spreadsheet:
         </p>
         <textarea id="jsonInput" class="json-textarea" placeholder='[
-  { "ID": 101, "Product": "Wireless Mouse", "Price": 29.99, "Stock": 45 },
-  { "ID": 102, "Product": "Mechanical Keyboard", "Price": 89.00, "Stock": 12 }
+  { "ID": 101, "Product": "Mouse", "Price": 29.99 },
+  { "ID": 102, "Product": "Keyboard", "Price": 89.00 }
 ]'></textarea>
         <div class="button-group">
-          <button class="btn btn-primary" id="btnJsonToExcel">Download as .XLSX</button>
-          <button class="btn btn-default" id="btnJsonToCsv">Download as .CSV</button>
+          <button class="btn btn-primary" id="btnJsonToExcel">Export .XLSX</button>
+          <button class="btn btn-default" id="btnJsonToCsv">Export .CSV</button>
         </div>
       </section>
     </div>
@@ -591,7 +628,6 @@
   </footer>
 
   <script>
-    // Tab Switching Logic
     const tabs = [
       { btn: document.getElementById("tabStudio"), pane: document.getElementById("paneStudio") },
       { btn: document.getElementById("tabPdf"), pane: document.getElementById("panePdf") },
@@ -680,7 +716,7 @@
 
       const keys = Array.from(new Set(parsedRows.flatMap(r => Object.keys(r))));
 
-      // Letter Header Row (A, B, C...)
+      // Sticky Top Header (Corner + A, B, C...)
       const trLetters = document.createElement("tr");
       const cornerTh = document.createElement("th");
       cornerTh.className = "corner-header";
@@ -694,7 +730,7 @@
       });
       studioTblHead.appendChild(trLetters);
 
-      // Data Rows (1, 2, 3...)
+      // Sticky Row Index (1, 2, 3...)
       rows.forEach((row, rowIdx) => {
         const tr = document.createElement("tr");
 
@@ -731,7 +767,7 @@
       if (nums.length > 0) {
         const sum = nums.reduce((a, b) => a + b, 0);
         excelStatSum.textContent = `Sum: ${Number.isInteger(sum) ? sum : sum.toFixed(2)}`;
-        excelStatAvg.textContent = `Average: ${(sum / nums.length).toFixed(2)}`;
+        excelStatAvg.textContent = `Avg: ${(sum / nums.length).toFixed(2)}`;
         excelStatSum.style.display = "inline";
         excelStatAvg.style.display = "inline";
       } else {
@@ -757,7 +793,7 @@
           parsedRows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
           if (!parsedRows || parsedRows.length === 0) {
-            showAlert("The sheet contains no readable data rows.");
+            showAlert("The spreadsheet has no readable data.");
             return;
           }
 
@@ -768,7 +804,7 @@
           excelStatusBar.style.display = "flex";
           studioDropzone.style.display = "none";
         } catch (err) {
-          showAlert("Error parsing Excel file: " + err.message);
+          showAlert("Error reading file: " + err.message);
         } finally {
           inputStudio.value = "";
         }
@@ -799,7 +835,7 @@
         return true;
       });
       renderExcelTable(parsedRows);
-      showAlert(`Cleaned ${init - parsedRows.length} duplicates. ${parsedRows.length} rows remain.`, "success");
+      showAlert(`Cleaned ${init - parsedRows.length} duplicates.`, "success");
     };
 
     document.getElementById("btnTrim").onclick = function() {
@@ -813,7 +849,7 @@
         return cleaned;
       });
       renderExcelTable(parsedRows);
-      showAlert("Trimmed whitespace across all cells and headers.", "success");
+      showAlert("Trimmed whitespace across all cells.", "success");
     };
 
     document.getElementById("btnExportXlsx").onclick = () => {
@@ -850,11 +886,11 @@
         <html>
           <head><title>Print Report</title>
           <style>
-            body { font-family: Segoe UI, sans-serif; padding: 20px; }
+            body { font-family: -apple-system, sans-serif; padding: 15px; }
             table { width: 100%; border-collapse: collapse; font-size: 11px; }
-            th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
+            th, td { border: 1px solid #ccc; padding: 5px 8px; text-align: left; }
             th { background: #f3f3f3; }
-            @media print { @page { size: landscape; margin: 8mm; } }
+            @media print { @page { size: landscape; margin: 6mm; } }
           </style>
           </head>
           <body>${tableHtml}<script>window.onload=()=>window.print();<\/script></body>
@@ -917,7 +953,7 @@
       head.innerHTML = ""; body.innerHTML = "";
 
       const keys = Array.from(new Set([...(diffA[0] ? Object.keys(diffA[0]) : []), ...(diffB[0] ? Object.keys(diffB[0]) : [])]));
-      head.innerHTML = `<tr><th class="corner-header"></th><th class="excel-header">Diff Status</th>${keys.map((k, i) => `<th class="excel-header">${getColumnLetter(i)} (${k})</th>`).join("")}</tr>`;
+      head.innerHTML = `<tr><th class="corner-header"></th><th class="excel-header">Status</th>${keys.map((k, i) => `<th class="excel-header">${getColumnLetter(i)} (${k})</th>`).join("")}</tr>`;
 
       const mapA = new Map(diffA.map(r => [JSON.stringify(r), r]));
       const mapB = new Map(diffB.map(r => [JSON.stringify(r), r]));
@@ -944,7 +980,7 @@
 
     inputMerge.onchange = async e => {
       const files = Array.from(e.target.files);
-      if (files.length < 2) return showAlert("Select at least 2 files to merge.");
+      if (files.length < 2) return showAlert("Select at least 2 files.");
       mergedData = [];
       for (const f of files) {
         const buf = await f.arrayBuffer();
