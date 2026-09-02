@@ -440,6 +440,43 @@
       background: #1e293b;
     }
 
+    /* Contextual Affiliate Callout Boxes */
+    .affiliate-banner {
+      margin-top: 18px;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .affiliate-banner-text {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .affiliate-link {
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: opacity 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .affiliate-link:hover {
+      opacity: 0.85;
+      text-decoration: underline;
+    }
+
     /* JSON Textarea */
     .json-textarea {
       width: 100%;
@@ -485,12 +522,16 @@
       .excel-grid-container {
         max-height: 48vh;
       }
+      .affiliate-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Universal Responsive Header -->
+  <!-- Universal Responsive Header with Tip Button -->
   <header>
     <div class="brand-group">
       <div class="brand-logo">D</div>
@@ -567,6 +608,17 @@
             <span id="excelStatAvg" style="display:none;">Avg: 0</span>
           </div>
         </div>
+
+        <!-- Contextual Excel/Database Affiliate Callout -->
+        <div class="affiliate-banner">
+          <div class="affiliate-banner-text">
+            <span>⚡ Need automated workflows, team sharing, or relational databases?</span>
+          </div>
+          <!-- Replace YOUR_AIRTABLE_AFFILIATE_LINK when registered -->
+          <a href="https://airtable.com" target="_blank" rel="noopener sponsored" class="affiliate-link" style="color: var(--excel-green);">
+            Explore Airtable for free &rarr;
+          </a>
+        </div>
       </section>
 
       <!-- ================= 2. PDF VIEWER ================= -->
@@ -585,6 +637,17 @@
 
         <div class="pdf-viewer-frame" id="pdfViewerBox">
           <embed id="pdfEmbed" src="" type="application/pdf" width="100%" height="100%" />
+        </div>
+
+        <!-- Contextual PDF Affiliate Callout -->
+        <div class="affiliate-banner">
+          <div class="affiliate-banner-text">
+            <span>🔍 Need advanced OCR text recognition, PDF compression, or file editing?</span>
+          </div>
+          <!-- Replace YOUR_SMALLPDF_AFFILIATE_LINK when registered -->
+          <a href="https://smallpdf.com" target="_blank" rel="noopener sponsored" class="affiliate-link" style="color: #dc2626;">
+            Try Smallpdf Pro &rarr;
+          </a>
         </div>
       </section>
 
