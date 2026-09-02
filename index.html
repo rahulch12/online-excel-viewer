@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rahul Chauhan | Doc & Data Studio</title>
 
-  <!-- Primary CDN: unpkg -->
+  <!-- SheetJS for Excel handling -->
   <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-  <!-- Backup CDN loader: if unpkg is blocked, load from cdnjs dynamically -->
-  <script>
-    if (typeof XLSX === 'undefined') {
-      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"><\/script>');
-    }
-  </script>
+  <!-- jsPDF & AutoTable for Excel -> PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- PDF.js for reading PDF text -> Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
   <style>
     :root {
@@ -65,7 +65,7 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1050px;
       width: 90%;
       margin: 30px auto;
       flex: 1;
@@ -78,6 +78,7 @@
       margin-bottom: 20px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 12px;
+      flex-wrap: wrap;
     }
 
     .tab-btn {
@@ -86,9 +87,10 @@
       color: var(--muted);
       font-size: 14px;
       font-weight: 600;
-      padding: 10px 22px;
+      padding: 10px 20px;
       cursor: pointer;
       border-radius: 8px;
+      transition: all 0.2s ease;
     }
 
     .tab-btn.active {
@@ -97,22 +99,18 @@
       color: #fff;
     }
 
-    /* Alert Banner */
+    /* Feedback Banner */
     .alert-banner {
       display: none;
       padding: 12px 16px;
       border-radius: 8px;
       margin-bottom: 20px;
       font-size: 14px;
-    }
-
-    .alert-error {
       background-color: rgba(239, 68, 68, 0.2);
       border: 1px solid #ef4444;
       color: #fca5a5;
     }
 
-    /* Upload Area */
     .dropzone {
       background: var(--card-bg);
       border: 2px dashed var(--border);
@@ -129,7 +127,7 @@
     }
 
     .btn {
-      padding: 10px 20px;
+      padding: 10px 18px;
       font-size: 14px;
       font-weight: 500;
       border-radius: 8px;
@@ -139,6 +137,7 @@
       gap: 8px;
       border: 1px solid transparent;
       user-select: none;
+      transition: all 0.2s;
     }
 
     .btn-primary {
@@ -171,6 +170,13 @@
       margin-bottom: 16px;
       flex-wrap: wrap;
       gap: 12px;
+    }
+
+    .button-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     /* Data Table */
@@ -217,7 +223,7 @@
       background-color: var(--row-hover);
     }
 
-    /* PDF View Box */
+    /* PDF Viewer Box */
     .pdf-viewer-box {
       display: none;
       width: 100%;
@@ -246,20 +252,20 @@
 
   <header>
     <h1 class="brand-title">Rahul's <span>Doc & Data Studio</span></h1>
-    <p class="subtitle">100% Client-Side Spreadsheet & PDF Viewer</p>
+    <p class="subtitle">Convert & View: Excel ⇄ PDF in your browser</p>
   </header>
 
   <main class="container">
-    <!-- Tab Controls -->
+    <!-- Tabs -->
     <div class="tab-nav">
-      <button class="tab-btn active" id="btnTabExcel" type="button">📊 Excel / CSV</button>
-      <button class="tab-btn" id="btnTabPdf" type="button">📄 PDF Viewer</button>
+      <button class="tab-btn active" id="btnTabExcel" type="button">📊 Excel Viewer & Convert</button>
+      <button class="tab-btn" id="btnTabPdfViewer" type="button">📄 PDF Viewer</button>
+      <button class="tab-btn" id="btnTabPdfToExcel" type="button">🔄 PDF to Excel</button>
     </div>
 
-    <!-- Feedback Banner -->
-    <div id="alertBox" class="alert-banner alert-error"></div>
+    <div id="alertBox" class="alert-banner"></div>
 
-    <!-- EXCEL SECTION -->
+    <!-- TAB 1: EXCEL SECTION -->
     <section id="sectionExcel">
       <div class="dropzone" id="excelDropzone">
         <label for="inputExcel" class="btn btn-primary">Choose Excel or CSV</label>
@@ -268,9 +274,10 @@
       </div>
 
       <div class="control-bar" id="excelControls">
-        <div>
+        <div class="button-group">
           <label for="inputExcel" class="btn btn-outline">Change File</label>
           <button class="btn btn-primary" id="btnExportExcel" type="button">Export to Excel</button>
+          <button class="btn btn-outline" id="btnExportPdf" type="button">Convert to PDF</button>
         </div>
         <span id="excelFileInfo" style="font-size: 13px; color: var(--muted);"></span>
       </div>
@@ -283,12 +290,12 @@
       </div>
     </section>
 
-    <!-- PDF SECTION -->
-    <section id="sectionPdf" style="display: none;">
+    <!-- TAB 2: PDF VIEWER SECTION -->
+    <section id="sectionPdfViewer" style="display: none;">
       <div class="dropzone" id="pdfDropzone">
         <label for="inputPdf" class="btn btn-primary">Choose PDF Document</label>
         <input type="file" id="inputPdf" accept="application/pdf, .pdf" />
-        <p>Rendered natively in your browser with zero data uploads</p>
+        <p>Rendered natively inside your browser</p>
       </div>
 
       <div class="control-bar" id="pdfControls">
@@ -299,24 +306,50 @@
       <div class="pdf-viewer-box" id="pdfViewerBox">
         <object id="pdfObject" data="" type="application/pdf">
           <p style="padding: 20px; text-align: center; color: #fff;">
-            Your browser does not support embedded PDFs. 
-            <a id="pdfFallbackLink" href="#" target="_blank" style="color: var(--primary);">Click here to open the file directly</a>.
+            Preview not available. <a id="pdfFallbackLink" href="#" target="_blank" style="color: var(--primary);">Open file directly</a>.
           </p>
         </object>
+      </div>
+    </section>
+
+    <!-- TAB 3: PDF TO EXCEL CONVERTER -->
+    <section id="sectionPdfToExcel" style="display: none;">
+      <div class="dropzone" id="pdfToExcelDropzone">
+        <label for="inputPdfConvert" class="btn btn-primary">Upload PDF to Extract to Excel</label>
+        <input type="file" id="inputPdfConvert" accept="application/pdf, .pdf" />
+        <p>Extracts text and table structures from text-based PDFs into spreadsheet rows</p>
+      </div>
+
+      <div class="control-bar" id="pdfConvertControls">
+        <div class="button-group">
+          <label for="inputPdfConvert" class="btn btn-outline">Upload Different PDF</label>
+          <button class="btn btn-primary" id="btnDownloadExtractedExcel" type="button">Download Extracted Excel</button>
+        </div>
+        <span id="pdfConvertInfo" style="font-size: 13px; color: var(--muted);"></span>
+      </div>
+
+      <div class="table-wrapper" id="pdfConvertTableWrapper">
+        <table>
+          <thead id="pdfConvertHead"></thead>
+          <tbody id="pdfConvertBody"></tbody>
+        </table>
       </div>
     </section>
   </main>
 
   <footer>
-    Built by Rahul Chauhan • Completely Secure & Client-Side
+    Built by Rahul Chauhan • 100% Client-Side Processing
   </footer>
 
   <script>
-    // Tab switching logic
+    // Tab switching
     const btnTabExcel = document.getElementById("btnTabExcel");
-    const btnTabPdf = document.getElementById("btnTabPdf");
+    const btnTabPdfViewer = document.getElementById("btnTabPdfViewer");
+    const btnTabPdfToExcel = document.getElementById("btnTabPdfToExcel");
+    
     const sectionExcel = document.getElementById("sectionExcel");
-    const sectionPdf = document.getElementById("sectionPdf");
+    const sectionPdfViewer = document.getElementById("sectionPdfViewer");
+    const sectionPdfToExcel = document.getElementById("sectionPdfToExcel");
     const alertBox = document.getElementById("alertBox");
 
     function showAlert(message) {
@@ -329,23 +362,20 @@
       alertBox.style.display = "none";
     }
 
-    btnTabExcel.addEventListener("click", function() {
-      btnTabExcel.classList.add("active");
-      btnTabPdf.classList.remove("active");
-      sectionExcel.style.display = "block";
-      sectionPdf.style.display = "none";
-      clearAlert();
-    });
+    function switchTab(activeBtn, activeSection) {
+      [btnTabExcel, btnTabPdfViewer, btnTabPdfToExcel].forEach(btn => btn.classList.remove("active"));
+      [sectionExcel, sectionPdfViewer, sectionPdfToExcel].forEach(sec => sec.style.display = "none");
 
-    btnTabPdf.addEventListener("click", function() {
-      btnTabPdf.classList.add("active");
-      btnTabExcel.classList.remove("active");
-      sectionPdf.style.display = "block";
-      sectionExcel.style.display = "none";
+      activeBtn.classList.add("active");
+      activeSection.style.display = "block";
       clearAlert();
-    });
+    }
 
-    // ================= EXCEL LOGIC =================
+    btnTabExcel.addEventListener("click", () => switchTab(btnTabExcel, sectionExcel));
+    btnTabPdfViewer.addEventListener("click", () => switchTab(btnTabPdfViewer, sectionPdfViewer));
+    btnTabPdfToExcel.addEventListener("click", () => switchTab(btnTabPdfToExcel, sectionPdfToExcel));
+
+    // ================= 1. EXCEL VIEWER & EXPORT =================
     let parsedRows = [];
     const inputExcel = document.getElementById("inputExcel");
     const tblHead = document.getElementById("tblHead");
@@ -355,16 +385,12 @@
     const excelDropzone = document.getElementById("excelDropzone");
     const excelFileInfo = document.getElementById("excelFileInfo");
     const btnExportExcel = document.getElementById("btnExportExcel");
+    const btnExportPdf = document.getElementById("btnExportPdf");
 
     inputExcel.addEventListener("change", function(evt) {
       clearAlert();
       const file = evt.target.files[0];
       if (!file) return;
-
-      if (typeof XLSX === "undefined") {
-        showAlert("The Excel parser could not be loaded. Please ensure you are connected to the internet and disable any ad blockers.");
-        return;
-      }
 
       const reader = new FileReader();
       reader.onload = function(e) {
@@ -372,11 +398,6 @@
           const buffer = e.target.result;
           const workbook = XLSX.read(buffer, { type: "binary" });
           const sheetName = workbook.SheetNames[0];
-          
-          if (!sheetName) {
-            throw new Error("No worksheets found in this workbook.");
-          }
-
           const worksheet = workbook.Sheets[sheetName];
           parsedRows = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
 
@@ -385,7 +406,6 @@
             return;
           }
 
-          // Build headers
           tblHead.innerHTML = "";
           tblBody.innerHTML = "";
           const keys = Array.from(new Set(parsedRows.flatMap(row => Object.keys(row))));
@@ -398,7 +418,6 @@
           });
           tblHead.appendChild(trHead);
 
-          // Build rows
           parsedRows.forEach(row => {
             const tr = document.createElement("tr");
             keys.forEach(k => {
@@ -409,30 +428,55 @@
             tblBody.appendChild(tr);
           });
 
-          // Show table & toolbar
           tableWrapper.style.display = "block";
           excelControls.style.display = "flex";
           excelDropzone.style.display = "none";
           excelFileInfo.textContent = `${file.name} (${parsedRows.length} rows)`;
         } catch (err) {
-          showAlert("Failed to parse the file: " + err.message);
+          showAlert("Failed to parse file: " + err.message);
         } finally {
           inputExcel.value = "";
         }
       };
-
       reader.readAsBinaryString(file);
     });
 
+    // Export to Excel
     btnExportExcel.addEventListener("click", function() {
       if (!parsedRows.length) return;
       const worksheet = XLSX.utils.json_to_sheet(parsedRows);
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-      XLSX.writeFile(workbook, "export.xlsx");
+      XLSX.writeFile(workbook, "converted-data.xlsx");
     });
 
-    // ================= PDF LOGIC =================
+    // Convert Excel -> PDF
+    btnExportPdf.addEventListener("click", function() {
+      if (!parsedRows.length) return;
+
+      try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: "landscape" });
+
+        const keys = Array.from(new Set(parsedRows.flatMap(row => Object.keys(row))));
+        const bodyData = parsedRows.map(row => keys.map(k => String(row[k] || "")));
+
+        doc.text("Converted Sheet Document", 14, 15);
+        doc.autoTable({
+          head: [keys],
+          body: bodyData,
+          startY: 20,
+          styles: { fontSize: 8 },
+          theme: 'striped'
+        });
+
+        doc.save("sheet-converted.pdf");
+      } catch (err) {
+        showAlert("Failed to export PDF: " + err.message);
+      }
+    });
+
+    // ================= 2. PDF VIEWER =================
     const inputPdf = document.getElementById("inputPdf");
     const pdfViewerBox = document.getElementById("pdfViewerBox");
     const pdfObject = document.getElementById("pdfObject");
@@ -460,6 +504,108 @@
       } finally {
         inputPdf.value = "";
       }
+    });
+
+    // ================= 3. PDF TO EXCEL CONVERTER =================
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+    }
+
+    let extractedRows = [];
+    const inputPdfConvert = document.getElementById("inputPdfConvert");
+    const pdfToExcelDropzone = document.getElementById("pdfToExcelDropzone");
+    const pdfConvertControls = document.getElementById("pdfConvertControls");
+    const pdfConvertInfo = document.getElementById("pdfConvertInfo");
+    const pdfConvertTableWrapper = document.getElementById("pdfConvertTableWrapper");
+    const pdfConvertHead = document.getElementById("pdfConvertHead");
+    const pdfConvertBody = document.getElementById("pdfConvertBody");
+    const btnDownloadExtractedExcel = document.getElementById("btnDownloadExtractedExcel");
+
+    inputPdfConvert.addEventListener("change", function(evt) {
+      clearAlert();
+      const file = evt.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async function() {
+        try {
+          const typedArray = new Uint8Array(this.result);
+          const pdf = await pdfjsLib.getDocument(typedArray).promise;
+          
+          extractedRows = [];
+
+          // Parse each page
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            
+            // Group text items by approximate Y coordinate (line by line)
+            const lines = {};
+            textContent.items.forEach(item => {
+              const y = Math.round(item.transform[5]);
+              if (!lines[y]) lines[y] = [];
+              lines[y].push(item.str.trim());
+            });
+
+            // Sort lines from top to bottom
+            const sortedY = Object.keys(lines).sort((a, b) => Number(b) - Number(a));
+
+            sortedY.forEach(y => {
+              const tokens = lines[y].filter(t => t.length > 0);
+              if (tokens.length > 0) {
+                extractedRows.push(tokens);
+              }
+            });
+          }
+
+          if (extractedRows.length === 0) {
+            showAlert("No extractable text found in this PDF (it might be a scanned image).");
+            return;
+          }
+
+          // Render into preview table
+          pdfConvertHead.innerHTML = "";
+          pdfConvertBody.innerHTML = "";
+
+          const maxCols = Math.max(...extractedRows.map(r => r.length));
+          const trHead = document.createElement("tr");
+          for (let c = 1; c <= maxCols; c++) {
+            const th = document.createElement("th");
+            th.textContent = `Column ${c}`;
+            trHead.appendChild(th);
+          }
+          pdfConvertHead.appendChild(trHead);
+
+          extractedRows.forEach(r => {
+            const tr = document.createElement("tr");
+            for (let c = 0; c < maxCols; c++) {
+              const td = document.createElement("td");
+              td.textContent = r[c] !== undefined ? r[c] : "";
+              tr.appendChild(td);
+            }
+            pdfConvertBody.appendChild(tr);
+          });
+
+          pdfConvertTableWrapper.style.display = "block";
+          pdfConvertControls.style.display = "flex";
+          pdfToExcelDropzone.style.display = "none";
+          pdfConvertInfo.textContent = `${file.name} (${extractedRows.length} lines parsed)`;
+        } catch (err) {
+          showAlert("Failed to convert PDF: " + err.message);
+        } finally {
+          inputPdfConvert.value = "";
+        }
+      };
+
+      reader.readAsArrayBuffer(file);
+    });
+
+    btnDownloadExtractedExcel.addEventListener("click", function() {
+      if (!extractedRows.length) return;
+      const worksheet = XLSX.utils.aoa_to_sheet(extractedRows);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Extracted");
+      XLSX.writeFile(workbook, "extracted-from-pdf.xlsx");
     });
   </script>
 </body>
