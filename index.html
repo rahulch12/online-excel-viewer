@@ -215,6 +215,7 @@
     }
 
     .nav-tab.active[data-tool="excel"] { color: var(--excel-green); }
+    .nav-tab.active[data-tool="compress"] { color: #d97706; }
     .nav-tab.active[data-tool="imgpdf"] { color: #ea580c; }
     .nav-tab.active[data-tool="pdfmerge"] { color: #0284c7; }
     .nav-tab.active[data-tool="pdf"] { color: #dc2626; }
@@ -311,6 +312,7 @@
     }
     .btn-excel { background: var(--excel-green); color: #fff; }
     .btn-primary { background: #2563eb; color: #fff; }
+    .btn-amber { background: #d97706; color: #fff; }
     .btn-orange { background: #ea580c; color: #fff; }
     .btn-sky { background: #0284c7; color: #fff; }
 
@@ -526,6 +528,40 @@
       font-size: 12px;
     }
 
+    /* Image Compressor Controls */
+    .compress-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .compress-stats {
+      display: flex;
+      justify-content: space-around;
+      background: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .slider-control {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slider-control input[type="range"] {
+      width: 100%;
+      accent-color: #d97706;
+    }
+
     .affiliate-banner {
       margin-top: 18px;
       padding: 12px 16px;
@@ -637,6 +673,7 @@
     <div class="suite-nav-container">
       <nav class="suite-nav">
         <button class="nav-tab active" id="tabStudio" data-tool="excel" type="button">📊 Excel & CSV</button>
+        <button class="nav-tab" id="tabCompress" data-tool="compress" type="button">⚡ Compress Image</button>
         <button class="nav-tab" id="tabImgPdf" data-tool="imgpdf" type="button">🖼️ Images ➔ PDF</button>
         <button class="nav-tab" id="tabPdfMerge" data-tool="pdfmerge" type="button">📑 Merge PDFs</button>
         <button class="nav-tab" id="tabPdf" data-tool="pdf" type="button">📄 PDF Viewer</button>
@@ -703,7 +740,60 @@
         </div>
       </section>
 
-      <!-- ================= 2. IMAGES ➔ PDF (GROUP 1 FEATURE) ================= -->
+      <!-- ================= 2. COMPRESS IMAGE ================= -->
+      <section id="paneCompress" style="display: none;">
+        <div class="dropzone" id="compressDropzone">
+          <div class="dropzone-icon" style="color: #d97706; background: #fef3c7;">⚡</div>
+          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Select Image to Compress</h3>
+          <p style="font-size: 12px; color: var(--text-muted);">Reduce JPG, JPEG, or PNG file size without quality loss</p>
+          <input type="file" id="inputCompress" accept="image/jpeg, image/jpg, image/png, image/webp" />
+        </div>
+
+        <div id="compressDetails" style="display: none;" class="compress-card">
+          <div class="compress-stats">
+            <div>
+              <div style="font-weight: 600; color: var(--text-muted);">Original</div>
+              <div id="statOriginalSize" style="font-weight: 700; font-size: 14px;">0 KB</div>
+            </div>
+            <div style="font-size: 20px; color: #cbd5e1;">➔</div>
+            <div>
+              <div style="font-weight: 600; color: #15803d;">Compressed</div>
+              <div id="statCompressedSize" style="font-weight: 700; font-size: 14px; color: #15803d;">0 KB</div>
+            </div>
+            <div>
+              <div style="font-weight: 600; color: var(--text-muted);">Reduction</div>
+              <div id="statSavedPercent" style="font-weight: 700; font-size: 14px; color: #d97706;">0%</div>
+            </div>
+          </div>
+
+          <div class="slider-control">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600;">
+              <span>Compression Level</span>
+              <span id="sliderQualityVal">70%</span>
+            </div>
+            <input type="range" id="sliderQuality" min="5" max="95" value="70" />
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted);">
+              <span>Smallest Size</span>
+              <span>Highest Quality</span>
+            </div>
+          </div>
+
+          <div class="slider-control">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600;">
+              <span>Max Width / Dimension</span>
+              <span id="sliderDimensionVal">1920 px</span>
+            </div>
+            <input type="range" id="sliderDimension" min="600" max="3840" step="100" value="1920" />
+          </div>
+
+          <div class="button-group" style="margin-top: 6px;">
+            <button class="btn btn-amber" id="btnDownloadCompressed" type="button">⬇️ Download Compressed Image</button>
+            <label for="inputCompress" class="btn btn-default">Change Image</label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. IMAGES ➔ PDF ================= -->
       <section id="paneImgPdf" style="display: none;">
         <div class="dropzone" id="imgPdfDropzone">
           <div class="dropzone-icon" style="color: #ea580c; background: #fff7ed;">🖼️</div>
@@ -723,7 +813,7 @@
         <div class="img-preview-grid" id="imgPreviewGrid"></div>
       </section>
 
-      <!-- ================= 3. MERGE PDFS (GROUP 1 FEATURE) ================= -->
+      <!-- ================= 4. MERGE PDFS ================= -->
       <section id="panePdfMerge" style="display: none;">
         <div class="dropzone" id="pdfMergeDropzone">
           <div class="dropzone-icon" style="color: #0284c7; background: #f0f9ff;">📑</div>
@@ -743,7 +833,7 @@
         <div class="pdf-file-list" id="pdfMergeList"></div>
       </section>
 
-      <!-- ================= 4. PDF VIEWER ================= -->
+      <!-- ================= 5. PDF VIEWER ================= -->
       <section id="panePdf" style="display: none;">
         <div class="dropzone" id="pdfDropzone">
           <div class="dropzone-icon" style="color: #dc2626; background: #fef2f2;">📄</div>
@@ -771,7 +861,7 @@
         </div>
       </section>
 
-      <!-- ================= 5. COMPARE / DIFF ================= -->
+      <!-- ================= 6. COMPARE / DIFF ================= -->
       <section id="paneCompare" style="display: none;">
         <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
           Compare two versions of an Excel file to see additions (<span style="color:#15803d; font-weight:bold;">green</span>) and removals (<span style="color:#b91c1c; font-weight:bold;">red</span>):
@@ -802,7 +892,7 @@
         </div>
       </section>
 
-      <!-- ================= 6. MERGE SHEETS ================= -->
+      <!-- ================= 7. MERGE SHEETS ================= -->
       <section id="paneMerge" style="display: none;">
         <div class="dropzone" id="mergeDropzone">
           <div class="dropzone-icon" style="color: #7c3aed; background: #f5f3ff;">📊</div>
@@ -824,7 +914,7 @@
         </div>
       </section>
 
-      <!-- ================= 7. JSON TO EXCEL ================= -->
+      <!-- ================= 8. JSON TO EXCEL ================= -->
       <section id="paneJson" style="display: none;">
         <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
           Paste JSON array to convert into a spreadsheet:
@@ -845,8 +935,12 @@
     <div style="margin-bottom: 6px; font-weight: 500;">
       SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
     </div>
+    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">
+      Zero server tracking. Questions or feedback? Contact: 
+      <a href="mailto:chauhanr003@gmail.com" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">chauhanr003@gmail.com</a>
+    </div>
     <div style="font-size: 11px; color: var(--text-muted);">
-      Zero server tracking. If this tool helped your workflow, consider supporting via 
+      If this tool helped your workflow, consider supporting via 
       <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">Buy Me a Coffee ☕</a> 
       • <a href="/privacy.html" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">Privacy Policy</a>.
     </div>
@@ -855,6 +949,7 @@
   <script>
     const tabs = [
       { btn: document.getElementById("tabStudio"), pane: document.getElementById("paneStudio") },
+      { btn: document.getElementById("tabCompress"), pane: document.getElementById("paneCompress") },
       { btn: document.getElementById("tabImgPdf"), pane: document.getElementById("paneImgPdf") },
       { btn: document.getElementById("tabPdfMerge"), pane: document.getElementById("panePdfMerge") },
       { btn: document.getElementById("tabPdf"), pane: document.getElementById("panePdf") },
@@ -915,7 +1010,16 @@
       return letter;
     }
 
-    // ================= 1. EXCEL WORKBOOK STUDIO (MOBILE COMPATIBLE) =================
+    function readFileBuffer(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("Failed reading file"));
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    // ================= 1. EXCEL WORKBOOK STUDIO =================
     let parsedRows = [];
     const inputStudio = document.getElementById("inputStudio");
     const studioDropzone = document.getElementById("studioDropzone");
@@ -1142,7 +1246,105 @@
       printWindow.document.close();
     };
 
-    // ================= 2. IMAGES ➔ PDF (MOBILE MEMORY & PERMISSIONS SAFE) =================
+    // ================= 2. IMAGE COMPRESSOR (100% IN-BROWSER CANVAS) =================
+    const inputCompress = document.getElementById("inputCompress");
+    const compressDropzone = document.getElementById("compressDropzone");
+    const compressDetails = document.getElementById("compressDetails");
+    const statOriginalSize = document.getElementById("statOriginalSize");
+    const statCompressedSize = document.getElementById("statCompressedSize");
+    const statSavedPercent = document.getElementById("statSavedPercent");
+    const sliderQuality = document.getElementById("sliderQuality");
+    const sliderQualityVal = document.getElementById("sliderQualityVal");
+    const sliderDimension = document.getElementById("sliderDimension");
+    const sliderDimensionVal = document.getElementById("sliderDimensionVal");
+    const btnDownloadCompressed = document.getElementById("btnDownloadCompressed");
+
+    let currentCompressImg = null;
+    let originalFileSize = 0;
+    let compressedBlob = null;
+    let originalFileName = "image.jpg";
+
+    setupDropzone(compressDropzone, inputCompress);
+
+    inputCompress.onchange = function(e) {
+      clearAlert();
+      const file = e.target.files[0];
+      if (!file) return;
+
+      originalFileSize = file.size;
+      originalFileName = file.name.replace(/\.[^/.]+$/, "");
+      statOriginalSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        currentCompressImg = new Image();
+        currentCompressImg.onload = function() {
+          compressDropzone.style.display = "none";
+          compressDetails.style.display = "flex";
+          processCompression();
+        };
+        currentCompressImg.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+      inputCompress.value = "";
+    };
+
+    function processCompression() {
+      if (!currentCompressImg) return;
+
+      const quality = sliderQuality.value / 100;
+      sliderQualityVal.textContent = `${sliderQuality.value}%`;
+
+      const maxDim = parseInt(sliderDimension.value, 10);
+      sliderDimensionVal.textContent = `${maxDim} px`;
+
+      let w = currentCompressImg.width;
+      let h = currentCompressImg.height;
+
+      if (w > maxDim || h > maxDim) {
+        if (w > h) {
+          h = Math.round((h * maxDim) / w);
+          w = maxDim;
+        } else {
+          w = Math.round((w * maxDim) / h);
+          h = maxDim;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(currentCompressImg, 0, 0, w, h);
+
+      canvas.toBlob(
+        function(blob) {
+          compressedBlob = blob;
+          const compressedSize = blob.size;
+          statCompressedSize.textContent = `${(compressedSize / 1024).toFixed(1)} KB`;
+
+          const saved = ((originalFileSize - compressedSize) / originalFileSize) * 100;
+          statSavedPercent.textContent = saved > 0 ? `-${saved.toFixed(1)}%` : "0%";
+          statSavedPercent.style.color = saved > 0 ? "#15803d" : "#64748b";
+        },
+        "image/jpeg",
+        quality
+      );
+    }
+
+    sliderQuality.oninput = processCompression;
+    sliderDimension.oninput = processCompression;
+
+    btnDownloadCompressed.onclick = function() {
+      if (!compressedBlob) return showAlert("No compressed image ready.");
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(compressedBlob);
+      a.download = `${originalFileName}-compressed.jpg`;
+      a.click();
+      showAlert("Compressed image downloaded successfully!", "success");
+    };
+
+    // ================= 3. IMAGES ➔ PDF (BUFFER SAFE) =================
     let imageBlobs = [];
     const inputImgPdf = document.getElementById("inputImgPdf");
     const imgPdfDropzone = document.getElementById("imgPdfDropzone");
@@ -1150,15 +1352,6 @@
     const imgPdfControls = document.getElementById("imgPdfControls");
 
     setupDropzone(imgPdfDropzone, inputImgPdf);
-
-    function readFileBuffer(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(new Error("Failed reading file"));
-        reader.readAsArrayBuffer(file);
-      });
-    }
 
     inputImgPdf.onchange = async function(e) {
       clearAlert();
@@ -1240,7 +1433,6 @@
             embeddedImage = await pdfDoc.embedJpg(item.bytes);
           }
 
-          // Standard A4 dimensions in points (595.28 x 841.89)
           const page = pdfDoc.addPage([595.28, 841.89]);
           const dims = embeddedImage.scaleToFit(555.28, 801.89);
 
@@ -1265,7 +1457,7 @@
       }
     };
 
-    // ================= 3. MERGE PDFS (MOBILE BUFFER SAFE) =================
+    // ================= 4. MERGE PDFS (BUFFER SAFE) =================
     let pdfMergeBuffers = [];
     const inputPdfMerge = document.getElementById("inputPdfMerge");
     const pdfMergeDropzone = document.getElementById("pdfMergeDropzone");
@@ -1355,7 +1547,7 @@
       }
     };
 
-    // ================= 4. PDF VIEWER =================
+    // ================= 5. PDF VIEWER =================
     const inputPdf = document.getElementById("inputPdf");
     const pdfDropzone = document.getElementById("pdfDropzone");
     const pdfViewerBox = document.getElementById("pdfViewerBox");
@@ -1383,7 +1575,7 @@
       }
     };
 
-    // ================= 5. DIFF CHECKER =================
+    // ================= 6. DIFF CHECKER =================
     let diffA = null, diffB = null;
     const inputDiffA = document.getElementById("inputDiffA");
     const inputDiffB = document.getElementById("inputDiffB");
@@ -1433,7 +1625,7 @@
       document.getElementById("diffTableWrapper").style.display = "block";
     };
 
-    // ================= 6. MERGE SPREADSHEETS =================
+    // ================= 7. MERGE SPREADSHEETS =================
     let mergedData = [];
     const inputMerge = document.getElementById("inputMergeFiles");
     setupDropzone(document.getElementById("mergeDropzone"), inputMerge);
@@ -1470,7 +1662,7 @@
       XLSX.writeFile(wb, "Merged-Spreadsheet.xlsx");
     };
 
-    // ================= 7. JSON TO EXCEL =================
+    // ================= 8. JSON TO EXCEL =================
     document.getElementById("btnJsonToExcel").onclick = () => {
       try {
         const d = JSON.parse(document.getElementById("jsonInput").value.trim());
