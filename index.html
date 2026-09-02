@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rahul Chauhan | Doc & Data Studio</title>
-  <meta name="description" content="A private, client-side spreadsheet & document utility. View and convert between Excel, CSV, JSON, Markdown, and PDF without server uploads." />
+  <meta name="description" content="All-in-one private in-browser document utility: View, clean, compare, merge, and convert Excel, CSV, JSON, Markdown, and PDF." />
 
   <!-- SheetJS CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -20,6 +20,8 @@
       --muted: #94a3b8;
       --row-hover: #273549;
       --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
     }
 
     * {
@@ -61,8 +63,8 @@
 
     .container {
       max-width: 1100px;
-      width: 90%;
-      margin: 30px auto;
+      width: 92%;
+      margin: 25px auto;
       flex: 1;
     }
 
@@ -80,9 +82,9 @@
       background: transparent;
       border: 1px solid var(--border);
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      padding: 10px 20px;
+      padding: 9px 16px;
       cursor: pointer;
       border-radius: 8px;
       transition: all 0.2s ease;
@@ -111,7 +113,7 @@
       background: var(--card-bg);
       border: 2px dashed var(--border);
       border-radius: 12px;
-      padding: 40px 20px;
+      padding: 35px 20px;
       text-align: center;
       margin-bottom: 20px;
     }
@@ -123,48 +125,44 @@
     }
 
     .btn {
-      padding: 9px 18px;
+      padding: 8px 16px;
       font-size: 13px;
       font-weight: 500;
       border-radius: 8px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       border: 1px solid transparent;
       user-select: none;
       transition: all 0.2s ease;
       text-decoration: none;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-hover);
-    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
 
     .btn-outline {
       background: transparent;
       border-color: var(--border);
       color: var(--text);
     }
+    .btn-outline:hover { background: var(--card-bg); border-color: var(--muted); }
 
-    .btn-outline:hover {
-      background: var(--card-bg);
+    .btn-clean {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--success);
+      color: #6ee7b7;
     }
+    .btn-clean:hover { background: var(--success); color: #fff; }
 
-    input[type="file"] {
-      display: none;
-    }
+    input[type="file"] { display: none; }
 
     .control-bar {
       display: none;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -176,16 +174,10 @@
       flex-wrap: wrap;
     }
 
-    /* Search & Filter Bar */
-    .filter-bar {
-      display: none;
-      margin-bottom: 16px;
-    }
-
     .search-input {
       width: 100%;
-      max-width: 320px;
-      padding: 8px 14px;
+      max-width: 280px;
+      padding: 8px 12px;
       font-size: 13px;
       border-radius: 8px;
       border: 1px solid var(--border);
@@ -193,12 +185,26 @@
       color: var(--text);
       outline: none;
     }
+    .search-input:focus { border-color: var(--primary); }
 
-    .search-input:focus {
-      border-color: var(--primary);
+    /* Quick Stats Bar */
+    .stats-bar {
+      display: none;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 10px 16px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: #c7d2fe;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    /* Data Table */
+    .stats-bar span strong { color: #fff; }
+
+    /* Table */
     .table-wrapper {
       display: none;
       background: var(--card-bg);
@@ -229,7 +235,11 @@
       text-align: left;
       border-bottom: 2px solid var(--border);
       white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
     }
+
+    th:hover { color: var(--primary); }
 
     td {
       padding: 10px 16px;
@@ -238,11 +248,14 @@
       white-space: nowrap;
     }
 
-    tbody tr:hover {
-      background-color: var(--row-hover);
-    }
+    tbody tr:hover { background-color: var(--row-hover); }
 
-    /* Output Modals / Boxes */
+    /* Diff Checker Visuals */
+    tr.diff-added { background-color: rgba(16, 185, 129, 0.15); }
+    tr.diff-removed { background-color: rgba(239, 68, 68, 0.15); }
+    tr.diff-modified { background-color: rgba(245, 158, 11, 0.15); }
+
+    /* Output Panel */
     .output-panel {
       display: none;
       background: var(--card-bg);
@@ -261,7 +274,7 @@
 
     .output-area {
       width: 100%;
-      height: 200px;
+      height: 180px;
       background: #0f172a;
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -272,7 +285,6 @@
       resize: vertical;
     }
 
-    /* JSON-to-Sheet Editor Pane */
     .json-input-box {
       width: 100%;
       height: 220px;
@@ -316,54 +328,70 @@
 
   <header>
     <h1 class="brand-title">Rahul's <span>Doc & Data Studio</span></h1>
-    <p class="subtitle">100% In-Browser Excel, CSV, JSON, Markdown & PDF Utility</p>
+    <p class="subtitle">Complete Spreadsheet & Document Swiss Army Knife — 100% In-Browser</p>
   </header>
 
   <main class="container">
-    <!-- Nav Tabs -->
+    <!-- Navigation Tabs -->
     <div class="tab-nav">
-      <button class="tab-btn active" id="tabBtnExcel" type="button">📊 Sheet Studio</button>
-      <button class="tab-btn" id="tabBtnJson" type="button">🔄 JSON ➔ Excel/CSV</button>
+      <button class="tab-btn active" id="tabBtnStudio" type="button">📊 Sheet Studio & Cleaner</button>
+      <button class="tab-btn" id="tabBtnCompare" type="button">⚖️ Compare / Diff Checker</button>
+      <button class="tab-btn" id="tabBtnMerge" type="button">📑 Merge Files</button>
+      <button class="tab-btn" id="tabBtnJson" type="button">🔄 JSON ➔ Excel</button>
       <button class="tab-btn" id="tabBtnPdf" type="button">📄 PDF Viewer</button>
     </div>
 
     <!-- Alert Box -->
     <div id="alertBox" class="alert-banner"></div>
 
-    <!-- TAB 1: SHEET STUDIO (Excel, CSV, Export JSON, Export MD, Export PDF) -->
-    <section id="paneExcel">
-      <div class="dropzone" id="excelDropzone">
-        <label for="inputExcel" class="btn btn-primary">Select Excel or CSV File</label>
-        <input type="file" id="inputExcel" accept=".xlsx, .xls, .csv" />
-        <p>Supports .xlsx, .xls, and .csv files. Runs completely locally.</p>
+    <!-- ================= TAB 1: SHEET STUDIO & CLEANER ================= -->
+    <section id="paneStudio">
+      <div class="dropzone" id="studioDropzone">
+        <label for="inputStudio" class="btn btn-primary">Choose Excel or CSV</label>
+        <input type="file" id="inputStudio" accept=".xlsx, .xls, .csv" />
+        <p>Supports .xlsx, .xls, and .csv. Files are processed locally with zero uploads.</p>
       </div>
 
-      <div class="control-bar" id="excelControls">
+      <!-- Controls & Cleaners -->
+      <div class="control-bar" id="studioControls">
         <div class="button-group">
-          <label for="inputExcel" class="btn btn-outline">Change File</label>
+          <label for="inputStudio" class="btn btn-outline">Change File</label>
+          <button class="btn btn-clean" id="btnDedupe" type="button" title="Remove duplicate rows">🧹 Deduplicate</button>
+          <button class="btn btn-clean" id="btnTrim" type="button" title="Trim extra spaces from cells and headers">✂️ Trim Spaces</button>
           <button class="btn btn-outline" id="btnExportXlsx" type="button">Export .XLSX</button>
           <button class="btn btn-outline" id="btnExportCsv" type="button">Export .CSV</button>
-          <button class="btn btn-outline" id="btnExportJson" type="button">Convert to JSON</button>
-          <button class="btn btn-outline" id="btnExportMarkdown" type="button">Convert to Markdown</button>
+          <button class="btn btn-outline" id="btnExportJson" type="button">JSON</button>
+          <button class="btn btn-outline" id="btnExportMd" type="button">Markdown</button>
           <button class="btn btn-outline" id="btnExportPdf" type="button">Print / PDF</button>
         </div>
-        <span id="excelFileInfo" style="font-size: 13px; color: var(--muted);"></span>
+        <span id="studioFileInfo" style="font-size: 13px; color: var(--muted);"></span>
       </div>
 
-      <!-- Live Search -->
-      <div class="filter-bar" id="filterBar">
-        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Live search rows..." />
+      <!-- Live Search & Helper Hint -->
+      <div class="control-bar" id="searchBar" style="margin-bottom: 10px;">
+        <input type="text" id="studioSearch" class="search-input" placeholder="🔍 Search rows instantly..." />
+        <span style="font-size: 12px; color: var(--muted);">💡 Click any column header to sort. Click numeric cells for stats.</span>
       </div>
 
-      <!-- Rendered Table -->
-      <div class="table-wrapper" id="tableWrapper">
-        <table id="mainTable">
-          <thead id="tblHead"></thead>
-          <tbody id="tblBody"></tbody>
+      <!-- Instant Numeric Column Stats Bar -->
+      <div class="stats-bar" id="statsBar">
+        <span>Column: <strong id="statCol">-</strong></span>
+        <span>Count: <strong id="statCount">0</strong></span>
+        <span>Sum: <strong id="statSum">0</strong></span>
+        <span>Average: <strong id="statAvg">0</strong></span>
+        <span>Min: <strong id="statMin">0</strong></span>
+        <span>Max: <strong id="statMax">0</strong></span>
+      </div>
+
+      <!-- Rendered Data Table -->
+      <div class="table-wrapper" id="studioTableWrapper">
+        <table>
+          <thead id="studioTblHead"></thead>
+          <tbody id="studioTblBody"></tbody>
         </table>
       </div>
 
-      <!-- Dynamic Output Box for JSON / Markdown view -->
+      <!-- Output Modal for JSON / Markdown view -->
       <div class="output-panel" id="outputPanel">
         <div class="output-header">
           <strong id="outputTitle" style="font-size: 13px;">Converted Result</strong>
@@ -376,10 +404,62 @@
       </div>
     </section>
 
-    <!-- TAB 2: JSON TO EXCEL/CSV -->
+    <!-- ================= TAB 2: DIFF CHECKER (COMPARE FILES) ================= -->
+    <section id="paneCompare" style="display: none;">
+      <p style="font-size: 13px; color: var(--muted); margin-bottom: 16px;">
+        Upload two versions of an Excel or CSV file to identify additions (<span style="color:#6ee7b7">green</span>), removals (<span style="color:#fca5a5">red</span>), and modifications (<span style="color:#fde68a">yellow</span>).
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+        <div class="dropzone" style="padding: 20px;">
+          <label for="inputDiffA" class="btn btn-outline">Select Original File (A)</label>
+          <input type="file" id="inputDiffA" accept=".xlsx, .xls, .csv" />
+          <p id="diffNameA" style="margin-top: 8px;">No file chosen</p>
+        </div>
+        <div class="dropzone" style="padding: 20px;">
+          <label for="inputDiffB" class="btn btn-outline">Select Updated File (B)</label>
+          <input type="file" id="inputDiffB" accept=".xlsx, .xls, .csv" />
+          <p id="diffNameB" style="margin-top: 8px;">No file chosen</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 16px;">
+        <button class="btn btn-primary" id="btnRunDiff">Compare Spreadsheets</button>
+      </div>
+
+      <div class="table-wrapper" id="diffTableWrapper">
+        <table>
+          <thead id="diffTblHead"></thead>
+          <tbody id="diffTblBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= TAB 3: FILE MERGER ================= -->
+    <section id="paneMerge" style="display: none;">
+      <div class="dropzone">
+        <label for="inputMergeFiles" class="btn btn-primary">Choose 2 or More Spreadsheets</label>
+        <input type="file" id="inputMergeFiles" accept=".xlsx, .xls, .csv" multiple />
+        <p>Select multiple Excel or CSV files with similar headers to merge into a single workbook.</p>
+      </div>
+
+      <div class="control-bar" id="mergeControls">
+        <button class="btn btn-primary" id="btnDownloadMerged">Download Merged Spreadsheet (.xlsx)</button>
+        <span id="mergeStatus" style="font-size: 13px; color: var(--muted);"></span>
+      </div>
+
+      <div class="table-wrapper" id="mergeTableWrapper">
+        <table>
+          <thead id="mergeTblHead"></thead>
+          <tbody id="mergeTblBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= TAB 4: JSON ➔ EXCEL ================= -->
     <section id="paneJson" style="display: none;">
-      <p style="font-size: 14px; color: var(--muted); margin-bottom: 12px;">
-        Paste your JSON array or object below to convert it into an Excel spreadsheet or CSV:
+      <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">
+        Paste JSON array text to generate a clean downloadable spreadsheet:
       </p>
       <textarea id="jsonInput" class="json-input-box" placeholder='[
   { "id": 101, "name": "Wireless Mouse", "price": 29.99, "stock": 45 },
@@ -388,16 +468,16 @@
       <div class="button-group">
         <button class="btn btn-primary" id="btnJsonToExcel">Download as Excel (.xlsx)</button>
         <button class="btn btn-outline" id="btnJsonToCsv">Download as CSV</button>
-        <button class="btn btn-outline" id="btnJsonFormat">Auto-Format JSON</button>
+        <button class="btn btn-outline" id="btnJsonFormat">Format JSON</button>
       </div>
     </section>
 
-    <!-- TAB 3: PDF VIEWER -->
+    <!-- ================= TAB 5: PDF VIEWER ================= -->
     <section id="panePdf" style="display: none;">
       <div class="dropzone" id="pdfDropzone">
-        <label for="inputPdf" class="btn btn-primary">Choose PDF File</label>
+        <label for="inputPdf" class="btn btn-primary">Choose PDF Document</label>
         <input type="file" id="inputPdf" accept="application/pdf, .pdf" />
-        <p>Uses native browser hardware acceleration without external cloud processing</p>
+        <p>Hardware-accelerated native PDF viewer. 100% private.</p>
       </div>
 
       <div class="control-bar" id="pdfControls">
@@ -416,14 +496,15 @@
   </footer>
 
   <script>
-    // Tab Elements
-    const tabBtnExcel = document.getElementById("tabBtnExcel");
-    const tabBtnJson = document.getElementById("tabBtnJson");
-    const tabBtnPdf = document.getElementById("tabBtnPdf");
+    // Tab Navigation
+    const tabs = [
+      { btn: document.getElementById("tabBtnStudio"), pane: document.getElementById("paneStudio") },
+      { btn: document.getElementById("tabBtnCompare"), pane: document.getElementById("paneCompare") },
+      { btn: document.getElementById("tabBtnMerge"), pane: document.getElementById("paneMerge") },
+      { btn: document.getElementById("tabBtnJson"), pane: document.getElementById("paneJson") },
+      { btn: document.getElementById("tabBtnPdf"), pane: document.getElementById("panePdf") }
+    ];
 
-    const paneExcel = document.getElementById("paneExcel");
-    const paneJson = document.getElementById("paneJson");
-    const panePdf = document.getElementById("panePdf");
     const alertBox = document.getElementById("alertBox");
 
     function showAlert(msg) {
@@ -436,64 +517,78 @@
       alertBox.style.display = "none";
     }
 
-    function switchTab(btn, pane) {
-      [tabBtnExcel, tabBtnJson, tabBtnPdf].forEach(b => b.classList.remove("active"));
-      [paneExcel, paneJson, panePdf].forEach(p => p.style.display = "none");
-      btn.classList.add("active");
-      pane.style.display = "block";
-      clearAlert();
-    }
+    tabs.forEach(({ btn, pane }) => {
+      btn.onclick = () => {
+        tabs.forEach(t => {
+          t.btn.classList.remove("active");
+          t.pane.style.display = "none";
+        });
+        btn.classList.add("active");
+        pane.style.display = "block";
+        clearAlert();
+      };
+    });
 
-    tabBtnExcel.onclick = () => switchTab(tabBtnExcel, paneExcel);
-    tabBtnJson.onclick = () => switchTab(tabBtnJson, paneJson);
-    tabBtnPdf.onclick = () => switchTab(tabBtnPdf, panePdf);
-
-    // ================= TAB 1: SHEET STUDIO =================
+    // ================= 1. SHEET STUDIO LOGIC =================
     let parsedRows = [];
-    const inputExcel = document.getElementById("inputExcel");
-    const tblHead = document.getElementById("tblHead");
-    const tblBody = document.getElementById("tblBody");
-    const tableWrapper = document.getElementById("tableWrapper");
-    const excelControls = document.getElementById("excelControls");
-    const excelDropzone = document.getElementById("excelDropzone");
-    const excelFileInfo = document.getElementById("excelFileInfo");
-    const filterBar = document.getElementById("filterBar");
-    const searchInput = document.getElementById("searchInput");
+    let currentSort = { col: null, asc: true };
+
+    const inputStudio = document.getElementById("inputStudio");
+    const studioTblHead = document.getElementById("studioTblHead");
+    const studioTblBody = document.getElementById("studioTblBody");
+    const studioTableWrapper = document.getElementById("studioTableWrapper");
+    const studioControls = document.getElementById("studioControls");
+    const studioDropzone = document.getElementById("studioDropzone");
+    const studioFileInfo = document.getElementById("studioFileInfo");
+    const searchBar = document.getElementById("searchBar");
+    const studioSearch = document.getElementById("studioSearch");
+
+    const statsBar = document.getElementById("statsBar");
+    const statCol = document.getElementById("statCol");
+    const statCount = document.getElementById("statCount");
+    const statSum = document.getElementById("statSum");
+    const statAvg = document.getElementById("statAvg");
+    const statMin = document.getElementById("statMin");
+    const statMax = document.getElementById("statMax");
 
     const outputPanel = document.getElementById("outputPanel");
     const outputTitle = document.getElementById("outputTitle");
     const outputArea = document.getElementById("outputArea");
-    const btnCopyOutput = document.getElementById("btnCopyOutput");
-    const btnCloseOutput = document.getElementById("btnCloseOutput");
 
-    function renderTable(rows) {
-      tblHead.innerHTML = "";
-      tblBody.innerHTML = "";
+    function renderStudioTable(rows) {
+      studioTblHead.innerHTML = "";
+      studioTblBody.innerHTML = "";
 
       if (!rows || rows.length === 0) return;
 
       const keys = Array.from(new Set(parsedRows.flatMap(row => Object.keys(row))));
       
+      // Header row
       const trHead = document.createElement("tr");
       keys.forEach(k => {
         const th = document.createElement("th");
-        th.textContent = k;
+        const arrow = (currentSort.col === k) ? (currentSort.asc ? " ▲" : " ▼") : "";
+        th.textContent = k + arrow;
+        th.onclick = () => sortColumn(k);
         trHead.appendChild(th);
       });
-      tblHead.appendChild(trHead);
+      studioTblHead.appendChild(trHead);
 
+      // Body rows
       rows.forEach(row => {
         const tr = document.createElement("tr");
         keys.forEach(k => {
           const td = document.createElement("td");
-          td.textContent = row[k] !== undefined ? row[k] : "";
+          const val = row[k] !== undefined ? row[k] : "";
+          td.textContent = val;
+          td.onclick = () => calculateStats(k);
           tr.appendChild(td);
         });
-        tblBody.appendChild(tr);
+        studioTblBody.appendChild(tr);
       });
     }
 
-    inputExcel.onchange = function(e) {
+    inputStudio.onchange = function(e) {
       clearAlert();
       const file = e.target.files[0];
       if (!file) return;
@@ -507,173 +602,396 @@
           parsedRows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
           if (!parsedRows || parsedRows.length === 0) {
-            showAlert("The sheet has no readable rows.");
+            showAlert("The sheet contains no readable data rows.");
             return;
           }
 
-          renderTable(parsedRows);
-          tableWrapper.style.display = "block";
-          excelControls.style.display = "flex";
-          filterBar.style.display = "block";
-          excelDropzone.style.display = "none";
-          excelFileInfo.textContent = `${file.name} (${parsedRows.length} rows)`;
+          renderStudioTable(parsedRows);
+          studioTableWrapper.style.display = "block";
+          studioControls.style.display = "flex";
+          searchBar.style.display = "flex";
+          studioDropzone.style.display = "none";
+          studioFileInfo.textContent = `${file.name} (${parsedRows.length} rows)`;
         } catch (err) {
-          showAlert("Error reading spreadsheet: " + err.message);
+          showAlert("Error parsing file: " + err.message);
         } finally {
-          inputExcel.value = "";
+          inputStudio.value = "";
         }
       };
       reader.readAsArrayBuffer(file);
     };
 
-    // Live search filter
-    searchInput.oninput = function() {
+    // Sort Column
+    function sortColumn(col) {
+      if (currentSort.col === col) {
+        currentSort.asc = !currentSort.asc;
+      } else {
+        currentSort.col = col;
+        currentSort.asc = true;
+      }
+
+      parsedRows.sort((a, b) => {
+        let v1 = a[col] ?? "";
+        let v2 = b[col] ?? "";
+        if (!isNaN(v1) && !isNaN(v2) && v1 !== "" && v2 !== "") {
+          return currentSort.asc ? Number(v1) - Number(v2) : Number(v2) - Number(v1);
+        }
+        return currentSort.asc ? String(v1).localeCompare(String(v2)) : String(v2).localeCompare(String(v1));
+      });
+
+      renderStudioTable(parsedRows);
+    }
+
+    // Deduplicate Rows
+    document.getElementById("btnDedupe").onclick = function() {
+      if (!parsedRows.length) return;
+      const initialCount = parsedRows.length;
+      const seen = new Set();
+      parsedRows = parsedRows.filter(row => {
+        const signature = JSON.stringify(row);
+        if (seen.has(signature)) return false;
+        seen.add(signature);
+        return true;
+      });
+      const removed = initialCount - parsedRows.length;
+      renderStudioTable(parsedRows);
+      showAlert(`Cleaned! Removed ${removed} duplicate row(s). Total: ${parsedRows.length} rows remaining.`);
+      alertBox.style.backgroundColor = "rgba(16, 185, 129, 0.2)";
+      alertBox.style.borderColor = "#10b981";
+      alertBox.style.color = "#6ee7b7";
+    };
+
+    // Trim Spaces & Clean Headers
+    document.getElementById("btnTrim").onclick = function() {
+      if (!parsedRows.length) return;
+      parsedRows = parsedRows.map(row => {
+        const cleaned = {};
+        Object.keys(row).forEach(k => {
+          const cleanKey = k.trim();
+          const val = row[k];
+          cleaned[cleanKey] = typeof val === "string" ? val.trim() : val;
+        });
+        return cleaned;
+      });
+      renderStudioTable(parsedRows);
+      showAlert("Trimmed leading/trailing whitespace across all cells and headers.");
+      alertBox.style.backgroundColor = "rgba(16, 185, 129, 0.2)";
+      alertBox.style.borderColor = "#10b981";
+      alertBox.style.color = "#6ee7b7";
+    };
+
+    // Quick Stats Calculation
+    function calculateStats(col) {
+      const nums = parsedRows.map(r => Number(r[col])).filter(n => !isNaN(n) && n !== 0);
+      if (nums.length === 0) {
+        statsBar.style.display = "none";
+        return;
+      }
+
+      const sum = nums.reduce((a, b) => a + b, 0);
+      const avg = sum / nums.length;
+      const min = Math.min(...nums);
+      const max = Math.max(...nums);
+
+      statCol.textContent = col;
+      statCount.textContent = nums.length;
+      statSum.textContent = Number.isInteger(sum) ? sum : sum.toFixed(2);
+      statAvg.textContent = avg.toFixed(2);
+      statMin.textContent = min;
+      statMax.textContent = max;
+      statsBar.style.display = "flex";
+    }
+
+    // Search filter
+    studioSearch.oninput = function() {
       const term = this.value.toLowerCase().trim();
       if (!term) {
-        renderTable(parsedRows);
+        renderStudioTable(parsedRows);
         return;
       }
       const filtered = parsedRows.filter(row => 
-        Object.values(row).some(val => String(val).toLowerCase().includes(term))
+        Object.values(row).some(v => String(v).toLowerCase().includes(term))
       );
-      renderTable(filtered);
+      renderStudioTable(filtered);
     };
 
-    // Export .XLSX
-    document.getElementById("btnExportXlsx").onclick = function() {
+    // Studio Exports
+    document.getElementById("btnExportXlsx").onclick = () => {
       if (!parsedRows.length) return;
       const ws = XLSX.utils.json_to_sheet(parsedRows);
       const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Data");
-      XLSX.writeFile(wb, "exported.xlsx");
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, "data-export.xlsx");
     };
 
-    // Export .CSV
-    document.getElementById("btnExportCsv").onclick = function() {
+    document.getElementById("btnExportCsv").onclick = () => {
       if (!parsedRows.length) return;
       const ws = XLSX.utils.json_to_sheet(parsedRows);
       const csv = XLSX.utils.sheet_to_csv(ws);
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "exported.csv";
-      link.click();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "data-export.csv";
+      a.click();
     };
 
-    // Convert to JSON view
-    document.getElementById("btnExportJson").onclick = function() {
+    document.getElementById("btnExportJson").onclick = () => {
       if (!parsedRows.length) return;
-      outputTitle.textContent = "JSON Output";
+      outputTitle.textContent = "JSON Array";
       outputArea.value = JSON.stringify(parsedRows, null, 2);
       outputPanel.style.display = "block";
     };
 
-    // Convert to Markdown table
-    document.getElementById("btnExportMarkdown").onclick = function() {
+    document.getElementById("btnExportMd").onclick = () => {
       if (!parsedRows.length) return;
       const keys = Array.from(new Set(parsedRows.flatMap(row => Object.keys(row))));
-      let md = `| ${keys.join(" | ")} |\n`;
-      md += `| ${keys.map(() => "---").join(" | ")} |\n`;
-      
-      parsedRows.forEach(row => {
-        md += `| ${keys.map(k => String(row[k] || "")).join(" | ")} |\n`;
+      let md = `| ${keys.join(" | ")} |\n| ${keys.map(() => "---").join(" | ")} |\n`;
+      parsedRows.forEach(r => {
+        md += `| ${keys.map(k => String(r[k] || "")).join(" | ")} |\n`;
       });
-
-      outputTitle.textContent = "Markdown Table Output";
+      outputTitle.textContent = "Markdown Table";
       outputArea.value = md;
       outputPanel.style.display = "block";
     };
 
-    // Print / PDF via Native View
-    document.getElementById("btnExportPdf").onclick = function() {
+    document.getElementById("btnExportPdf").onclick = () => {
       if (!parsedRows.length) return;
       const printWindow = window.open('', '_blank');
-      const tableHtml = document.getElementById("tableWrapper").innerHTML;
-
+      const tableHtml = document.getElementById("studioTableWrapper").innerHTML;
       printWindow.document.write(`
         <html>
-          <head>
-            <title>Spreadsheet Report</title>
-            <style>
-              body { font-family: system-ui, sans-serif; padding: 20px; }
-              table { width: 100%; border-collapse: collapse; font-size: 12px; }
-              th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
-              th { background: #f1f5f9; }
-              @media print { @page { size: landscape; margin: 10mm; } }
-            </style>
+          <head><title>Data Report</title>
+          <style>
+            body { font-family: system-ui, sans-serif; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; font-size: 11px; }
+            th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
+            th { background: #f1f5f9; font-weight: bold; }
+            @media print { @page { size: landscape; margin: 8mm; } }
+          </style>
           </head>
-          <body>
-            <h2>Data Report</h2>
-            ${tableHtml}
-            <script>window.onload = function() { window.print(); }<\/script>
-          </body>
+          <body>${tableHtml}<script>window.onload=()=>window.print();<\/script></body>
         </html>
       `);
       printWindow.document.close();
     };
 
-    btnCopyOutput.onclick = function() {
+    document.getElementById("btnCopyOutput").onclick = function() {
       outputArea.select();
       navigator.clipboard.writeText(outputArea.value);
-      btnCopyOutput.textContent = "✅ Copied!";
-      setTimeout(() => btnCopyOutput.textContent = "📋 Copy Text", 2000);
+      this.textContent = "✅ Copied!";
+      setTimeout(() => this.textContent = "📋 Copy Text", 2000);
     };
 
-    btnCloseOutput.onclick = function() {
+    document.getElementById("btnCloseOutput").onclick = () => {
       outputPanel.style.display = "none";
     };
 
-    // ================= TAB 2: JSON ➔ EXCEL/CSV =================
+    // ================= 2. DIFF CHECKER LOGIC =================
+    let diffDataA = null;
+    let diffDataB = null;
+
+    function readDiffFile(file, callback) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const wb = XLSX.read(data, { type: "array" });
+        const sheet = wb.Sheets[wb.SheetNames[0]];
+        callback(XLSX.utils.sheet_to_json(sheet, { defval: "" }));
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    document.getElementById("inputDiffA").onchange = (e) => {
+      const f = e.target.files[0];
+      if (f) {
+        document.getElementById("diffNameA").textContent = f.name;
+        readDiffFile(f, (rows) => diffDataA = rows);
+      }
+    };
+
+    document.getElementById("inputDiffB").onchange = (e) => {
+      const f = e.target.files[0];
+      if (f) {
+        document.getElementById("diffNameB").textContent = f.name;
+        readDiffFile(f, (rows) => diffDataB = rows);
+      }
+    };
+
+    document.getElementById("btnRunDiff").onclick = function() {
+      clearAlert();
+      if (!diffDataA || !diffDataB) {
+        showAlert("Please select both File A and File B before running compare.");
+        return;
+      }
+
+      const diffHead = document.getElementById("diffTblHead");
+      const diffBody = document.getElementById("diffTblBody");
+      diffHead.innerHTML = "";
+      diffBody.innerHTML = "";
+
+      const keysA = diffDataA.length ? Object.keys(diffDataA[0]) : [];
+      const keysB = diffDataB.length ? Object.keys(diffDataB[0]) : [];
+      const allKeys = Array.from(new Set([...keysA, ...keysB]));
+
+      // Headers
+      const trHead = document.createElement("tr");
+      const thStatus = document.createElement("th");
+      thStatus.textContent = "Diff Status";
+      trHead.appendChild(thStatus);
+      allKeys.forEach(k => {
+        const th = document.createElement("th");
+        th.textContent = k;
+        trHead.appendChild(th);
+      });
+      diffHead.appendChild(trHead);
+
+      const mapA = new Map(diffDataA.map(r => [JSON.stringify(r), r]));
+      const mapB = new Map(diffDataB.map(r => [JSON.stringify(r), r]));
+
+      let diffCount = 0;
+
+      // Rows in B not in A (Added)
+      diffDataB.forEach(rowB => {
+        const sig = JSON.stringify(rowB);
+        if (!mapA.has(sig)) {
+          diffCount++;
+          const tr = document.createElement("tr");
+          tr.className = "diff-added";
+          tr.innerHTML = `<td><strong>+ Added</strong></td>` + allKeys.map(k => `<td>${rowB[k] ?? ""}</td>`).join("");
+          diffBody.appendChild(tr);
+        }
+      });
+
+      // Rows in A not in B (Removed)
+      diffDataA.forEach(rowA => {
+        const sig = JSON.stringify(rowA);
+        if (!mapB.has(sig)) {
+          diffCount++;
+          const tr = document.createElement("tr");
+          tr.className = "diff-removed";
+          tr.innerHTML = `<td><strong>- Removed</strong></td>` + allKeys.map(k => `<td>${rowA[k] ?? ""}</td>`).join("");
+          diffBody.appendChild(tr);
+        }
+      });
+
+      document.getElementById("diffTableWrapper").style.display = "block";
+      showAlert(`Comparison complete! Found ${diffCount} differences between the two versions.`);
+      alertBox.style.backgroundColor = "rgba(99, 102, 241, 0.2)";
+      alertBox.style.borderColor = "#6366f1";
+      alertBox.style.color = "#c7d2fe";
+    };
+
+    // ================= 3. MULTI-FILE MERGER =================
+    let mergedRows = [];
+    const inputMergeFiles = document.getElementById("inputMergeFiles");
+    const mergeTblHead = document.getElementById("mergeTblHead");
+    const mergeTblBody = document.getElementById("mergeTblBody");
+    const mergeControls = document.getElementById("mergeControls");
+    const mergeStatus = document.getElementById("mergeStatus");
+    const mergeTableWrapper = document.getElementById("mergeTableWrapper");
+
+    inputMergeFiles.onchange = async function(e) {
+      clearAlert();
+      const files = Array.from(e.target.files);
+      if (files.length < 2) {
+        showAlert("Please select 2 or more files to merge.");
+        return;
+      }
+
+      mergedRows = [];
+      for (const file of files) {
+        const buffer = await file.arrayBuffer();
+        const wb = XLSX.read(new Uint8Array(buffer), { type: "array" });
+        const sheet = wb.Sheets[wb.SheetNames[0]];
+        const json = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+        mergedRows = mergedRows.concat(json);
+      }
+
+      mergeTblHead.innerHTML = "";
+      mergeTblBody.innerHTML = "";
+      const keys = Array.from(new Set(mergedRows.flatMap(r => Object.keys(r))));
+
+      const trHead = document.createElement("tr");
+      keys.forEach(k => {
+        const th = document.createElement("th");
+        th.textContent = k;
+        trHead.appendChild(th);
+      });
+      mergeTblHead.appendChild(trHead);
+
+      // Render first 100 preview rows
+      mergedRows.slice(0, 100).forEach(r => {
+        const tr = document.createElement("tr");
+        keys.forEach(k => {
+          const td = document.createElement("td");
+          td.textContent = r[k] ?? "";
+          tr.appendChild(td);
+        });
+        mergeTblBody.appendChild(tr);
+      });
+
+      mergeTableWrapper.style.display = "block";
+      mergeControls.style.display = "flex";
+      mergeStatus.textContent = `Merged ${files.length} files into ${mergedRows.length} total rows. (Showing first 100 rows preview)`;
+    };
+
+    document.getElementById("btnDownloadMerged").onclick = function() {
+      if (!mergedRows.length) return;
+      const ws = XLSX.utils.json_to_sheet(mergedRows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "MergedData");
+      XLSX.writeFile(wb, "consolidated-merge.xlsx");
+    };
+
+    // ================= 4. JSON ➔ EXCEL =================
     const jsonInput = document.getElementById("jsonInput");
 
     function getJsonData() {
       try {
-        let text = jsonInput.value.trim();
-        if (!text) throw new Error("Please paste JSON array text first.");
+        const text = jsonInput.value.trim();
+        if (!text) throw new Error("Please paste JSON text first.");
         const parsed = JSON.parse(text);
         return Array.isArray(parsed) ? parsed : [parsed];
       } catch (err) {
-        showAlert("Invalid JSON syntax: " + err.message);
+        showAlert("Invalid JSON: " + err.message);
         return null;
       }
     }
 
-    document.getElementById("btnJsonToExcel").onclick = function() {
+    document.getElementById("btnJsonToExcel").onclick = () => {
       clearAlert();
-      const data = getJsonData();
-      if (!data) return;
-
-      const ws = XLSX.utils.json_to_sheet(data);
+      const d = getJsonData();
+      if (!d) return;
+      const ws = XLSX.utils.json_to_sheet(d);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-      XLSX.writeFile(wb, "json-converted.xlsx");
+      XLSX.writeFile(wb, "json-data.xlsx");
     };
 
-    document.getElementById("btnJsonToCsv").onclick = function() {
+    document.getElementById("btnJsonToCsv").onclick = () => {
       clearAlert();
-      const data = getJsonData();
-      if (!data) return;
-
-      const ws = XLSX.utils.json_to_sheet(data);
+      const d = getJsonData();
+      if (!d) return;
+      const ws = XLSX.utils.json_to_sheet(d);
       const csv = XLSX.utils.sheet_to_csv(ws);
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "json-converted.csv";
-      link.click();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "json-data.csv";
+      a.click();
     };
 
-    document.getElementById("btnJsonFormat").onclick = function() {
+    document.getElementById("btnJsonFormat").onclick = () => {
       clearAlert();
       try {
-        const parsed = JSON.parse(jsonInput.value.trim());
-        jsonInput.value = JSON.stringify(parsed, null, 2);
+        const p = JSON.parse(jsonInput.value.trim());
+        jsonInput.value = JSON.stringify(p, null, 2);
       } catch (err) {
         showAlert("Cannot format: " + err.message);
       }
     };
 
-    // ================= TAB 3: PDF VIEWER =================
+    // ================= 5. PDF VIEWER =================
     const inputPdf = document.getElementById("inputPdf");
     const pdfViewerBox = document.getElementById("pdfViewerBox");
     const pdfEmbed = document.getElementById("pdfEmbed");
@@ -687,9 +1005,8 @@
       if (!file) return;
 
       try {
-        const fileUrl = URL.createObjectURL(file);
-        pdfEmbed.src = fileUrl;
-
+        const url = URL.createObjectURL(file);
+        pdfEmbed.src = url;
         pdfViewerBox.style.display = "block";
         pdfControls.style.display = "flex";
         pdfDropzone.style.display = "none";
