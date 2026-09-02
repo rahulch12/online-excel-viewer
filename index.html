@@ -915,7 +915,7 @@
       return letter;
     }
 
-    // ================= 1. EXCEL WORKBOOK STUDIO =================
+    // ================= 1. EXCEL WORKBOOK STUDIO (MOBILE COMPATIBLE) =================
     let parsedRows = [];
     const inputStudio = document.getElementById("inputStudio");
     const studioDropzone = document.getElementById("studioDropzone");
@@ -1009,8 +1009,8 @@
       const reader = new FileReader();
       reader.onload = function(evt) {
         try {
-          const data = new Uint8Array(evt.target.result);
-          const workbook = XLSX.read(data, { type: "array" });
+          const data = evt.target.result;
+          const workbook = XLSX.read(data, { type: "binary" });
           const firstSheet = workbook.SheetNames[0];
           sheetTabName.textContent = firstSheet;
 
@@ -1034,7 +1034,12 @@
           inputStudio.value = "";
         }
       };
-      reader.readAsArrayBuffer(file);
+
+      if (reader.readAsBinaryString) {
+        reader.readAsBinaryString(file);
+      } else {
+        reader.readAsArrayBuffer(file);
+      }
     };
 
     studioSearch.oninput = function() {
@@ -1103,7 +1108,6 @@
       a.click();
     };
 
-    // Refined Spreadsheet -> Landscape PDF Print
     document.getElementById("btnExportPdf").onclick = () => {
       if (!parsedRows.length) return showAlert("Open a spreadsheet first.");
       const printWindow = window.open('', '_blank');
@@ -1138,8 +1142,8 @@
       printWindow.document.close();
     };
 
-    // ================= 2. IMAGES ➔ PDF (GROUP 1) =================
-    let imageFiles = [];
+    // ================= 2. IMAGES ➔ PDF (MOBILE MEMORY & PERMISSIONS SAFE) =================
+    let imageBlobs = [];
     const inputImgPdf = document.getElementById("inputImgPdf");
     const imgPdfDropzone = document.getElementById("imgPdfDropzone");
     const imgPreviewGrid = document.getElementById("imgPreviewGrid");
@@ -1147,18 +1151,47 @@
 
     setupDropzone(imgPdfDropzone, inputImgPdf);
 
-    inputImgPdf.onchange = function(e) {
+    function readFileBuffer(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("Failed reading file"));
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    inputImgPdf.onchange = async function(e) {
       clearAlert();
       const files = Array.from(e.target.files);
       if (!files.length) return;
 
-      imageFiles = imageFiles.concat(files);
+      showAlert("Caching images...", "info");
+
+      for (const file of files) {
+        try {
+          const buffer = await readFileBuffer(file);
+          const isPng = file.type === "image/png" || file.name.toLowerCase().endsWith(".png");
+          const blobUrl = URL.createObjectURL(new Blob([buffer], { type: file.type }));
+
+          imageBlobs.push({
+            name: file.name,
+            bytes: new Uint8Array(buffer),
+            url: blobUrl,
+            isPng: isPng
+          });
+        } catch (err) {
+          console.error("Error reading image buffer:", err);
+        }
+      }
+
+      inputImgPdf.value = "";
+      clearAlert();
       renderImageThumbnails();
     };
 
     function renderImageThumbnails() {
       imgPreviewGrid.innerHTML = "";
-      if (imageFiles.length === 0) {
+      if (imageBlobs.length === 0) {
         imgPdfControls.style.display = "none";
         imgPdfDropzone.style.display = "block";
         return;
@@ -1167,48 +1200,47 @@
       imgPdfDropzone.style.display = "none";
       imgPdfControls.style.display = "flex";
 
-      imageFiles.forEach((file, idx) => {
-        const item = document.createElement("div");
-        item.className = "img-preview-item";
+      imageBlobs.forEach((item, idx) => {
+        const wrap = document.createElement("div");
+        wrap.className = "img-preview-item";
 
         const img = document.createElement("img");
-        img.src = URL.createObjectURL(file);
+        img.src = item.url;
 
         const label = document.createElement("span");
-        label.textContent = `${idx + 1}. ${file.name}`;
+        label.textContent = `${idx + 1}. ${item.name}`;
 
-        item.appendChild(img);
-        item.appendChild(label);
-        imgPreviewGrid.appendChild(item);
+        wrap.appendChild(img);
+        wrap.appendChild(label);
+        imgPreviewGrid.appendChild(wrap);
       });
     }
 
     document.getElementById("btnClearImgPdf").onclick = function() {
-      imageFiles = [];
+      imageBlobs.forEach(b => URL.revokeObjectURL(b.url));
+      imageBlobs = [];
       inputImgPdf.value = "";
       renderImageThumbnails();
       clearAlert();
     };
 
     document.getElementById("btnConvertImgPdf").onclick = async function() {
-      if (imageFiles.length === 0) return showAlert("Select at least one image.");
+      if (imageBlobs.length === 0) return showAlert("Select at least one image.");
 
       showAlert("Converting images to PDF in your browser...", "info");
 
       try {
         const pdfDoc = await PDFLib.PDFDocument.create();
 
-        for (const file of imageFiles) {
-          const buffer = await file.arrayBuffer();
+        for (const item of imageBlobs) {
           let embeddedImage;
-
-          if (file.type === "image/png") {
-            embeddedImage = await pdfDoc.embedPng(buffer);
+          if (item.isPng) {
+            embeddedImage = await pdfDoc.embedPng(item.bytes);
           } else {
-            embeddedImage = await pdfDoc.embedJpg(buffer);
+            embeddedImage = await pdfDoc.embedJpg(item.bytes);
           }
 
-          // A4 dimensions in points: 595.28 x 841.89
+          // Standard A4 dimensions in points (595.28 x 841.89)
           const page = pdfDoc.addPage([595.28, 841.89]);
           const dims = embeddedImage.scaleToFit(555.28, 801.89);
 
@@ -1233,8 +1265,8 @@
       }
     };
 
-    // ================= 3. MERGE PDFS (GROUP 1) =================
-    let pdfMergeFiles = [];
+    // ================= 3. MERGE PDFS (MOBILE BUFFER SAFE) =================
+    let pdfMergeBuffers = [];
     const inputPdfMerge = document.getElementById("inputPdfMerge");
     const pdfMergeDropzone = document.getElementById("pdfMergeDropzone");
     const pdfMergeList = document.getElementById("pdfMergeList");
@@ -1242,18 +1274,34 @@
 
     setupDropzone(pdfMergeDropzone, inputPdfMerge);
 
-    inputPdfMerge.onchange = function(e) {
+    inputPdfMerge.onchange = async function(e) {
       clearAlert();
       const files = Array.from(e.target.files);
       if (!files.length) return;
 
-      pdfMergeFiles = pdfMergeFiles.concat(files);
+      showAlert("Reading PDF files...", "info");
+
+      for (const file of files) {
+        try {
+          const buffer = await readFileBuffer(file);
+          pdfMergeBuffers.push({
+            name: file.name,
+            bytes: new Uint8Array(buffer),
+            size: file.size
+          });
+        } catch (err) {
+          console.error("Error buffering PDF:", err);
+        }
+      }
+
+      inputPdfMerge.value = "";
+      clearAlert();
       renderPdfMergeList();
     };
 
     function renderPdfMergeList() {
       pdfMergeList.innerHTML = "";
-      if (pdfMergeFiles.length === 0) {
+      if (pdfMergeBuffers.length === 0) {
         pdfMergeControls.style.display = "none";
         pdfMergeDropzone.style.display = "block";
         return;
@@ -1262,7 +1310,7 @@
       pdfMergeDropzone.style.display = "none";
       pdfMergeControls.style.display = "flex";
 
-      pdfMergeFiles.forEach((f, idx) => {
+      pdfMergeBuffers.forEach((f, idx) => {
         const item = document.createElement("div");
         item.className = "pdf-file-item";
         item.innerHTML = `
@@ -1274,23 +1322,22 @@
     }
 
     document.getElementById("btnClearPdfMerge").onclick = function() {
-      pdfMergeFiles = [];
+      pdfMergeBuffers = [];
       inputPdfMerge.value = "";
       renderPdfMergeList();
       clearAlert();
     };
 
     document.getElementById("btnRunPdfMerge").onclick = async function() {
-      if (pdfMergeFiles.length < 2) return showAlert("Please select at least 2 PDF files to combine.");
+      if (pdfMergeBuffers.length < 2) return showAlert("Please select at least 2 PDF files to combine.");
 
       showAlert("Merging PDF files directly in your browser...", "info");
 
       try {
         const mergedPdf = await PDFLib.PDFDocument.create();
 
-        for (const file of pdfMergeFiles) {
-          const buffer = await file.arrayBuffer();
-          const srcPdf = await PDFLib.PDFDocument.load(buffer);
+        for (const item of pdfMergeBuffers) {
+          const srcPdf = await PDFLib.PDFDocument.load(item.bytes);
           const copiedPages = await mergedPdf.copyPages(srcPdf, srcPdf.getPageIndices());
           copiedPages.forEach(p => mergedPdf.addPage(p));
         }
@@ -1302,7 +1349,7 @@
         a.download = `SheetBox-Merged-Document-${Date.now()}.pdf`;
         a.click();
 
-        showAlert(`Successfully merged ${pdfMergeFiles.length} PDF files!`, "success");
+        showAlert(`Successfully merged ${pdfMergeBuffers.length} PDF files!`, "success");
       } catch (err) {
         showAlert("Failed to merge PDFs: " + err.message);
       }
@@ -1346,10 +1393,14 @@
     function readDiff(f, cb) {
       const r = new FileReader();
       r.onload = e => {
-        const wb = XLSX.read(new Uint8Array(e.target.result), { type: "array" });
+        const wb = XLSX.read(e.target.result, { type: "binary" });
         cb(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" }));
       };
-      r.readAsArrayBuffer(f);
+      if (r.readAsBinaryString) {
+        r.readAsBinaryString(f);
+      } else {
+        r.readAsArrayBuffer(f);
+      }
     }
 
     inputDiffA.onchange = e => { if (e.target.files[0]) { document.getElementById("diffNameA").textContent = e.target.files[0].name; readDiff(e.target.files[0], d => diffA = d); } };
@@ -1392,8 +1443,8 @@
       if (files.length < 2) return showAlert("Select at least 2 files.");
       mergedData = [];
       for (const f of files) {
-        const buf = await f.arrayBuffer();
-        const wb = XLSX.read(new Uint8Array(buf), { type: "array" });
+        const buf = await readFileBuffer(f);
+        const wb = XLSX.read(buf, { type: "binary" });
         mergedData = mergedData.concat(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" }));
       }
 
@@ -1419,7 +1470,7 @@
       XLSX.writeFile(wb, "Merged-Spreadsheet.xlsx");
     };
 
-    // ================= 7. JSON ➔ EXCEL =================
+    // ================= 7. JSON TO EXCEL =================
     document.getElementById("btnJsonToExcel").onclick = () => {
       try {
         const d = JSON.parse(document.getElementById("jsonInput").value.trim());
