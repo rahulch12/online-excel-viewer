@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rahul Chauhan | Free Online Excel, CSV & PDF Studio</title>
-  <meta name="description" content="A fast, private in-browser document viewer by Rahul Chauhan. View Excel, CSV, and PDF documents directly without installing software." />
+  <title>Rahul Chauhan | Doc & Data Studio</title>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <!-- Primary CDN: unpkg -->
+  <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- Backup CDN loader: if unpkg is blocked, load from cdnjs dynamically -->
+  <script>
+    if (typeof XLSX === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"><\/script>');
+    }
+  </script>
 
   <style>
     :root {
       --primary: #6366f1;
       --primary-hover: #4f46e5;
-      --bg-color: #0f172a;
+      --bg: #0f172a;
       --card-bg: #1e293b;
-      --border-color: #334155;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --row-hover: #283548;
-      --error: #ef4444;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --row-hover: #273549;
     }
 
     * {
@@ -30,8 +35,8 @@
     }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
+      background-color: var(--bg);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -39,7 +44,7 @@
 
     header {
       background-color: var(--card-bg);
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border);
       padding: 24px 20px;
       text-align: center;
     }
@@ -47,7 +52,6 @@
     .brand-title {
       font-size: 22px;
       font-weight: 700;
-      color: var(--text-main);
     }
 
     .brand-title span {
@@ -56,7 +60,7 @@
 
     .subtitle {
       font-size: 13px;
-      color: var(--text-muted);
+      color: var(--muted);
       margin-top: 4px;
     }
 
@@ -67,25 +71,24 @@
       flex: 1;
     }
 
-    /* Tab Switcher */
-    .tab-container {
+    /* Tabs */
+    .tab-nav {
       display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border-color);
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
       padding-bottom: 12px;
     }
 
     .tab-btn {
       background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      font-size: 15px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
       font-weight: 600;
-      padding: 8px 18px;
+      padding: 10px 22px;
       cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.2s ease;
+      border-radius: 8px;
     }
 
     .tab-btn.active {
@@ -94,46 +97,35 @@
       color: #fff;
     }
 
-    #errorBanner {
+    /* Alert Banner */
+    .alert-banner {
       display: none;
-      background-color: rgba(239, 68, 68, 0.15);
-      border: 1px solid var(--error);
-      color: #fca5a5;
       padding: 12px 16px;
       border-radius: 8px;
       margin-bottom: 20px;
       font-size: 14px;
     }
 
-    /* Upload Box */
-    .upload-box {
+    .alert-error {
+      background-color: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+    }
+
+    /* Upload Area */
+    .dropzone {
       background: var(--card-bg);
-      border: 2px dashed var(--border-color);
+      border: 2px dashed var(--border);
       border-radius: 12px;
       padding: 40px 20px;
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
-    .upload-box p {
-      font-size: 14px;
-      color: var(--text-muted);
+    .dropzone p {
+      font-size: 13px;
+      color: var(--muted);
       margin-top: 10px;
-    }
-
-    .actions-bar {
-      display: none;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .button-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
     }
 
     .btn {
@@ -145,7 +137,6 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s ease;
       border: 1px solid transparent;
       user-select: none;
     }
@@ -161,124 +152,93 @@
 
     .btn-outline {
       background: transparent;
-      border-color: var(--border-color);
-      color: var(--text-main);
+      border-color: var(--border);
+      color: var(--text);
     }
 
     .btn-outline:hover {
       background: var(--card-bg);
-      border-color: var(--text-muted);
     }
 
     input[type="file"] {
       display: none;
     }
 
-    .file-status {
-      font-size: 13px;
-      color: var(--text-muted);
+    .control-bar {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    /* Table Container */
-    .table-card {
+    /* Data Table */
+    .table-wrapper {
       display: none;
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
       overflow-x: auto;
+      max-height: 70vh;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      text-align: left;
       font-size: 14px;
     }
 
-    thead tr {
+    thead {
+      position: sticky;
+      top: 0;
       background-color: #172033;
-      border-bottom: 2px solid var(--border-color);
+      z-index: 10;
     }
 
     th {
-      padding: 16px 20px;
+      padding: 14px 18px;
       font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      font-weight: 600;
+      color: var(--muted);
+      text-align: left;
+      border-bottom: 2px solid var(--border);
       white-space: nowrap;
     }
 
     td {
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border-color);
-      color: var(--text-main);
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
       white-space: nowrap;
-    }
-
-    tbody tr:last-child td {
-      border-bottom: none;
     }
 
     tbody tr:hover {
       background-color: var(--row-hover);
     }
 
-    /* PDF Section */
-    #pdfSection {
+    /* PDF View Box */
+    .pdf-viewer-box {
       display: none;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      width: 100%;
+      height: 75vh;
+      background: #334155;
       border-radius: 12px;
-      padding: 20px;
-      text-align: center;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
-    .pdf-toolbar {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .pdf-canvas-wrapper {
-      max-height: 70vh;
-      overflow: auto;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      background: #0f172a;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-    }
-
-    canvas {
-      max-width: 100%;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-
-    .privacy-notice {
-      margin-top: 25px;
-      font-size: 12px;
-      color: var(--text-muted);
-      text-align: center;
+    .pdf-viewer-box object {
+      width: 100%;
+      height: 100%;
     }
 
     footer {
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--border);
       padding: 20px;
       text-align: center;
       font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    footer a {
-      color: var(--primary);
-      text-decoration: none;
+      color: var(--muted);
     }
   </style>
 </head>
@@ -286,45 +246,221 @@
 
   <header>
     <h1 class="brand-title">Rahul's <span>Doc & Data Studio</span></h1>
-    <p class="subtitle">Secure in-browser viewer for Spreadsheets and PDF files</p>
+    <p class="subtitle">100% Client-Side Spreadsheet & PDF Viewer</p>
   </header>
 
   <main class="container">
-    <div class="tab-container">
-      <button class="tab-btn active" id="excelTabBtn" type="button">📊 Excel / CSV Viewer</button>
-      <button class="tab-btn" id="pdfTabBtn" type="button">📄 PDF Viewer</button>
+    <!-- Tab Controls -->
+    <div class="tab-nav">
+      <button class="tab-btn active" id="btnTabExcel" type="button">📊 Excel / CSV</button>
+      <button class="tab-btn" id="btnTabPdf" type="button">📄 PDF Viewer</button>
     </div>
 
-    <div id="errorBanner"></div>
+    <!-- Feedback Banner -->
+    <div id="alertBox" class="alert-banner alert-error"></div>
 
-    <div id="excelSection">
-      <div class="upload-box" id="excelUploadBox">
-        <label for="fileInputExcel" class="btn btn-primary">Choose Excel or CSV</label>
-        <input type="file" id="fileInputExcel" accept=".xlsx, .xls, .csv" />
-        <p>Supports .xlsx, .xls, and .csv files</p>
+    <!-- EXCEL SECTION -->
+    <section id="sectionExcel">
+      <div class="dropzone" id="excelDropzone">
+        <label for="inputExcel" class="btn btn-primary">Choose Excel or CSV</label>
+        <input type="file" id="inputExcel" accept=".xlsx, .xls, .csv" />
+        <p>Supports .xlsx, .xls, and .csv formats</p>
       </div>
 
-      <div class="actions-bar" id="excelActionBar">
-        <div class="button-group">
-          <label for="fileInputExcel" class="btn btn-outline">Upload Different File</label>
-          <button class="btn btn-primary" id="downloadBtn" type="button">Export Excel</button>
+      <div class="control-bar" id="excelControls">
+        <div>
+          <label for="inputExcel" class="btn btn-outline">Change File</label>
+          <button class="btn btn-primary" id="btnExportExcel" type="button">Export to Excel</button>
         </div>
-        <span class="file-status" id="excelFileName"></span>
+        <span id="excelFileInfo" style="font-size: 13px; color: var(--muted);"></span>
       </div>
 
-      <div class="table-card" id="tableCard">
-        <table id="dataTable">
-          <thead id="tableHead"></thead>
-          <tbody id="tableBody"></tbody>
+      <div class="table-wrapper" id="tableWrapper">
+        <table>
+          <thead id="tblHead"></thead>
+          <tbody id="tblBody"></tbody>
         </table>
       </div>
-    </div>
+    </section>
 
-    <div id="pdfSection">
-      <div class="pdf-toolbar">
-        <label for="fileInputPdf" class="btn btn-primary">Choose PDF File</label>
-        <input type="file" id="fileInputPdf" accept=".pdf" />
+    <!-- PDF SECTION -->
+    <section id="sectionPdf" style="display: none;">
+      <div class="dropzone" id="pdfDropzone">
+        <label for="inputPdf" class="btn btn-primary">Choose PDF Document</label>
+        <input type="file" id="inputPdf" accept="application/pdf, .pdf" />
+        <p>Rendered natively in your browser with zero data uploads</p>
+      </div>
 
-        <button class="btn btn-outline" id="prevPage" type="button">◀ Prev</button>
-        <span>Page <span id="pageNum">0</span> / <span id="pageCount">0</span></span>
-        <button class="btn btn-outline"
+      <div class="control-bar" id="pdfControls">
+        <label for="inputPdf" class="btn btn-outline">Change PDF</label>
+        <span id="pdfFileInfo" style="font-size: 13px; color: var(--muted);"></span>
+      </div>
+
+      <div class="pdf-viewer-box" id="pdfViewerBox">
+        <object id="pdfObject" data="" type="application/pdf">
+          <p style="padding: 20px; text-align: center; color: #fff;">
+            Your browser does not support embedded PDFs. 
+            <a id="pdfFallbackLink" href="#" target="_blank" style="color: var(--primary);">Click here to open the file directly</a>.
+          </p>
+        </object>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Built by Rahul Chauhan • Completely Secure & Client-Side
+  </footer>
+
+  <script>
+    // Tab switching logic
+    const btnTabExcel = document.getElementById("btnTabExcel");
+    const btnTabPdf = document.getElementById("btnTabPdf");
+    const sectionExcel = document.getElementById("sectionExcel");
+    const sectionPdf = document.getElementById("sectionPdf");
+    const alertBox = document.getElementById("alertBox");
+
+    function showAlert(message) {
+      alertBox.textContent = message;
+      alertBox.style.display = "block";
+    }
+
+    function clearAlert() {
+      alertBox.textContent = "";
+      alertBox.style.display = "none";
+    }
+
+    btnTabExcel.addEventListener("click", function() {
+      btnTabExcel.classList.add("active");
+      btnTabPdf.classList.remove("active");
+      sectionExcel.style.display = "block";
+      sectionPdf.style.display = "none";
+      clearAlert();
+    });
+
+    btnTabPdf.addEventListener("click", function() {
+      btnTabPdf.classList.add("active");
+      btnTabExcel.classList.remove("active");
+      sectionPdf.style.display = "block";
+      sectionExcel.style.display = "none";
+      clearAlert();
+    });
+
+    // ================= EXCEL LOGIC =================
+    let parsedRows = [];
+    const inputExcel = document.getElementById("inputExcel");
+    const tblHead = document.getElementById("tblHead");
+    const tblBody = document.getElementById("tblBody");
+    const tableWrapper = document.getElementById("tableWrapper");
+    const excelControls = document.getElementById("excelControls");
+    const excelDropzone = document.getElementById("excelDropzone");
+    const excelFileInfo = document.getElementById("excelFileInfo");
+    const btnExportExcel = document.getElementById("btnExportExcel");
+
+    inputExcel.addEventListener("change", function(evt) {
+      clearAlert();
+      const file = evt.target.files[0];
+      if (!file) return;
+
+      if (typeof XLSX === "undefined") {
+        showAlert("The Excel parser could not be loaded. Please ensure you are connected to the internet and disable any ad blockers.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const buffer = e.target.result;
+          const workbook = XLSX.read(buffer, { type: "binary" });
+          const sheetName = workbook.SheetNames[0];
+          
+          if (!sheetName) {
+            throw new Error("No worksheets found in this workbook.");
+          }
+
+          const worksheet = workbook.Sheets[sheetName];
+          parsedRows = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+          if (!parsedRows || parsedRows.length === 0) {
+            showAlert("The sheet contains no readable rows.");
+            return;
+          }
+
+          // Build headers
+          tblHead.innerHTML = "";
+          tblBody.innerHTML = "";
+          const keys = Array.from(new Set(parsedRows.flatMap(row => Object.keys(row))));
+          
+          const trHead = document.createElement("tr");
+          keys.forEach(k => {
+            const th = document.createElement("th");
+            th.textContent = k;
+            trHead.appendChild(th);
+          });
+          tblHead.appendChild(trHead);
+
+          // Build rows
+          parsedRows.forEach(row => {
+            const tr = document.createElement("tr");
+            keys.forEach(k => {
+              const td = document.createElement("td");
+              td.textContent = (row[k] !== undefined && row[k] !== null) ? row[k] : "";
+              tr.appendChild(td);
+            });
+            tblBody.appendChild(tr);
+          });
+
+          // Show table & toolbar
+          tableWrapper.style.display = "block";
+          excelControls.style.display = "flex";
+          excelDropzone.style.display = "none";
+          excelFileInfo.textContent = `${file.name} (${parsedRows.length} rows)`;
+        } catch (err) {
+          showAlert("Failed to parse the file: " + err.message);
+        } finally {
+          inputExcel.value = "";
+        }
+      };
+
+      reader.readAsBinaryString(file);
+    });
+
+    btnExportExcel.addEventListener("click", function() {
+      if (!parsedRows.length) return;
+      const worksheet = XLSX.utils.json_to_sheet(parsedRows);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.writeFile(workbook, "export.xlsx");
+    });
+
+    // ================= PDF LOGIC =================
+    const inputPdf = document.getElementById("inputPdf");
+    const pdfViewerBox = document.getElementById("pdfViewerBox");
+    const pdfObject = document.getElementById("pdfObject");
+    const pdfFallbackLink = document.getElementById("pdfFallbackLink");
+    const pdfDropzone = document.getElementById("pdfDropzone");
+    const pdfControls = document.getElementById("pdfControls");
+    const pdfFileInfo = document.getElementById("pdfFileInfo");
+
+    inputPdf.addEventListener("change", function(evt) {
+      clearAlert();
+      const file = evt.target.files[0];
+      if (!file) return;
+
+      try {
+        const fileUrl = URL.createObjectURL(file);
+        pdfObject.data = fileUrl;
+        pdfFallbackLink.href = fileUrl;
+
+        pdfViewerBox.style.display = "block";
+        pdfControls.style.display = "flex";
+        pdfDropzone.style.display = "none";
+        pdfFileInfo.textContent = file.name;
+      } catch (err) {
+        showAlert("Failed to display PDF: " + err.message);
+      } finally {
+        inputPdf.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
