@@ -7,7 +7,7 @@
   <meta name="description" content="A fast, private in-browser document viewer by Rahul Chauhan. View Excel, CSV, and PDF documents directly without installing software." />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
   <style>
     :root {
@@ -78,11 +78,11 @@
 
     .tab-btn {
       background: transparent;
-      border: none;
+      border: 1px solid var(--border-color);
       color: var(--text-muted);
       font-size: 15px;
       font-weight: 600;
-      padding: 8px 16px;
+      padding: 8px 18px;
       cursor: pointer;
       border-radius: 6px;
       transition: all 0.2s ease;
@@ -90,6 +90,7 @@
 
     .tab-btn.active {
       background-color: var(--primary);
+      border-color: var(--primary);
       color: #fff;
     }
 
@@ -104,24 +105,14 @@
       font-size: 14px;
     }
 
-    /* Clean Empty State & Action Box */
+    /* Upload Box */
     .upload-box {
       background: var(--card-bg);
       border: 2px dashed var(--border-color);
       border-radius: 12px;
       padding: 40px 20px;
       text-align: center;
-      transition: border-color 0.2s ease;
       margin-bottom: 24px;
-    }
-
-    .upload-box:hover {
-      border-color: var(--primary);
-    }
-
-    .upload-icon {
-      margin-bottom: 12px;
-      color: var(--text-muted);
     }
 
     .upload-box p {
@@ -131,7 +122,7 @@
     }
 
     .actions-bar {
-      display: flex;
+      display: none;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
@@ -188,7 +179,7 @@
       color: var(--text-muted);
     }
 
-    /* Table Container (hidden until loaded) */
+    /* Table Container */
     .table-card {
       display: none;
       background: var(--card-bg);
@@ -236,12 +227,11 @@
     }
 
     /* PDF Section */
-    .pdf-card {
+    #pdfSection {
       display: none;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
       padding: 20px;
       text-align: center;
     }
@@ -260,7 +250,7 @@
       overflow: auto;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      background: #334155;
+      background: #0f172a;
       padding: 10px;
       display: flex;
       justify-content: center;
@@ -284,10 +274,6 @@
       text-align: center;
       font-size: 13px;
       color: var(--text-muted);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
     }
 
     footer a {
@@ -305,29 +291,23 @@
 
   <main class="container">
     <div class="tab-container">
-      <button class="tab-btn active" id="excelTabBtn">📊 Excel / CSV Viewer</button>
-      <button class="tab-btn" id="pdfTabBtn">📄 PDF Viewer</button>
+      <button class="tab-btn active" id="excelTabBtn" type="button">📊 Excel / CSV Viewer</button>
+      <button class="tab-btn" id="pdfTabBtn" type="button">📄 PDF Viewer</button>
     </div>
 
     <div id="errorBanner"></div>
 
     <div id="excelSection">
       <div class="upload-box" id="excelUploadBox">
-        <div class="upload-icon">
-          <svg width="40" height="40" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-          </svg>
-        </div>
-        <label for="fileInputExcel" class="btn btn-primary">Upload Excel or CSV</label>
+        <label for="fileInputExcel" class="btn btn-primary">Choose Excel or CSV</label>
         <input type="file" id="fileInputExcel" accept=".xlsx, .xls, .csv" />
         <p>Supports .xlsx, .xls, and .csv files</p>
       </div>
 
-      <div class="actions-bar" id="excelActionBar" style="display: none;">
+      <div class="actions-bar" id="excelActionBar">
         <div class="button-group">
-          <label for="fileInputExcel" class="btn btn-outline">Change File</label>
-          <button class="btn btn-primary" id="downloadBtn">Export Excel</button>
+          <label for="fileInputExcel" class="btn btn-outline">Upload Different File</label>
+          <button class="btn btn-primary" id="downloadBtn" type="button">Export Excel</button>
         </div>
         <span class="file-status" id="excelFileName"></span>
       </div>
@@ -340,10 +320,11 @@
       </div>
     </div>
 
-    <div id="pdfSection" class="pdf-card">
+    <div id="pdfSection">
       <div class="pdf-toolbar">
-        <label for="fileInputPdf" class="btn btn-primary">Upload PDF</label>
+        <label for="fileInputPdf" class="btn btn-primary">Choose PDF File</label>
         <input type="file" id="fileInputPdf" accept=".pdf" />
 
-        <button class="btn btn-outline" id="prevPage">◀ Prev</button>
-        <span>Page <span id="pageNum">0</span> / <span id="pageCount
+        <button class="btn btn-outline" id="prevPage" type="button">◀ Prev</button>
+        <span>Page <span id="pageNum">0</span> / <span id="pageCount">0</span></span>
+        <button class="btn btn-outline"
