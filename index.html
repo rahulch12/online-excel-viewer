@@ -88,17 +88,45 @@
       display: block;
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
     .privacy-badge {
       font-size: 11px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: #cbd5e1;
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 20px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
       white-space: nowrap;
+    }
+
+    .bmc-header-btn {
+      background: #ffdd00;
+      color: #000000;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .bmc-header-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
     }
 
     .container {
@@ -115,10 +143,10 @@
       -webkit-overflow-scrolling: touch;
       margin-bottom: 16px;
       padding-bottom: 4px;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
     }
     .suite-nav-container::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
+      display: none;
     }
 
     .suite-nav {
@@ -321,7 +349,7 @@
       min-width: 100%;
     }
 
-    /* Frozen Sticky Corner (Top Left) */
+    /* Frozen Sticky Corner */
     .corner-header {
       background: #e2e8f0;
       border-right: 1px solid var(--excel-border);
@@ -429,29 +457,30 @@
     }
 
     footer {
-      padding: 18px;
+      padding: 20px 16px;
       text-align: center;
       font-size: 12px;
       color: var(--text-muted);
       border-top: 1px solid var(--border-color);
       background: #fff;
       margin-top: auto;
+      line-height: 1.6;
     }
 
-    /* Screen Queries for Small Mobiles */
     @media (max-width: 640px) {
       header {
         flex-direction: column;
         align-items: flex-start;
       }
-      .privacy-badge {
-        align-self: flex-start;
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
       }
       .workspace-card {
         padding: 12px;
       }
       .button-group .btn {
-        flex: 1 1 calc(50% - 6px); /* 2 buttons per row */
+        flex: 1 1 calc(50% - 6px);
       }
       .excel-grid-container {
         max-height: 48vh;
@@ -461,6 +490,7 @@
 </head>
 <body>
 
+  <!-- Universal Responsive Header -->
   <header>
     <div class="brand-group">
       <div class="brand-logo">D</div>
@@ -469,7 +499,12 @@
         <span class="brand-subtitle">by Rahul Chauhan</span>
       </div>
     </div>
-    <div class="privacy-badge">🔒 100% In-Browser Privacy</div>
+    <div class="header-actions">
+      <div class="privacy-badge">🔒 100% In-Browser Privacy</div>
+      <a href="https://buymeacoffee.com/docforge" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">
+        ☕ <span>Buy me a coffee</span>
+      </a>
+    </div>
   </header>
 
   <main class="container">
@@ -624,7 +659,13 @@
   </main>
 
   <footer>
-    DocForge Studio • Built by Rahul Chauhan • 100% In-Browser Execution
+    <div style="margin-bottom: 6px; font-weight: 500;">
+      DocForge Studio • Built by Rahul Chauhan • 100% In-Browser Execution
+    </div>
+    <div style="font-size: 11px; color: var(--text-muted);">
+      Zero server tracking. If this tool helped your workflow, consider supporting via 
+      <a href="https://buymeacoffee.com/docforge" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">Buy Me a Coffee ☕</a>.
+    </div>
   </footer>
 
   <script>
