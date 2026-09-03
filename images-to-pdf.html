@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS8Z05TBZY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CS8Z05TBZY');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
+
+  <!-- jsPDF Library for client-side PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  
+  <!-- SEO Meta Tags -->
+  <title>Convert JPG to PDF Online Free (A4 Format) — SheetBox</title>
+  <meta name="title" content="Convert JPG to PDF Online Free (A4 Format) — SheetBox" />
+  <meta name="description" content="Convert multiple JPG, PNG, and WebP images into a single clean A4 PDF file directly in your browser. 100% private, zero uploads, instant download." />
+  <meta name="keywords" content="convert jpg to pdf, images to pdf, merge photos into pdf, convert png to pdf free, client side pdf converter" />
+  <link rel="canonical" href="https://sheetbox.in/images-to-pdf.html" />
+
+  <!-- Schema.org WebApplication & FAQ Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SheetBox Images to PDF Converter",
+    "url": "https://sheetbox.in/images-to-pdf.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Are my images uploaded to any server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All conversion is handled directly inside your web browser via client-side JavaScript. Your images remain private on your device."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Can I convert multiple images into one PDF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can select multiple image files simultaneously. Each image will be placed neatly onto its own page inside the final PDF."
+      }
+    }]
+  }
+  </script>
+
+  <style>
+    :root {
+      --header-bg: #0f172a;
+      --page-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary-accent: #3b82f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--page-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+    .brand-group { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+    .brand-logo { width: 32px; height: 32px; background: linear-gradient(135deg, #3b82f6, #6366f1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; }
+    .bmc-header-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
+    .container { max-width: 900px; width: 100%; padding: 20px 16px; margin: 0 auto; flex: 1; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--primary-accent); text-decoration: none; margin-bottom: 14px; }
+    .workspace-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+    .dropzone { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 10px; padding: 36px 16px; text-align: center; cursor: pointer; }
+    .btn { padding: 9px 16px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-blue { background: #2563eb; color: #fff; }
+    .btn-default { background: #fff; border-color: #cbd5e1; color: #334155; }
+    .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-top: 14px; }
+    .preview-item { border: 1px solid var(--border-color); border-radius: 8px; padding: 6px; background: #fff; text-align: center; }
+    .preview-item img { width: 100%; height: 90px; object-fit: cover; border-radius: 4px; }
+    .preview-item span { display: block; font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 4px; }
+    
+    .seo-content { margin-top: 36px; line-height: 1.65; color: #334155; }
+    .seo-content h2 { font-size: 20px; font-weight: 700; color: #0f172a; margin: 24px 0 10px 0; }
+    .seo-content h3 { font-size: 16px; font-weight: 600; color: #1e293b; margin: 16px 0 6px 0; }
+    .seo-content p { font-size: 14px; margin-bottom: 12px; }
+    .seo-content ol, .seo-content ul { padding-left: 20px; font-size: 14px; margin-bottom: 16px; }
+    .seo-content li { margin-bottom: 6px; }
+    
+    footer { padding: 20px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-color); background: #fff; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="brand-group">
+      <div class="brand-logo">S</div>
+      <div>
+        <span style="font-size: 16px; font-weight: 700;">SheetBox</span>
+        <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
+      </div>
+    </a>
+    <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">☕ Buy me a coffee</a>
+  </header>
+
+  <main class="container">
+    <a href="/" class="back-link">&larr; Open Full Tool Suite (Excel, PDF, CSV)</a>
+    
+    <div class="workspace-card">
+      <h1 style="font-size: 22px; font-weight: 800; margin-bottom: 6px; color: #0f172a;">Convert Images to PDF Online Free</h1>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">Combine JPG, JPEG, PNG, or WebP pictures into a clean multi-page A4 document. 100% private in-browser generation.</p>
+
+      <div class="dropzone" id="imgPdfDropzone">
+        <div style="font-size: 30px; margin-bottom: 8px;">🖼️</div>
+        <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Select or Drop Images Here</h3>
+        <p style="font-size: 12px; color: var(--text-muted);">Supports JPG, PNG, and WebP (Select multiple files)</p>
+        <input type="file" id="inputImgPdf" accept="image/jpeg, image/jpg, image/png, image/webp" multiple style="display: none;" />
+      </div>
+
+      <div id="imgPdfActions" style="display: none; margin-top: 16px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+          <span id="selectedCount" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">0 images selected</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-blue" id="btnGeneratePdf" type="button">📄 Download Combined PDF</button>
+            <label for="inputImgPdf" class="btn btn-default">Add More Images</label>
+          </div>
+        </div>
+        <div class="preview-grid" id="previewGrid"></div>
+      </div>
+
+      <!-- Static SEO Copy -->
+      <article class="seo-content">
+        <h2>How to Convert JPG or PNG Images to PDF</h2>
+        <ol>
+          <li><strong>Select your files:</strong> Click the upload box or drag multiple photos (receipts, scanned certificates, ID cards).</li>
+          <li><strong>Review the order:</strong> Preview thumbnails appear in the sequence they will be placed in the final PDF document.</li>
+          <li><strong>Generate:</strong> Click "Download Combined PDF" to instantly compile and save your clean A4 document.</li>
+        </ol>
+
+        <h2>Why Convert Photos to PDF with SheetBox?</h2>
+        <ul>
+          <li><strong>Zero Uploads (100% Confidential):</strong> Your sensitive identity cards and certificates are never transmitted to external cloud servers. The PDF is assembled purely in client-side memory.</li>
+          <li><strong>Universal A4 Compatibility:</strong> Photos are automatically centered and scaled to fit standard A4 proportions without cropping key details.</li>
+          <li><strong>No Watermarks:</strong> Clean, unbranded PDFs suitable for business contracts, tax filings, and academic submissions.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions (FAQ)</h2>
+        <h3>Can I merge pictures taken directly from a phone?</h3>
+        <p>Yes. SheetBox works seamlessly on mobile browsers. You can select photos directly from your phone's camera roll or gallery.</p>
+
+        <h3>Is there a limit on how many images I can convert?</h3>
+        <p>There are no arbitrary software limits. You can merge as many pages as your browser's local memory can handle, completely free.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div style="margin-bottom: 6px; font-weight: 500;">SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution</div>
+    <div style="font-size: 11px; color: var(--text-muted);">
+      Contact: <a href="mailto:chauhanr003@gmail.com" style="color: var(--primary-accent); text-decoration: none;">chauhanr003@gmail.com</a> • 
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); text-decoration: none;">Buy Me a Coffee ☕</a>
+    </div>
+  </footer>
+
+  <script>
+    const inputImgPdf = document.getElementById("inputImgPdf");
+    const imgPdfDropzone = document.getElementById("imgPdfDropzone");
+    const imgPdfActions = document.getElementById("imgPdfActions");
+    const previewGrid = document.getElementById("previewGrid");
+    const selectedCount = document.getElementById("selectedCount");
+    const btnGeneratePdf = document.getElementById("btnGeneratePdf");
+
+    let loadedImages = [];
+
+    imgPdfDropzone.onclick = () => inputImgPdf.click();
+    imgPdfDropzone.ondragover = (e) => { e.preventDefault(); imgPdfDropzone.style.borderColor = "#64748b"; };
+    imgPdfDropzone.ondragleave = () => { imgPdfDropzone.style.borderColor = "#cbd5e1"; };
+    imgPdfDropzone.ondrop = (e) => {
+      e.preventDefault();
+      imgPdfDropzone.style.borderColor = "#cbd5e1";
+      if (e.dataTransfer.files.length) {
+        handleFiles(e.dataTransfer.files);
+      }
+    };
+
+    inputImgPdf.onchange = (e) => handleFiles(e.target.files);
+
+    function handleFiles(files) {
+      if (!files.length) return;
+      Array.from(files).forEach(file => {
+        if (!file.type.startsWith("image/")) return;
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          loadedImages.push({ name: file.name, dataUrl: evt.target.result });
+          renderPreviews();
+        };
+        reader.readAsDataURL(file);
+      });
+      imgPdfActions.style.display = "block";
+      inputImgPdf.value = "";
+    }
+
+    function renderPreviews() {
+      previewGrid.innerHTML = "";
+      selectedCount.textContent = `${loadedImages.length} image(s) selected`;
+      loadedImages.forEach(img => {
+        const item = document.createElement("div");
+        item.className = "preview-item";
+        item.innerHTML = `<img src="${img.dataUrl}" alt="Preview" /><span>${img.name}</span>`;
+        previewGrid.appendChild(item);
+      });
+    }
+
+    btnGeneratePdf.onclick = async function() {
+      if (!loadedImages.length) return;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+
+      for (let i = 0; i < loadedImages.length; i++) {
+        if (i > 0) doc.addPage();
+        const imgObj = loadedImages[i];
+        const imgEl = new Image();
+        await new Promise(resolve => {
+          imgEl.onload = resolve;
+          imgEl.src = imgObj.dataUrl;
+        });
+
+        let imgW = imgEl.width;
+        let imgH = imgEl.height;
+        const maxW = pageWidth - 40;
+        const maxH = pageHeight - 40;
+        const ratio = Math.min(maxW / imgW, maxH / imgH, 1);
+        
+        const finalW = imgW * ratio;
+        const finalH = imgH * ratio;
+        const posX = (pageWidth - finalW) / 2;
+        const posY = (pageHeight - finalH) / 2;
+
+        doc.addImage(imgObj.dataUrl, "JPEG", posX, posY, finalW, finalH);
+      }
+
+      doc.save("SheetBox-Images.pdf");
+    };
+  </script>
+</body>
+</html>
