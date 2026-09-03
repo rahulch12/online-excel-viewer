@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS8Z05TBZY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CS8Z05TBZY');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
+
+  <!-- PDF-Lib for fast, 100% in-browser PDF manipulation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  
+  <!-- SEO Meta Tags -->
+  <title>Merge PDF Files Online Free — 100% Client-Side Privacy | SheetBox</title>
+  <meta name="title" content="Merge PDF Files Online Free — 100% Client-Side Privacy | SheetBox" />
+  <meta name="description" content="Combine multiple PDF documents into a single file directly in your browser. 100% private client-side processing, zero server uploads, unlimited free PDF merging." />
+  <meta name="keywords" content="merge pdf online, combine pdf files, join pdf documents free, client side pdf merge, private pdf combiner" />
+  <link rel="canonical" href="https://sheetbox.in/merge-pdf.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sheetbox.in/merge-pdf.html" />
+  <meta property="og:title" content="Merge PDF Files Online Free — Zero Server Uploads" />
+  <meta property="og:description" content="Combine multiple PDF documents into one cleanly formatted file directly in your browser." />
+
+  <!-- Schema.org WebApplication & FAQ Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SheetBox PDF Merger",
+    "url": "https://sheetbox.in/merge-pdf.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Are my confidential contracts and financial statements safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, absolutely. All PDF merging occurs inside your browser memory using PDF-Lib. None of your files or metadata are uploaded to or stored on any server."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Is there a limit on how many PDFs I can combine?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There are no page count or file limits. You can combine as many documents as your device's browser memory supports."
+      }
+    }]
+  }
+  </script>
+
+  <style>
+    :root {
+      --header-bg: #0f172a;
+      --page-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary-accent: #3b82f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--page-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+    .brand-group { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+    .brand-logo { width: 32px; height: 32px; background: linear-gradient(135deg, #3b82f6, #6366f1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; }
+    .bmc-header-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
+    .container { max-width: 900px; width: 100%; padding: 20px 16px; margin: 0 auto; flex: 1; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--primary-accent); text-decoration: none; margin-bottom: 14px; }
+    .workspace-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+    .dropzone { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 10px; padding: 36px 16px; text-align: center; cursor: pointer; }
+    .btn { padding: 9px 16px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-emerald { background: #059669; color: #fff; }
+    .btn-default { background: #fff; border-color: #cbd5e1; color: #334155; }
+    .file-list { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+    .file-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 8px; font-size: 13px; }
+    .file-info { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+    .seo-content { margin-top: 36px; line-height: 1.65; color: #334155; }
+    .seo-content h2 { font-size: 20px; font-weight: 700; color: #0f172a; margin: 24px 0 10px 0; }
+    .seo-content h3 { font-size: 16px; font-weight: 600; color: #1e293b; margin: 16px 0 6px 0; }
+    .seo-content p { font-size: 14px; margin-bottom: 12px; }
+    .seo-content ol, .seo-content ul { padding-left: 20px; font-size: 14px; margin-bottom: 16px; }
+    .seo-content li { margin-bottom: 6px; }
+    footer { padding: 20px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-color); background: #fff; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="brand-group">
+      <div class="brand-logo">S</div>
+      <div>
+        <span style="font-size: 16px; font-weight: 700;">SheetBox</span>
+        <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
+      </div>
+    </a>
+    <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">☕ Buy me a coffee</a>
+  </header>
+
+  <main class="container">
+    <a href="/" class="back-link">&larr; Open Full Tool Suite (Excel, PDF, CSV)</a>
+    
+    <div class="workspace-card">
+      <h1 style="font-size: 22px; font-weight: 800; margin-bottom: 6px; color: #0f172a;">Merge PDF Files Online Free</h1>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">Combine multiple PDF files into one complete document in seconds. 100% private in-browser merging.</p>
+
+      <div class="dropzone" id="mergeDropzone">
+        <div style="font-size: 30px; margin-bottom: 8px;">📑</div>
+        <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Select or Drop PDF Files Here</h3>
+        <p style="font-size: 12px; color: var(--text-muted);">Choose 2 or more PDF documents to combine</p>
+        <input type="file" id="inputMergePdf" accept="application/pdf" multiple style="display: none;" />
+      </div>
+
+      <div id="mergeActions" style="display: none; margin-top: 16px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+          <span id="pdfFileCount" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">0 PDFs queued</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-emerald" id="btnMergePdfs" type="button">⬇️ Merge & Download PDF</button>
+            <label for="inputMergePdf" class="btn btn-default">Add More PDFs</label>
+          </div>
+        </div>
+        <div class="file-list" id="pdfFileList"></div>
+      </div>
+
+      <!-- Static SEO Copy -->
+      <article class="seo-content">
+        <h2>How to Merge PDF Documents Online</h2>
+        <ol>
+          <li><strong>Select your PDF files:</strong> Drag and drop your PDFs into the box or click to select multiple files.</li>
+          <li><strong>Verify order:</strong> Your documents will merge seamlessly in the order listed above.</li>
+          <li><strong>Download:</strong> Click "Merge & Download PDF" to instantly assemble and save your combined file locally.</li>
+        </ol>
+
+        <h2>Why Choose SheetBox to Merge PDFs?</h2>
+        <ul>
+          <li><strong>Strict Client-Side Security:</strong> Unlike traditional web utilities that require uploading PDFs to external servers, SheetBox runs 100% within your local browser. Your financial statements, legal contracts, and personal records never leave your machine.</li>
+          <li><strong>High Speed Execution:</strong> Processing takes place locally using your CPU, meaning no waiting for long upload queues or download links.</li>
+          <li><strong>Unlimited & Unrestricted:</strong> No page caps, watermarks, or email signup gates.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions (FAQ)</h2>
+        <h3>Does this tool support password-protected PDFs?</h3>
+        <p>For privacy and security, documents must be decrypted before merging so the browser can read and compile the page stream.</p>
+
+        <h3>Can I combine large multi-page reports?</h3>
+        <p>Yes. SheetBox uses efficient memory buffers, allowing you to combine extensive reports, presentations, and forms quickly.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div style="margin-bottom: 6px; font-weight: 500;">SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution</div>
+    <div style="font-size: 11px; color: var(--text-muted);">
+      Contact: <a href="mailto:chauhanr003@gmail.com" style="color: var(--primary-accent); text-decoration: none;">chauhanr003@gmail.com</a> • 
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); text-decoration: none;">Buy Me a Coffee ☕</a>
+    </div>
+  </footer>
+
+  <script>
+    const inputMergePdf = document.getElementById("inputMergePdf");
+    const mergeDropzone = document.getElementById("mergeDropzone");
+    const mergeActions = document.getElementById("mergeActions");
+    const pdfFileList = document.getElementById("pdfFileList");
+    const pdfFileCount = document.getElementById("pdfFileCount");
+    const btnMergePdfs = document.getElementById("btnMergePdfs");
+
+    let pdfFiles = [];
+
+    mergeDropzone.onclick = () => inputMergePdf.click();
+    mergeDropzone.ondragover = (e) => { e.preventDefault(); mergeDropzone.style.borderColor = "#64748b"; };
+    mergeDropzone.ondragleave = () => { mergeDropzone.style.borderColor = "#cbd5e1"; };
+    mergeDropzone.ondrop = (e) => {
+      e.preventDefault();
+      mergeDropzone.style.borderColor = "#cbd5e1";
+      if (e.dataTransfer.files.length) {
+        addFiles(e.dataTransfer.files);
+      }
+    };
+
+    inputMergePdf.onchange = (e) => addFiles(e.target.files);
+
+    function addFiles(files) {
+      if (!files.length) return;
+      Array.from(files).forEach(file => {
+        if (file.type === "application/pdf" || file.name.endsWith(".pdf")) {
+          pdfFiles.push(file);
+        }
+      });
+      renderList();
+      inputMergePdf.value = "";
+    }
+
+    function renderList() {
+      if (!pdfFiles.length) {
+        mergeActions.style.display = "none";
+        return;
+      }
+      mergeActions.style.display = "block";
+      pdfFileCount.textContent = `${pdfFiles.length} PDF(s) ready`;
+      pdfFileList.innerHTML = "";
+
+      pdfFiles.forEach((f, idx) => {
+        const item = document.createElement("div");
+        item.className = "file-item";
+        item.innerHTML = `
+          <div class="file-info">
+            <span>📄</span>
+            <span>${idx + 1}. ${f.name}</span>
+            <span style="font-weight: 400; color: var(--text-muted);">(${(f.size / 1024).toFixed(1)} KB)</span>
+          </div>
+          <button type="button" style="background: none; border: none; color: #ef4444; font-size: 16px; cursor: pointer;" onclick="removePdf(${idx})">&times;</button>
+        `;
+        pdfFileList.appendChild(item);
+      });
+    }
+
+    window.removePdf = function(index) {
+      pdfFiles.splice(index, 1);
+      renderList();
+    };
+
+    btnMergePdfs.onclick = async function() {
+      if (pdfFiles.length < 2) {
+        alert("Please select at least 2 PDF files to merge.");
+        return;
+      }
+      btnMergePdfs.textContent = "Merging...";
+      btnMergePdfs.disabled = true;
+
+      try {
+        const { PDFDocument } = window.PDFLib;
+        const mergedDoc = await PDFDocument.create();
+
+        for (const file of pdfFiles) {
+          const arrayBuffer = await file.arrayBuffer();
+          const doc = await PDFDocument.load(arrayBuffer);
+          const copiedPages = await mergedDoc.copyPages(doc, doc.getPageIndices());
+          copiedPages.forEach(page => mergedDoc.addPage(page));
+        }
+
+        const mergedBytes = await mergedDoc.save();
+        const blob = new Blob([mergedBytes], { type: "application/pdf" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "SheetBox-Merged.pdf";
+        a.click();
+      } catch (err) {
+        alert("Error merging PDFs: " + err.message);
+      } finally {
+        btnMergePdfs.textContent = "⬇️ Merge & Download PDF";
+        btnMergePdfs.disabled = false;
+      }
+    };
+  </script>
+</body>
+</html>
