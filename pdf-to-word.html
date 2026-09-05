@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS8Z05TBZY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -10,18 +9,16 @@
     gtag('config', 'G-CS8Z05TBZY');
   </script>
 
-  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
 
-  <!-- PDF.js for text stream extraction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
   </script>
 
-  <!-- docx library for client-side Word document packaging -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
   <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
-  <!-- FileSaver for triggering download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
   <meta charset="UTF-8" />
@@ -30,36 +27,10 @@
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="apple-touch-icon" href="/logo.png" />
 
-  <!-- Primary SEO Meta Tags -->
   <title>Free PDF to Word Converter Online — Edit & Download DOCX | SheetBox</title>
   <meta name="title" content="Free PDF to Word Converter Online — Edit & Download DOCX | SheetBox" />
-  <meta name="description" content="Convert PDF documents to editable Microsoft Word (.docx) files directly in your browser. Inspect, edit text before downloading, 100% private with no server uploads." />
-  <meta name="keywords" content="pdf to word converter, convert pdf to docx free, edit pdf online, pdf to word editable, client side pdf converter" />
+  <meta name="description" content="Convert PDF documents and scanned image PDFs to editable Microsoft Word (.docx) files. Built-in OCR, 100% private in-browser execution." />
   <link rel="canonical" href="https://sheetbox.in/pdf-to-word.html" />
-
-  <!-- Open Graph / Social Sharing -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://sheetbox.in/pdf-to-word.html" />
-  <meta property="og:title" content="Free PDF to Word Converter Online — SheetBox" />
-  <meta property="og:description" content="Convert and edit your PDFs into editable Word (.docx) documents in your browser. 100% private." />
-  <meta property="og:image" content="https://sheetbox.in/logo.png" />
-
-  <!-- Schema.org WebApplication Markup -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "SheetBox PDF to Word Converter",
-    "url": "https://sheetbox.in/pdf-to-word.html",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "All",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
-  }
-  </script>
 
   <style>
     :root {
@@ -83,18 +54,19 @@
     .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; margin-bottom: 14px; }
 
     /* Upload Box */
-    .upload-card { background: var(--card-bg); border: 2px dashed #cbd5e1; border-radius: 14px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 24px; }
+    .upload-card { background: var(--card-bg); border: 2px dashed #cbd5e1; border-radius: 14px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 20px; }
     .upload-card:hover { border-color: var(--accent); background: #f0f7ff; }
     .upload-icon { font-size: 40px; margin-bottom: 8px; }
     .upload-title { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
     .upload-desc { font-size: 13px; color: var(--text-muted); }
 
-    /* Progress Notification */
-    .status-box { display: none; background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px 16px; border-radius: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 20px; text-align: center; }
+    /* Dynamic Status Banner */
+    .status-box { display: none; background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 14px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 600; margin-bottom: 20px; text-align: center; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #3b82f6; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* Interactive Editor Workspace */
     .editor-section { display: none; background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.04); margin-bottom: 30px; }
-    
     .editor-toolbar { background: #0f172a; color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .editor-toolbar-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
     .editor-actions { display: flex; gap: 8px; }
@@ -112,8 +84,6 @@
     .seo-section h2 { font-size: 18px; color: #0f172a; margin: 18px 0 6px 0; font-weight: 700; }
     .seo-section h2:first-child { margin-top: 0; }
     .seo-section p { margin-bottom: 12px; }
-    .seo-section ol, .seo-section ul { padding-left: 20px; margin-bottom: 14px; }
-    .seo-section li { margin-bottom: 6px; }
 
     footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 40px; }
   </style>
@@ -134,18 +104,20 @@
   <main class="container">
     <a href="/" class="back-link">&larr; Open Full Tool Suite (Excel, PDF, CSV)</a>
 
-    <!-- Upload Box -->
     <div class="upload-card" id="dropArea">
       <div class="upload-icon">📄</div>
       <div class="upload-title">Drop your PDF file here to convert</div>
-      <div class="upload-desc">Or click to select a file from your device. 100% private and processed in-browser.</div>
+      <div class="upload-desc">Works with standard text PDFs and scanned document images. 100% in-browser privacy.</div>
       <input type="file" id="fileInput" accept=".pdf" style="display: none;" />
     </div>
 
-    <!-- Status Banner -->
-    <div class="status-box" id="statusBox">Parsing PDF pages...</div>
+    <div class="status-box" id="statusBox">
+      <span class="spinner"></span>
+      <span id="statusText">Processing document...</span>
+    </div>
 
-    <!-- Live Document Editor -->
+    <canvas id="ocrCanvas" style="display: none;"></canvas>
+
     <div class="editor-section" id="editorSection">
       <div class="editor-toolbar">
         <div class="editor-toolbar-title">
@@ -161,21 +133,9 @@
       <div class="editor-body" id="textEditor" contenteditable="true" spellcheck="true"></div>
     </div>
 
-    <!-- SEO Content -->
     <article class="seo-section">
-      <h2>Free Online PDF to Word (.docx) Converter</h2>
-      <p>Convert native PDF documents into editable Microsoft Word (.docx) documents in seconds. Unlike traditional conversion websites that require you to upload private contracts, financial invoices, or personal resumes to their servers, SheetBox runs parsing algorithms entirely inside your browser memory.</p>
-
-      <h2>How to Convert PDF to Editable Word Online</h2>
-      <ol>
-        <li><strong>Choose or drop your PDF:</strong> Select any standard text PDF file from your phone, laptop, or desktop.</li>
-        <li><strong>Review & Edit in Real-Time:</strong> Your PDF text stream is parsed and loaded into the built-in editor, allowing you to proofread, fix typo lines, or delete excess headings.</li>
-        <li><strong>Download as Word:</strong> Click <em>Download as Word (.docx)</em> to compile the structured text into a native document file compatible with Microsoft Word, Google Docs, and WPS Office.</li>
-      </ol>
-
-      <h2>Frequently Asked Questions</h2>
-      <p><strong>Are my documents stored on your servers?</strong><br>No. Every step of the extraction and file construction occurs inside your browser. No data ever leaves your device.</p>
-      <p><strong>Does this work for scanned image PDFs?</strong><br>This tool is designed for digital PDFs that contain selectable text streams. Flat image scans (photos of paper) require optical OCR processing, which will be added in a future update.</p>
+      <h2>Free Online PDF to Word (.docx) Converter with OCR</h2>
+      <p>Convert native PDF documents as well as scanned image PDFs into editable Microsoft Word (.docx) documents in seconds. Unlike traditional conversion websites that upload private contracts, financial invoices, or personal resumes to cloud servers, SheetBox runs parsing and optical recognition algorithms entirely inside your browser memory.</p>
     </article>
   </main>
 
@@ -201,10 +161,12 @@
     const dropArea = document.getElementById("dropArea");
     const fileInput = document.getElementById("fileInput");
     const statusBox = document.getElementById("statusBox");
+    const statusText = document.getElementById("statusText");
     const editorSection = document.getElementById("editorSection");
     const textEditor = document.getElementById("textEditor");
     const docFileName = document.getElementById("docFileName");
     const btnDownloadDocx = document.getElementById("btnDownloadDocx");
+    const ocrCanvas = document.getElementById("ocrCanvas");
 
     let originalName = "Document";
 
@@ -222,6 +184,11 @@
       if (e.target.files.length) processPdf(e.target.files[0]);
     };
 
+    function updateStatus(msg) {
+      statusBox.style.display = "block";
+      statusText.textContent = msg;
+    }
+
     async function processPdf(file) {
       if (file.type !== "application/pdf" && !file.name.endsWith(".pdf")) {
         alert("Please select a valid PDF file.");
@@ -230,8 +197,7 @@
 
       originalName = file.name.replace(/\.pdf$/i, "");
       docFileName.textContent = `${originalName}.docx`;
-      statusBox.style.display = "block";
-      statusBox.textContent = `Reading "${file.name}"...`;
+      updateStatus(`Reading "${file.name}"...`);
 
       try {
         const arrayBuffer = await file.arrayBuffer();
@@ -240,8 +206,9 @@
 
         let fullText = "";
 
+        // Attempt Step 1: Direct digital text stream extraction
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-          statusBox.textContent = `Extracting page ${pageNum} of ${pdf.numPages}...`;
+          updateStatus(`Checking text stream on page ${pageNum} of ${pdf.numPages}...`);
           const page = await pdf.getPage(pageNum);
           const textContent = await page.getTextContent();
           
@@ -258,11 +225,39 @@
             lastY = item.transform[5];
           });
 
-          fullText += pageText.trim() + "\n\n";
+          if (pageText.trim()) {
+            fullText += pageText.trim() + "\n\n";
+          }
+        }
+
+        // Attempt Step 2: Fallback to OCR if PDF contains no selectable text (scanned or image-based)
+        if (!fullText.trim()) {
+          updateStatus("Scanned image PDF detected. Initializing browser OCR engine...");
+
+          const worker = await Tesseract.createWorker("eng");
+
+          for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            updateStatus(`Scanning page ${pageNum} of ${pdf.numPages} with OCR...`);
+            const page = await pdf.getPage(pageNum);
+            const viewport = page.getViewport({ scale: 2.0 });
+
+            ocrCanvas.width = viewport.width;
+            ocrCanvas.height = viewport.height;
+            const ctx = ocrCanvas.getContext("2d");
+
+            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+            const { data: { text } } = await worker.recognize(ocrCanvas);
+            if (text && text.trim()) {
+              fullText += text.trim() + "\n\n";
+            }
+          }
+
+          await worker.terminate();
         }
 
         if (!fullText.trim()) {
-          alert("No selectable text could be found. This PDF may be a flat image scan.");
+          alert("Could not extract readable text from this document.");
           statusBox.style.display = "none";
           return;
         }
@@ -274,7 +269,7 @@
 
       } catch (err) {
         statusBox.style.display = "none";
-        alert("Error parsing PDF: " + err.message);
+        alert("Error processing PDF: " + err.message);
       }
     }
 
