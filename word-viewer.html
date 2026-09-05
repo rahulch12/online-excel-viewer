@@ -23,7 +23,7 @@
   <!-- Primary SEO Meta Tags -->
   <title>Free Word Viewer Online — Open & Read DOCX Files | SheetBox</title>
   <meta name="title" content="Free Word Viewer Online — Open & Read DOCX Files | SheetBox" />
-  <meta name="description" content="Open and view Microsoft Word (.docx) documents directly in your browser without installing MS Office. 100% free, private, and works on all mobile devices." />
+  <meta name="description" content="Open and read Microsoft Word (.docx) documents directly in your browser without MS Office. Clean paginated layout, 100% free, private, and mobile-friendly." />
   <meta name="keywords" content="word viewer online, docx viewer free, open docx without office, read word file online, client side word viewer, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/word-viewer.html" />
 
@@ -98,7 +98,7 @@
     .brand img { width: 32px; height: 32px; border-radius: 8px; }
     .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
 
-    .container { max-width: 1040px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
+    .container { max-width: 1140px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
     .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; margin-bottom: 14px; }
 
     /* Upload Area */
@@ -108,37 +108,103 @@
     .upload-title { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
     .upload-desc { font-size: 13px; color: var(--text-muted); }
 
-    /* Loading Status Banner */
+    /* Status Box */
     .status-box { display: none; background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 14px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 600; margin-bottom: 20px; text-align: center; }
     .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #3b82f6; border-radius: 50%; border-top-color: transparent; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Viewer Container */
-    .viewer-card { display: none; background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 30px; }
-    .viewer-toolbar { background: #0f172a; color: #fff; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .viewer-file-name { font-size: 14px; font-weight: 700; }
-    .toolbar-actions { display: flex; gap: 8px; }
-    .btn { padding: 7px 12px; font-size: 12.5px; font-weight: 700; border-radius: 6px; cursor: pointer; border: none; }
+    /* Viewer Stage */
+    .viewer-card { display: none; background: #ffffff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(15, 23, 42, 0.06); margin-bottom: 30px; }
+    
+    .viewer-toolbar { 
+      background: #0f172a; 
+      color: #fff; 
+      padding: 10px 16px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .viewer-file-info { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .toolbar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    
+    .btn { padding: 6px 12px; font-size: 12.5px; font-weight: 700; border-radius: 6px; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 4px; }
+    .btn-tool { background: #334155; color: #f8fafc; }
+    .btn-tool:hover { background: #475569; }
     .btn-print { background: var(--accent); color: #fff; }
-    .btn-clear { background: rgba(255,255,255,0.15); color: #fff; }
+    .btn-print:hover { background: #1d4ed8; }
+    .btn-close { background: #ef4444; color: #fff; }
+    .btn-close:hover { background: #dc2626; }
 
-    /* Target container for docx-preview */
-    .doc-render-area {
-      padding: 30px 20px;
-      background: #e2e8f0;
-      min-height: 500px;
-      max-height: 800px;
+    /* Scrollable Stage */
+    .doc-stage {
+      background: #cbd5e1;
+      padding: 30px 16px;
+      min-height: 550px;
+      max-height: 82vh;
       overflow: auto;
       display: flex;
       justify-content: center;
+      align-items: flex-start;
     }
+
+    /* Container for rendered pages */
     #docxContainer {
-      background: #ffffff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transform-origin: top center;
+      transition: transform 0.15s ease-out;
       width: 100%;
-      max-width: 820px;
-      padding: 40px 36px;
-      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* =========================================================
+       NATIVE DOCX-PREVIEW PAGE CONTAINER STYLES
+       ========================================================= */
+    .docx-wrapper {
+      background: transparent !important;
+      padding: 0 !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .docx-wrapper > section.docx {
+      background: #ffffff !important;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.16) !important;
+      border-radius: 4px !important;
+      margin: 0 auto !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      overflow: hidden !important;
+      width: 100% !important;
+      max-width: 820px !important;
+      padding: 50px 48px !important;
+      min-height: 1060px;
+    }
+
+    /* Proper Table and Text Formatting */
+    .docx-wrapper table {
+      border-collapse: collapse !important;
+      width: 100% !important;
+      margin: 14px 0 !important;
+    }
+    .docx-wrapper td, .docx-wrapper th {
+      border: 1px solid #cbd5e1 !important;
+      padding: 6px 10px !important;
+      font-size: 13px !important;
+    }
+    .docx-wrapper p {
+      margin-bottom: 8px !important;
+      line-height: 1.6 !important;
+      color: #1e293b !important;
     }
 
     /* SEO Section */
@@ -149,9 +215,12 @@
 
     footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 40px; }
 
-    @media (max-width: 600px) {
-      .doc-render-area { padding: 12px 6px; }
-      #docxContainer { padding: 20px 14px; }
+    @media (max-width: 768px) {
+      .doc-stage { padding: 12px 6px; }
+      .docx-wrapper > section.docx {
+        padding: 24px 18px !important;
+        min-height: auto !important;
+      }
     }
   </style>
 </head>
@@ -171,30 +240,38 @@
   <main class="container">
     <a href="/" class="back-link">&larr; Open Full Tool Suite (Excel, PDF, CSV)</a>
 
-    <!-- Upload Box -->
+    <!-- Upload Zone -->
     <div class="upload-card" id="dropArea">
       <div class="upload-icon">📘</div>
-      <div class="upload-title">Drop your Word (.docx) file here</div>
-      <div class="upload-desc">Instant preview in your browser. No MS Office required, 100% private.</div>
+      <div class="upload-title">Drop your Word (.docx) file here to view</div>
+      <div class="upload-desc">Instant document preview. Works without Microsoft Office or Word 365. 100% private.</div>
       <input type="file" id="fileInput" accept=".docx" style="display: none;" />
     </div>
 
-    <!-- Loading Box -->
+    <!-- Status Notification -->
     <div class="status-box" id="statusBox">
       <span class="spinner"></span>
-      <span id="statusText">Rendering document...</span>
+      <span id="statusText">Rendering pages...</span>
     </div>
 
-    <!-- Viewer Workspace -->
+    <!-- Paginated Document Stage -->
     <div class="viewer-card" id="viewerCard">
       <div class="viewer-toolbar">
-        <div class="viewer-file-name" id="fileNameLabel">Document.docx</div>
+        <div class="viewer-file-info">
+          <span>📄</span>
+          <span id="fileNameLabel">Document.docx</span>
+        </div>
         <div class="toolbar-actions">
+          <button class="btn btn-tool" onclick="zoomDoc(-0.1)" title="Zoom Out">🔍 −</button>
+          <span id="zoomLevelText" style="font-size: 12px; font-weight: 700; min-width: 44px; text-align: center;">100%</span>
+          <button class="btn btn-tool" onclick="zoomDoc(0.1)" title="Zoom In">🔍 +</button>
+          <button class="btn btn-tool" onclick="resetZoom()" title="Reset Zoom">↺ Reset</button>
           <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
-          <button class="btn btn-clear" onclick="resetViewer()">✕ Close</button>
+          <button class="btn btn-close" onclick="resetViewer()">✕ Close</button>
         </div>
       </div>
-      <div class="doc-render-area">
+
+      <div class="doc-stage" id="docStage">
         <div id="docxContainer"></div>
       </div>
     </div>
@@ -202,12 +279,26 @@
     <!-- SEO Content -->
     <article class="seo-section">
       <h1>Free Online Word (.docx) Document Viewer</h1>
-      <p>Open and read Microsoft Word documents (.docx) directly on your smartphone, tablet, or PC without installing Office software. SheetBox renders the document structure, tables, styling, and images securely in your local browser session.</p>
+      <p>Open, read, and inspect Microsoft Word documents (.docx) directly inside your web browser. SheetBox runs locally using client-side rendering—no file uploads to external clouds, no Microsoft 365 subscriptions, and no registration required.</p>
 
-      <h2>How to Open Word Files Online</h2>
-      <p>Select or drag your .docx file into the upload zone above. The viewer immediately displays your document with formatting intact. You can read, review, or print directly from your browser.</p>
+      <h2>Why Use SheetBox Word Viewer?</h2>
+      <ul>
+        <li><strong>Strict Data Privacy:</strong> Policy documents, employment contracts, and financial reports stay in your device's memory.</li>
+        <li><strong>Paginated A4 Layout:</strong> View real document breaks, page numbering, font formatting, and tables.</li>
+        <li><strong>Cross-Platform Compatibility:</strong> Works seamlessly on mobile phones, Chromebooks, iPads, and desktop PCs.</li>
+      </ul>
     </article>
   </main>
+
+  <div style="max-width: 1240px; margin: 16px auto; padding: 0 16px; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+    <strong>Popular Tools:</strong> 
+    <a href="/word-viewer.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">📘 Word Viewer</a> •
+    <a href="/pdf-to-word.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">📄 PDF to Word</a> •
+    <a href="/merge-pdf.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">📑 Merge PDF</a> •
+    <a href="/images-to-pdf.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">🖼️ Images to PDF</a> •
+    <a href="/compress-image.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">⚡ Compress Image</a> •
+    <a href="/invoice-generator.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">🧾 Invoice Generator</a>
+  </div>
 
   <footer>
     <div style="margin-bottom: 6px; font-weight: 500;">SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution</div>
@@ -217,7 +308,7 @@
     </div>
   </footer>
 
-  <!-- JSZip & docx-preview CDNs -->
+  <!-- Fast & Compatible JSZip + docx-preview libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.2/dist/docx-preview.min.js"></script>
 
@@ -229,6 +320,9 @@
     const viewerCard = document.getElementById("viewerCard");
     const docxContainer = document.getElementById("docxContainer");
     const fileNameLabel = document.getElementById("fileNameLabel");
+    const zoomLevelText = document.getElementById("zoomLevelText");
+
+    let currentScale = 1.0;
 
     dropArea.onclick = () => fileInput.click();
 
@@ -246,21 +340,28 @@
 
     async function renderDocx(file) {
       if (!file.name.toLowerCase().endsWith(".docx")) {
-        alert("Please select a valid .docx file.");
+        alert("Please select a valid Microsoft Word (.docx) file.");
         return;
       }
 
       fileNameLabel.textContent = file.name;
       statusBox.style.display = "block";
-      statusText.textContent = `Unpacking "${file.name}"...`;
+      statusText.textContent = `Unpacking and formatting "${file.name}"...`;
 
       try {
         docxContainer.innerHTML = "";
+        resetZoom();
+
+        // Render with inWrapper: true so docx-preview produces isolated, paginated paper pages
         await docx.renderAsync(file, docxContainer, null, {
           className: "docx",
-          inWrapper: false,
+          inWrapper: true,
           ignoreWidth: false,
-          ignoreHeight: false
+          ignoreHeight: false,
+          breakPages: true,
+          renderHeaders: true,
+          renderFooters: true,
+          renderFootnotes: true
         });
 
         statusBox.style.display = "none";
@@ -268,8 +369,24 @@
         viewerCard.scrollIntoView({ behavior: 'smooth' });
       } catch (err) {
         statusBox.style.display = "none";
-        alert("Error rendering Word document: " + err.message);
+        alert("Could not render document: " + err.message);
       }
+    }
+
+    // Zoom Controls
+    window.zoomDoc = (delta) => {
+      currentScale = Math.min(Math.max(0.5, currentScale + delta), 2.0);
+      applyZoom();
+    };
+
+    window.resetZoom = () => {
+      currentScale = 1.0;
+      applyZoom();
+    };
+
+    function applyZoom() {
+      docxContainer.style.transform = `scale(${currentScale})`;
+      zoomLevelText.textContent = `${Math.round(currentScale * 100)}%`;
     }
 
     window.resetViewer = () => {
@@ -277,6 +394,7 @@
       docxContainer.innerHTML = "";
       viewerCard.style.display = "none";
       statusBox.style.display = "none";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
   </script>
 </body>
