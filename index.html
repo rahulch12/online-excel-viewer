@@ -7,57 +7,56 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-CS8Z05TBZY');
   </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
 
+  <!-- SheetJS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  
+
+  <!-- Favicons -->
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="apple-touch-icon" href="/logo.png" />
 
-  <!-- Open Graph & Social Sharing -->
+  <!-- Primary SEO Meta Tags -->
+  <title>SheetBox Studio — Free In-Browser Excel, PDF & Document Tools</title>
+  <meta name="title" content="SheetBox Studio — Free In-Browser Excel, PDF & Document Tools" />
+  <meta name="description" content="Open, view, compare spreadsheets, merge PDFs, compress images, and generate invoices 100% in your browser. Fast, private, client-side execution." />
+  <meta name="keywords" content="online excel viewer, merge pdf online free, compress image online, compare excel files, free invoice generator, client side document utilities" />
+  <link rel="canonical" href="https://sheetbox.in/" />
+
+  <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sheetbox.in/" />
-  <meta property="og:title" content="SheetBox — Free In-Browser Tools" />
-  <meta property="og:description" content="Fast, 100% private in-browser document tools." />
-
-  <!-- PASTE IT HERE -->
+  <meta property="og:title" content="SheetBox Studio — Free In-Browser Document Tools" />
+  <meta property="og:description" content="Fast, 100% private in-browser document, spreadsheet, and PDF tools." />
   <meta property="og:image" content="https://sheetbox.in/logo.png" />
   <meta property="og:image:width" content="1024" />
   <meta property="og:image:height" content="1024" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://sheetbox.in/logo.png" />
-  
-  <!-- Primary Meta Tags -->
-  <title>SheetBox — Free In-Browser Spreadsheet & PDF Studio</title>
-  <meta name="title" content="SheetBox — Free In-Browser Spreadsheet & PDF Studio" />
-  <meta name="description" content="Open, view, compare, and convert Excel, CSV, PDF, and Images directly in your browser. 100% free, client-side private, zero file uploads." />
 
-  <!-- Open Graph / WhatsApp / Facebook / LinkedIn -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://sheetbox.in/" />
-  <meta property="og:title" content="SheetBox — Fast In-Browser Spreadsheet & PDF Studio" />
-  <meta property="og:description" content="Open, view, compare, and convert Excel, CSV, PDF, and Images directly in your browser. Zero file uploads, 100% private." />
-  <meta property="og:image" content="https://sheetbox.in/preview.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-
-  <!-- Twitter / X Cards -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://sheetbox.in/" />
-  <meta name="twitter:title" content="SheetBox — In-Browser Spreadsheet & PDF Studio" />
-  <meta name="twitter:description" content="Open, view, compare, and convert Excel, CSV, PDF, and Images directly in your browser. 100% private." />
-  <meta name="twitter:image" content="https://sheetbox.in/preview.png" />
-
-  <!-- SheetJS CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <!-- PDF-Lib CDN for Client-Side PDF Generation and Merging -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <!-- Schema.org WebSite & WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SheetBox Studio",
+    "url": "https://sheetbox.in/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
 
   <style>
     :root {
@@ -67,1655 +66,317 @@
       --border-color: #e2e8f0;
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --primary-accent: #3b82f6;
-
-      /* Excel Colors */
-      --excel-green: #107c41;
-      --excel-header-bg: #f1f5f9;
-      --excel-border: #d4d4d4;
-      --excel-active: #107c41;
+      --primary-accent: #2563eb;
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--page-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .brand-group { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+    .brand-logo-img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .privacy-badge { font-size: 11.5px; color: #94a3b8; background: rgba(255,255,255,0.06); padding: 5px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
+    .bmc-header-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: 20px; text-decoration: none; }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
+    .main-container { max-width: 1140px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
 
-    body {
-      background-color: var(--page-bg);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Universal Responsive Header */
-    header {
-      background-color: var(--header-bg);
-      color: #fff;
-      padding: 12px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand-logo {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #3b82f6, #6366f1);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 15px;
-      color: #fff;
-      flex-shrink: 0;
-    }
-
-    .brand-title {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-      line-height: 1.2;
-    }
-
-    .brand-subtitle {
-      font-size: 11px;
-      color: #94a3b8;
-      display: block;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .privacy-badge {
-      font-size: 11px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #cbd5e1;
-      padding: 5px 10px;
-      border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      white-space: nowrap;
-    }
-
-    .bmc-header-btn {
-      background: #ffdd00;
-      color: #000000;
-      font-weight: 700;
-      font-size: 12px;
-      padding: 5px 12px;
-      border-radius: 20px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      white-space: nowrap;
-    }
-
-    .bmc-header-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-    }
-
-    .container {
-      max-width: 1240px;
-      width: 100%;
-      padding: 16px;
-      margin: 0 auto;
-      flex: 1;
-    }
-
-    /* Responsive Navigation: Horizontal Strip on Desktop, 2-Column Grid on Mobile */
-    .suite-nav-container {
-      margin-bottom: 16px;
-    }
-
-    .suite-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      background: #e2e8f0;
-      padding: 6px;
-      border-radius: 12px;
-      justify-content: flex-start;
-    }
-
-    .nav-tab {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 8px 14px;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-
-    .nav-tab.active {
-      background: #fff;
-      color: var(--text-main);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    }
-
-    .nav-tab.active[data-tool="excel"] { color: var(--excel-green); }
-    .nav-tab.active[data-tool="compress"] { color: #d97706; }
-    .nav-tab.active[data-tool="imgpdf"] { color: #ea580c; }
-    .nav-tab.active[data-tool="pdfmerge"] { color: #0284c7; }
-    .nav-tab.active[data-tool="pdf"] { color: #dc2626; }
-    .nav-tab.active[data-tool="diff"] { color: #2563eb; }
-    .nav-tab.active[data-tool="merge"] { color: #7c3aed; }
-    .nav-tab.active[data-tool="json"] { color: #059669; }
-
-    /* Workspace Content Card */
-    .workspace-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-    }
-
-    .alert-banner {
-      display: none;
-      padding: 10px 14px;
-      border-radius: 8px;
-      margin-bottom: 14px;
-      font-size: 13px;
-      word-break: break-word;
-    }
-    .alert-error { background: #fee2e2; border: 1px solid #f87171; color: #b91c1c; }
-    .alert-success { background: #dcfce7; border: 1px solid #4ade80; color: #15803d; }
-    .alert-info { background: #e0f2fe; border: 1px solid #38bdf8; color: #0369a1; }
-
-    /* Dropzone */
+    /* Studio Workspace Card */
+    .workspace-wrapper { background: #ffffff; border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 30px; }
+    
     .dropzone {
-      background: #f8fafc;
       border: 2px dashed #cbd5e1;
-      border-radius: 10px;
-      padding: 32px 16px;
+      border-radius: 12px;
+      padding: 46px 20px;
       text-align: center;
+      background: #f8fafc;
       cursor: pointer;
       transition: all 0.2s ease;
     }
+    .dropzone:hover { border-color: var(--primary-accent); background: #f0f7ff; }
+    .drop-icon { font-size: 36px; margin-bottom: 8px; }
+    .drop-title { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .drop-desc { font-size: 13px; color: var(--text-muted); }
 
-    .dropzone-icon {
-      width: 44px;
-      height: 44px;
-      margin: 0 auto 10px auto;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
+    /* Viewer Table Canvas */
+    .viewer-area { display: none; margin-top: 20px; }
+    .viewer-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+    .sheet-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .sheet-tab-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #f8fafc; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .sheet-tab-btn.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+    .table-scroll-wrapper { max-height: 520px; overflow: auto; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; }
+    table.data-grid { width: 100%; border-collapse: collapse; font-size: 12px; }
+    table.data-grid th { position: sticky; top: 0; background: #f1f5f9; padding: 8px 10px; border-bottom: 2px solid var(--border-color); text-align: left; font-weight: 700; color: #334155; }
+    table.data-grid td { padding: 7px 10px; border-bottom: 1px solid #f1f5f9; white-space: nowrap; color: #334155; }
+    table.data-grid tr:hover { background-color: #f8fafc; }
 
-    /* Toolbars & Action Buttons */
-    .toolbar {
-      display: none;
-      background: #f8fafc;
+    /* Grid Directory of Tools */
+    .directory-section { margin-top: 20px; }
+    .section-heading-bar { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 18px; flex-wrap: wrap; gap: 8px; }
+    .section-title { font-size: 18px; font-weight: 800; color: #0f172a; }
+    .section-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .pill-badge { font-size: 11.5px; font-weight: 600; color: var(--primary-accent); background: #eff6ff; padding: 4px 10px; border-radius: 20px; }
+
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .tool-card {
+      background: #ffffff;
       border: 1px solid var(--border-color);
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .button-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      width: 100%;
-    }
-
-    .btn {
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      border: 1px solid transparent;
-      user-select: none;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-      min-height: 36px;
-    }
-
-    .btn-default {
-      background: #fff;
-      border-color: #cbd5e1;
-      color: #334155;
-    }
-    .btn-excel { background: var(--excel-green); color: #fff; }
-    .btn-primary { background: #2563eb; color: #fff; }
-    .btn-amber { background: #d97706; color: #fff; }
-    .btn-orange { background: #ea580c; color: #fff; }
-    .btn-sky { background: #0284c7; color: #fff; }
-
-    input[type="file"] { display: none; }
-
-    .search-box {
-      padding: 8px 12px;
-      font-size: 13px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      outline: none;
-      width: 100%;
-    }
-
-    /* Excel Formula Bar */
-    .excel-formula-bar {
-      display: none;
-      align-items: center;
-      background: #f8fafc;
-      border: 1px solid var(--excel-border);
-      border-bottom: none;
-      padding: 6px 10px;
-      gap: 8px;
-    }
-
-    .cell-coordinate {
-      width: 55px;
-      background: #fff;
-      border: 1px solid var(--excel-border);
-      padding: 5px 6px;
-      font-weight: 700;
-      font-size: 11px;
-      text-align: center;
-      color: var(--excel-green);
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-
-    .fx-label {
-      font-style: italic;
-      color: #64748b;
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    .formula-display {
-      flex: 1;
-      background: #fff;
-      border: 1px solid var(--excel-border);
-      padding: 5px 8px;
-      font-size: 12px;
-      color: #1e293b;
-      outline: none;
-      border-radius: 4px;
-      min-width: 0;
-    }
-
-    /* Mobile Sticky Grid Viewport */
-    .excel-grid-container {
-      display: none;
-      overflow: auto;
-      max-height: 55vh;
-      border: 1px solid var(--excel-border);
-      background: #fff;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    table.excel-sheet-table {
-      border-collapse: separate;
-      border-spacing: 0;
-      font-size: 12px;
-      color: #1e293b;
-      white-space: nowrap;
-      min-width: 100%;
-    }
-
-    .corner-header {
-      background: #e2e8f0;
-      border-right: 1px solid var(--excel-border);
-      border-bottom: 1px solid var(--excel-border);
-      width: 38px;
-      min-width: 38px;
-      position: sticky;
-      top: 0;
-      left: 0;
-      z-index: 25;
-    }
-
-    th.excel-header {
-      background: var(--excel-header-bg);
-      border-right: 1px solid var(--excel-border);
-      border-bottom: 1px solid var(--excel-border);
-      padding: 6px 12px;
-      font-weight: 600;
-      color: #475569;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-    }
-
-    td.row-indexer {
-      background: var(--excel-header-bg);
-      border-right: 1px solid var(--excel-border);
-      border-bottom: 1px solid var(--excel-border);
-      text-align: center;
-      color: #64748b;
-      font-weight: 600;
-      padding: 6px 6px;
-      position: sticky;
-      left: 0;
-      z-index: 15;
-    }
-
-    td.data-cell {
-      border-right: 1px solid #e2e8f0;
-      border-bottom: 1px solid #e2e8f0;
-      padding: 6px 10px;
-      background: #fff;
-      outline: none;
-    }
-
-    td.data-cell.active-cell {
-      box-shadow: inset 0 0 0 2px var(--excel-active);
-      background: #f0fdf4 !important;
-    }
-
-    .excel-footer-bar {
-      display: none;
-      background: #f8fafc;
-      border: 1px solid var(--excel-border);
-      border-top: none;
-      padding: 8px 12px;
-      font-size: 11px;
-      color: #64748b;
-      justify-content: space-between;
-      align-items: center;
-      border-radius: 0 0 6px 6px;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .sheet-tab-tag {
-      background: #fff;
-      padding: 3px 10px;
-      font-weight: 700;
-      color: var(--excel-green);
-      border: 1px solid #cbd5e1;
-      border-bottom: 2px solid var(--excel-green);
-      font-size: 11px;
-    }
-
-    .pdf-viewer-frame {
-      display: none;
-      width: 100%;
-      height: 65vh;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #1e293b;
-    }
-
-    /* Thumbnail Gallery for Image -> PDF */
-    .img-preview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .img-preview-item {
-      position: relative;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 4px;
-      background: #f8fafc;
-      text-align: center;
-    }
-
-    .img-preview-item img {
-      width: 100%;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
-    .img-preview-item span {
-      display: block;
-      font-size: 10px;
-      color: var(--text-muted);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      margin-top: 4px;
-    }
-
-    /* List view for PDF Merger */
-    .pdf-file-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .pdf-file-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-    }
-
-    /* Image Compressor Controls */
-    .compress-card {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      padding: 16px;
-      border-radius: 10px;
-      margin-top: 12px;
-    }
-
-    .compress-stats {
-      display: flex;
-      justify-content: space-around;
-      background: #fff;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      font-size: 12px;
-      text-align: center;
-    }
-
-    .slider-control {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .slider-control input[type="range"] {
-      width: 100%;
-      accent-color: #d97706;
-    }
-
-    .affiliate-banner {
-      margin-top: 18px;
-      padding: 12px 16px;
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 12px;
-    }
-
-    .affiliate-banner-text {
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .affiliate-link {
-      font-weight: 700;
+      border-radius: 12px;
+      padding: 20px 18px;
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: opacity 0.15s ease;
-      white-space: nowrap;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
     }
+    .tool-card:hover {
+      border-color: var(--primary-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+    }
+    .tool-card-icon { font-size: 26px; margin-bottom: 10px; }
+    .tool-card-title { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .tool-card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.45; }
 
-    .affiliate-link:hover {
-      opacity: 0.85;
-      text-decoration: underline;
-    }
-
-    .json-textarea {
-      width: 100%;
-      height: 200px;
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px;
-      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-      font-size: 12px;
-      color: #38bdf8;
-      margin-bottom: 12px;
-      outline: none;
-      resize: vertical;
-    }
-
-    footer {
-      padding: 20px 16px;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-color);
-      background: #fff;
-      margin-top: auto;
-      line-height: 1.6;
-    }
-
-    /* Screen Adjustments & Mobile 2-Column Navigation */
-    @media (max-width: 640px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .header-actions {
-        width: 100%;
-        justify-content: space-between;
-      }
-      .suite-nav {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-        padding: 6px;
-      }
-      .nav-tab {
-        font-size: 11.5px;
-        padding: 9px 6px;
-        text-align: center;
-      }
-      .workspace-card {
-        padding: 12px;
-      }
-      .button-group .btn {
-        flex: 1 1 calc(50% - 6px);
-      }
-      .excel-grid-container {
-        max-height: 48vh;
-      }
-      .affiliate-banner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
+    /* Categorized Footer */
+    footer { border-top: 1px solid var(--border-color); background: #ffffff; padding: 36px 16px 24px 16px; margin-top: 50px; }
+    .footer-container { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 28px; font-size: 13px; }
+    .footer-brand-col { max-width: 320px; }
+    .footer-brand-title { font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .footer-brand-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
+    .footer-links-group { display: flex; gap: 44px; flex-wrap: wrap; }
+    .footer-col-title { color: #0f172a; display: block; margin-bottom: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; }
+    .footer-links-list { list-style: none; padding: 0; margin: 0; line-height: 2.1; }
+    .footer-links-list a { color: var(--text-muted); text-decoration: none; font-size: 12.5px; }
+    .footer-links-list a:hover { color: var(--primary-accent); }
   </style>
 </head>
 <body>
 
-  <!-- Universal Responsive Header with Tip Button -->
   <header>
-    <div class="brand-group">
-      <!-- REPLACE WITH THIS: -->
-      <img src="/logo.png" alt="SheetBox Logo" style="width: 34px; height: 34px; border-radius: 8px; object-fit: cover; display: block;" />
+    <a href="/" class="brand-group">
+      <img src="/logo.png" alt="SheetBox Logo" class="brand-logo-img" />
       <div>
-        <span class="brand-title">SheetBox Studio</span>
-        <span class="brand-subtitle">by Rahul Chauhan</span>
+        <span style="font-size: 16px; font-weight: 700;">SheetBox Studio</span>
+        <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
       </div>
-    </div>
+    </a>
     <div class="header-actions">
       <div class="privacy-badge">🔒 100% In-Browser Privacy</div>
-      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">
-        ☕ <span>Buy me a coffee</span>
-      </a>
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">☕ Support</a>
     </div>
   </header>
 
-  <main class="container">
-    <!-- Responsive Navigation: 2-Column Grid on Mobile, Row on Desktop -->
-    <div class="suite-nav-container">
-      <nav class="suite-nav">
-        <button class="nav-tab active" id="tabStudio" data-tool="excel" type="button">📊 Excel & CSV</button>
-        <button class="nav-tab" id="tabCompress" data-tool="compress" type="button">⚡ Compress Image</button>
-        <button class="nav-tab" id="tabImgPdf" data-tool="imgpdf" type="button">🖼️ Images ➔ PDF</button>
-        <button class="nav-tab" id="tabPdfMerge" data-tool="pdfmerge" type="button">📑 Merge PDFs</button>
-        <button class="nav-tab" id="tabPdf" data-tool="pdf" type="button">📄 PDF Viewer</button>
-        <button class="nav-tab" id="tabCompare" data-tool="diff" type="button">⚖️ Compare / Diff</button>
-        <button class="nav-tab" id="tabMerge" data-tool="merge" type="button">📊 Merge Sheets</button>
-        <button class="nav-tab" id="tabJson" data-tool="json" type="button">🔄 JSON ➔ Excel</button>
+  <main class="main-container">
+    
+    <!-- Workspace: Native Spreadsheet Viewer -->
+    <div class="workspace-wrapper">
+      <div class="dropzone" id="dropzone">
+        <div class="drop-icon">📊</div>
+        <div class="drop-title">Open Spreadsheet (XLSX, XLS, CSV)</div>
+        <div class="drop-desc">Click or drop your spreadsheet here to view and filter instantly. No upload to servers.</div>
+        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display: none;" />
+      </div>
+
+      <div class="viewer-area" id="viewerArea">
+        <div class="viewer-toolbar">
+          <div class="sheet-tabs" id="sheetTabs"></div>
+          <div style="font-size: 12px; color: var(--text-muted);" id="rowColCount"></div>
+        </div>
+        <div class="table-scroll-wrapper">
+          <table class="data-grid" id="dataGrid">
+            <thead id="gridHead"></thead>
+            <tbody id="gridBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Standalone Tools Directory Grid -->
+    <section class="directory-section">
+      <div class="section-heading-bar">
+        <div>
+          <h2 class="section-title">Free In-Browser Utilities</h2>
+          <p class="section-sub">100% private, client-side document processing. Zero server storage.</p>
+        </div>
+        <span class="pill-badge">No Signup Required</span>
+      </div>
+
+      <div class="tools-grid">
         
-      </nav>
-    </div>
+        <!-- Tool 1: Merge PDF -->
+        <a href="/merge-pdf.html" class="tool-card">
+          <div class="tool-card-icon">📑</div>
+          <div class="tool-card-title">Merge PDF Files</div>
+          <div class="tool-card-desc">Combine multiple PDF documents into a single organized file in seconds.</div>
+        </a>
 
-    <div class="workspace-card">
-      <div id="alertBox" class="alert-banner"></div>
+        <!-- Tool 2: Images to PDF -->
+        <a href="/images-to-pdf.html" class="tool-card">
+          <div class="tool-card-icon">🖼️</div>
+          <div class="tool-card-title">Images to PDF</div>
+          <div class="tool-card-desc">Convert PNG, JPG, and WebP images into clean, shareable PDF documents.</div>
+        </a>
 
-      <!-- ================= 1. EXCEL & CSV STUDIO ================= -->
-      <section id="paneStudio">
-        <div class="dropzone" id="studioDropzone">
-          <div class="dropzone-icon" style="color: var(--excel-green); background: #f0fdf4;">📊</div>
-          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Open Spreadsheet</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Tap to upload or drop .xlsx / .csv</p>
-          <input type="file" id="inputStudio" accept=".xlsx, .xls, .csv" />
-        </div>
+        <!-- Tool 3: Compress Image -->
+        <a href="/compress-image.html" class="tool-card">
+          <div class="tool-card-icon">⚡</div>
+          <div class="tool-card-title">Compress Image</div>
+          <div class="tool-card-desc">Shrink image file sizes without noticeable loss in visual quality.</div>
+        </a>
 
-        <div class="toolbar" id="studioControls">
-          <div class="button-group">
-            <label for="inputStudio" class="btn btn-default">Change</label>
-            <button class="btn btn-excel" id="btnExportXlsx" type="button">Export .XLSX</button>
-            <button class="btn btn-default" id="btnExportCsv" type="button">CSV</button>
-            <button class="btn btn-default" id="btnDedupe" type="button">🧹 Dedupe</button>
-            <button class="btn btn-default" id="btnTrim" type="button">✂️ Trim</button>
-            <button class="btn btn-default" id="btnExportJson" type="button">JSON</button>
-            <button class="btn btn-default" id="btnExportPdf" type="button">📄 Export PDF</button>
-          </div>
-          <input type="text" id="studioSearch" class="search-box" placeholder="🔍 Search rows..." />
-        </div>
+        <!-- Tool 4: Compare Spreadsheets -->
+        <a href="/compare-excel.html" class="tool-card">
+          <div class="tool-card-icon">🔍</div>
+          <div class="tool-card-title">Compare Spreadsheets</div>
+          <div class="tool-card-desc">Diff two Excel or CSV sheets to highlight added, removed, and modified rows.</div>
+        </a>
 
-        <div class="excel-formula-bar" id="formulaBar">
-          <div class="cell-coordinate" id="activeCellName">A1</div>
-          <span class="fx-label">fx</span>
-          <input type="text" class="formula-display" id="formulaInput" readonly placeholder="Select cell" />
-        </div>
+        <!-- Tool 5: Invoice Generator -->
+        <a href="/invoice-generator.html" class="tool-card">
+          <div class="tool-card-icon">🧾</div>
+          <div class="tool-card-title">Invoice Generator</div>
+          <div class="tool-card-desc">Create professional receipts and commercial invoices. Export as PDF or PNG.</div>
+        </a>
 
-        <div class="excel-grid-container" id="studioTableWrapper">
-          <table class="excel-sheet-table">
-            <thead id="studioTblHead"></thead>
-            <tbody id="studioTblBody"></tbody>
-          </table>
-        </div>
+      </div>
+    </section>
 
-        <div class="excel-footer-bar" id="excelStatusBar">
-          <span class="sheet-tab-tag" id="sheetTabName">Sheet1</span>
-          <div style="display: flex; gap: 10px; font-size: 11px;">
-            <span id="excelStatCount">Count: 0</span>
-            <span id="excelStatSum" style="display:none; font-weight: 700; color: var(--excel-green);">Sum: 0</span>
-            <span id="excelStatAvg" style="display:none;">Avg: 0</span>
-          </div>
-        </div>
-
-        <div class="affiliate-banner">
-          <div class="affiliate-banner-text">
-            <span>⚡ Need automated workflows, team sharing, or relational databases?</span>
-          </div>
-          <a href="https://airtable.com" target="_blank" rel="noopener sponsored" class="affiliate-link" style="color: var(--excel-green);">
-            Explore Airtable for free &rarr;
-          </a>
-        </div>
-      </section>
-
-      <!-- ================= 2. COMPRESS IMAGE ================= -->
-      <section id="paneCompress" style="display: none;">
-        <div class="dropzone" id="compressDropzone">
-          <div class="dropzone-icon" style="color: #d97706; background: #fef3c7;">⚡</div>
-          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Select Image to Compress</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Reduce JPG, JPEG, or PNG file size without quality loss</p>
-          <input type="file" id="inputCompress" accept="image/jpeg, image/jpg, image/png, image/webp" />
-        </div>
-
-        <div id="compressDetails" style="display: none;" class="compress-card">
-          <div class="compress-stats">
-            <div>
-              <div style="font-weight: 600; color: var(--text-muted);">Original</div>
-              <div id="statOriginalSize" style="font-weight: 700; font-size: 14px;">0 KB</div>
-            </div>
-            <div style="font-size: 20px; color: #cbd5e1;">➔</div>
-            <div>
-              <div style="font-weight: 600; color: #15803d;">Compressed</div>
-              <div id="statCompressedSize" style="font-weight: 700; font-size: 14px; color: #15803d;">0 KB</div>
-            </div>
-            <div>
-              <div style="font-weight: 600; color: var(--text-muted);">Reduction</div>
-              <div id="statSavedPercent" style="font-weight: 700; font-size: 14px; color: #d97706;">0%</div>
-            </div>
-          </div>
-
-          <div class="slider-control">
-            <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600;">
-              <span>Compression Level</span>
-              <span id="sliderQualityVal">70%</span>
-            </div>
-            <input type="range" id="sliderQuality" min="5" max="95" value="70" />
-            <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted);">
-              <span>Smallest Size</span>
-              <span>Highest Quality</span>
-            </div>
-          </div>
-
-          <div class="slider-control">
-            <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600;">
-              <span>Max Width / Dimension</span>
-              <span id="sliderDimensionVal">1920 px</span>
-            </div>
-            <input type="range" id="sliderDimension" min="600" max="3840" step="100" value="1920" />
-          </div>
-
-          <div class="button-group" style="margin-top: 6px;">
-            <button class="btn btn-amber" id="btnDownloadCompressed" type="button">⬇️ Download Compressed Image</button>
-            <label for="inputCompress" class="btn btn-default">Change Image</label>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= 3. IMAGES ➔ PDF ================= -->
-      <section id="paneImgPdf" style="display: none;">
-        <div class="dropzone" id="imgPdfDropzone">
-          <div class="dropzone-icon" style="color: #ea580c; background: #fff7ed;">🖼️</div>
-          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Select Images to Convert</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Drop JPG, JPEG, or PNG files to package into a single A4 PDF</p>
-          <input type="file" id="inputImgPdf" accept="image/jpeg, image/jpg, image/png" multiple />
-        </div>
-
-        <div class="toolbar" id="imgPdfControls">
-          <div class="button-group">
-            <button class="btn btn-orange" id="btnConvertImgPdf" type="button">⬇️ Download A4 PDF</button>
-            <label for="inputImgPdf" class="btn btn-default">Add More Images</label>
-            <button class="btn btn-default" id="btnClearImgPdf" type="button">Clear All</button>
-          </div>
-        </div>
-
-        <div class="img-preview-grid" id="imgPreviewGrid"></div>
-      </section>
-
-      <!-- ================= 4. MERGE PDFS ================= -->
-      <section id="panePdfMerge" style="display: none;">
-        <div class="dropzone" id="pdfMergeDropzone">
-          <div class="dropzone-icon" style="color: #0284c7; background: #f0f9ff;">📑</div>
-          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Combine Multiple PDF Documents</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Drop 2 or more PDF files to merge into a single PDF document</p>
-          <input type="file" id="inputPdfMerge" accept="application/pdf" multiple />
-        </div>
-
-        <div class="toolbar" id="pdfMergeControls">
-          <div class="button-group">
-            <button class="btn btn-sky" id="btnRunPdfMerge" type="button">⬇️ Merge & Download PDF</button>
-            <label for="inputPdfMerge" class="btn btn-default">Add More PDFs</label>
-            <button class="btn btn-default" id="btnClearPdfMerge" type="button">Clear All</button>
-          </div>
-        </div>
-
-        <div class="pdf-file-list" id="pdfMergeList"></div>
-      </section>
-
-      <!-- ================= 5. PDF VIEWER ================= -->
-      <section id="panePdf" style="display: none;">
-        <div class="dropzone" id="pdfDropzone">
-          <div class="dropzone-icon" style="color: #dc2626; background: #fef2f2;">📄</div>
-          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Choose a PDF File</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Tap to preview locally</p>
-          <input type="file" id="inputPdf" accept="application/pdf, .pdf" />
-        </div>
-
-        <div class="toolbar" id="pdfControls">
-          <label for="inputPdf" class="btn btn-default">Change PDF</label>
-          <span id="pdfFileName" style="font-size: 12px; color: var(--text-muted); font-weight: 600;"></span>
-        </div>
-
-        <div class="pdf-viewer-frame" id="pdfViewerBox">
-          <embed id="pdfEmbed" src="" type="application/pdf" width="100%" height="100%" />
-        </div>
-
-        <div class="affiliate-banner">
-          <div class="affiliate-banner-text">
-            <span>🔍 Need advanced OCR text recognition, PDF compression, or file editing?</span>
-          </div>
-          <a href="https://smallpdf.com" target="_blank" rel="noopener sponsored" class="affiliate-link" style="color: #dc2626;">
-            Try Smallpdf Pro &rarr;
-          </a>
-        </div>
-      </section>
-
-      <!-- ================= 6. COMPARE / DIFF ================= -->
-      <section id="paneCompare" style="display: none;">
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
-          Compare two versions of an Excel file to see additions (<span style="color:#15803d; font-weight:bold;">green</span>) and removals (<span style="color:#b91c1c; font-weight:bold;">red</span>):
-        </p>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 14px;">
-          <div class="dropzone" id="dropzoneA" style="padding: 20px 10px;">
-            <label for="inputDiffA" class="btn btn-default">Original (A)</label>
-            <input type="file" id="inputDiffA" accept=".xlsx, .xls, .csv" />
-            <p id="diffNameA" style="margin-top: 6px; font-size: 11px;">No file</p>
-          </div>
-          <div class="dropzone" id="dropzoneB" style="padding: 20px 10px;">
-            <label for="inputDiffB" class="btn btn-default">Updated (B)</label>
-            <input type="file" id="inputDiffB" accept=".xlsx, .xls, .csv" />
-            <p id="diffNameB" style="margin-top: 6px; font-size: 11px;">No file</p>
-          </div>
-        </div>
-
-        <div style="text-align: center; margin-bottom: 14px;">
-          <button class="btn btn-primary" id="btnRunDiff" style="width: 100%; max-width: 260px;">Compare Sheets</button>
-        </div>
-
-        <div class="excel-grid-container" id="diffTableWrapper" style="display:none;">
-          <table class="excel-sheet-table">
-            <thead id="diffTblHead"></thead>
-            <tbody id="diffTblBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- ================= 7. MERGE SHEETS ================= -->
-      <section id="paneMerge" style="display: none;">
-        <div class="dropzone" id="mergeDropzone">
-          <div class="dropzone-icon" style="color: #7c3aed; background: #f5f3ff;">📊</div>
-          <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 4px;">Merge Multiple Spreadsheets</h3>
-          <p style="font-size: 12px; color: var(--text-muted);">Select 2 or more Excel/CSV files to combine rows</p>
-          <input type="file" id="inputMergeFiles" accept=".xlsx, .xls, .csv" multiple />
-        </div>
-
-        <div class="toolbar" id="mergeBar">
-          <button class="btn btn-excel" id="btnDownloadMerged">Download Combined .XLSX</button>
-          <span id="mergeStatus" style="font-size: 11px; color: var(--text-muted); font-weight: 600;"></span>
-        </div>
-
-        <div class="excel-grid-container" id="mergeTableWrapper" style="display:none;">
-          <table class="excel-sheet-table">
-            <thead id="mergeTblHead"></thead>
-            <tbody id="mergeTblBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- ================= 8. JSON TO EXCEL ================= -->
-      <section id="paneJson" style="display: none;">
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
-          Paste JSON array to convert into a spreadsheet:
-        </p>
-        <textarea id="jsonInput" class="json-textarea" placeholder='[
-  { "ID": 101, "Product": "Mouse", "Price": 29.99 },
-  { "ID": 102, "Product": "Keyboard", "Price": 89.00 }
-]'></textarea>
-        <div class="button-group">
-          <button class="btn btn-primary" id="btnJsonToExcel">Export .XLSX</button>
-          <button class="btn btn-default" id="btnJsonToCsv">Export .CSV</button>
-        </div>
-      </section>
-    </div>
   </main>
- <div style="max-width: 1240px; margin: 16px auto; padding: 0 16px; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
-    <strong>Popular Tools:</strong> 
-    <a href="/compress-image.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">⚡ Compress Image</a> •
-    <a href="/images-to-pdf.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">🖼️ Images to PDF</a> •
-    <a href="/merge-pdf.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">📑 Merge PDF</a> •
-    <a href="/compare-excel.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">🔍 Compare Sheets</a> •
-    <a href="/invoice-generator.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">🧾 Invoice Generator</a> •
-    <a href="/" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">📊 Excel & CSV Studio</a>
-  </div>
+
+  <!-- Categorized Footer Directory -->
   <footer>
-    <div style="margin-bottom: 6px; font-weight: 500;">
-      SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
-    </div>
-    <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">
-      Zero server tracking. Questions or feedback? Contact: 
-      <a href="mailto:chauhanr003@gmail.com" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">chauhanr003@gmail.com</a>
-    </div>
-    <div style="font-size: 11px; color: var(--text-muted);">
-      If this tool helped your workflow, consider supporting via 
-      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">Buy Me a Coffee ☕</a> 
-      • <a href="/privacy.html" style="color: var(--primary-accent); font-weight: 600; text-decoration: none;">Privacy Policy</a>.
+    <div class="footer-container">
+      
+      <div class="footer-brand-col">
+        <div class="footer-brand-title">SheetBox Studio</div>
+        <p class="footer-brand-desc">Fast, secure in-browser document tools. All processing happens in local browser memory with zero server uploads.</p>
+        <div style="font-size: 11.5px; color: #94a3b8;">Built by Rahul Chauhan</div>
+      </div>
+
+      <div class="footer-links-group">
+        <div>
+          <strong class="footer-col-title">PDF & Images</strong>
+          <ul class="footer-links-list">
+            <li><a href="/merge-pdf.html">Merge PDFs</a></li>
+            <li><a href="/images-to-pdf.html">Images to PDF</a></li>
+            <li><a href="/compress-image.html">Compress Image</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <strong class="footer-col-title">Spreadsheet & Tools</strong>
+          <ul class="footer-links-list">
+            <li><a href="/">Spreadsheet Studio</a></li>
+            <li><a href="/compare-excel.html">Compare Spreadsheets</a></li>
+            <li><a href="/invoice-generator.html">Invoice Generator</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <strong class="footer-col-title">Contact & Links</strong>
+          <ul class="footer-links-list">
+            <li><a href="mailto:chauhanr003@gmail.com">chauhanr003@gmail.com</a></li>
+            <li><a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer">Buy Me a Coffee ☕</a></li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </footer>
 
   <script>
-    const tabs = [
-      { btn: document.getElementById("tabStudio"), pane: document.getElementById("paneStudio") },
-      { btn: document.getElementById("tabCompress"), pane: document.getElementById("paneCompress") },
-      { btn: document.getElementById("tabImgPdf"), pane: document.getElementById("paneImgPdf") },
-      { btn: document.getElementById("tabPdfMerge"), pane: document.getElementById("panePdfMerge") },
-      { btn: document.getElementById("tabPdf"), pane: document.getElementById("panePdf") },
-      { btn: document.getElementById("tabCompare"), pane: document.getElementById("paneCompare") },
-      { btn: document.getElementById("tabMerge"), pane: document.getElementById("paneMerge") },
-      { btn: document.getElementById("tabJson"), pane: document.getElementById("paneJson") }
-    ];
+    let currentWorkbook = null;
+    const dropzone = document.getElementById("dropzone");
+    const fileInput = document.getElementById("fileInput");
+    const viewerArea = document.getElementById("viewerArea");
+    const sheetTabs = document.getElementById("sheetTabs");
+    const gridHead = document.getElementById("gridHead");
+    const gridBody = document.getElementById("gridBody");
+    const rowColCount = document.getElementById("rowColCount");
 
-    const alertBox = document.getElementById("alertBox");
+    dropzone.onclick = () => fileInput.click();
 
-    function showAlert(msg, type = "error") {
-      alertBox.textContent = msg;
-      alertBox.className = "alert-banner " + (type === "success" ? "alert-success" : type === "info" ? "alert-info" : "alert-error");
-      alertBox.style.display = "block";
-    }
-
-    function clearAlert() {
-      alertBox.textContent = "";
-      alertBox.style.display = "none";
-    }
-
-    tabs.forEach(({ btn, pane }) => {
-      btn.onclick = () => {
-        tabs.forEach(t => {
-          t.btn.classList.remove("active");
-          t.pane.style.display = "none";
-        });
-        btn.classList.add("active");
-        pane.style.display = "block";
-        clearAlert();
-      };
-    });
-
-    function setupDropzone(dropEl, inputEl) {
-      dropEl.onclick = (e) => {
-        if (e.target.tagName !== "INPUT" && e.target.tagName !== "LABEL") inputEl.click();
-      };
-      dropEl.ondragover = (e) => { e.preventDefault(); dropEl.style.borderColor = "#64748b"; };
-      dropEl.ondragleave = () => { dropEl.style.borderColor = "#cbd5e1"; };
-      dropEl.ondrop = (e) => {
-        e.preventDefault();
-        dropEl.style.borderColor = "#cbd5e1";
-        if (e.dataTransfer.files.length) {
-          inputEl.files = e.dataTransfer.files;
-          inputEl.dispatchEvent(new Event("change"));
-        }
-      };
-    }
-
-    function getColumnLetter(colIndex) {
-      let temp, letter = '';
-      colIndex++;
-      while (colIndex > 0) {
-        temp = (colIndex - 1) % 26;
-        letter = String.fromCharCode(temp + 65) + letter;
-        colIndex = (colIndex - temp - 1) / 26;
+    dropzone.ondragover = (e) => { e.preventDefault(); dropzone.style.borderColor = "#2563eb"; };
+    dropzone.ondragleave = () => { dropzone.style.borderColor = "#cbd5e1"; };
+    dropzone.ondrop = (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = "#cbd5e1";
+      if (e.dataTransfer.files.length) {
+        handleFile(e.dataTransfer.files[0]);
       }
-      return letter;
-    }
+    };
 
-    function readFileBuffer(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(new Error("Failed reading file"));
-        reader.readAsArrayBuffer(file);
-      });
-    }
-
-    // ================= 1. EXCEL WORKBOOK STUDIO =================
-    let parsedRows = [];
-    const inputStudio = document.getElementById("inputStudio");
-    const studioDropzone = document.getElementById("studioDropzone");
-    const studioTblHead = document.getElementById("studioTblHead");
-    const studioTblBody = document.getElementById("studioTblBody");
-    const studioTableWrapper = document.getElementById("studioTableWrapper");
-    const studioControls = document.getElementById("studioControls");
-    const formulaBar = document.getElementById("formulaBar");
-    const excelStatusBar = document.getElementById("excelStatusBar");
-    const activeCellName = document.getElementById("activeCellName");
-    const formulaInput = document.getElementById("formulaInput");
-    const sheetTabName = document.getElementById("sheetTabName");
-    const excelStatCount = document.getElementById("excelStatCount");
-    const excelStatSum = document.getElementById("excelStatSum");
-    const excelStatAvg = document.getElementById("excelStatAvg");
-    const studioSearch = document.getElementById("studioSearch");
-
-    setupDropzone(studioDropzone, inputStudio);
-
-    function renderExcelTable(rows) {
-      studioTblHead.innerHTML = "";
-      studioTblBody.innerHTML = "";
-
-      if (!rows || rows.length === 0) return;
-
-      const keys = Array.from(new Set(parsedRows.flatMap(r => Object.keys(r))));
-
-      const trLetters = document.createElement("tr");
-      const cornerTh = document.createElement("th");
-      cornerTh.className = "corner-header";
-      trLetters.appendChild(cornerTh);
-
-      keys.forEach((k, idx) => {
-        const th = document.createElement("th");
-        th.className = "excel-header";
-        th.textContent = `${getColumnLetter(idx)} (${k})`;
-        trLetters.appendChild(th);
-      });
-      studioTblHead.appendChild(trLetters);
-
-      rows.forEach((row, rowIdx) => {
-        const tr = document.createElement("tr");
-
-        const tdNum = document.createElement("td");
-        tdNum.className = "row-indexer";
-        tdNum.textContent = rowIdx + 1;
-        tr.appendChild(tdNum);
-
-        keys.forEach((k, colIdx) => {
-          const td = document.createElement("td");
-          td.className = "data-cell";
-          const cellVal = row[k] !== undefined ? row[k] : "";
-          td.textContent = cellVal;
-
-          td.onclick = function() {
-            document.querySelectorAll(".data-cell.active-cell").forEach(el => el.classList.remove("active-cell"));
-            td.classList.add("active-cell");
-            activeCellName.textContent = `${getColumnLetter(colIdx)}${rowIdx + 1}`;
-            formulaInput.value = cellVal;
-            checkStatsForColumn(k);
-          };
-
-          tr.appendChild(td);
-        });
-
-        studioTblBody.appendChild(tr);
-      });
-
-      excelStatCount.textContent = `Count: ${rows.length}`;
-    }
-
-    function checkStatsForColumn(colKey) {
-      const nums = parsedRows.map(r => Number(r[colKey])).filter(n => !isNaN(n) && n !== 0);
-      if (nums.length > 0) {
-        const sum = nums.reduce((a, b) => a + b, 0);
-        excelStatSum.textContent = `Sum: ${Number.isInteger(sum) ? sum : sum.toFixed(2)}`;
-        excelStatAvg.textContent = `Avg: ${(sum / nums.length).toFixed(2)}`;
-        excelStatSum.style.display = "inline";
-        excelStatAvg.style.display = "inline";
-      } else {
-        excelStatSum.style.display = "none";
-        excelStatAvg.style.display = "none";
+    fileInput.onchange = (e) => {
+      if (e.target.files.length) {
+        handleFile(e.target.files[0]);
       }
-    }
+    };
 
-    inputStudio.onchange = function(e) {
-      clearAlert();
-      const file = e.target.files[0];
-      if (!file) return;
-
+    function handleFile(file) {
       const reader = new FileReader();
-      reader.onload = function(evt) {
-        try {
-          const data = evt.target.result;
-          const workbook = XLSX.read(data, { type: "binary" });
-          const firstSheet = workbook.SheetNames[0];
-          sheetTabName.textContent = firstSheet;
-
-          const sheet = workbook.Sheets[firstSheet];
-          parsedRows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
-
-          if (!parsedRows || parsedRows.length === 0) {
-            showAlert("The spreadsheet has no readable data.");
-            return;
-          }
-
-          renderExcelTable(parsedRows);
-          studioTableWrapper.style.display = "block";
-          studioControls.style.display = "flex";
-          formulaBar.style.display = "flex";
-          excelStatusBar.style.display = "flex";
-          studioDropzone.style.display = "none";
-        } catch (err) {
-          showAlert("Error reading file: " + err.message);
-        } finally {
-          inputStudio.value = "";
-        }
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        currentWorkbook = XLSX.read(data, { type: "array" });
+        setupSheetTabs();
+        renderActiveSheet(currentWorkbook.SheetNames[0]);
+        viewerArea.style.display = "block";
+        dropzone.querySelector(".drop-title").textContent = `Viewing: ${file.name}`;
       };
+      reader.readAsArrayBuffer(file);
+    }
 
-      if (reader.readAsBinaryString) {
-        reader.readAsBinaryString(file);
-      } else {
-        reader.readAsArrayBuffer(file);
-      }
-    };
-
-    studioSearch.oninput = function() {
-      const term = this.value.toLowerCase().trim();
-      if (!term) {
-        renderExcelTable(parsedRows);
-        return;
-      }
-      const filtered = parsedRows.filter(row => 
-        Object.values(row).some(v => String(v).toLowerCase().includes(term))
-      );
-      renderExcelTable(filtered);
-    };
-
-    document.getElementById("btnDedupe").onclick = function() {
-      if (!parsedRows.length) return;
-      const init = parsedRows.length;
-      const seen = new Set();
-      parsedRows = parsedRows.filter(r => {
-        const sig = JSON.stringify(r);
-        if (seen.has(sig)) return false;
-        seen.add(sig);
-        return true;
-      });
-      renderExcelTable(parsedRows);
-      showAlert(`Cleaned ${init - parsedRows.length} duplicates.`, "success");
-    };
-
-    document.getElementById("btnTrim").onclick = function() {
-      if (!parsedRows.length) return;
-      parsedRows = parsedRows.map(row => {
-        const cleaned = {};
-        Object.keys(row).forEach(k => {
-          const val = row[k];
-          cleaned[k.trim()] = typeof val === "string" ? val.trim() : val;
-        });
-        return cleaned;
-      });
-      renderExcelTable(parsedRows);
-      showAlert("Trimmed whitespace across all cells.", "success");
-    };
-
-    document.getElementById("btnExportXlsx").onclick = () => {
-      if (!parsedRows.length) return;
-      const ws = XLSX.utils.json_to_sheet(parsedRows);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-      XLSX.writeFile(wb, "Workbook.xlsx");
-    };
-
-    document.getElementById("btnExportCsv").onclick = () => {
-      if (!parsedRows.length) return;
-      const ws = XLSX.utils.json_to_sheet(parsedRows);
-      const csv = XLSX.utils.sheet_to_csv(ws);
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-      a.download = "Spreadsheet.csv";
-      a.click();
-    };
-
-    document.getElementById("btnExportJson").onclick = () => {
-      if (!parsedRows.length) return;
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(new Blob([JSON.stringify(parsedRows, null, 2)], { type: "application/json" }));
-      a.download = "data.json";
-      a.click();
-    };
-
-    document.getElementById("btnExportPdf").onclick = () => {
-      if (!parsedRows.length) return showAlert("Open a spreadsheet first.");
-      const printWindow = window.open('', '_blank');
-      const tableHtml = document.getElementById("studioTableWrapper").innerHTML;
-      printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>SheetBox Spreadsheet Report</title>
-            <style>
-              @page { size: landscape; margin: 8mm; }
-              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 10px; color: #1e293b; }
-              h2 { font-size: 16px; margin-bottom: 8px; }
-              table { width: 100%; border-collapse: collapse; font-size: 10px; }
-              th, td { border: 1px solid #cbd5e1; padding: 5px 8px; text-align: left; }
-              th { background-color: #f1f5f9; font-weight: bold; }
-              .corner-header, .row-indexer { display: none; }
-            </style>
-          </head>
-          <body>
-            <h2>SheetBox Report &bull; ${sheetTabName.textContent}</h2>
-            ${tableHtml}
-            <script>
-              window.onload = () => {
-                window.print();
-                setTimeout(() => window.close(), 1000);
-              };
-            <\/script>
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
-    };
-
-    // ================= 2. IMAGE COMPRESSOR (100% IN-BROWSER CANVAS) =================
-    const inputCompress = document.getElementById("inputCompress");
-    const compressDropzone = document.getElementById("compressDropzone");
-    const compressDetails = document.getElementById("compressDetails");
-    const statOriginalSize = document.getElementById("statOriginalSize");
-    const statCompressedSize = document.getElementById("statCompressedSize");
-    const statSavedPercent = document.getElementById("statSavedPercent");
-    const sliderQuality = document.getElementById("sliderQuality");
-    const sliderQualityVal = document.getElementById("sliderQualityVal");
-    const sliderDimension = document.getElementById("sliderDimension");
-    const sliderDimensionVal = document.getElementById("sliderDimensionVal");
-    const btnDownloadCompressed = document.getElementById("btnDownloadCompressed");
-
-    let currentCompressImg = null;
-    let originalFileSize = 0;
-    let compressedBlob = null;
-    let originalFileName = "image.jpg";
-
-    setupDropzone(compressDropzone, inputCompress);
-
-    inputCompress.onchange = function(e) {
-      clearAlert();
-      const file = e.target.files[0];
-      if (!file) return;
-
-      originalFileSize = file.size;
-      originalFileName = file.name.replace(/\.[^/.]+$/, "");
-      statOriginalSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        currentCompressImg = new Image();
-        currentCompressImg.onload = function() {
-          compressDropzone.style.display = "none";
-          compressDetails.style.display = "flex";
-          processCompression();
+    function setupSheetTabs() {
+      sheetTabs.innerHTML = "";
+      currentWorkbook.SheetNames.forEach((sheetName, index) => {
+        const btn = document.createElement("button");
+        btn.className = `sheet-tab-btn ${index === 0 ? "active" : ""}`;
+        btn.textContent = sheetName;
+        btn.onclick = () => {
+          document.querySelectorAll(".sheet-tab-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderActiveSheet(sheetName);
         };
-        currentCompressImg.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
-      inputCompress.value = "";
-    };
-
-    function processCompression() {
-      if (!currentCompressImg) return;
-
-      const quality = sliderQuality.value / 100;
-      sliderQualityVal.textContent = `${sliderQuality.value}%`;
-
-      const maxDim = parseInt(sliderDimension.value, 10);
-      sliderDimensionVal.textContent = `${maxDim} px`;
-
-      let w = currentCompressImg.width;
-      let h = currentCompressImg.height;
-
-      if (w > maxDim || h > maxDim) {
-        if (w > h) {
-          h = Math.round((h * maxDim) / w);
-          w = maxDim;
-        } else {
-          w = Math.round((w * maxDim) / h);
-          h = maxDim;
-        }
-      }
-
-      const canvas = document.createElement("canvas");
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(currentCompressImg, 0, 0, w, h);
-
-      canvas.toBlob(
-        function(blob) {
-          compressedBlob = blob;
-          const compressedSize = blob.size;
-          statCompressedSize.textContent = `${(compressedSize / 1024).toFixed(1)} KB`;
-
-          const saved = ((originalFileSize - compressedSize) / originalFileSize) * 100;
-          statSavedPercent.textContent = saved > 0 ? `-${saved.toFixed(1)}%` : "0%";
-          statSavedPercent.style.color = saved > 0 ? "#15803d" : "#64748b";
-        },
-        "image/jpeg",
-        quality
-      );
+        sheetTabs.appendChild(btn);
+      });
     }
 
-    sliderQuality.oninput = processCompression;
-    sliderDimension.oninput = processCompression;
+    function renderActiveSheet(sheetName) {
+      const sheet = currentWorkbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "" });
 
-    btnDownloadCompressed.onclick = function() {
-      if (!compressedBlob) return showAlert("No compressed image ready.");
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(compressedBlob);
-      a.download = `${originalFileName}-compressed.jpg`;
-      a.click();
-      showAlert("Compressed image downloaded successfully!", "success");
-    };
+      gridHead.innerHTML = "";
+      gridBody.innerHTML = "";
 
-    // ================= 3. IMAGES ➔ PDF (BUFFER SAFE) =================
-    let imageBlobs = [];
-    const inputImgPdf = document.getElementById("inputImgPdf");
-    const imgPdfDropzone = document.getElementById("imgPdfDropzone");
-    const imgPreviewGrid = document.getElementById("imgPreviewGrid");
-    const imgPdfControls = document.getElementById("imgPdfControls");
-
-    setupDropzone(imgPdfDropzone, inputImgPdf);
-
-    inputImgPdf.onchange = async function(e) {
-      clearAlert();
-      const files = Array.from(e.target.files);
-      if (!files.length) return;
-
-      showAlert("Caching images...", "info");
-
-      for (const file of files) {
-        try {
-          const buffer = await readFileBuffer(file);
-          const isPng = file.type === "image/png" || file.name.toLowerCase().endsWith(".png");
-          const blobUrl = URL.createObjectURL(new Blob([buffer], { type: file.type }));
-
-          imageBlobs.push({
-            name: file.name,
-            bytes: new Uint8Array(buffer),
-            url: blobUrl,
-            isPng: isPng
-          });
-        } catch (err) {
-          console.error("Error reading image buffer:", err);
-        }
-      }
-
-      inputImgPdf.value = "";
-      clearAlert();
-      renderImageThumbnails();
-    };
-
-    function renderImageThumbnails() {
-      imgPreviewGrid.innerHTML = "";
-      if (imageBlobs.length === 0) {
-        imgPdfControls.style.display = "none";
-        imgPdfDropzone.style.display = "block";
+      if (!json.length) {
+        rowColCount.textContent = "0 rows × 0 columns";
         return;
       }
 
-      imgPdfDropzone.style.display = "none";
-      imgPdfControls.style.display = "flex";
+      const headers = json[0];
+      const rows = json.slice(1);
 
-      imageBlobs.forEach((item, idx) => {
-        const wrap = document.createElement("div");
-        wrap.className = "img-preview-item";
+      rowColCount.textContent = `${rows.length} rows × ${headers.length} columns`;
 
-        const img = document.createElement("img");
-        img.src = item.url;
+      // Render Header
+      const headerTr = document.createElement("tr");
+      headers.forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h || "—";
+        headerTr.appendChild(th);
+      });
+      gridHead.appendChild(headerTr);
 
-        const label = document.createElement("span");
-        label.textContent = `${idx + 1}. ${item.name}`;
-
-        wrap.appendChild(img);
-        wrap.appendChild(label);
-        imgPreviewGrid.appendChild(wrap);
+      // Render max 100 preview rows for smooth performance
+      const previewRows = rows.slice(0, 100);
+      previewRows.forEach(row => {
+        const tr = document.createElement("tr");
+        for (let i = 0; i < headers.length; i++) {
+          const td = document.createElement("td");
+          td.textContent = row[i] !== undefined ? row[i] : "";
+          tr.appendChild(td);
+        }
+        gridBody.appendChild(tr);
       });
     }
-
-    document.getElementById("btnClearImgPdf").onclick = function() {
-      imageBlobs.forEach(b => URL.revokeObjectURL(b.url));
-      imageBlobs = [];
-      inputImgPdf.value = "";
-      renderImageThumbnails();
-      clearAlert();
-    };
-
-    document.getElementById("btnConvertImgPdf").onclick = async function() {
-      if (imageBlobs.length === 0) return showAlert("Select at least one image.");
-
-      showAlert("Converting images to PDF in your browser...", "info");
-
-      try {
-        const pdfDoc = await PDFLib.PDFDocument.create();
-
-        for (const item of imageBlobs) {
-          let embeddedImage;
-          if (item.isPng) {
-            embeddedImage = await pdfDoc.embedPng(item.bytes);
-          } else {
-            embeddedImage = await pdfDoc.embedJpg(item.bytes);
-          }
-
-          const page = pdfDoc.addPage([595.28, 841.89]);
-          const dims = embeddedImage.scaleToFit(555.28, 801.89);
-
-          page.drawImage(embeddedImage, {
-            x: (595.28 - dims.width) / 2,
-            y: (841.89 - dims.height) / 2,
-            width: dims.width,
-            height: dims.height,
-          });
-        }
-
-        const pdfBytes = await pdfDoc.save();
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `SheetBox-Images-${Date.now()}.pdf`;
-        a.click();
-
-        showAlert("Images successfully converted into PDF!", "success");
-      } catch (err) {
-        showAlert("Failed to convert images: " + err.message);
-      }
-    };
-
-    // ================= 4. MERGE PDFS (BUFFER SAFE) =================
-    let pdfMergeBuffers = [];
-    const inputPdfMerge = document.getElementById("inputPdfMerge");
-    const pdfMergeDropzone = document.getElementById("pdfMergeDropzone");
-    const pdfMergeList = document.getElementById("pdfMergeList");
-    const pdfMergeControls = document.getElementById("pdfMergeControls");
-
-    setupDropzone(pdfMergeDropzone, inputPdfMerge);
-
-    inputPdfMerge.onchange = async function(e) {
-      clearAlert();
-      const files = Array.from(e.target.files);
-      if (!files.length) return;
-
-      showAlert("Reading PDF files...", "info");
-
-      for (const file of files) {
-        try {
-          const buffer = await readFileBuffer(file);
-          pdfMergeBuffers.push({
-            name: file.name,
-            bytes: new Uint8Array(buffer),
-            size: file.size
-          });
-        } catch (err) {
-          console.error("Error buffering PDF:", err);
-        }
-      }
-
-      inputPdfMerge.value = "";
-      clearAlert();
-      renderPdfMergeList();
-    };
-
-    function renderPdfMergeList() {
-      pdfMergeList.innerHTML = "";
-      if (pdfMergeBuffers.length === 0) {
-        pdfMergeControls.style.display = "none";
-        pdfMergeDropzone.style.display = "block";
-        return;
-      }
-
-      pdfMergeDropzone.style.display = "none";
-      pdfMergeControls.style.display = "flex";
-
-      pdfMergeBuffers.forEach((f, idx) => {
-        const item = document.createElement("div");
-        item.className = "pdf-file-item";
-        item.innerHTML = `
-          <span><strong>${idx + 1}.</strong> ${f.name}</span>
-          <span style="color: var(--text-muted); font-size: 11px;">(${(f.size / 1024).toFixed(1)} KB)</span>
-        `;
-        pdfMergeList.appendChild(item);
-      });
-    }
-
-    document.getElementById("btnClearPdfMerge").onclick = function() {
-      pdfMergeBuffers = [];
-      inputPdfMerge.value = "";
-      renderPdfMergeList();
-      clearAlert();
-    };
-
-    document.getElementById("btnRunPdfMerge").onclick = async function() {
-      if (pdfMergeBuffers.length < 2) return showAlert("Please select at least 2 PDF files to combine.");
-
-      showAlert("Merging PDF files directly in your browser...", "info");
-
-      try {
-        const mergedPdf = await PDFLib.PDFDocument.create();
-
-        for (const item of pdfMergeBuffers) {
-          const srcPdf = await PDFLib.PDFDocument.load(item.bytes);
-          const copiedPages = await mergedPdf.copyPages(srcPdf, srcPdf.getPageIndices());
-          copiedPages.forEach(p => mergedPdf.addPage(p));
-        }
-
-        const mergedBytes = await mergedPdf.save();
-        const blob = new Blob([mergedBytes], { type: "application/pdf" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `SheetBox-Merged-Document-${Date.now()}.pdf`;
-        a.click();
-
-        showAlert(`Successfully merged ${pdfMergeBuffers.length} PDF files!`, "success");
-      } catch (err) {
-        showAlert("Failed to merge PDFs: " + err.message);
-      }
-    };
-
-    // ================= 5. PDF VIEWER =================
-    const inputPdf = document.getElementById("inputPdf");
-    const pdfDropzone = document.getElementById("pdfDropzone");
-    const pdfViewerBox = document.getElementById("pdfViewerBox");
-    const pdfEmbed = document.getElementById("pdfEmbed");
-    const pdfControls = document.getElementById("pdfControls");
-    const pdfFileName = document.getElementById("pdfFileName");
-
-    setupDropzone(pdfDropzone, inputPdf);
-
-    inputPdf.onchange = function(e) {
-      clearAlert();
-      const file = e.target.files[0];
-      if (!file) return;
-
-      try {
-        pdfEmbed.src = URL.createObjectURL(file);
-        pdfViewerBox.style.display = "block";
-        pdfControls.style.display = "flex";
-        pdfDropzone.style.display = "none";
-        pdfFileName.textContent = file.name;
-      } catch (err) {
-        showAlert("Failed to open PDF: " + err.message);
-      } finally {
-        inputPdf.value = "";
-      }
-    };
-
-    // ================= 6. DIFF CHECKER =================
-    let diffA = null, diffB = null;
-    const inputDiffA = document.getElementById("inputDiffA");
-    const inputDiffB = document.getElementById("inputDiffB");
-    setupDropzone(document.getElementById("dropzoneA"), inputDiffA);
-    setupDropzone(document.getElementById("dropzoneB"), inputDiffB);
-
-    function readDiff(f, cb) {
-      const r = new FileReader();
-      r.onload = e => {
-        const wb = XLSX.read(e.target.result, { type: "binary" });
-        cb(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" }));
-      };
-      if (r.readAsBinaryString) {
-        r.readAsBinaryString(f);
-      } else {
-        r.readAsArrayBuffer(f);
-      }
-    }
-
-    inputDiffA.onchange = e => { if (e.target.files[0]) { document.getElementById("diffNameA").textContent = e.target.files[0].name; readDiff(e.target.files[0], d => diffA = d); } };
-    inputDiffB.onchange = e => { if (e.target.files[0]) { document.getElementById("diffNameB").textContent = e.target.files[0].name; readDiff(e.target.files[0], d => diffB = d); } };
-
-    document.getElementById("btnRunDiff").onclick = function() {
-      if (!diffA || !diffB) return showAlert("Select both files first.");
-      const head = document.getElementById("diffTblHead");
-      const body = document.getElementById("diffTblBody");
-      head.innerHTML = ""; body.innerHTML = "";
-
-      const keys = Array.from(new Set([...(diffA[0] ? Object.keys(diffA[0]) : []), ...(diffB[0] ? Object.keys(diffB[0]) : [])]));
-      head.innerHTML = `<tr><th class="corner-header"></th><th class="excel-header">Status</th>${keys.map((k, i) => `<th class="excel-header">${getColumnLetter(i)} (${k})</th>`).join("")}</tr>`;
-
-      const mapA = new Map(diffA.map(r => [JSON.stringify(r), r]));
-      const mapB = new Map(diffB.map(r => [JSON.stringify(r), r]));
-
-      diffB.forEach((r, idx) => {
-        if (!mapA.has(JSON.stringify(r))) {
-          body.innerHTML += `<tr style="background:#dcfce7;"><td class="row-indexer">${idx+1}</td><td style="color:#15803d; font-weight:bold;">+ Added</td>${keys.map(k=>`<td class="data-cell">${r[k]??''}</td>`).join('')}</tr>`;
-        }
-      });
-
-      diffA.forEach((r, idx) => {
-        if (!mapB.has(JSON.stringify(r))) {
-          body.innerHTML += `<tr style="background:#fee2e2;"><td class="row-indexer">${idx+1}</td><td style="color:#b91c1c; font-weight:bold;">- Removed</td>${keys.map(k=>`<td class="data-cell">${r[k]??''}</td>`).join('')}</tr>`;
-        }
-      });
-
-      document.getElementById("diffTableWrapper").style.display = "block";
-    };
-
-    // ================= 7. MERGE SPREADSHEETS =================
-    let mergedData = [];
-    const inputMerge = document.getElementById("inputMergeFiles");
-    setupDropzone(document.getElementById("mergeDropzone"), inputMerge);
-
-    inputMerge.onchange = async e => {
-      const files = Array.from(e.target.files);
-      if (files.length < 2) return showAlert("Select at least 2 files.");
-      mergedData = [];
-      for (const f of files) {
-        const buf = await readFileBuffer(f);
-        const wb = XLSX.read(buf, { type: "binary" });
-        mergedData = mergedData.concat(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" }));
-      }
-
-      const head = document.getElementById("mergeTblHead");
-      const body = document.getElementById("mergeTblBody");
-      head.innerHTML = ""; body.innerHTML = "";
-      const keys = Array.from(new Set(mergedData.flatMap(r => Object.keys(r))));
-
-      head.innerHTML = `<tr><th class="corner-header"></th>${keys.map((k, i) => `<th class="excel-header">${getColumnLetter(i)} (${k})</th>`).join("")}</tr>`;
-      mergedData.slice(0, 50).forEach((r, idx) => {
-        body.innerHTML += `<tr><td class="row-indexer">${idx+1}</td>${keys.map(k=>`<td class="data-cell">${r[k]??''}</td>`).join('')}</tr>`;
-      });
-
-      document.getElementById("mergeTableWrapper").style.display = "block";
-      document.getElementById("mergeBar").style.display = "flex";
-      document.getElementById("mergeStatus").textContent = `Merged ${files.length} files (${mergedData.length} rows)`;
-    };
-
-    document.getElementById("btnDownloadMerged").onclick = () => {
-      const ws = XLSX.utils.json_to_sheet(mergedData);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Merged");
-      XLSX.writeFile(wb, "Merged-Spreadsheet.xlsx");
-    };
-
-    // ================= 8. JSON TO EXCEL =================
-    document.getElementById("btnJsonToExcel").onclick = () => {
-      try {
-        const d = JSON.parse(document.getElementById("jsonInput").value.trim());
-        const ws = XLSX.utils.json_to_sheet(Array.isArray(d) ? d : [d]);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-        XLSX.writeFile(wb, "Export.xlsx");
-      } catch(err) { showAlert("Invalid JSON: " + err.message); }
-    };
-
-    document.getElementById("btnJsonToCsv").onclick = () => {
-      try {
-        const d = JSON.parse(document.getElementById("jsonInput").value.trim());
-        const ws = XLSX.utils.json_to_sheet(Array.isArray(d) ? d : [d]);
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(new Blob([XLSX.utils.sheet_to_csv(ws)], { type: "text/csv" }));
-        a.download = "Export.csv";
-        a.click();
-      } catch(err) { showAlert("Invalid JSON: " + err.message); }
-    };
   </script>
 </body>
 </html>
