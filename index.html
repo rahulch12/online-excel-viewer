@@ -26,8 +26,8 @@
   <!-- Primary SEO Meta Tags -->
   <title>SheetBox — Free Online PDF, Image & Document Tools (100% Private)</title>
   <meta name="title" content="SheetBox — Free Online PDF, Image & Document Tools (100% Private)" />
-  <meta name="description" content="Free, super-simple tools to merge PDFs, compress photos, create bills & invoices, view Excel files, and compare sheets right in your browser. 100% secure and private." />
-  <meta name="keywords" content="simple invoice maker, free pdf merger, compress photo online, view excel file online, convert images to pdf, sheetbox" />
+  <meta name="description" content="Free, simple tools to convert PDF to Word, merge PDFs, compress photos, create bills & invoices, and compare sheets right in your browser. 100% secure and private." />
+  <meta name="keywords" content="pdf to word converter, simple invoice maker, free pdf merger, compress photo online, view excel file online, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/" />
 
   <!-- Open Graph / Social Sharing -->
@@ -36,10 +36,6 @@
   <meta property="og:title" content="SheetBox — Easy, Free Document & PDF Tools" />
   <meta property="og:description" content="Click and get your work done in seconds. 100% free, safe, and private in your browser." />
   <meta property="og:image" content="https://sheetbox.in/logo.png" />
-  <meta property="og:image:width" content="1024" />
-  <meta property="og:image:height" content="1024" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="https://sheetbox.in/logo.png" />
 
   <!-- Schema.org WebSite & WebApplication -->
   <script type="application/ld+json">
@@ -81,50 +77,57 @@
 
     /* Welcoming Hero Banner */
     .hero-banner { text-align: center; margin-bottom: 28px; }
-    .hero-badge { display: inline-block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; background: #dbeafe; color: #1d4ed8; padding: 5px 14px; border-radius: 30px; margin-bottom: 10px; }
+    .hero-badge { display: inline-block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; background: #dbeafe; color: #1d4ed8; padding: 4px 12px; border-radius: 30px; margin-bottom: 10px; }
     .hero-title { font-size: 28px; font-weight: 900; color: #0f172a; letter-spacing: -0.5px; margin-bottom: 6px; }
-    .hero-subtitle { font-size: 15px; color: #475569; max-width: 580px; margin: 0 auto; line-height: 1.5; }
+    .hero-subtitle { font-size: 14.5px; color: #475569; max-width: 580px; margin: 0 auto; line-height: 1.5; }
 
-    /* Eye-Catching Tool Cards Grid */
-    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; }
+    /* Balanced Responsive Grid */
+    .tools-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 340px)); 
+      justify-content: center;
+      gap: 20px; 
+    }
 
     .tool-box {
       background: #ffffff;
-      border: 2px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 22px 20px;
-      text-decoration: none;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
     }
     .tool-box:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
     }
 
-    /* Individual Color Themes */
+    /* Distinct Color Themes */
     .theme-invoice { border-color: #c7d2fe; }
     .theme-invoice:hover { border-color: #6366f1; }
     .theme-invoice .icon-bg { background: #eef2ff; color: #4f46e5; }
     .theme-invoice .tool-action-btn { background: #4f46e5; color: #fff; }
 
-    .theme-pdf-merge { border-color: #ddd6fe; }
-    .theme-pdf-merge:hover { border-color: #8b5cf6; }
-    .theme-pdf-merge .icon-bg { background: #f5f3ff; color: #7c3aed; }
-    .theme-pdf-merge .tool-action-btn { background: #7c3aed; color: #fff; }
+    .theme-pdf-word { border-color: #ddd6fe; }
+    .theme-pdf-word:hover { border-color: #7c3aed; }
+    .theme-pdf-word .icon-bg { background: #f5f3ff; color: #7c3aed; }
+    .theme-pdf-word .tool-action-btn { background: #7c3aed; color: #fff; }
+
+    .theme-pdf-merge { border-color: #e2e8f0; }
+    .theme-pdf-merge:hover { border-color: #2563eb; }
+    .theme-pdf-merge .icon-bg { background: #eff6ff; color: #2563eb; }
+    .theme-pdf-merge .tool-action-btn { background: #2563eb; color: #fff; }
 
     .theme-img-pdf { border-color: #a7f3d0; }
-    .theme-img-pdf:hover { border-color: #10b981; }
+    .theme-img-pdf:hover { border-color: #059669; }
     .theme-img-pdf .icon-bg { background: #ecfdf5; color: #059669; }
     .theme-img-pdf .tool-action-btn { background: #059669; color: #fff; }
 
     .theme-compress { border-color: #fed7aa; }
-    .theme-compress:hover { border-color: #f97316; }
+    .theme-compress:hover { border-color: #ea580c; }
     .theme-compress .icon-bg { background: #fff7ed; color: #ea580c; }
     .theme-compress .tool-action-btn { background: #ea580c; color: #fff; }
 
@@ -138,21 +141,21 @@
     .theme-viewer .icon-bg { background: #f1f5f9; color: #1e293b; }
     .theme-viewer .tool-action-btn { background: #1e293b; color: #fff; }
 
-    /* Card Top Elements */
-    .card-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
-    .icon-bg { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+    /* Card Elements */
+    .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .icon-bg { width: 46px; height: 46px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
     .card-heading-group { flex: 1; }
-    .tool-name { font-size: 17px; font-weight: 800; color: #0f172a; line-height: 1.3; margin-bottom: 3px; }
-    .tool-pill { font-size: 10.5px; font-weight: 700; text-transform: uppercase; padding: 2px 7px; border-radius: 6px; display: inline-block; }
+    .tool-name { font-size: 16px; font-weight: 800; color: #0f172a; line-height: 1.25; margin-bottom: 3px; }
+    .tool-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; display: inline-block; }
 
-    .tool-desc { font-size: 13.5px; color: #475569; line-height: 1.5; margin-bottom: 20px; flex: 1; }
+    .tool-desc { font-size: 13px; color: #475569; line-height: 1.45; margin-bottom: 16px; flex: 1; }
 
-    /* Big Direct Action Button */
+    /* Compact & Balanced Button */
     .tool-action-btn {
       width: 100%;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-size: 14px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13.5px;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -161,16 +164,15 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       transition: filter 0.15s;
     }
-    .tool-action-btn:hover { filter: brightness(1.1); }
+    .tool-action-btn:hover { filter: brightness(1.08); }
 
     /* In-Page Quick Spreadsheet Viewer Box */
-    .inline-viewer-section { margin-top: 40px; background: #ffffff; border: 2px dashed #cbd5e1; border-radius: 16px; padding: 28px 20px; text-align: center; }
-    .inline-viewer-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
-    .inline-viewer-sub { font-size: 13px; color: #64748b; margin-bottom: 14px; }
-    .btn-choose-file { background: #0f172a; color: #fff; padding: 11px 22px; font-size: 13.5px; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .inline-viewer-section { margin-top: 36px; background: #ffffff; border: 2px dashed #cbd5e1; border-radius: 14px; padding: 26px 20px; text-align: center; }
+    .inline-viewer-title { font-size: 16.5px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .inline-viewer-sub { font-size: 13px; color: #64748b; margin-bottom: 12px; }
+    .btn-choose-file { background: #0f172a; color: #fff; padding: 10px 20px; font-size: 13px; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
 
     /* Spreadsheet Grid Render */
     .viewer-display { display: none; margin-top: 20px; text-align: left; }
@@ -183,7 +185,7 @@
     table.v-grid td { padding: 8px 10px; border-bottom: 1px solid #f1f5f9; white-space: nowrap; }
 
     /* Footer */
-    footer { border-top: 1px solid #e2e8f0; background: #ffffff; padding: 34px 16px 24px 16px; margin-top: 40px; }
+    footer { border-top: 1px solid #e2e8f0; background: #ffffff; padding: 32px 16px 24px 16px; margin-top: 40px; }
     .footer-content { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; font-size: 13px; }
     .footer-links-group { display: flex; gap: 40px; flex-wrap: wrap; }
     .footer-col-title { color: #0f172a; display: block; margin-bottom: 8px; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
@@ -223,7 +225,7 @@
       <p class="hero-subtitle">Choose a tool below to get your job done in seconds. Your files never leave your device.</p>
     </div>
 
-    <!-- 6 High-Contrast Visual Tool Cards -->
+    <!-- Balanced Tool Cards Grid -->
     <div class="tools-grid">
 
       <!-- Tool 1: Invoice Generator -->
@@ -236,27 +238,42 @@
               <span class="tool-pill" style="background: #e0e7ff; color: #3730a3;">Most Popular</span>
             </div>
           </div>
-          <div class="tool-desc">Create quick, clean business bills and receipts. Add items, calculate totals, and download as PDF or Image.</div>
+          <div class="tool-desc">Create quick business bills and receipts. Auto-calculate totals and download as PDF or Image.</div>
         </div>
         <a href="/invoice-generator.html" class="tool-action-btn">Open Invoice Maker &rarr;</a>
       </div>
 
-      <!-- Tool 2: Merge PDF -->
+      <!-- Tool 2: PDF to Word -->
+      <div class="tool-box theme-pdf-word">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">📝</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Convert PDF to Word</div>
+              <span class="tool-pill" style="background: #ede9fe; color: #5b21b6;">Editable DOCX</span>
+            </div>
+          </div>
+          <div class="tool-desc">Extract text from PDFs into editable Word (.docx) files with live in-browser proofing and OCR.</div>
+        </div>
+        <a href="/pdf-to-word.html" class="tool-action-btn">Convert to Word &rarr;</a>
+      </div>
+
+      <!-- Tool 3: Merge PDF -->
       <div class="tool-box theme-pdf-merge">
         <div>
           <div class="card-top">
             <div class="icon-bg">📑</div>
             <div class="card-heading-group">
               <div class="tool-name">Join Multiple PDFs</div>
-              <span class="tool-pill" style="background: #ede9fe; color: #5b21b6;">PDF Utility</span>
+              <span class="tool-pill" style="background: #dbeafe; color: #1e40af;">PDF Utility</span>
             </div>
           </div>
-          <div class="tool-desc">Combine 2 or more PDF documents into one single file. Rearrange them however you like and download instantly.</div>
+          <div class="tool-desc">Combine 2 or more PDF documents into one organized file. Rearrange and download instantly.</div>
         </div>
         <a href="/merge-pdf.html" class="tool-action-btn">Merge PDFs Now &rarr;</a>
       </div>
 
-      <!-- Tool 3: Images to PDF -->
+      <!-- Tool 4: Images to PDF -->
       <div class="tool-box theme-img-pdf">
         <div>
           <div class="card-top">
@@ -266,12 +283,12 @@
               <span class="tool-pill" style="background: #d1fae5; color: #065f46;">Fast & Simple</span>
             </div>
           </div>
-          <div class="tool-desc">Turn JPG, PNG, or mobile camera photos into a neat, shareable PDF document ready for printing or email.</div>
+          <div class="tool-desc">Turn JPG, PNG, or mobile camera photos into a neat, shareable PDF document ready for printing.</div>
         </div>
         <a href="/images-to-pdf.html" class="tool-action-btn">Convert Photos &rarr;</a>
       </div>
 
-      <!-- Tool 4: Compress Image -->
+      <!-- Tool 5: Compress Image -->
       <div class="tool-box theme-compress">
         <div>
           <div class="card-top">
@@ -281,12 +298,12 @@
               <span class="tool-pill" style="background: #ffedd5; color: #9a3412;">Size Saver</span>
             </div>
           </div>
-          <div class="tool-desc">Shrink heavy images to small MB/KB sizes for forms, uploads, and applications without losing quality.</div>
+          <div class="tool-desc">Shrink heavy images to small MB/KB sizes for forms and web uploads without losing clarity.</div>
         </div>
         <a href="/compress-image.html" class="tool-action-btn">Compress Photos &rarr;</a>
       </div>
 
-      <!-- Tool 5: Compare Spreadsheets -->
+      <!-- Tool 6: Compare Spreadsheets -->
       <div class="tool-box theme-compare">
         <div>
           <div class="card-top">
@@ -296,45 +313,16 @@
               <span class="tool-pill" style="background: #e0f2fe; color: #075985;">Difference Checker</span>
             </div>
           </div>
-          <div class="tool-desc">Upload two Excel or CSV sheets to spot differences. Instantly highlights added, removed, or changed rows.</div>
+          <div class="tool-desc">Upload two Excel or CSV sheets to spot differences. Highlights added, removed, or changed rows.</div>
         </div>
         <a href="/compare-excel.html" class="tool-action-btn">Compare Spreadsheets &rarr;</a>
       </div>
 
-      <!-- Tool 6: Quick View Excel -->
-      <div class="tool-box theme-viewer">
-        <div>
-          <div class="card-top">
-            <div class="icon-bg">📊</div>
-            <div class="card-heading-group">
-              <div class="tool-name">Open & Read Excel File</div>
-              <span class="tool-pill" style="background: #f1f5f9; color: #334155;">Spreadsheet</span>
-            </div>
-          </div>
-          <div class="tool-desc">Open and read any .xlsx, .xls, or .csv file directly on your screen without installing Microsoft Office.</div>
-        </div>
-        <button type="button" class="tool-action-btn" onclick="document.getElementById('fileInput').click()">Select Excel File &rarr;</button>
-      </div>
-
     </div>
-    <!-- Tool: PDF to Word -->
-      <div class="tool-box theme-pdf-merge">
-        <div>
-          <div class="card-top">
-            <div class="icon-bg">📝</div>
-            <div class="card-heading-group">
-              <div class="tool-name">Convert PDF to Word</div>
-              <span class="tool-pill" style="background: #ede9fe; color: #5b21b6;">Editable DOCX</span>
-            </div>
-          </div>
-          <div class="tool-desc">Extract text from PDF documents into editable Microsoft Word (.docx) files with an interactive live editor.</div>
-        </div>
-        <a href="/pdf-to-word.html" class="tool-action-btn">Convert to Word &rarr;</a>
-      </div>
 
     <!-- Built-in In-Browser Excel Viewer -->
     <div class="inline-viewer-section" id="quickViewerBlock">
-      <div class="inline-viewer-title">Or open a spreadsheet right here:</div>
+      <div class="inline-viewer-title">Or open a spreadsheet directly here:</div>
       <div class="inline-viewer-sub">Works with .xlsx, .xls, and .csv files. 100% private, never uploaded to any server.</div>
       <button type="button" class="btn-choose-file" onclick="document.getElementById('fileInput').click()">
         📁 Choose Excel File From Device
@@ -371,6 +359,7 @@
         <div>
           <strong class="footer-col-title">PDF & Image Tools</strong>
           <ul class="footer-links-list">
+            <li><a href="/pdf-to-word.html">PDF to Word</a></li>
             <li><a href="/merge-pdf.html">Merge PDF Files</a></li>
             <li><a href="/images-to-pdf.html">Images to PDF</a></li>
             <li><a href="/compress-image.html">Compress Photos</a></li>
