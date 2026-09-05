@@ -22,4 +22,8 @@
 </url>
   <loc>https://sheetbox.in/invoice-generator.html</loc>
     <priority>0.9</priority>
+  <url>
+    <loc>https://sheetbox.in/pdf-to-word.html</loc>
+    <priority>0.9</priority>
+  </url>
 </urlset>
