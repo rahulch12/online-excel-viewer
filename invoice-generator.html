@@ -20,12 +20,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 
+  <!-- Favicons -->
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="apple-touch-icon" href="/logo.png" />
 
-  <title>Quick Invoice Generator — Create & Download Free PDF/Image</title>
-  <meta name="description" content="Generate quick, clean professional invoices online. Fill in items and amounts, calculate totals, and download as clean PDF or Image instantly. 100% private." />
+  <!-- Primary SEO Meta Tags -->
+  <title>Free Invoice Generator Online — Download PDF & Image | SheetBox</title>
+  <meta name="title" content="Free Invoice Generator Online — Download PDF & Image | SheetBox" />
+  <meta name="description" content="Create, calculate, and download professional invoices in PDF and PNG format instantly. 100% free, private in-browser calculations, zero signup, no watermark." />
+  <meta name="keywords" content="free invoice generator, invoice maker online, create invoice pdf, download invoice png, simple receipt maker, client side invoice generator" />
   <link rel="canonical" href="https://sheetbox.in/invoice-generator.html" />
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sheetbox.in/invoice-generator.html" />
+  <meta property="og:title" content="Free Invoice Generator Online — SheetBox" />
+  <meta property="og:description" content="Assemble, compute taxes, and download professional invoices in PDF or PNG instantly in your browser." />
+  <meta property="og:image" content="https://sheetbox.in/logo.png" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="1024" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://sheetbox.in/logo.png" />
+
+  <!-- Schema.org WebApplication Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SheetBox Quick Invoice Generator",
+    "url": "https://sheetbox.in/invoice-generator.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Schema.org FAQ Markup for Search Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is my confidential client and billing data secure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, completely. SheetBox executes calculations and renders files entirely within your web browser. Neither your line items, client names, bank details, nor financial values are sent to or stored on any remote server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I download my invoice as an image for chat or WhatsApp?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. In addition to a vector-grade PDF download, you can click 'Download Image' to instantly get a crisp PNG file optimized for sharing via chat apps, WhatsApp, and email attachments."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does SheetBox place a watermark on generated invoices?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All exported invoices are 100% clean and unbranded with no forced logos, subscriptions, or watermarks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which currencies are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can select INR (₹), USD ($), EUR (€), and GBP (£) with instant real-time currency formatting across item subtotals and grand totals."
+        }
+      }
+    ]
+  }
+  </script>
 
   <style>
     :root {
@@ -45,19 +120,19 @@
     .brand img { width: 32px; height: 32px; border-radius: 8px; }
     .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
 
-    .container { max-width: 1140px; width: 100%; margin: 16px auto; padding: 0 12px; flex: 1; }
+    .container { max-width: 1160px; width: 100%; margin: 16px auto; padding: 0 12px; flex: 1; }
     .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; margin-bottom: 12px; }
 
-    /* Mobile-only Tab Switcher */
+    /* Mobile Tab Bar */
     .mobile-tab-bar { display: none; margin-bottom: 16px; background: #e2e8f0; padding: 4px; border-radius: 8px; }
     .tab-btn { flex: 1; padding: 8px 12px; border: none; background: transparent; font-size: 13px; font-weight: 600; color: #475569; border-radius: 6px; cursor: pointer; text-align: center; }
     .tab-btn.active { background: #fff; color: var(--accent); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
-    /* Layout */
-    .app-layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 20px; align-items: start; }
+    /* Split Workspace */
+    .app-layout { display: grid; grid-template-columns: 1fr 1.25fr; gap: 24px; align-items: start; }
 
     /* Left Input Panel */
-    .input-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+    .input-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
     .panel-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: #0f172a; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
@@ -65,7 +140,7 @@
     .input-field:focus { border-color: var(--accent); }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-    /* Item Card for mobile/desktop friendliness */
+    /* Dynamic Item Lines */
     .item-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px; }
     .item-row-top { display: flex; gap: 8px; margin-bottom: 6px; }
     .item-row-bottom { display: grid; grid-template-columns: 1fr 1fr 34px; gap: 8px; align-items: center; }
@@ -81,41 +156,197 @@
     .action-bar { display: flex; gap: 8px; flex-wrap: wrap; }
     .action-bar .btn { flex: 1; min-width: 140px; }
     
-    /* Scroll container to keep invoice formatted cleanly even on narrow phones */
-    .invoice-scroll-wrapper { width: 100%; overflow-x: auto; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-    .invoice-sheet { min-width: 480px; padding: 28px 24px; background: #ffffff; }
+    .invoice-scroll-wrapper { width: 100%; overflow-x: auto; background: #e2e8f0; padding: 14px; border-radius: 12px; }
     
-    .inv-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-    .inv-brand h2 { font-size: 20px; font-weight: 800; color: #0f172a; word-break: break-word; }
-    .inv-brand p { font-size: 12px; color: var(--text-muted); }
-    .inv-meta { text-align: right; font-size: 12px; color: var(--text-muted); }
-    .inv-meta strong { color: var(--text); }
+    /* ========================================================
+       PREMIUM RECEIPT / INVOICE STYLING
+       ======================================================== */
+    .invoice-sheet {
+      min-width: 520px;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      position: relative;
+    }
 
-    .inv-billing { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 12px; }
-    .inv-billing div { max-width: 48%; word-break: break-word; }
-    .inv-billing h4 { font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .inv-top-bar {
+      height: 6px;
+      background: linear-gradient(90deg, #2563eb, #38bdf8);
+    }
 
-    .inv-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }
-    .inv-table th { background: #f8fafc; border-bottom: 2px solid var(--border); padding: 8px 6px; text-align: left; font-weight: 600; color: var(--text-muted); }
-    .inv-table td { border-bottom: 1px solid var(--border); padding: 8px 6px; }
+    .inv-inner {
+      padding: 32px 28px;
+    }
+
+    .inv-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 22px;
+      border-bottom: 1px dashed #cbd5e1;
+      margin-bottom: 22px;
+    }
+
+    .inv-business-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.4px;
+      margin-bottom: 3px;
+    }
+
+    .inv-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+      margin-top: 4px;
+    }
+
+    .inv-meta-block {
+      text-align: right;
+    }
+
+    .inv-number-tag {
+      font-size: 15px;
+      font-weight: 800;
+      color: #2563eb;
+      margin-bottom: 4px;
+    }
+
+    .inv-date-text {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* Client Details Card */
+    .inv-client-card {
+      background: #f8fafc;
+      border-left: 3px solid #2563eb;
+      padding: 12px 14px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 24px;
+    }
+    .inv-client-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #64748b;
+      margin-bottom: 3px;
+    }
+    .inv-client-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* Items Table */
+    .inv-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-bottom: 22px;
+      font-size: 12.5px;
+    }
+    .inv-table th {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 9px 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 10.5px;
+      letter-spacing: 0.5px;
+    }
+    .inv-table th:first-child { border-radius: 6px 0 0 6px; }
+    .inv-table th:last-child { border-radius: 0 6px 6px 0; }
+    .inv-table td {
+      padding: 11px 10px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+    .inv-table tbody tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    .inv-table .item-name {
+      font-weight: 600;
+      color: #0f172a;
+    }
     .text-right { text-align: right; }
+    .text-center { text-align: center; }
 
-    .inv-summary { display: flex; justify-content: flex-end; margin-top: 10px; }
-    .summary-box { width: 220px; font-size: 12px; }
-    .summary-box div { display: flex; justify-content: space-between; padding: 4px 0; }
-    .summary-box .total-line { font-size: 15px; font-weight: 800; color: #0f172a; border-top: 2px solid var(--border); margin-top: 6px; padding-top: 6px; }
+    /* Summary Card */
+    .inv-summary-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
+    .inv-summary-card {
+      width: 250px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: #475569;
+    }
+    .summary-line.grand-total {
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 10px 12px;
+      border-top: none;
+    }
 
-    .seo-section { margin-top: 36px; font-size: 13.5px; color: #475569; line-height: 1.6; }
-    .seo-section h2 { font-size: 17px; color: #0f172a; margin: 18px 0 8px 0; }
+    /* Modern Receipt Footnote */
+    .inv-receipt-footer {
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .inv-receipt-footer strong {
+      color: #475569;
+    }
+
+    /* SEO Section */
+    .seo-section { margin-top: 40px; font-size: 14px; color: #334155; line-height: 1.7; background: #fff; padding: 24px; border-radius: 12px; border: 1px solid var(--border); }
+    .seo-section h2 { font-size: 19px; color: #0f172a; margin: 20px 0 8px 0; font-weight: 700; }
+    .seo-section h2:first-child { margin-top: 0; }
+    .seo-section h3 { font-size: 15px; color: #1e293b; margin: 14px 0 4px 0; font-weight: 600; }
+    .seo-section p { margin-bottom: 12px; }
+    .seo-section ol, .seo-section ul { padding-left: 22px; margin-bottom: 14px; }
+    .seo-section li { margin-bottom: 6px; }
+
     footer { padding: 20px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 36px; }
 
-    /* Mobile viewport breakpoints */
+    /* Mobile Breakpoint */
     @media (max-width: 860px) {
       .app-layout { grid-template-columns: 1fr; }
       .mobile-tab-bar { display: flex; }
-      .preview-panel { display: none; } /* Toggled via Tab */
+      .preview-panel { display: none; }
       .preview-panel.show-mobile { display: flex; }
       .input-panel.hide-mobile { display: none; }
+      .invoice-scroll-wrapper { padding: 4px; }
     }
   </style>
 </head>
@@ -180,9 +411,7 @@
         </div>
 
         <h3 class="panel-title" style="margin-top: 18px;">2. Items & Pricing</h3>
-        <div id="itemsContainer">
-          <!-- Populated dynamically as responsive cards -->
-        </div>
+        <div id="itemsContainer"></div>
 
         <button type="button" class="btn btn-outline" id="btnAddItem" style="width: 100%; margin-top: 4px;">+ Add Line Item</button>
 
@@ -197,7 +426,6 @@
           </div>
         </div>
 
-        <!-- Mobile shortcut to review -->
         <button type="button" class="btn btn-blue" style="width: 100%; margin-top: 10px; display: none;" id="btnMobileGoPreview" onclick="switchMobileTab('preview')">Preview Invoice &rarr;</button>
       </div>
 
@@ -205,59 +433,105 @@
       <div class="preview-panel" id="previewPanel">
         <div class="action-bar">
           <button class="btn btn-blue" id="btnDownloadPdf">📄 Download PDF</button>
-          <button class="btn btn-green" id="btnDownloadImg">🖼️ Download Image</button>
+          <button class="btn btn-green" id="btnDownloadImg">🖼️ Download Image (PNG)</button>
         </div>
 
         <div class="invoice-scroll-wrapper">
+          
+          <!-- STYLED RECEIPT SHEET -->
           <div class="invoice-sheet" id="invoicePaper">
-            <div class="inv-top">
-              <div class="inv-brand">
-                <h2 id="outFrom">Freelance Services</h2>
-                <p>Standard Commercial Invoice</p>
+            <div class="inv-top-bar"></div>
+            
+            <div class="inv-inner">
+              <div class="inv-header-flex">
+                <div>
+                  <div class="inv-business-title" id="outFrom">Freelance Services</div>
+                  <span class="inv-badge">Official Invoice</span>
+                </div>
+                <div class="inv-meta-block">
+                  <div class="inv-number-tag" id="outInvNum">#INV-001</div>
+                  <div class="inv-date-text">Date: <strong id="outDate" style="color: #334155;"></strong></div>
+                </div>
               </div>
-              <div class="inv-meta">
-                <div>Invoice: <strong id="outInvNum">#INV-001</strong></div>
-                <div>Date: <span id="outDate"></span></div>
+
+              <div class="inv-client-card">
+                <div class="inv-client-label">Billed To</div>
+                <div class="inv-client-name" id="outTo">Acme Corp</div>
               </div>
-            </div>
 
-            <div class="inv-billing">
-              <div>
-                <h4>Billed To:</h4>
-                <p><strong id="outTo">Acme Corp</strong></p>
+              <table class="inv-table">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th style="width: 45px;" class="text-center">Qty</th>
+                    <th style="width: 80px;" class="text-right">Rate</th>
+                    <th style="width: 95px;" class="text-right">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="outTableBody"></tbody>
+              </table>
+
+              <div class="inv-summary-container">
+                <div class="inv-summary-card">
+                  <div class="summary-line">
+                    <span>Subtotal</span>
+                    <strong id="outSubtotal">0.00</strong>
+                  </div>
+                  <div class="summary-line" id="taxRow" style="display: none;">
+                    <span>Tax</span>
+                    <span id="outTax" style="color: #059669;">0.00</span>
+                  </div>
+                  <div class="summary-line" id="discountRow" style="display: none;">
+                    <span>Discount</span>
+                    <span id="outDiscount" style="color: #dc2626;">0.00</span>
+                  </div>
+                  <div class="summary-line grand-total">
+                    <span>Total Due</span>
+                    <span id="outTotal">0.00</span>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <table class="inv-table">
-              <thead>
-                <tr>
-                  <th>Item Description</th>
-                  <th style="width: 50px;" class="text-right">Qty</th>
-                  <th style="width: 80px;" class="text-right">Rate</th>
-                  <th style="width: 90px;" class="text-right">Amount</th>
-                </tr>
-              </thead>
-              <tbody id="outTableBody"></tbody>
-            </table>
-
-            <div class="inv-summary">
-              <div class="summary-box">
-                <div><span>Subtotal:</span><strong id="outSubtotal">0.00</strong></div>
-                <div id="taxRow" style="display: none;"><span>Tax:</span><span id="outTax">0.00</span></div>
-                <div id="discountRow" style="display: none;"><span>Discount:</span><span id="outDiscount">0.00</span></div>
-                <div class="total-line"><span>Total Due:</span><span id="outTotal">0.00</span></div>
+              <div class="inv-receipt-footer">
+                <span>Thank you for your business!</span>
+                <span>Generated via <strong>SheetBox.in</strong></span>
               </div>
             </div>
           </div>
+          <!-- END STYLED RECEIPT SHEET -->
+
         </div>
       </div>
 
     </div>
 
-    <!-- SEO Guidance -->
+    <!-- Structured SEO Content -->
     <article class="seo-section">
-      <h2>Free Mobile-Friendly Invoice & Bill Generator</h2>
-      <p>SheetBox Invoice Generator allows freelancers, consultants, and small business owners to quickly assemble clean, itemized invoices from any device, including smartphones. Calculations take place instantly in browser memory with 100% data privacy.</p>
+      <h2>How to Create & Download Invoices in Seconds</h2>
+      <ol>
+        <li><strong>Enter your billing info:</strong> Fill in your business name, client name, invoice number, and preferred currency symbol ($, ₹, €, £).</li>
+        <li><strong>Add items and rates:</strong> Type your item descriptions, quantities, and prices. Totals, line items, and balances calculate in real time.</li>
+        <li><strong>Apply tax or discounts:</strong> Add optional GST/tax percentages or flat discounts to compute the exact net balance.</li>
+        <li><strong>Export cleanly:</strong> Click <em>Download PDF</em> for formal business invoicing or <em>Download Image</em> for sharing receipts over WhatsApp, messaging apps, and email.</li>
+      </ol>
+
+      <h2>Why Use SheetBox Invoice Generator?</h2>
+      <ul>
+        <li><strong>100% In-Browser Privacy:</strong> Unlike web utilities that store client records and fee structures on remote cloud servers, SheetBox runs strictly on your machine. No financial data leaves your browser.</li>
+        <li><strong>Dual PDF & High-Res PNG Output:</strong> Get crisp, print-ready vector PDF files or mobile-friendly image files with one click.</li>
+        <li><strong>Zero Cost & Zero Watermarks:</strong> No required account signups, subscriptions, or intrusive brand stamps.</li>
+        <li><strong>Mobile First Design:</strong> Easily switch between the edit form and live document preview from any smartphone or tablet.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <h3>Is this invoice generator completely free?</h3>
+      <p>Yes. SheetBox provides unrestricted access to build and export as many PDF and PNG invoices as needed without subscription fees or caps.</p>
+
+      <h3>Are my client and pricing details saved on your servers?</h3>
+      <p>No. SheetBox processes all line items, tax rates, and totals directly in client-side memory using JavaScript. None of your data is sent to an external database.</p>
+
+      <h3>Can I generate invoices on mobile?</h3>
+      <p>Yes. Use the tab bar at the top of the workspace to toggle between editing details and previewing the generated invoice on any smartphone.</p>
     </article>
   </main>
 
@@ -362,10 +636,10 @@
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${it.desc || "Item"}</td>
-          <td class="text-right">${it.qty}</td>
+          <td class="item-name">${it.desc || "Item"}</td>
+          <td class="text-center">${it.qty}</td>
           <td class="text-right">${sym}${it.rate.toFixed(2)}</td>
-          <td class="text-right">${sym}${amount.toFixed(2)}</td>
+          <td class="text-right" style="font-weight: 700; color: #0f172a;">${sym}${amount.toFixed(2)}</td>
         `;
         outTableBody.appendChild(tr);
       });
@@ -425,25 +699,27 @@
       document.getElementById("btnMobileGoPreview").style.display = "block";
     }
 
-    // Export PDF
+    // High-Resolution PDF Export
     document.getElementById("btnDownloadPdf").onclick = async () => {
       const target = document.getElementById("invoicePaper");
-      const canvas = await html2canvas(target, { scale: 2 });
-      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+      const canvas = await html2canvas(target, { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
+      const imgData = canvas.toDataURL("image/jpeg", 0.95);
 
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF("p", "pt", "a4");
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      const margin = 30;
+      const printWidth = pdfWidth - (margin * 2);
+      const printHeight = (canvas.height * printWidth) / canvas.width;
 
-      pdf.addImage(imgData, "JPEG", 0, 20, pdfWidth, pdfHeight);
+      pdf.addImage(imgData, "JPEG", margin, 30, printWidth, printHeight);
       pdf.save(`${inInvNum.value || "Invoice"}.pdf`);
     };
 
-    // Export PNG Image
+    // High-Resolution PNG Image Export
     document.getElementById("btnDownloadImg").onclick = async () => {
       const target = document.getElementById("invoicePaper");
-      const canvas = await html2canvas(target, { scale: 2 });
+      const canvas = await html2canvas(target, { scale: 3, useCORS: true, backgroundColor: "#ffffff" });
       const link = document.createElement("a");
       link.download = `${inInvNum.value || "Invoice"}.png`;
       link.href = canvas.toDataURL("image/png");
