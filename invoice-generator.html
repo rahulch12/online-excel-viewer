@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS8Z05TBZY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CS8Z05TBZY');
+  </script>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+
+  <title>Free Invoice Generator Online (Download PDF) — SheetBox</title>
+  <meta name="title" content="Free Invoice Generator Online (Download PDF) — SheetBox" />
+  <meta name="description" content="Create, calculate, and download professional invoices in PDF format instantly. 100% private, client-side calculations, zero server storage, no sign-up required." />
+  <meta name="keywords" content="free invoice generator, invoice maker online, create invoice pdf, simple bill maker, client side invoice generator" />
+  <link rel="canonical" href="https://sheetbox.in/invoice-generator.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sheetbox.in/invoice-generator.html" />
+  <meta property="og:title" content="Free Invoice Generator Online — SheetBox" />
+  <meta property="og:description" content="Create and download clean invoices in seconds right in your browser." />
+  <meta property="og:image" content="https://sheetbox.in/logo.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SheetBox Free Invoice Generator",
+    "url": "https://sheetbox.in/invoice-generator.html",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Is my client and financial data stored on your server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The invoice generator runs completely in your web browser. Your client names, addresses, item costs, and totals are never sent or saved to any external database."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Can I customize the currency and tax rate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can select your preferred currency symbol ($, ₹, €, £) and adjust tax percentages with automatic real-time total calculations."
+      }
+    }]
+  }
+  </script>
+
+  <style>
+    :root {
+      --header-bg: #0f172a;
+      --page-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary-accent: #2563eb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--page-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+    .brand-group { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+    .brand-logo-img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
+    .bmc-header-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
+    
+    .container { max-width: 960px; width: 100%; padding: 20px 16px; margin: 0 auto; flex: 1; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--primary-accent); text-decoration: none; margin-bottom: 14px; }
+    
+    /* Control Toolbar */
+    .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
+    .btn { padding: 9px 16px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary { background: var(--primary-accent); color: #fff; }
+    .btn-default { background: #fff; border-color: #cbd5e1; color: #334155; }
+    .btn-danger { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+
+    /* The Printable Invoice Sheet */
+    .invoice-card { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+    .inv-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; gap: 20px; flex-wrap: wrap; }
+    .inv-title { font-size: 28px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
+    .input-clean { border: 1px solid transparent; padding: 4px 6px; border-radius: 4px; font-size: 14px; width: 100%; transition: border-color 0.2s; }
+    .input-clean:hover, .input-clean:focus { border-color: #cbd5e1; outline: none; background: #f8fafc; }
+    
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+    @media (max-width: 600px) { .meta-grid { grid-template-columns: 1fr; } }
+    .meta-box h4 { font-size: 12px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px; }
+
+    /* Line Items Table */
+    .table-box { width: 100%; overflow-x: auto; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background: #f8fafc; padding: 10px 8px; text-align: left; font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--border-color); }
+    td { padding: 8px; border-bottom: 1px solid var(--border-color); }
+    .col-action { width: 40px; text-align: center; }
+    .col-qty { width: 75px; }
+    .col-rate { width: 110px; }
+    .col-total { width: 120px; text-align: right; font-weight: 600; }
+
+    /* Totals Summary */
+    .summary-section { display: flex; justify-content: flex-end; margin-top: 10px; }
+    .summary-table { width: 280px; font-size: 13px; }
+    .summary-table tr td { padding: 6px 8px; border-bottom: 1px solid #f1f5f9; }
+    .summary-table tr td:last-child { text-align: right; font-weight: 600; }
+    .grand-total-row td { font-size: 16px; font-weight: 800; color: #0f172a; border-top: 2px solid var(--border-color); border-bottom: none; }
+
+    /* SEO Section */
+    .seo-content { margin-top: 40px; line-height: 1.65; color: #334155; }
+    .seo-content h2 { font-size: 20px; font-weight: 700; color: #0f172a; margin: 24px 0 10px 0; }
+    .seo-content h3 { font-size: 16px; font-weight: 600; color: #1e293b; margin: 16px 0 6px 0; }
+    .seo-content p { font-size: 14px; margin-bottom: 12px; }
+    .seo-content ol, .seo-content ul { padding-left: 20px; font-size: 14px; margin-bottom: 16px; }
+    .seo-content li { margin-bottom: 6px; }
+
+    footer { padding: 20px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-color); background: #fff; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="brand-group">
+      <img src="/logo.png" alt="SheetBox Logo" class="brand-logo-img" />
+      <div>
+        <span style="font-size: 16px; font-weight: 700;">SheetBox</span>
+        <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
+      </div>
+    </a>
+    <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">☕ Buy me a coffee</a>
+  </header>
+
+  <main class="container">
+    <a href="/" class="back-link">&larr; Open Full Tool Suite (Excel, PDF, CSV)</a>
+
+    <div class="toolbar">
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Currency:</label>
+        <select id="currencySelect" style="padding: 6px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 13px;">
+          <option value="₹">₹ (INR)</option>
+          <option value="$">$ (USD)</option>
+          <option value="€">€ (EUR)</option>
+          <option value="£">£ (GBP)</option>
+        </select>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-primary" id="btnDownloadPdf">📄 Download PDF</button>
+        <button class="btn btn-default" onclick="window.print()">🖨️ Print</button>
+      </div>
+    </div>
+
+    <div class="invoice-card" id="invoicePaper">
+      <div class="inv-header">
+        <div>
+          <div class="inv-title">INVOICE</div>
+          <input type="text" class="input-clean" id="invNumber" value="#INV-001" style="font-weight: 600; color: var(--text-muted); width: 140px;" />
+        </div>
+        <div style="text-align: right;">
+          <input type="text" class="input-clean" placeholder="Your Business / Your Name" style="font-size: 18px; font-weight: 700; text-align: right;" value="Freelance Services" />
+          <input type="text" class="input-clean" placeholder="your-email@domain.com" style="text-align: right;" value="chauhanr003@gmail.com" />
+          <input type="text" class="input-clean" placeholder="Phone or Tax ID / GSTIN" style="text-align: right;" />
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-box">
+          <h4>Billed To (Client):</h4>
+          <input type="text" class="input-clean" placeholder="Client Name / Business Name" style="font-weight: 600;" value="Acme Corp" />
+          <input type="text" class="input-clean" placeholder="Client Address" />
+          <input type="text" class="input-clean" placeholder="Client Email / Contact" />
+        </div>
+        <div class="meta-box" style="text-align: right;">
+          <h4>Invoice Details:</h4>
+          <div style="margin-bottom: 4px;">
+            <span style="font-size: 12px; color: var(--text-muted);">Date: </span>
+            <input type="date" id="invDate" class="input-clean" style="width: 140px; display: inline-block;" />
+          </div>
+          <div>
+            <span style="font-size: 12px; color: var(--text-muted);">Due Date: </span>
+            <input type="date" id="invDueDate" class="input-clean" style="width: 140px; display: inline-block;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="table-box">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 45%;">Item Description</th>
+              <th class="col-qty">Qty</th>
+              <th class="col-rate">Rate</th>
+              <th class="col-total">Amount</th>
+              <th class="col-action"></th>
+            </tr>
+          </thead>
+          <tbody id="itemsBody">
+            <tr>
+              <td><input type="text" class="input-clean item-desc" placeholder="Service or product description" value="Web Testing & QA Consulting" /></td>
+              <td><input type="number" class="input-clean item-qty" value="1" min="1" /></td>
+              <td><input type="number" class="input-clean item-rate" value="5000" min="0" /></td>
+              <td class="col-total item-amount">₹5000.00</td>
+              <td class="col-action"><button type="button" class="btn btn-danger" style="padding: 2px 6px; font-size: 11px;" onclick="removeRow(this)">&times;</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button type="button" class="btn btn-default" id="btnAddRow" style="font-size: 12px; margin-bottom: 16px;">+ Add Line Item</button>
+
+      <div class="summary-section">
+        <table class="summary-table">
+          <tr>
+            <td>Subtotal</td>
+            <td id="subtotalVal">₹5000.00</td>
+          </tr>
+          <tr>
+            <td>
+              Tax (%)
+              <input type="number" id="taxPercent" class="input-clean" value="0" min="0" max="100" style="width: 50px; display: inline-block; padding: 2px 4px; text-align: center;" />
+            </td>
+            <td id="taxVal">₹0.00</td>
+          </tr>
+          <tr>
+            <td>
+              Discount
+              <input type="number" id="discountValInput" class="input-clean" value="0" min="0" style="width: 60px; display: inline-block; padding: 2px 4px; text-align: center;" />
+            </td>
+            <td id="discountVal">₹0.00</td>
+          </tr>
+          <tr class="grand-total-row">
+            <td>Total Due</td>
+            <td id="grandTotalVal">₹5000.00</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <article class="seo-content">
+      <h2>How to Create and Download an Invoice Online</h2>
+      <ol>
+        <li><strong>Enter your details:</strong> Add your business name, client information, and invoice date.</li>
+        <li><strong>Add line items:</strong> Type your item descriptions, quantity, and unit rate. Totals update automatically in real-time.</li>
+        <li><strong>Apply tax or discount:</strong> Set tax percentages or flat discounts as needed.</li>
+        <li><strong>Download or Print:</strong> Click "Download PDF" to instantly generate a print-ready vector PDF document.</li>
+      </ol>
+
+      <h2>Why Use SheetBox Invoice Generator?</h2>
+      <ul>
+        <li><strong>Zero Data Uploads (100% Client-Side Privacy):</strong> Your client lists, rates, and billing amounts are processed entirely in your web browser. Nothing is sent to or stored on our servers.</li>
+        <li><strong>Completely Free & No Signup:</strong> Create unlimited invoices without watermarks or mandatory account registrations.</li>
+        <li><strong>Multi-Currency Support:</strong> Instantly switch between ₹ (INR), $ (USD), € (EUR), and £ (GBP).</li>
+      </ul>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <h3>Can I save the invoice as a PDF without watermarks?</h3>
+      <p>Yes. SheetBox generates clean, unbranded PDFs suitable for business, contract, and freelance billing.</p>
+
+      <h3>Is my data saved if I close the tab?</h3>
+      <p>Because SheetBox prioritizes strict privacy and runs client-side without storing personal data on external databases, please make sure to download your PDF before navigating away.</p>
+    </article>
+  </main>
+
+  <div style="max-width: 1240px; margin: 16px auto; padding: 0 16px; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+    <strong>Popular Tools:</strong> 
+    <a href="/compress-image.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">⚡ Compress Image</a> •
+    <a href="/images-to-pdf.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">🖼️ Images to PDF</a> •
+    <a href="/merge-pdf.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">📑 Merge PDF</a> •
+    <a href="/compare-excel.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">🔍 Compare Sheets</a> •
+    <a href="/invoice-generator.html" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">🧾 Invoice Generator</a> •
+    <a href="/" style="color: var(--primary-accent); margin-left: 6px; text-decoration: none;">📊 Excel & CSV Studio</a>
+  </div>
+
+  <footer>
+    <div style="margin-bottom: 6px; font-weight: 500;">SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution</div>
+    <div style="font-size: 11px; color: var(--text-muted);">
+      Contact: <a href="mailto:chauhanr003@gmail.com" style="color: var(--primary-accent); text-decoration: none;">chauhanr003@gmail.com</a> • 
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--primary-accent); text-decoration: none;">Buy Me a Coffee ☕</a>
+    </div>
+  </footer>
+
+  <script>
+    const itemsBody = document.getElementById("itemsBody");
+    const btnAddRow = document.getElementById("btnAddRow");
+    const currencySelect = document.getElementById("currencySelect");
+    const taxPercent = document.getElementById("taxPercent");
+    const discountValInput = document.getElementById("discountValInput");
+    const subtotalVal = document.getElementById("subtotalVal");
+    const taxVal = document.getElementById("taxVal");
+    const discountVal = document.getElementById("discountVal");
+    const grandTotalVal = document.getElementById("grandTotalVal");
+    const btnDownloadPdf = document.getElementById("btnDownloadPdf");
+
+    // Default dates
+    document.getElementById("invDate").valueAsDate = new Date();
+    const nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
+    document.getElementById("invDueDate").valueAsDate = nextWeek;
+
+    function getCurrency() {
+      return currencySelect.value;
+    }
+
+    function calculateTotals() {
+      const sym = getCurrency();
+      let subtotal = 0;
+      const rows = itemsBody.querySelectorAll("tr");
+
+      rows.forEach(row => {
+        const qty = parseFloat(row.querySelector(".item-qty").value) || 0;
+        const rate = parseFloat(row.querySelector(".item-rate").value) || 0;
+        const total = qty * rate;
+        row.querySelector(".item-amount").textContent = `${sym}${total.toFixed(2)}`;
+        subtotal += total;
+      });
+
+      const taxRate = parseFloat(taxPercent.value) || 0;
+      const taxAmount = (subtotal * taxRate) / 100;
+      const discount = parseFloat(discountValInput.value) || 0;
+      const grandTotal = Math.max(0, subtotal + taxAmount - discount);
+
+      subtotalVal.textContent = `${sym}${subtotal.toFixed(2)}`;
+      taxVal.textContent = `${sym}${taxAmount.toFixed(2)}`;
+      discountVal.textContent = `${sym}${discount.toFixed(2)}`;
+      grandTotalVal.textContent = `${sym}${grandTotal.toFixed(2)}`;
+    }
+
+    btnAddRow.onclick = function() {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><input type="text" class="input-clean item-desc" placeholder="Service or product description" /></td>
+        <td><input type="number" class="input-clean item-qty" value="1" min="1" /></td>
+        <td><input type="number" class="input-clean item-rate" value="0" min="0" /></td>
+        <td class="col-total item-amount">${getCurrency()}0.00</td>
+        <td class="col-action"><button type="button" class="btn btn-danger" style="padding: 2px 6px; font-size: 11px;" onclick="removeRow(this)">&times;</button></td>
+      `;
+      itemsBody.appendChild(tr);
+      attachInputListeners(tr);
+    };
+
+    window.removeRow = function(btn) {
+      if (itemsBody.querySelectorAll("tr").length > 1) {
+        btn.closest("tr").remove();
+        calculateTotals();
+      }
+    };
+
+    function attachInputListeners(parent) {
+      parent.querySelectorAll("input").forEach(inp => {
+        inp.addEventListener("input", calculateTotals);
+      });
+    }
+
+    attachInputListeners(document);
+    currencySelect.addEventListener("change", calculateTotals);
+    taxPercent.addEventListener("input", calculateTotals);
+    discountValInput.addEventListener("input", calculateTotals);
+
+    // Generate and download PDF
+    btnDownloadPdf.onclick = function() {
+      const element = document.getElementById("invoicePaper");
+      
+      // Hide action buttons inside row during PDF render
+      const actions = element.querySelectorAll(".col-action");
+      actions.forEach(a => a.style.display = "none");
+
+      const opt = {
+        margin: 10,
+        filename: `${document.getElementById("invNumber").value || "Invoice"}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        actions.forEach(a => a.style.display = "");
+      });
+    };
+  </script>
+</body>
+</html>
