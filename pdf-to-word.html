@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS8Z05TBZY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CS8Z05TBZY');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
+
+  <!-- PDF.js for text stream extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+  </script>
+
+  <!-- docx library for client-side Word document packaging -->
+  <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
+  <!-- FileSaver for triggering download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Free PDF to Word Converter Online — Edit & Download DOCX | SheetBox</title>
+  <meta name="title" content="Free PDF to Word Converter Online — Edit & Download DOCX | SheetBox" />
+  <meta name="description" content="Convert PDF documents to editable Microsoft Word (.docx) files directly in your browser. Inspect, edit text before downloading, 100% private with no server uploads." />
+  <meta name="keywords" content="pdf to word converter, convert pdf to docx free, edit pdf online, pdf to word editable, client side pdf converter" />
+  <link rel="canonical" href="https://sheetbox.in/pdf-to-word.html" />
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sheetbox.in/pdf-to-word.html" />
+  <meta property="og:title" content="Free PDF to Word Converter Online — SheetBox" />
+  <meta property="og:description" content="Convert and edit your PDFs into editable Word (.docx) documents in your browser. 100% private." />
+  <meta property="og:image" content="https://sheetbox.in/logo.png" />
+
+  <!-- Schema.org WebApplication Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SheetBox PDF to Word Converter",
+    "url": "https://sheetbox.in/pdf-to-word.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --header-bg: #0f172a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #2563eb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+    .brand img { width: 32px; height: 32px; border-radius: 8px; }
+    .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
+
+    .container { max-width: 1100px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
+    .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; margin-bottom: 14px; }
+
+    /* Upload Box */
+    .upload-card { background: var(--card-bg); border: 2px dashed #cbd5e1; border-radius: 14px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 24px; }
+    .upload-card:hover { border-color: var(--accent); background: #f0f7ff; }
+    .upload-icon { font-size: 40px; margin-bottom: 8px; }
+    .upload-title { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .upload-desc { font-size: 13px; color: var(--text-muted); }
+
+    /* Progress Notification */
+    .status-box { display: none; background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px 16px; border-radius: 8px; font-size: 13.5px; font-weight: 600; margin-bottom: 20px; text-align: center; }
+
+    /* Interactive Editor Workspace */
+    .editor-section { display: none; background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.04); margin-bottom: 30px; }
+    
+    .editor-toolbar { background: #0f172a; color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .editor-toolbar-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .editor-actions { display: flex; gap: 8px; }
+
+    .btn { padding: 8px 14px; font-size: 13px; font-weight: 700; border-radius: 6px; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-download { background: #10b981; color: #fff; }
+    .btn-download:hover { background: #059669; }
+    .btn-reset { background: rgba(255,255,255,0.12); color: #fff; }
+
+    .editor-body { padding: 24px; min-height: 380px; max-height: 600px; overflow-y: auto; font-size: 14.5px; line-height: 1.75; color: #1e293b; outline: none; white-space: pre-wrap; word-break: break-word; }
+    .editor-body:focus { background-color: #fafbfc; }
+
+    /* SEO Section */
+    .seo-section { margin-top: 36px; font-size: 14px; color: #334155; line-height: 1.7; background: #fff; padding: 24px; border-radius: 12px; border: 1px solid var(--border); }
+    .seo-section h2 { font-size: 18px; color: #0f172a; margin: 18px 0 6px 0; font-weight: 700; }
+    .seo-section h2:first-child { margin-top: 0; }
+    .seo-section p { margin-bottom: 12px; }
+    .seo-section ol, .seo-section ul { padding-left: 20px; margin-bottom: 14px; }
+    .seo-section li { margin-bottom: 6px; }
+
+    footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="brand">
+      <img src="/logo.png" alt="SheetBox Logo" />
+      <div>
+        <span style="font-weight: 800; font-size: 16px;">SheetBox</span>
+        <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
+      </div>
+    </a>
+    <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn">☕ Support</a>
+  </header>
+
+  <main class="container">
+    <a href="/" class="back-link">&larr; Open Full Tool Suite (Excel, PDF, CSV)</a>
+
+    <!-- Upload Box -->
+    <div class="upload-card" id="dropArea">
+      <div class="upload-icon">📄</div>
+      <div class="upload-title">Drop your PDF file here to convert</div>
+      <div class="upload-desc">Or click to select a file from your device. 100% private and processed in-browser.</div>
+      <input type="file" id="fileInput" accept=".pdf" style="display: none;" />
+    </div>
+
+    <!-- Status Banner -->
+    <div class="status-box" id="statusBox">Parsing PDF pages...</div>
+
+    <!-- Live Document Editor -->
+    <div class="editor-section" id="editorSection">
+      <div class="editor-toolbar">
+        <div class="editor-toolbar-title">
+          <span>📝</span>
+          <span id="docFileName">Converted Document</span>
+          <span style="font-size: 11px; font-weight: 400; opacity: 0.75;">(Click below to edit text before downloading)</span>
+        </div>
+        <div class="editor-actions">
+          <button class="btn btn-reset" onclick="resetConverter()">✕ Clear</button>
+          <button class="btn btn-download" id="btnDownloadDocx">💾 Download as Word (.docx)</button>
+        </div>
+      </div>
+      <div class="editor-body" id="textEditor" contenteditable="true" spellcheck="true"></div>
+    </div>
+
+    <!-- SEO Content -->
+    <article class="seo-section">
+      <h2>Free Online PDF to Word (.docx) Converter</h2>
+      <p>Convert native PDF documents into editable Microsoft Word (.docx) documents in seconds. Unlike traditional conversion websites that require you to upload private contracts, financial invoices, or personal resumes to their servers, SheetBox runs parsing algorithms entirely inside your browser memory.</p>
+
+      <h2>How to Convert PDF to Editable Word Online</h2>
+      <ol>
+        <li><strong>Choose or drop your PDF:</strong> Select any standard text PDF file from your phone, laptop, or desktop.</li>
+        <li><strong>Review & Edit in Real-Time:</strong> Your PDF text stream is parsed and loaded into the built-in editor, allowing you to proofread, fix typo lines, or delete excess headings.</li>
+        <li><strong>Download as Word:</strong> Click <em>Download as Word (.docx)</em> to compile the structured text into a native document file compatible with Microsoft Word, Google Docs, and WPS Office.</li>
+      </ol>
+
+      <h2>Frequently Asked Questions</h2>
+      <p><strong>Are my documents stored on your servers?</strong><br>No. Every step of the extraction and file construction occurs inside your browser. No data ever leaves your device.</p>
+      <p><strong>Does this work for scanned image PDFs?</strong><br>This tool is designed for digital PDFs that contain selectable text streams. Flat image scans (photos of paper) require optical OCR processing, which will be added in a future update.</p>
+    </article>
+  </main>
+
+  <div style="max-width: 1240px; margin: 16px auto; padding: 0 16px; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+    <strong>Popular Tools:</strong> 
+    <a href="/pdf-to-word.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">📄 PDF to Word</a> •
+    <a href="/merge-pdf.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">📑 Merge PDF</a> •
+    <a href="/images-to-pdf.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">🖼️ Images to PDF</a> •
+    <a href="/compress-image.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">⚡ Compress Image</a> •
+    <a href="/invoice-generator.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">🧾 Invoice Generator</a> •
+    <a href="/compare-excel.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">🔍 Compare Sheets</a>
+  </div>
+
+  <footer>
+    <div style="margin-bottom: 6px; font-weight: 500;">SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution</div>
+    <div style="font-size: 11px; color: var(--text-muted);">
+      Contact: <a href="mailto:chauhanr003@gmail.com" style="color: var(--accent); text-decoration: none;">chauhanr003@gmail.com</a> • 
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">Buy Me a Coffee ☕</a>
+    </div>
+  </footer>
+
+  <script>
+    const dropArea = document.getElementById("dropArea");
+    const fileInput = document.getElementById("fileInput");
+    const statusBox = document.getElementById("statusBox");
+    const editorSection = document.getElementById("editorSection");
+    const textEditor = document.getElementById("textEditor");
+    const docFileName = document.getElementById("docFileName");
+    const btnDownloadDocx = document.getElementById("btnDownloadDocx");
+
+    let originalName = "Document";
+
+    dropArea.onclick = () => fileInput.click();
+
+    dropArea.ondragover = (e) => { e.preventDefault(); dropArea.style.borderColor = "#2563eb"; };
+    dropArea.ondragleave = () => { dropArea.style.borderColor = "#cbd5e1"; };
+    dropArea.ondrop = (e) => {
+      e.preventDefault();
+      dropArea.style.borderColor = "#cbd5e1";
+      if (e.dataTransfer.files.length) processPdf(e.dataTransfer.files[0]);
+    };
+
+    fileInput.onchange = (e) => {
+      if (e.target.files.length) processPdf(e.target.files[0]);
+    };
+
+    async function processPdf(file) {
+      if (file.type !== "application/pdf" && !file.name.endsWith(".pdf")) {
+        alert("Please select a valid PDF file.");
+        return;
+      }
+
+      originalName = file.name.replace(/\.pdf$/i, "");
+      docFileName.textContent = `${originalName}.docx`;
+      statusBox.style.display = "block";
+      statusBox.textContent = `Reading "${file.name}"...`;
+
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+        const pdf = await loadingTask.promise;
+
+        let fullText = "";
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          statusBox.textContent = `Extracting page ${pageNum} of ${pdf.numPages}...`;
+          const page = await pdf.getPage(pageNum);
+          const textContent = await page.getTextContent();
+          
+          let lastY = null;
+          let pageText = "";
+
+          textContent.items.forEach(item => {
+            if (lastY !== null && Math.abs(item.transform[5] - lastY) > 6) {
+              pageText += "\n";
+            } else if (lastY !== null && !pageText.endsWith(" ")) {
+              pageText += " ";
+            }
+            pageText += item.str;
+            lastY = item.transform[5];
+          });
+
+          fullText += pageText.trim() + "\n\n";
+        }
+
+        if (!fullText.trim()) {
+          alert("No selectable text could be found. This PDF may be a flat image scan.");
+          statusBox.style.display = "none";
+          return;
+        }
+
+        textEditor.innerText = fullText.trim();
+        statusBox.style.display = "none";
+        editorSection.style.display = "block";
+        editorSection.scrollIntoView({ behavior: 'smooth' });
+
+      } catch (err) {
+        statusBox.style.display = "none";
+        alert("Error parsing PDF: " + err.message);
+      }
+    }
+
+    // Build and download .docx
+    btnDownloadDocx.onclick = async () => {
+      btnDownloadDocx.textContent = "⏳ Building Word file...";
+      btnDownloadDocx.disabled = true;
+
+      try {
+        const rawContent = textEditor.innerText;
+        const paragraphs = rawContent.split(/\n+/).map(pText => {
+          return new docx.Paragraph({
+            children: [
+              new docx.TextRun({
+                text: pText,
+                font: "Calibri",
+                size: 24 // 12pt
+              })
+            ],
+            spacing: { after: 120 }
+          });
+        });
+
+        const doc = new docx.Document({
+          sections: [{
+            properties: {},
+            children: paragraphs
+          }]
+        });
+
+        const blob = await docx.Packer.toBlob(doc);
+        saveAs(blob, `${originalName}.docx`);
+      } catch (err) {
+        alert("Failed to export Word document: " + err.message);
+      } finally {
+        btnDownloadDocx.textContent = "💾 Download as Word (.docx)";
+        btnDownloadDocx.disabled = false;
+      }
+    };
+
+    window.resetConverter = () => {
+      fileInput.value = "";
+      textEditor.innerText = "";
+      editorSection.style.display = "none";
+      statusBox.style.display = "none";
+    };
+  </script>
+</body>
+</html>
