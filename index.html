@@ -24,17 +24,17 @@
   <link rel="apple-touch-icon" href="/logo.png" />
 
   <!-- Primary SEO Meta Tags -->
-  <title>SheetBox Studio — Free In-Browser Excel, PDF & Document Tools</title>
-  <meta name="title" content="SheetBox Studio — Free In-Browser Excel, PDF & Document Tools" />
-  <meta name="description" content="Open, view, compare spreadsheets, merge PDFs, compress images, and generate invoices 100% in your browser. Fast, private, client-side execution." />
-  <meta name="keywords" content="online excel viewer, merge pdf online free, compress image online, compare excel files, free invoice generator, client side document utilities" />
+  <title>SheetBox — Free Online PDF, Image & Document Tools (100% Private)</title>
+  <meta name="title" content="SheetBox — Free Online PDF, Image & Document Tools (100% Private)" />
+  <meta name="description" content="Free, super-simple tools to merge PDFs, compress photos, create bills & invoices, view Excel files, and compare sheets right in your browser. 100% secure and private." />
+  <meta name="keywords" content="simple invoice maker, free pdf merger, compress photo online, view excel file online, convert images to pdf, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/" />
 
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sheetbox.in/" />
-  <meta property="og:title" content="SheetBox Studio — Free In-Browser Document Tools" />
-  <meta property="og:description" content="Fast, 100% private in-browser document, spreadsheet, and PDF tools." />
+  <meta property="og:title" content="SheetBox — Easy, Free Document & PDF Tools" />
+  <meta property="og:description" content="Click and get your work done in seconds. 100% free, safe, and private in your browser." />
   <meta property="og:image" content="https://sheetbox.in/logo.png" />
   <meta property="og:image:width" content="1024" />
   <meta property="og:image:height" content="1024" />
@@ -46,7 +46,7 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "SheetBox Studio",
+    "name": "SheetBox",
     "url": "https://sheetbox.in/",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "All",
@@ -62,91 +62,140 @@
     :root {
       --header-bg: #0f172a;
       --page-bg: #f8fafc;
-      --card-bg: #ffffff;
-      --border-color: #e2e8f0;
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --primary-accent: #2563eb;
+      --primary: #2563eb;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: var(--page-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
     
-    header { background-color: var(--header-bg); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
     .brand-group { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
     .brand-logo-img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
     .header-actions { display: flex; align-items: center; gap: 10px; }
-    .privacy-badge { font-size: 11.5px; color: #94a3b8; background: rgba(255,255,255,0.06); padding: 5px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
-    .bmc-header-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: 20px; text-decoration: none; }
+    .privacy-tag { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); padding: 4px 10px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+    .bmc-header-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: 20px; text-decoration: none; transition: transform 0.1s; }
+    .bmc-header-btn:hover { transform: scale(1.03); }
 
-    .main-container { max-width: 1140px; width: 100%; margin: 16px auto; padding: 0 16px; flex: 1; }
+    .main-container { max-width: 1140px; width: 100%; margin: 0 auto; padding: 24px 16px 40px 16px; flex: 1; }
 
-    /* Studio Workspace Card */
-    .workspace-wrapper { background: #ffffff; border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 30px; }
-    
-    .dropzone {
-      border: 2px dashed #cbd5e1;
-      border-radius: 12px;
-      padding: 46px 20px;
-      text-align: center;
-      background: #f8fafc;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .dropzone:hover { border-color: var(--primary-accent); background: #f0f7ff; }
-    .drop-icon { font-size: 36px; margin-bottom: 8px; }
-    .drop-title { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-    .drop-desc { font-size: 13px; color: var(--text-muted); }
+    /* Welcoming Hero Banner */
+    .hero-banner { text-align: center; margin-bottom: 28px; }
+    .hero-badge { display: inline-block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; background: #dbeafe; color: #1d4ed8; padding: 5px 14px; border-radius: 30px; margin-bottom: 10px; }
+    .hero-title { font-size: 28px; font-weight: 900; color: #0f172a; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .hero-subtitle { font-size: 15px; color: #475569; max-width: 580px; margin: 0 auto; line-height: 1.5; }
 
-    /* Viewer Table Canvas */
-    .viewer-area { display: none; margin-top: 20px; }
-    .viewer-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
-    .sheet-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-    .sheet-tab-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #f8fafc; font-size: 12px; font-weight: 600; cursor: pointer; }
-    .sheet-tab-btn.active { background: #0f172a; color: #fff; border-color: #0f172a; }
-    .table-scroll-wrapper { max-height: 520px; overflow: auto; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; }
-    table.data-grid { width: 100%; border-collapse: collapse; font-size: 12px; }
-    table.data-grid th { position: sticky; top: 0; background: #f1f5f9; padding: 8px 10px; border-bottom: 2px solid var(--border-color); text-align: left; font-weight: 700; color: #334155; }
-    table.data-grid td { padding: 7px 10px; border-bottom: 1px solid #f1f5f9; white-space: nowrap; color: #334155; }
-    table.data-grid tr:hover { background-color: #f8fafc; }
+    /* Eye-Catching Tool Cards Grid */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; }
 
-    /* Grid Directory of Tools */
-    .directory-section { margin-top: 20px; }
-    .section-heading-bar { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 18px; flex-wrap: wrap; gap: 8px; }
-    .section-title { font-size: 18px; font-weight: 800; color: #0f172a; }
-    .section-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-    .pill-badge { font-size: 11.5px; font-weight: 600; color: var(--primary-accent); background: #eff6ff; padding: 4px 10px; border-radius: 20px; }
-
-    .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-    .tool-card {
+    .tool-box {
       background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 22px 20px;
       text-decoration: none;
       display: flex;
       flex-direction: column;
-      transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .tool-card:hover {
-      border-color: var(--primary-accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+    .tool-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
     }
-    .tool-card-icon { font-size: 26px; margin-bottom: 10px; }
-    .tool-card-title { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-    .tool-card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.45; }
 
-    /* Categorized Footer */
-    footer { border-top: 1px solid var(--border-color); background: #ffffff; padding: 36px 16px 24px 16px; margin-top: 50px; }
-    .footer-container { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 28px; font-size: 13px; }
-    .footer-brand-col { max-width: 320px; }
-    .footer-brand-title { font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
-    .footer-brand-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
-    .footer-links-group { display: flex; gap: 44px; flex-wrap: wrap; }
-    .footer-col-title { color: #0f172a; display: block; margin-bottom: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; }
-    .footer-links-list { list-style: none; padding: 0; margin: 0; line-height: 2.1; }
-    .footer-links-list a { color: var(--text-muted); text-decoration: none; font-size: 12.5px; }
-    .footer-links-list a:hover { color: var(--primary-accent); }
+    /* Individual Color Themes */
+    .theme-invoice { border-color: #c7d2fe; }
+    .theme-invoice:hover { border-color: #6366f1; }
+    .theme-invoice .icon-bg { background: #eef2ff; color: #4f46e5; }
+    .theme-invoice .tool-action-btn { background: #4f46e5; color: #fff; }
+
+    .theme-pdf-merge { border-color: #ddd6fe; }
+    .theme-pdf-merge:hover { border-color: #8b5cf6; }
+    .theme-pdf-merge .icon-bg { background: #f5f3ff; color: #7c3aed; }
+    .theme-pdf-merge .tool-action-btn { background: #7c3aed; color: #fff; }
+
+    .theme-img-pdf { border-color: #a7f3d0; }
+    .theme-img-pdf:hover { border-color: #10b981; }
+    .theme-img-pdf .icon-bg { background: #ecfdf5; color: #059669; }
+    .theme-img-pdf .tool-action-btn { background: #059669; color: #fff; }
+
+    .theme-compress { border-color: #fed7aa; }
+    .theme-compress:hover { border-color: #f97316; }
+    .theme-compress .icon-bg { background: #fff7ed; color: #ea580c; }
+    .theme-compress .tool-action-btn { background: #ea580c; color: #fff; }
+
+    .theme-compare { border-color: #bae6fd; }
+    .theme-compare:hover { border-color: #0284c7; }
+    .theme-compare .icon-bg { background: #f0f9ff; color: #0284c7; }
+    .theme-compare .tool-action-btn { background: #0284c7; color: #fff; }
+
+    .theme-viewer { border-color: #cbd5e1; }
+    .theme-viewer:hover { border-color: #334155; }
+    .theme-viewer .icon-bg { background: #f1f5f9; color: #1e293b; }
+    .theme-viewer .tool-action-btn { background: #1e293b; color: #fff; }
+
+    /* Card Top Elements */
+    .card-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+    .icon-bg { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+    .card-heading-group { flex: 1; }
+    .tool-name { font-size: 17px; font-weight: 800; color: #0f172a; line-height: 1.3; margin-bottom: 3px; }
+    .tool-pill { font-size: 10.5px; font-weight: 700; text-transform: uppercase; padding: 2px 7px; border-radius: 6px; display: inline-block; }
+
+    .tool-desc { font-size: 13.5px; color: #475569; line-height: 1.5; margin-bottom: 20px; flex: 1; }
+
+    /* Big Direct Action Button */
+    .tool-action-btn {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: filter 0.15s;
+    }
+    .tool-action-btn:hover { filter: brightness(1.1); }
+
+    /* In-Page Quick Spreadsheet Viewer Box */
+    .inline-viewer-section { margin-top: 40px; background: #ffffff; border: 2px dashed #cbd5e1; border-radius: 16px; padding: 28px 20px; text-align: center; }
+    .inline-viewer-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .inline-viewer-sub { font-size: 13px; color: #64748b; margin-bottom: 14px; }
+    .btn-choose-file { background: #0f172a; color: #fff; padding: 11px 22px; font-size: 13.5px; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+
+    /* Spreadsheet Grid Render */
+    .viewer-display { display: none; margin-top: 20px; text-align: left; }
+    .viewer-sheet-tabs { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+    .v-tab-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .v-tab-btn.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+    .v-table-wrapper { max-height: 480px; overflow: auto; border: 1px solid #cbd5e1; border-radius: 8px; }
+    table.v-grid { width: 100%; border-collapse: collapse; font-size: 12px; }
+    table.v-grid th { position: sticky; top: 0; background: #f1f5f9; padding: 8px 10px; border-bottom: 2px solid #cbd5e1; text-align: left; font-weight: 700; }
+    table.v-grid td { padding: 8px 10px; border-bottom: 1px solid #f1f5f9; white-space: nowrap; }
+
+    /* Footer */
+    footer { border-top: 1px solid #e2e8f0; background: #ffffff; padding: 34px 16px 24px 16px; margin-top: 40px; }
+    .footer-content { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; font-size: 13px; }
+    .footer-links-group { display: flex; gap: 40px; flex-wrap: wrap; }
+    .footer-col-title { color: #0f172a; display: block; margin-bottom: 8px; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+    .footer-links-list { list-style: none; padding: 0; line-height: 2.1; }
+    .footer-links-list a { color: #64748b; text-decoration: none; }
+    .footer-links-list a:hover { color: #2563eb; }
+
+    @media (max-width: 640px) {
+      .hero-title { font-size: 22px; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .header-actions .privacy-tag { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -155,124 +204,176 @@
     <a href="/" class="brand-group">
       <img src="/logo.png" alt="SheetBox Logo" class="brand-logo-img" />
       <div>
-        <span style="font-size: 16px; font-weight: 700;">SheetBox Studio</span>
+        <span style="font-size: 16px; font-weight: 800;">SheetBox</span>
         <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
       </div>
     </a>
     <div class="header-actions">
-      <div class="privacy-badge">🔒 100% In-Browser Privacy</div>
+      <div class="privacy-tag">🔒 100% Private & Safe</div>
       <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">☕ Support</a>
     </div>
   </header>
 
   <main class="main-container">
-    
-    <!-- Workspace: Native Spreadsheet Viewer -->
-    <div class="workspace-wrapper">
-      <div class="dropzone" id="dropzone">
-        <div class="drop-icon">📊</div>
-        <div class="drop-title">Open Spreadsheet (XLSX, XLS, CSV)</div>
-        <div class="drop-desc">Click or drop your spreadsheet here to view and filter instantly. No upload to servers.</div>
-        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display: none;" />
+
+    <!-- Hero Introduction -->
+    <div class="hero-banner">
+      <span class="hero-badge">⚡ Instant • Free • No Sign-up</span>
+      <h1 class="hero-title">What would you like to do today?</h1>
+      <p class="hero-subtitle">Choose a tool below to get your job done in seconds. Your files never leave your device.</p>
+    </div>
+
+    <!-- 6 High-Contrast Visual Tool Cards -->
+    <div class="tools-grid">
+
+      <!-- Tool 1: Invoice Generator -->
+      <div class="tool-box theme-invoice">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">🧾</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Make an Invoice or Bill</div>
+              <span class="tool-pill" style="background: #e0e7ff; color: #3730a3;">Most Popular</span>
+            </div>
+          </div>
+          <div class="tool-desc">Create quick, clean business bills and receipts. Add items, calculate totals, and download as PDF or Image.</div>
+        </div>
+        <a href="/invoice-generator.html" class="tool-action-btn">Open Invoice Maker &rarr;</a>
       </div>
 
-      <div class="viewer-area" id="viewerArea">
-        <div class="viewer-toolbar">
-          <div class="sheet-tabs" id="sheetTabs"></div>
-          <div style="font-size: 12px; color: var(--text-muted);" id="rowColCount"></div>
+      <!-- Tool 2: Merge PDF -->
+      <div class="tool-box theme-pdf-merge">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">📑</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Join Multiple PDFs</div>
+              <span class="tool-pill" style="background: #ede9fe; color: #5b21b6;">PDF Utility</span>
+            </div>
+          </div>
+          <div class="tool-desc">Combine 2 or more PDF documents into one single file. Rearrange them however you like and download instantly.</div>
         </div>
-        <div class="table-scroll-wrapper">
-          <table class="data-grid" id="dataGrid">
-            <thead id="gridHead"></thead>
-            <tbody id="gridBody"></tbody>
+        <a href="/merge-pdf.html" class="tool-action-btn">Merge PDFs Now &rarr;</a>
+      </div>
+
+      <!-- Tool 3: Images to PDF -->
+      <div class="tool-box theme-img-pdf">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">🖼️</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Convert Photos to PDF</div>
+              <span class="tool-pill" style="background: #d1fae5; color: #065f46;">Fast & Simple</span>
+            </div>
+          </div>
+          <div class="tool-desc">Turn JPG, PNG, or mobile camera photos into a neat, shareable PDF document ready for printing or email.</div>
+        </div>
+        <a href="/images-to-pdf.html" class="tool-action-btn">Convert Photos &rarr;</a>
+      </div>
+
+      <!-- Tool 4: Compress Image -->
+      <div class="tool-box theme-compress">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">⚡</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Reduce Photo File Size</div>
+              <span class="tool-pill" style="background: #ffedd5; color: #9a3412;">Size Saver</span>
+            </div>
+          </div>
+          <div class="tool-desc">Shrink heavy images to small MB/KB sizes for forms, uploads, and applications without losing quality.</div>
+        </div>
+        <a href="/compress-image.html" class="tool-action-btn">Compress Photos &rarr;</a>
+      </div>
+
+      <!-- Tool 5: Compare Spreadsheets -->
+      <div class="tool-box theme-compare">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">🔍</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Compare Two Excel Files</div>
+              <span class="tool-pill" style="background: #e0f2fe; color: #075985;">Difference Checker</span>
+            </div>
+          </div>
+          <div class="tool-desc">Upload two Excel or CSV sheets to spot differences. Instantly highlights added, removed, or changed rows.</div>
+        </div>
+        <a href="/compare-excel.html" class="tool-action-btn">Compare Spreadsheets &rarr;</a>
+      </div>
+
+      <!-- Tool 6: Quick View Excel -->
+      <div class="tool-box theme-viewer">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">📊</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Open & Read Excel File</div>
+              <span class="tool-pill" style="background: #f1f5f9; color: #334155;">Spreadsheet</span>
+            </div>
+          </div>
+          <div class="tool-desc">Open and read any .xlsx, .xls, or .csv file directly on your screen without installing Microsoft Office.</div>
+        </div>
+        <button type="button" class="tool-action-btn" onclick="document.getElementById('fileInput').click()">Select Excel File &rarr;</button>
+      </div>
+
+    </div>
+
+    <!-- Built-in In-Browser Excel Viewer -->
+    <div class="inline-viewer-section" id="quickViewerBlock">
+      <div class="inline-viewer-title">Or open a spreadsheet right here:</div>
+      <div class="inline-viewer-sub">Works with .xlsx, .xls, and .csv files. 100% private, never uploaded to any server.</div>
+      <button type="button" class="btn-choose-file" onclick="document.getElementById('fileInput').click()">
+        📁 Choose Excel File From Device
+      </button>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display: none;" />
+
+      <div class="viewer-display" id="viewerDisplay">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div class="viewer-sheet-tabs" id="vSheetTabs"></div>
+          <span id="vCount" style="font-size: 12px; color: #64748b; font-weight: 600;"></span>
+        </div>
+        <div class="v-table-wrapper">
+          <table class="v-grid" id="vGrid">
+            <thead id="vHead"></thead>
+            <tbody id="vBody"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- All Standalone Tools Directory Grid -->
-    <section class="directory-section">
-      <div class="section-heading-bar">
-        <div>
-          <h2 class="section-title">Free In-Browser Utilities</h2>
-          <p class="section-sub">100% private, client-side document processing. Zero server storage.</p>
-        </div>
-        <span class="pill-badge">No Signup Required</span>
-      </div>
-
-      <div class="tools-grid">
-        
-        <!-- Tool 1: Merge PDF -->
-        <a href="/merge-pdf.html" class="tool-card">
-          <div class="tool-card-icon">📑</div>
-          <div class="tool-card-title">Merge PDF Files</div>
-          <div class="tool-card-desc">Combine multiple PDF documents into a single organized file in seconds.</div>
-        </a>
-
-        <!-- Tool 2: Images to PDF -->
-        <a href="/images-to-pdf.html" class="tool-card">
-          <div class="tool-card-icon">🖼️</div>
-          <div class="tool-card-title">Images to PDF</div>
-          <div class="tool-card-desc">Convert PNG, JPG, and WebP images into clean, shareable PDF documents.</div>
-        </a>
-
-        <!-- Tool 3: Compress Image -->
-        <a href="/compress-image.html" class="tool-card">
-          <div class="tool-card-icon">⚡</div>
-          <div class="tool-card-title">Compress Image</div>
-          <div class="tool-card-desc">Shrink image file sizes without noticeable loss in visual quality.</div>
-        </a>
-
-        <!-- Tool 4: Compare Spreadsheets -->
-        <a href="/compare-excel.html" class="tool-card">
-          <div class="tool-card-icon">🔍</div>
-          <div class="tool-card-title">Compare Spreadsheets</div>
-          <div class="tool-card-desc">Diff two Excel or CSV sheets to highlight added, removed, and modified rows.</div>
-        </a>
-
-        <!-- Tool 5: Invoice Generator -->
-        <a href="/invoice-generator.html" class="tool-card">
-          <div class="tool-card-icon">🧾</div>
-          <div class="tool-card-title">Invoice Generator</div>
-          <div class="tool-card-desc">Create professional receipts and commercial invoices. Export as PDF or PNG.</div>
-        </a>
-
-      </div>
-    </section>
-
   </main>
 
   <!-- Categorized Footer Directory -->
   <footer>
-    <div class="footer-container">
+    <div class="footer-content">
       
-      <div class="footer-brand-col">
-        <div class="footer-brand-title">SheetBox Studio</div>
-        <p class="footer-brand-desc">Fast, secure in-browser document tools. All processing happens in local browser memory with zero server uploads.</p>
+      <div style="max-width: 320px;">
+        <div style="font-weight: 800; font-size: 16px; color: #0f172a; margin-bottom: 6px;">SheetBox Studio</div>
+        <p style="color: #64748b; font-size: 12.5px; line-height: 1.5; margin-bottom: 10px;">Fast, private in-browser document tools. All processing happens in local browser memory with zero server uploads.</p>
         <div style="font-size: 11.5px; color: #94a3b8;">Built by Rahul Chauhan</div>
       </div>
 
       <div class="footer-links-group">
         <div>
-          <strong class="footer-col-title">PDF & Images</strong>
+          <strong class="footer-col-title">PDF & Image Tools</strong>
           <ul class="footer-links-list">
-            <li><a href="/merge-pdf.html">Merge PDFs</a></li>
+            <li><a href="/merge-pdf.html">Merge PDF Files</a></li>
             <li><a href="/images-to-pdf.html">Images to PDF</a></li>
-            <li><a href="/compress-image.html">Compress Image</a></li>
+            <li><a href="/compress-image.html">Compress Photos</a></li>
           </ul>
         </div>
 
         <div>
-          <strong class="footer-col-title">Spreadsheet & Tools</strong>
+          <strong class="footer-col-title">Business & Excel</strong>
           <ul class="footer-links-list">
-            <li><a href="/">Spreadsheet Studio</a></li>
+            <li><a href="/invoice-generator.html">Invoice & Bill Generator</a></li>
             <li><a href="/compare-excel.html">Compare Spreadsheets</a></li>
-            <li><a href="/invoice-generator.html">Invoice Generator</a></li>
+            <li><a href="/">Excel & CSV Viewer</a></li>
           </ul>
         </div>
 
         <div>
-          <strong class="footer-col-title">Contact & Links</strong>
+          <strong class="footer-col-title">Contact & Support</strong>
           <ul class="footer-links-list">
             <li><a href="mailto:chauhanr003@gmail.com">chauhanr003@gmail.com</a></li>
             <li><a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer">Buy Me a Coffee ☕</a></li>
@@ -285,25 +386,12 @@
 
   <script>
     let currentWorkbook = null;
-    const dropzone = document.getElementById("dropzone");
     const fileInput = document.getElementById("fileInput");
-    const viewerArea = document.getElementById("viewerArea");
-    const sheetTabs = document.getElementById("sheetTabs");
-    const gridHead = document.getElementById("gridHead");
-    const gridBody = document.getElementById("gridBody");
-    const rowColCount = document.getElementById("rowColCount");
-
-    dropzone.onclick = () => fileInput.click();
-
-    dropzone.ondragover = (e) => { e.preventDefault(); dropzone.style.borderColor = "#2563eb"; };
-    dropzone.ondragleave = () => { dropzone.style.borderColor = "#cbd5e1"; };
-    dropzone.ondrop = (e) => {
-      e.preventDefault();
-      dropzone.style.borderColor = "#cbd5e1";
-      if (e.dataTransfer.files.length) {
-        handleFile(e.dataTransfer.files[0]);
-      }
-    };
+    const viewerDisplay = document.getElementById("viewerDisplay");
+    const vSheetTabs = document.getElementById("vSheetTabs");
+    const vHead = document.getElementById("vHead");
+    const vBody = document.getElementById("vBody");
+    const vCount = document.getElementById("vCount");
 
     fileInput.onchange = (e) => {
       if (e.target.files.length) {
@@ -318,24 +406,24 @@
         currentWorkbook = XLSX.read(data, { type: "array" });
         setupSheetTabs();
         renderActiveSheet(currentWorkbook.SheetNames[0]);
-        viewerArea.style.display = "block";
-        dropzone.querySelector(".drop-title").textContent = `Viewing: ${file.name}`;
+        viewerDisplay.style.display = "block";
+        document.getElementById("quickViewerBlock").scrollIntoView({ behavior: 'smooth' });
       };
       reader.readAsArrayBuffer(file);
     }
 
     function setupSheetTabs() {
-      sheetTabs.innerHTML = "";
+      vSheetTabs.innerHTML = "";
       currentWorkbook.SheetNames.forEach((sheetName, index) => {
         const btn = document.createElement("button");
-        btn.className = `sheet-tab-btn ${index === 0 ? "active" : ""}`;
+        btn.className = `v-tab-btn ${index === 0 ? "active" : ""}`;
         btn.textContent = sheetName;
         btn.onclick = () => {
-          document.querySelectorAll(".sheet-tab-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".v-tab-btn").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
           renderActiveSheet(sheetName);
         };
-        sheetTabs.appendChild(btn);
+        vSheetTabs.appendChild(btn);
       });
     }
 
@@ -343,29 +431,26 @@
       const sheet = currentWorkbook.Sheets[sheetName];
       const json = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "" });
 
-      gridHead.innerHTML = "";
-      gridBody.innerHTML = "";
+      vHead.innerHTML = "";
+      vBody.innerHTML = "";
 
       if (!json.length) {
-        rowColCount.textContent = "0 rows × 0 columns";
+        vCount.textContent = "0 rows × 0 columns";
         return;
       }
 
       const headers = json[0];
       const rows = json.slice(1);
+      vCount.textContent = `${rows.length} rows × ${headers.length} columns`;
 
-      rowColCount.textContent = `${rows.length} rows × ${headers.length} columns`;
-
-      // Render Header
       const headerTr = document.createElement("tr");
       headers.forEach(h => {
         const th = document.createElement("th");
         th.textContent = h || "—";
         headerTr.appendChild(th);
       });
-      gridHead.appendChild(headerTr);
+      vHead.appendChild(headerTr);
 
-      // Render max 100 preview rows for smooth performance
       const previewRows = rows.slice(0, 100);
       previewRows.forEach(row => {
         const tr = document.createElement("tr");
@@ -374,7 +459,7 @@
           td.textContent = row[i] !== undefined ? row[i] : "";
           tr.appendChild(td);
         }
-        gridBody.appendChild(tr);
+        vBody.appendChild(tr);
       });
     }
   </script>
