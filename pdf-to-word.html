@@ -38,7 +38,7 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://sheetbox.in/logo.png" />
 
-  <!-- Schema.org Structured Data -->
+  <!-- Schema.org WebApplication & FAQPage Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -169,7 +169,7 @@
       <span id="statusText">Processing document...</span>
     </div>
 
-    <!-- Hidden Canvas for rendering PDF pages to OCR -->
+    <!-- Hidden Canvas for OCR processing -->
     <canvas id="ocrCanvas" style="display: none;"></canvas>
 
     <!-- Live Document Editor -->
@@ -238,14 +238,14 @@
     </div>
   </footer>
 
-  <!-- Bulletproof Fast CDNs placed at the bottom so HTML paints instantly -->
+  <!-- Highly reliable CDNs (pdf.js, JSZip for native docx construction, and FileSaver) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <script>
     if (window.pdfjsLib) {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.iife.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
   <script>
@@ -280,7 +280,6 @@
       statusText.textContent = msg;
     }
 
-    // Helper: Dynamically loads Tesseract only if scanned pages are detected
     function loadTesseractScript() {
       return new Promise((resolve, reject) => {
         if (window.Tesseract) return resolve(window.Tesseract);
@@ -309,9 +308,9 @@
 
         let fullText = "";
 
-        // Attempt Step 1: Direct digital text stream extraction
+        // Phase 1: Digital selectable text extraction
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-          updateStatus(`Extracting text on page ${pageNum} of ${pdf.numPages}...`);
+          updateStatus(`Extracting text from page ${pageNum} of ${pdf.numPages}...`);
           const page = await pdf.getPage(pageNum);
           const textContent = await page.getTextContent();
           
@@ -333,9 +332,9 @@
           }
         }
 
-        // Attempt Step 2: Fallback to OCR if PDF contains no selectable text (scanned or image-based)
+        // Phase 2: Fallback to OCR if PDF is a flat image scan
         if (!fullText.trim()) {
-          updateStatus("Image-only PDF detected. Loading optical character recognition engine...");
+          updateStatus("Image-only PDF detected. Starting browser OCR engine...");
           const Tesseract = await loadTesseractScript();
           const worker = await Tesseract.createWorker("eng");
 
@@ -376,35 +375,86 @@
       }
     }
 
-    // Build and download .docx
+    // Helper: Escape XML entities for DOCX document.xml
+    function escapeXml(unsafe) {
+      return unsafe.replace(/[<>&'"]/g, function (c) {
+        switch (c) {
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '&': return '&amp;';
+          case '\'': return '&apos;';
+          case '"': return '&quot;';
+        }
+      });
+    }
+
+    // Native in-browser OpenXML (.docx) generation using JSZip
     btnDownloadDocx.onclick = async () => {
-      btnDownloadDocx.textContent = "⏳ Building Word file...";
+      btnDownloadDocx.textContent = "⏳ Generating DOCX...";
       btnDownloadDocx.disabled = true;
 
       try {
-        const rawContent = textEditor.innerText;
-        const paragraphs = rawContent.split(/\n+/).map(pText => {
-          return new docx.Paragraph({
-            children: [
-              new docx.TextRun({
-                text: pText,
-                font: "Calibri",
-                size: 24 // 12pt
-              })
-            ],
-            spacing: { after: 120 }
-          });
+        const rawContent = textEditor.innerText || "";
+        const lines = rawContent.split(/\r?\n/);
+
+        // Build OpenXML paragraph markup
+        let paragraphsXml = "";
+        lines.forEach(line => {
+          const escaped = escapeXml(line);
+          paragraphsXml += `
+            <w:p>
+              <w:pPr>
+                <w:spacing w:after="160" w:line="276" w:lineRule="auto"/>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>
+                  <w:sz w:val="24"/>
+                </w:rPr>
+                <w:t xml:space="preserve">${escaped}</w:t>
+              </w:r>
+            </w:p>`;
         });
 
-        const doc = new docx.Document({
-          sections: [{
-            properties: {},
-            children: paragraphs
-          }]
+        const zip = new JSZip();
+
+        // 1. [Content_Types].xml
+        zip.file("[Content_Types].xml", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+</Types>`);
+
+        // 2. _rels/.rels
+        zip.folder("_rels").file(".rels", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
+</Relationships>`);
+
+        // 3. word/_rels/document.xml.rels
+        zip.folder("word").folder("_rels").file("document.xml.rels", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"/>`);
+
+        // 4. word/document.xml
+        zip.folder("word").file("document.xml", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    ${paragraphsXml}
+    <w:sectPr>
+      <w:pgSz w:w="12240" w:h="15840"/>
+      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/>
+    </w:sectPr>
+  </w:body>
+</w:document>`);
+
+        const blob = await zip.generateAsync({
+          type: "blob",
+          mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         });
 
-        const blob = await docx.Packer.toBlob(doc);
         saveAs(blob, `${originalName}.docx`);
+
       } catch (err) {
         alert("Failed to export Word document: " + err.message);
       } finally {
