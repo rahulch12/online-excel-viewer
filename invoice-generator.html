@@ -183,7 +183,7 @@
         <div class="row-2">
           <div class="form-group">
             <label>Invoice Number</label>
-            <input type="text" id="inInvNum" class="input-field" value="#INV-001" />
+            <input type="text" id="inInvNum" class="input-field" placeholder="e.g. #INV-001" value="#INV-001" />
           </div>
           <div class="form-group">
             <label>Currency</label>
@@ -199,11 +199,11 @@
         <div class="row-2">
           <div class="form-group">
             <label>Your Name / Business</label>
-            <input type="text" id="inFrom" class="input-field" value="Freelance Services" />
+            <input type="text" id="inFrom" class="input-field" placeholder="e.g. Acme Agency or John Doe" value="Your Business Name" />
           </div>
           <div class="form-group">
             <label>Client Name</label>
-            <input type="text" id="inTo" class="input-field" value="Acme Corp" />
+            <input type="text" id="inTo" class="input-field" placeholder="e.g. Client / Company Name" value="Client Name" />
           </div>
         </div>
 
@@ -220,11 +220,11 @@
         <div class="row-2" style="margin-top: 14px;">
           <div class="form-group">
             <label>Tax / GST (%)</label>
-            <input type="number" id="inTax" class="input-field" value="0" min="0" max="100" />
+            <input type="number" id="inTax" class="input-field" placeholder="0" value="0" min="0" max="100" />
           </div>
           <div class="form-group">
             <label>Discount Amount</label>
-            <input type="number" id="inDiscount" class="input-field" value="0" min="0" />
+            <input type="number" id="inDiscount" class="input-field" placeholder="0" value="0" min="0" />
           </div>
         </div>
 
@@ -245,7 +245,7 @@
             <div class="inv-inner">
               <div class="inv-header-flex">
                 <div>
-                  <div class="inv-business-title" id="outFrom">Freelance Services</div>
+                  <div class="inv-business-title" id="outFrom">Your Business Name</div>
                   <span class="inv-badge">Official Invoice</span>
                 </div>
                 <div class="inv-meta-block">
@@ -256,7 +256,7 @@
 
               <div class="inv-client-card">
                 <div class="inv-client-label">Billed To</div>
-                <div class="inv-client-name" id="outTo">Acme Corp</div>
+                <div class="inv-client-name" id="outTo">Client Name</div>
               </div>
 
               <table class="inv-table">
@@ -330,7 +330,7 @@
 
   <script>
     let items = [
-      { desc: "Website QA Testing & Consulting", qty: 1, rate: 5000 }
+      { desc: "Consulting / Professional Services", qty: 1, rate: 1000 }
     ];
 
     const inInvNum = document.getElementById("inInvNum");
@@ -363,7 +363,7 @@
         card.className = "item-card";
         card.innerHTML = `
           <div class="item-row-top">
-            <input type="text" class="input-field" placeholder="Description" value="${it.desc}" oninput="updateItem(${idx}, 'desc', this.value)" />
+            <input type="text" class="input-field" placeholder="Item or service description..." value="${it.desc}" oninput="updateItem(${idx}, 'desc', this.value)" />
           </div>
           <div class="item-row-bottom">
             <div>
@@ -397,9 +397,9 @@
 
     function syncPreview() {
       const sym = inCurrency.value;
-      outInvNum.textContent = inInvNum.value || "#INV-001";
-      outFrom.textContent = inFrom.value || "Freelance Services";
-      outTo.textContent = inTo.value || "Client Name";
+      outInvNum.textContent = inInvNum.value.trim() || "#INV-001";
+      outFrom.textContent = inFrom.value.trim() || "Your Business Name";
+      outTo.textContent = inTo.value.trim() || "Client Name";
       outDate.textContent = inDate.value || new Date().toISOString().split('T')[0];
 
       let subtotal = 0;
@@ -411,9 +411,9 @@
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td class="item-name">${it.desc || "Item"}</td>
+          <td class="item-name">${it.desc.trim() || "Item / Service"}</td>
           <td class="text-center">${it.qty}</td>
-          <td class="text-right">${sym}${it.rate.toFixed(2)}</td>
+          <td class="text-right">${sym}${(it.rate || 0).toFixed(2)}</td>
           <td class="text-right" style="font-weight: 700; color: #0f172a;">${sym}${amount.toFixed(2)}</td>
         `;
         outTableBody.appendChild(tr);
@@ -513,7 +513,7 @@
         const printHeight = (canvas.height * printWidth) / canvas.width;
 
         pdf.addImage(imgData, "JPEG", margin, 28, printWidth, printHeight);
-        pdf.save(`${inInvNum.value || "Invoice"}.pdf`);
+        pdf.save(`${inInvNum.value.trim() || "Invoice"}.pdf`);
       } catch (err) {
         alert("Export failed: " + err.message);
       } finally {
@@ -531,7 +531,7 @@
       try {
         const canvas = await renderCleanCanvas();
         const link = document.createElement("a");
-        link.download = `${inInvNum.value || "Invoice"}.png`;
+        link.download = `${inInvNum.value.trim() || "Invoice"}.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
       } catch (err) {
