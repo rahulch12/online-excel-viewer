@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS8Z05TBZY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -9,28 +10,34 @@
     gtag('config', 'G-CS8Z05TBZY');
   </script>
 
+  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
 
+  <!-- SheetJS CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 
+  <!-- Favicons -->
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="apple-touch-icon" href="/logo.png" />
 
+  <!-- Primary SEO Meta Tags -->
   <title>SheetBox — Free Online PDF, Image & Document Tools (100% Private)</title>
   <meta name="title" content="SheetBox — Free Online PDF, Image & Document Tools (100% Private)" />
   <meta name="description" content="Free, simple tools to convert PDF to Word, view DOCX files, merge PDFs, compress photos, create bills & invoices, and compare sheets right in your browser. 100% secure and private." />
-  <meta name="keywords" content="pdf to word converter, word viewer online, simple invoice maker, free pdf merger, compress photo online, view excel file online, sheetbox" />
+  <meta name="keywords" content="pdf to word converter, compress image to 50kb, merge pdf online, jpg to pdf, word viewer online, simple invoice maker, view excel file online, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/" />
 
+  <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sheetbox.in/" />
   <meta property="og:title" content="SheetBox — Easy, Free Document & PDF Tools" />
   <meta property="og:description" content="Click and get your work done in seconds. 100% free, safe, and private in your browser." />
   <meta property="og:image" content="https://sheetbox.in/logo.png" />
 
+  <!-- Schema.org WebSite & WebApplication -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -98,15 +105,15 @@
     }
 
     /* Distinct Theme Styles */
-    .theme-invoice { border-color: #c7d2fe; }
-    .theme-invoice:hover { border-color: #6366f1; }
-    .theme-invoice .icon-bg { background: #eef2ff; color: #4f46e5; }
-    .theme-invoice .tool-action-btn { background: #4f46e5; color: #fff; }
-
     .theme-pdf-word { border-color: #ddd6fe; }
     .theme-pdf-word:hover { border-color: #7c3aed; }
     .theme-pdf-word .icon-bg { background: #f5f3ff; color: #7c3aed; }
     .theme-pdf-word .tool-action-btn { background: #7c3aed; color: #fff; }
+
+    .theme-compress { border-color: #fed7aa; }
+    .theme-compress:hover { border-color: #ea580c; }
+    .theme-compress .icon-bg { background: #fff7ed; color: #ea580c; }
+    .theme-compress .tool-action-btn { background: #ea580c; color: #fff; }
 
     .theme-pdf-merge { border-color: #bfdbfe; }
     .theme-pdf-merge:hover { border-color: #2563eb; }
@@ -118,15 +125,10 @@
     .theme-img-pdf .icon-bg { background: #ecfdf5; color: #059669; }
     .theme-img-pdf .tool-action-btn { background: #059669; color: #fff; }
 
-    .theme-compress { border-color: #fed7aa; }
-    .theme-compress:hover { border-color: #ea580c; }
-    .theme-compress .icon-bg { background: #fff7ed; color: #ea580c; }
-    .theme-compress .tool-action-btn { background: #ea580c; color: #fff; }
-
-    .theme-compare { border-color: #bae6fd; }
-    .theme-compare:hover { border-color: #0284c7; }
-    .theme-compare .icon-bg { background: #f0f9ff; color: #0284c7; }
-    .theme-compare .tool-action-btn { background: #0284c7; color: #fff; }
+    .theme-invoice { border-color: #c7d2fe; }
+    .theme-invoice:hover { border-color: #6366f1; }
+    .theme-invoice .icon-bg { background: #eef2ff; color: #4f46e5; }
+    .theme-invoice .tool-action-btn { background: #4f46e5; color: #fff; }
 
     .theme-word-view { border-color: #cbd5e1; }
     .theme-word-view:hover { border-color: #475569; }
@@ -138,6 +140,11 @@
     .theme-excel-view .icon-bg { background: #f0fdf4; color: #16a34a; }
     .theme-excel-view .tool-action-btn { background: #16a34a; color: #fff; }
 
+    .theme-compare { border-color: #bae6fd; }
+    .theme-compare:hover { border-color: #0284c7; }
+    .theme-compare .icon-bg { background: #f0f9ff; color: #0284c7; }
+    .theme-compare .tool-action-btn { background: #0284c7; color: #fff; }
+
     /* Card Top Elements */
     .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
     .icon-bg { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
@@ -147,7 +154,7 @@
 
     .tool-desc { font-size: 12.5px; color: #475569; line-height: 1.45; margin-bottom: 14px; flex: 1; }
 
-    /* Uniform, Compact Card Action Button */
+    /* Uniform Action Button */
     .tool-action-btn {
       width: 100%;
       padding: 9px 12px;
@@ -165,7 +172,7 @@
     }
     .tool-action-btn:hover { filter: brightness(1.08); }
 
-    /* In-Page Quick Spreadsheet Viewer Box */
+    /* Quick Spreadsheet Viewer Box */
     .inline-viewer-section { margin-top: 36px; background: #ffffff; border: 2px dashed #cbd5e1; border-radius: 14px; padding: 26px 20px; text-align: center; }
     .inline-viewer-title { font-size: 16.5px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
     .inline-viewer-sub { font-size: 13px; color: #64748b; margin-bottom: 12px; }
@@ -215,35 +222,24 @@
 
   <main class="main-container">
 
+    <!-- Hero Section -->
     <div class="hero-banner">
       <span class="hero-badge">⚡ Instant • Free • No Sign-up</span>
       <h1 class="hero-title">What would you like to do today?</h1>
       <p class="hero-subtitle">Choose a tool below to get your job done in seconds. Your files never leave your device.</p>
     </div>
 
+    <!-- Ranked 8 Tool Cards -->
     <div class="tools-grid">
 
-      <div class="tool-box theme-invoice">
-        <div>
-          <div class="card-top">
-            <div class="icon-bg">🧾</div>
-            <div class="card-heading-group">
-              <div class="tool-name">Make an Invoice or Bill</div>
-              <span class="tool-pill" style="background: #e0e7ff; color: #3730a3;">Most Popular</span>
-            </div>
-          </div>
-          <div class="tool-desc">Create quick business bills and receipts. Auto-calculate totals and download as PDF or Image.</div>
-        </div>
-        <a href="/invoice-generator.html" class="tool-action-btn">Open Invoice Maker &rarr;</a>
-      </div>
-
+      <!-- 1. PDF to Word (Rank #1 in Global Search Volume) -->
       <div class="tool-box theme-pdf-word">
         <div>
           <div class="card-top">
             <div class="icon-bg">📝</div>
             <div class="card-heading-group">
               <div class="tool-name">Convert PDF to Word</div>
-              <span class="tool-pill" style="background: #ede9fe; color: #5b21b6;">Editable DOCX</span>
+              <span class="tool-pill" style="background: #ede9fe; color: #5b21b6;">High Demand</span>
             </div>
           </div>
           <div class="tool-desc">Extract text from PDFs into editable Word (.docx) files with live in-browser proofing and OCR.</div>
@@ -251,6 +247,67 @@
         <a href="/pdf-to-word.html" class="tool-action-btn">Convert to Word &rarr;</a>
       </div>
 
+      <!-- 2. Reduce Photo Size (Rank #2 in Search Demand: 20KB, 50KB, 100KB queries) -->
+      <div class="tool-box theme-compress">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">⚡</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Reduce Photo File Size</div>
+              <span class="tool-pill" style="background: #ffedd5; color: #9a3412;">Trending</span>
+            </div>
+          </div>
+          <div class="tool-desc">Shrink heavy images to 20KB, 50KB, or 100KB for government portals and forms without losing clarity.</div>
+        </div>
+        <a href="/compress-image.html" class="tool-action-btn">Compress Photos &rarr;</a>
+      </div>
+
+      <!-- 3. Join Multiple PDFs (Rank #3 in Evergreen Utility Searches) -->
+      <div class="tool-box theme-pdf-merge">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">📑</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Join Multiple PDFs</div>
+              <span class="tool-pill" style="background: #dbeafe; color: #1e40af;">Popular</span>
+            </div>
+          </div>
+          <div class="tool-desc">Combine 2 or more PDF documents into one organized file. Rearrange pages and download instantly.</div>
+        </div>
+        <a href="/merge-pdf.html" class="tool-action-btn">Merge PDFs Now &rarr;</a>
+      </div>
+
+      <!-- 4. Photos to PDF (Rank #4 Mobile & Office Search Demand) -->
+      <div class="tool-box theme-img-pdf">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">🖼️</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Convert Photos to PDF</div>
+              <span class="tool-pill" style="background: #d1fae5; color: #065f46;">Fast & Simple</span>
+            </div>
+          </div>
+          <div class="tool-desc">Turn JPG, PNG, or mobile camera photos into a neat, shareable A4 PDF document ready for printing.</div>
+        </div>
+        <a href="/images-to-pdf.html" class="tool-action-btn">Convert Photos &rarr;</a>
+      </div>
+
+      <!-- 5. Make an Invoice or Bill (Rank #5 High Commercial/Freelance Intent) -->
+      <div class="tool-box theme-invoice">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">🧾</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Make an Invoice or Bill</div>
+              <span class="tool-pill" style="background: #e0e7ff; color: #3730a3;">Business</span>
+            </div>
+          </div>
+          <div class="tool-desc">Create professional invoices and receipts. Auto-calculate totals and download as PDF or image.</div>
+        </div>
+        <a href="/invoice-generator.html" class="tool-action-btn">Open Invoice Maker &rarr;</a>
+      </div>
+
+      <!-- 6. Word Document Viewer (Rank #6 Utility Demand) -->
       <div class="tool-box theme-word-view">
         <div>
           <div class="card-top">
@@ -265,62 +322,7 @@
         <a href="/word-viewer.html" class="tool-action-btn">Open Word Viewer &rarr;</a>
       </div>
 
-      <div class="tool-box theme-pdf-merge">
-        <div>
-          <div class="card-top">
-            <div class="icon-bg">📑</div>
-            <div class="card-heading-group">
-              <div class="tool-name">Join Multiple PDFs</div>
-              <span class="tool-pill" style="background: #dbeafe; color: #1e40af;">PDF Utility</span>
-            </div>
-          </div>
-          <div class="tool-desc">Combine 2 or more PDF documents into one organized file. Rearrange and download instantly.</div>
-        </div>
-        <a href="/merge-pdf.html" class="tool-action-btn">Merge PDFs Now &rarr;</a>
-      </div>
-
-      <div class="tool-box theme-img-pdf">
-        <div>
-          <div class="card-top">
-            <div class="icon-bg">🖼️</div>
-            <div class="card-heading-group">
-              <div class="tool-name">Convert Photos to PDF</div>
-              <span class="tool-pill" style="background: #d1fae5; color: #065f46;">Fast & Simple</span>
-            </div>
-          </div>
-          <div class="tool-desc">Turn JPG, PNG, or mobile camera photos into a neat, shareable PDF document ready for printing.</div>
-        </div>
-        <a href="/images-to-pdf.html" class="tool-action-btn">Convert Photos &rarr;</a>
-      </div>
-
-      <div class="tool-box theme-compress">
-        <div>
-          <div class="card-top">
-            <div class="icon-bg">⚡</div>
-            <div class="card-heading-group">
-              <div class="tool-name">Reduce Photo File Size</div>
-              <span class="tool-pill" style="background: #ffedd5; color: #9a3412;">Size Saver</span>
-            </div>
-          </div>
-          <div class="tool-desc">Shrink heavy images to small MB/KB sizes for forms and web uploads without losing clarity.</div>
-        </div>
-        <a href="/compress-image.html" class="tool-action-btn">Compress Photos &rarr;</a>
-      </div>
-
-      <div class="tool-box theme-compare">
-        <div>
-          <div class="card-top">
-            <div class="icon-bg">🔍</div>
-            <div class="card-heading-group">
-              <div class="tool-name">Compare Two Excel Files</div>
-              <span class="tool-pill" style="background: #e0f2fe; color: #075985;">Diff Checker</span>
-            </div>
-          </div>
-          <div class="tool-desc">Upload two Excel or CSV sheets to spot differences. Highlights added, removed, or changed rows.</div>
-        </div>
-        <a href="/compare-excel.html" class="tool-action-btn">Compare Spreadsheets &rarr;</a>
-      </div>
-
+      <!-- 7. Open Excel Spreadsheet (Rank #7 Spreadsheet Utility) -->
       <div class="tool-box theme-excel-view">
         <div>
           <div class="card-top">
@@ -335,8 +337,24 @@
         <button type="button" class="tool-action-btn" onclick="document.getElementById('fileInput').click()">Select Excel File &rarr;</button>
       </div>
 
+      <!-- 8. Compare Spreadsheets (Rank #8 Niche Diff Utility) -->
+      <div class="tool-box theme-compare">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">🔍</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Compare Two Excel Files</div>
+              <span class="tool-pill" style="background: #e0f2fe; color: #075985;">Diff Checker</span>
+            </div>
+          </div>
+          <div class="tool-desc">Upload two Excel or CSV sheets to spot differences. Highlights added, removed, or changed rows.</div>
+        </div>
+        <a href="/compare-excel.html" class="tool-action-btn">Compare Spreadsheets &rarr;</a>
+      </div>
+
     </div>
 
+    <!-- Quick Spreadsheet Viewer Section -->
     <div class="inline-viewer-section" id="quickViewerBlock">
       <div class="inline-viewer-title">Or open a spreadsheet directly here:</div>
       <div class="inline-viewer-sub">Works with .xlsx, .xls, and .csv files. 100% private, never uploaded to any server.</div>
@@ -361,6 +379,7 @@
 
   </main>
 
+  <!-- Categorized Footer Directory -->
   <footer>
     <div class="footer-content">
       
@@ -375,17 +394,17 @@
           <strong class="footer-col-title">PDF & Image Tools</strong>
           <ul class="footer-links-list">
             <li><a href="/pdf-to-word.html">PDF to Word</a></li>
+            <li><a href="/compress-image.html">Compress Photos</a></li>
             <li><a href="/merge-pdf.html">Merge PDF Files</a></li>
             <li><a href="/images-to-pdf.html">Images to PDF</a></li>
-            <li><a href="/compress-image.html">Compress Photos</a></li>
           </ul>
         </div>
 
         <div>
           <strong class="footer-col-title">Office & Business</strong>
           <ul class="footer-links-list">
-            <li><a href="/word-viewer.html">Word (.docx) Viewer</a></li>
             <li><a href="/invoice-generator.html">Invoice & Bill Generator</a></li>
+            <li><a href="/word-viewer.html">Word (.docx) Viewer</a></li>
             <li><a href="/compare-excel.html">Compare Spreadsheets</a></li>
             <li><a href="/">Excel & CSV Viewer</a></li>
           </ul>
