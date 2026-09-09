@@ -23,7 +23,7 @@
   <!-- Primary SEO Meta Tags -->
   <title>Compress Image to 20KB, 50KB, 100KB Online Free | SheetBox</title>
   <meta name="title" content="Compress Image to 20KB, 50KB, 100KB Online Free | SheetBox" />
-  <meta name="description" content="Reduce image file size to 20KB, 50KB, or 100KB with real-time before/after comparison slider. 100% free, private in-browser photo compressor." />
+  <meta name="description" content="Reduce image file size to 20KB, 50KB, or 100KB in seconds. 100% free, private in-browser photo compressor with preset target sizes for government and job portals." />
   <meta name="keywords" content="compress image to 50kb, compress image to 20kb, compress image to 100kb, photo size reducer, compress photo for exam, reduce image size in kb, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/compress-image.html" />
 
@@ -46,7 +46,7 @@
     .brand img { width: 32px; height: 32px; border-radius: 8px; }
     .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
 
-    .container { max-width: 960px; width: 100%; margin: 20px auto; padding: 0 16px; flex: 1; }
+    .container { max-width: 1000px; width: 100%; margin: 20px auto; padding: 0 16px; flex: 1; }
     .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 16px; }
 
     .hero-title { font-size: 26px; font-weight: 900; margin-bottom: 6px; }
@@ -57,7 +57,7 @@
       background: var(--card-bg);
       border: 2px dashed #cbd5e1;
       border-radius: 14px;
-      padding: 38px 20px;
+      padding: 36px 20px;
       text-align: center;
       cursor: pointer;
       transition: border-color 0.2s, background 0.2s;
@@ -95,106 +95,13 @@
     .slider-header { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; }
     .range-slider { width: 100%; height: 6px; border-radius: 4px; accent-color: var(--accent); }
 
-    /* Split Slider Section */
-    .comparison-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .badge-pill { padding: 4px 10px; border-radius: 20px; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; }
-    .badge-orig { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-    .badge-comp { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
-
-    .split-viewport {
-      position: relative;
-      width: 100%;
-      height: 420px;
-      background: #0f172a;
-      border-radius: 10px;
-      overflow: hidden;
-      user-select: none;
-      -webkit-user-select: none;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-      margin-bottom: 20px;
-      cursor: ew-resize;
-    }
-
-    .split-layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-
-    .split-layer img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      pointer-events: none;
-    }
-
-    .layer-compressed {
-      clip-path: inset(0 0 0 50%);
-      background: transparent;
-    }
-
-    /* Floating Tags inside image */
-    .layer-tag {
-      position: absolute;
-      top: 12px;
-      background: rgba(15, 23, 42, 0.75);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 4px;
-      backdrop-filter: blur(4px);
-      letter-spacing: 0.5px;
-      z-index: 5;
-    }
-    .layer-tag-left { left: 12px; }
-    .layer-tag-right { right: 12px; }
-
-    /* The Divider Line & Handle */
-    .split-divider {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 2px;
-      background: #ffffff;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-      transform: translateX(-50%);
-      z-index: 10;
-    }
-
-    .split-handle {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #0f172a;
-      font-size: 13px;
-      font-weight: 900;
-      cursor: ew-resize;
-      border: 2px solid #ea580c;
-    }
+    /* Clean Side-by-Side Comparison Grid */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .preview-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
+    .preview-card-title { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+    .preview-img-container { height: 220px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000; border-radius: 6px; margin-bottom: 10px; }
+    .preview-img-container img { max-height: 100%; max-width: 100%; object-fit: contain; }
+    .size-badge { font-size: 13px; font-weight: 800; color: #0f172a; }
 
     .action-row { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
 
@@ -206,8 +113,8 @@
     footer { padding: 20px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 30px; }
 
     @media (max-width: 640px) {
-      .split-viewport { height: 280px; }
-      .comparison-header { flex-direction: column; gap: 6px; align-items: flex-start; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .preview-img-container { height: 180px; }
     }
   </style>
 </head>
@@ -262,38 +169,22 @@
         <input type="range" id="qualityRange" class="range-slider" min="5" max="95" value="70" />
       </div>
 
-      <!-- Comparison Metrics Header -->
-      <div class="comparison-header">
-        <div class="badge-pill badge-orig">
-          Original: <strong id="origSizeLabel">—</strong>
-        </div>
-        <div style="color: var(--text-muted); font-size: 11px;">
-          ⟵ Drag slider to compare clarity ⟶
-        </div>
-        <div class="badge-pill badge-comp">
-          Result: <strong id="compSizeLabel">—</strong>
-        </div>
-      </div>
-
-      <!-- Interactive Split Slider Viewport -->
-      <div class="split-viewport" id="splitViewport">
-        <!-- Static tags -->
-        <div class="layer-tag layer-tag-left">ORIGINAL</div>
-        <div class="layer-tag layer-tag-right">COMPRESSED</div>
-
-        <!-- Base Layer: Original Image -->
-        <div class="split-layer">
-          <img id="origImg" alt="Original Photo" />
+      <!-- Side-by-Side Comparison Grid -->
+      <div class="compare-grid">
+        <div class="preview-card">
+          <div class="preview-card-title">ORIGINAL IMAGE</div>
+          <div class="preview-img-container">
+            <img id="origImg" alt="Original Preview" />
+          </div>
+          <div class="size-badge" id="origSizeLabel">—</div>
         </div>
 
-        <!-- Clipped Layer: Compressed Image -->
-        <div class="split-layer layer-compressed" id="compLayer">
-          <img id="compImg" alt="Compressed Photo" />
-        </div>
-
-        <!-- Visual Divider Handle -->
-        <div class="split-divider" id="splitDivider">
-          <div class="split-handle">◀ ▶</div>
+        <div class="preview-card">
+          <div class="preview-card-title">COMPRESSED RESULT</div>
+          <div class="preview-img-container">
+            <img id="compImg" alt="Compressed Preview" />
+          </div>
+          <div class="size-badge" id="compSizeLabel" style="color: #059669;">—</div>
         </div>
       </div>
 
@@ -306,7 +197,7 @@
 
     <article class="seo-section">
       <h2>Why Compress Photos in Browser?</h2>
-      <p>Online competitive exams and government application portals require strict file dimensions and file size limits (often 20KB for signatures and 50KB for applicant photographs). SheetBox operates directly on your device using the HTML5 Canvas API, guaranteeing instantaneous compression and inspection without uploading your personal documents to any remote server.</p>
+      <p>Online competitive exams and government application portals across India require strict file dimensions and maximum file size limits (often 20KB for signatures and 50KB for applicant photographs). SheetBox operates directly on your device using Canvas API, guaranteeing instantaneous compression without uploading your personal documents to any external server.</p>
     </article>
   </main>
 
@@ -333,12 +224,6 @@
     const qualityRange = document.getElementById("qualityRange");
     const qualityVal = document.getElementById("qualityVal");
     const btnDownload = document.getElementById("btnDownload");
-
-    // Split Slider Elements
-    const splitViewport = document.getElementById("splitViewport");
-    const compLayer = document.getElementById("compLayer");
-    const splitDivider = document.getElementById("splitDivider");
-    let isDraggingSlider = false;
 
     fileInput.onchange = (e) => {
       if (e.target.files.length) processSelectedFile(e.target.files[0]);
@@ -392,8 +277,7 @@
           origImg.src = e.target.result;
           workspace.style.display = "block";
           dropzoneBox.style.display = "none";
-          setSliderPosition(50); // Initialize divider at center
-          applyPreset(50);      // Default to 50KB govt portal preset
+          applyPreset(50); // Default to 50KB govt portal preset
         };
       };
       reader.readAsDataURL(file);
@@ -474,50 +358,6 @@
 
       testQuality(0.7);
     };
-
-    // --- Interactive Split Slider Drag Engine ---
-    function setSliderPosition(percent) {
-      percent = Math.max(0, Math.min(100, percent));
-      splitDivider.style.left = percent + "%";
-      compLayer.style.clipPath = `inset(0 0 0 ${percent}%)`;
-    }
-
-    function handleDragMove(clientX) {
-      const rect = splitViewport.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const pct = (x / rect.width) * 100;
-      setSliderPosition(pct);
-    }
-
-    // Mouse Events
-    splitViewport.addEventListener("mousedown", (e) => {
-      isDraggingSlider = true;
-      handleDragMove(e.clientX);
-    });
-
-    window.addEventListener("mousemove", (e) => {
-      if (!isDraggingSlider) return;
-      handleDragMove(e.clientX);
-    });
-
-    window.addEventListener("mouseup", () => {
-      isDraggingSlider = false;
-    });
-
-    // Touch Events for Mobile / Tablet
-    splitViewport.addEventListener("touchstart", (e) => {
-      isDraggingSlider = true;
-      if (e.touches.length) handleDragMove(e.touches[0].clientX);
-    }, { passive: true });
-
-    window.addEventListener("touchmove", (e) => {
-      if (!isDraggingSlider) return;
-      if (e.touches.length) handleDragMove(e.touches[0].clientX);
-    }, { passive: true });
-
-    window.addEventListener("touchend", () => {
-      isDraggingSlider = false;
-    });
 
     btnDownload.onclick = () => {
       if (!currentBlob) return;
