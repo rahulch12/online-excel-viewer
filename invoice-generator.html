@@ -27,7 +27,7 @@
   <!-- Primary SEO Meta Tags -->
   <title>Free Invoice Generator Online — Download PDF & Image | SheetBox</title>
   <meta name="title" content="Free Invoice Generator Online — Download PDF & Image | SheetBox" />
-  <meta name="description" content="Create, calculate, and download professional invoices with addresses and phone numbers in PDF and PNG format instantly. 100% free, client-side privacy." />
+  <meta name="description" content="Create, calculate, and download professional invoices with WhatsApp sharing in PDF and PNG format instantly. 100% free, client-side privacy." />
   <link rel="canonical" href="https://sheetbox.in/invoice-generator.html" />
 
   <style>
@@ -73,15 +73,17 @@
     .item-row-bottom { display: grid; grid-template-columns: 1fr 1fr 34px; gap: 8px; align-items: center; }
     .btn-remove { background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 6px; height: 34px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-    .btn { padding: 9px 14px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; }
+    .btn { padding: 9px 12px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; text-decoration: none; }
     .btn-blue { background: var(--accent); color: #fff; }
-    .btn-green { background: #10b981; color: #fff; }
+    .btn-green { background: #059669; color: #fff; }
+    .btn-whatsapp { background: #25d366; color: #fff; font-weight: 700; }
+    .btn-whatsapp:hover { background: #1eb956; }
     .btn-outline { background: #fff; border-color: #cbd5e1; color: #334155; }
 
     /* Right Preview Section */
     .preview-panel { display: flex; flex-direction: column; gap: 12px; }
     .action-bar { display: flex; gap: 8px; flex-wrap: wrap; }
-    .action-bar .btn { flex: 1; min-width: 140px; }
+    .action-bar .btn { flex: 1; min-width: 120px; }
 
     /* Responsive Invoice Sheet */
     .invoice-wrapper { width: 100%; }
@@ -232,7 +234,7 @@
             <input type="text" id="inToAddress" class="input-field" placeholder="e.g. 45 Avenue Road, New Delhi" />
           </div>
           <div class="form-group">
-            <label>Client Phone / Mobile</label>
+            <label>Client Phone / Mobile (For WhatsApp)</label>
             <input type="text" id="inToPhone" class="input-field" placeholder="e.g. +91 91234 56789" />
           </div>
         </div>
@@ -259,8 +261,9 @@
       <!-- RIGHT PREVIEW -->
       <div class="preview-panel" id="previewPanel">
         <div class="action-bar">
-          <button class="btn btn-blue" id="btnDownloadPdf">📄 Download PDF</button>
-          <button class="btn btn-green" id="btnDownloadImg">🖼️ Download Image</button>
+          <button class="btn btn-blue" id="btnDownloadPdf">📄 PDF</button>
+          <button class="btn btn-green" id="btnDownloadImg">🖼️ Image</button>
+          <button class="btn btn-whatsapp" id="btnShareWhatsApp">📲 WhatsApp</button>
         </div>
 
         <div class="invoice-wrapper">
@@ -338,8 +341,8 @@
 
     <!-- SEO Guidance -->
     <article class="seo-section">
-      <h2>Free Mobile-Friendly Invoice & Bill Generator</h2>
-      <p>SheetBox Invoice Generator allows freelancers, consultants, and business owners to build, calculate, and export clean invoices with addresses and phone numbers from smartphones, tablets, and desktops. Everything is computed directly in your browser with 100% data privacy.</p>
+      <h2>Free Mobile-Friendly Invoice & Bill Generator with WhatsApp Sharing</h2>
+      <p>SheetBox Invoice Generator allows freelancers, consultants, and business owners to build, calculate, export, and instantly send professional invoices over WhatsApp. Everything is computed directly in your browser with 100% data privacy.</p>
     </article>
   </main>
 
@@ -362,7 +365,6 @@
   </footer>
 
   <script>
-    // Empty starting item so inputs are clear of hardcoded text
     let items = [
       { desc: "", qty: 1, rate: "" }
     ];
@@ -537,7 +539,7 @@
       document.getElementById("btnMobileGoPreview").style.display = "block";
     }
 
-    // Clone invoice into fixed offscreen node for clean desktop-grade generation
+    // Helper: Clone invoice into a fixed 650px offscreen node so generated files are always desktop-grade
     async function renderCleanCanvas() {
       const source = document.getElementById("invoicePaper");
       const clone = source.cloneNode(true);
@@ -556,6 +558,41 @@
       document.body.removeChild(clone);
       return canvas;
     }
+
+    // --- WHATSAPP SHARE HANDLER ---
+    document.getElementById("btnShareWhatsApp").onclick = () => {
+      const clientName = inTo.value.trim() || "Valued Client";
+      const senderName = inFrom.value.trim() || "Your Business";
+      const invoiceNumber = inInvNum.value.trim() || "#INV-001";
+      const totalAmount = outTotal.textContent || "0.00";
+      const invoiceDate = inDate.value || new Date().toISOString().split('T')[0];
+      
+      // Clean phone number (strip spaces, dashes, parentheses)
+      const rawPhone = inToPhone.value.trim().replace(/[^0-9]/g, '');
+
+      const messageText = 
+`Hello ${clientName},
+
+Here is your invoice *${invoiceNumber}* from *${senderName}*.
+*Total Amount Due:* ${totalAmount}
+*Date:* ${invoiceDate}
+
+Thank you for your business!
+Generated via SheetBox (https://sheetbox.in/invoice-generator.html)`;
+
+      const encodedMessage = encodeURIComponent(messageText);
+
+      let targetUrl = "";
+      if (rawPhone.length >= 10) {
+        // Direct link to the client's phone number
+        targetUrl = `https://wa.me/${rawPhone}?text=${encodedMessage}`;
+      } else {
+        // Universal share link allowing user to pick any contact or group
+        targetUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+      }
+
+      window.open(targetUrl, "_blank");
+    };
 
     // Download PDF
     document.getElementById("btnDownloadPdf").onclick = async () => {
@@ -579,7 +616,7 @@
       } catch (err) {
         alert("Export failed: " + err.message);
       } finally {
-        btn.textContent = "📄 Download PDF";
+        btn.textContent = "📄 PDF";
         btn.disabled = false;
       }
     };
@@ -599,7 +636,7 @@
       } catch (err) {
         alert("Export failed: " + err.message);
       } finally {
-        btn.textContent = "🖼️ Download Image";
+        btn.textContent = "🖼️ Image";
         btn.disabled = false;
       }
     };
