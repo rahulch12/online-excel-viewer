@@ -58,30 +58,111 @@
     :root {
       --header-bg: #0f172a;
       --page-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
       --text-main: #0f172a;
       --text-muted: #64748b;
       --primary: #2563eb;
+      --search-bg: #ffffff;
+      --search-border: #cbd5e1;
+      --footer-bg: #ffffff;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+    body.dark-mode {
+      --header-bg: #090d16;
+      --page-bg: #0b0f19;
+      --card-bg: #131b2e;
+      --card-border: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --search-bg: #131b2e;
+      --search-border: #334155;
+      --footer-bg: #090d16;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
     body { background-color: var(--page-bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
     
-    header { background-color: var(--header-bg); color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .brand-group { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
     .brand-logo-img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
     .header-actions { display: flex; align-items: center; gap: 10px; }
     .privacy-tag { font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); padding: 4px 10px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+    
+    /* Dark Mode Toggle Button */
+    .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 14px;
+      padding: 6px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .theme-toggle-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
     .bmc-header-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: 20px; text-decoration: none; transition: transform 0.1s; }
     .bmc-header-btn:hover { transform: scale(1.03); }
 
     .main-container { max-width: 1160px; width: 100%; margin: 0 auto; padding: 28px 16px 40px 16px; flex: 1; }
 
     /* Welcoming Hero Banner */
-    .hero-banner { text-align: center; margin-bottom: 30px; }
+    .hero-banner { text-align: center; margin-bottom: 24px; }
     .hero-badge { display: inline-block; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; background: #dbeafe; color: #1d4ed8; padding: 4px 12px; border-radius: 30px; margin-bottom: 10px; }
-    .hero-title { font-size: 28px; font-weight: 900; color: #0f172a; letter-spacing: -0.5px; margin-bottom: 6px; }
-    .hero-subtitle { font-size: 14.5px; color: #475569; max-width: 580px; margin: 0 auto; line-height: 1.5; }
+    body.dark-mode .hero-badge { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .hero-title { font-size: 28px; font-weight: 900; color: var(--text-main); letter-spacing: -0.5px; margin-bottom: 6px; }
+    .hero-subtitle { font-size: 14.5px; color: var(--text-muted); max-width: 580px; margin: 0 auto; line-height: 1.5; }
 
-    /* Perfectly Balanced 4-Column / 2-Column Responsive Grid */
+    /* Search Box */
+    .search-bar-wrapper {
+      max-width: 520px;
+      margin: 20px auto 30px auto;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--search-bg);
+      border: 2px solid var(--search-border);
+      color: var(--text-main);
+      padding: 12px 16px 12px 42px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 30px;
+      outline: none;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    }
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.15);
+    }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    .clear-search-btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 16px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: none;
+    }
+
+    /* 4-Column / 2-Column Responsive Grid */
     .tools-grid { 
       display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
@@ -89,15 +170,15 @@
     }
 
     .tool-box {
-      background: #ffffff;
-      border: 1.5px solid #e2e8f0;
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
       border-radius: 14px;
       padding: 18px 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, opacity 0.2s;
     }
     .tool-box:hover {
       transform: translateY(-3px);
@@ -145,14 +226,18 @@
     .theme-compare .icon-bg { background: #f0f9ff; color: #0284c7; }
     .theme-compare .tool-action-btn { background: #0284c7; color: #fff; }
 
+    /* Dark Mode Accent Overrides */
+    body.dark-mode .icon-bg { background: rgba(255,255,255,0.05) !important; }
+    body.dark-mode .tool-box { border-color: var(--card-border); }
+
     /* Card Top Elements */
     .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
     .icon-bg { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
     .card-heading-group { flex: 1; }
-    .tool-name { font-size: 15.5px; font-weight: 800; color: #0f172a; line-height: 1.25; margin-bottom: 3px; }
+    .tool-name { font-size: 15.5px; font-weight: 800; color: var(--text-main); line-height: 1.25; margin-bottom: 3px; }
     .tool-pill { font-size: 9.5px; font-weight: 700; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; display: inline-block; }
 
-    .tool-desc { font-size: 12.5px; color: #475569; line-height: 1.45; margin-bottom: 14px; flex: 1; }
+    .tool-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.45; margin-bottom: 14px; flex: 1; }
 
     /* Uniform Action Button */
     .tool-action-btn {
@@ -172,30 +257,43 @@
     }
     .tool-action-btn:hover { filter: brightness(1.08); }
 
+    /* No Search Results Notice */
+    .no-results-msg {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 30px 16px;
+      background: var(--card-bg);
+      border: 1px dashed var(--card-border);
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
     /* Quick Spreadsheet Viewer Box */
-    .inline-viewer-section { margin-top: 36px; background: #ffffff; border: 2px dashed #cbd5e1; border-radius: 14px; padding: 26px 20px; text-align: center; }
-    .inline-viewer-title { font-size: 16.5px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
-    .inline-viewer-sub { font-size: 13px; color: #64748b; margin-bottom: 12px; }
-    .btn-choose-file { background: #0f172a; color: #fff; padding: 10px 20px; font-size: 13px; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+    .inline-viewer-section { margin-top: 36px; background: var(--card-bg); border: 2px dashed var(--card-border); border-radius: 14px; padding: 26px 20px; text-align: center; }
+    .inline-viewer-title { font-size: 16.5px; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
+    .inline-viewer-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+    .btn-choose-file { background: var(--header-bg); color: #fff; padding: 10px 20px; font-size: 13px; font-weight: 700; border-radius: 8px; border: 1px solid var(--card-border); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
 
     /* Spreadsheet Grid Render */
     .viewer-display { display: none; margin-top: 20px; text-align: left; }
     .viewer-sheet-tabs { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
-    .v-tab-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 12px; font-weight: 600; cursor: pointer; }
-    .v-tab-btn.active { background: #0f172a; color: #fff; border-color: #0f172a; }
-    .v-table-wrapper { max-height: 480px; overflow: auto; border: 1px solid #cbd5e1; border-radius: 8px; }
+    .v-tab-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--card-border); background: var(--page-bg); color: var(--text-main); font-size: 12px; font-weight: 600; cursor: pointer; }
+    .v-tab-btn.active { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
+    .v-table-wrapper { max-height: 480px; overflow: auto; border: 1px solid var(--card-border); border-radius: 8px; }
     table.v-grid { width: 100%; border-collapse: collapse; font-size: 12px; }
-    table.v-grid th { position: sticky; top: 0; background: #f1f5f9; padding: 8px 10px; border-bottom: 2px solid #cbd5e1; text-align: left; font-weight: 700; }
-    table.v-grid td { padding: 8px 10px; border-bottom: 1px solid #f1f5f9; white-space: nowrap; }
+    table.v-grid th { position: sticky; top: 0; background: var(--page-bg); color: var(--text-main); padding: 8px 10px; border-bottom: 2px solid var(--card-border); text-align: left; font-weight: 700; }
+    table.v-grid td { padding: 8px 10px; border-bottom: 1px solid var(--card-border); white-space: nowrap; color: var(--text-main); }
 
     /* Footer */
-    footer { border-top: 1px solid #e2e8f0; background: #ffffff; padding: 32px 16px 24px 16px; margin-top: 40px; }
+    footer { border-top: 1px solid var(--card-border); background: var(--footer-bg); padding: 32px 16px 24px 16px; margin-top: 40px; }
     .footer-content { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; font-size: 13px; }
     .footer-links-group { display: flex; gap: 40px; flex-wrap: wrap; }
-    .footer-col-title { color: #0f172a; display: block; margin-bottom: 8px; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+    .footer-col-title { color: var(--text-main); display: block; margin-bottom: 8px; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
     .footer-links-list { list-style: none; padding: 0; line-height: 2.1; }
-    .footer-links-list a { color: #64748b; text-decoration: none; }
-    .footer-links-list a:hover { color: #2563eb; }
+    .footer-links-list a { color: var(--text-muted); text-decoration: none; }
+    .footer-links-list a:hover { color: var(--primary); }
 
     @media (max-width: 640px) {
       .hero-title { font-size: 22px; }
@@ -216,6 +314,7 @@
     </a>
     <div class="header-actions">
       <div class="privacy-tag">🔒 100% Private & Safe</div>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Mode">🌙</button>
       <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-header-btn">☕ Support</a>
     </div>
   </header>
@@ -227,13 +326,26 @@
       <span class="hero-badge">⚡ Instant • Free • No Sign-up</span>
       <h1 class="hero-title">What would you like to do today?</h1>
       <p class="hero-subtitle">Choose a tool below to get your job done in seconds. Your files never leave your device.</p>
+      
+      <!-- Instant Live Search Bar -->
+      <div class="search-bar-wrapper">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="toolSearchInput" 
+          class="search-input" 
+          placeholder="Search any tool (e.g. compress, word, merge, invoice)..." 
+          autocomplete="off"
+        />
+        <button class="clear-search-btn" id="clearSearchBtn">&times;</button>
+      </div>
     </div>
 
     <!-- Ranked 8 Tool Cards -->
-    <div class="tools-grid">
+    <div class="tools-grid" id="toolsGrid">
 
-      <!-- 1. PDF to Word (Rank #1 in Global Search Volume) -->
-      <div class="tool-box theme-pdf-word">
+      <!-- 1. PDF to Word -->
+      <div class="tool-box theme-pdf-word" data-keywords="pdf to word convert editable docx extract text doc word ocr">
         <div>
           <div class="card-top">
             <div class="icon-bg">📝</div>
@@ -247,8 +359,8 @@
         <a href="/pdf-to-word.html" class="tool-action-btn">Convert to Word &rarr;</a>
       </div>
 
-      <!-- 2. Reduce Photo Size (Rank #2 in Search Demand: 20KB, 50KB, 100KB queries) -->
-      <div class="tool-box theme-compress">
+      <!-- 2. Reduce Photo Size -->
+      <div class="tool-box theme-compress" data-keywords="compress image reduce photo size 20kb 50kb 100kb 200kb shrink jpg png resizer signature exam govt portal">
         <div>
           <div class="card-top">
             <div class="icon-bg">⚡</div>
@@ -262,8 +374,8 @@
         <a href="/compress-image.html" class="tool-action-btn">Compress Photos &rarr;</a>
       </div>
 
-      <!-- 3. Join Multiple PDFs (Rank #3 in Evergreen Utility Searches) -->
-      <div class="tool-box theme-pdf-merge">
+      <!-- 3. Join Multiple PDFs -->
+      <div class="tool-box theme-pdf-merge" data-keywords="merge pdf combine pdfs join multiple document pdf binder">
         <div>
           <div class="card-top">
             <div class="icon-bg">📑</div>
@@ -277,8 +389,8 @@
         <a href="/merge-pdf.html" class="tool-action-btn">Merge PDFs Now &rarr;</a>
       </div>
 
-      <!-- 4. Photos to PDF (Rank #4 Mobile & Office Search Demand) -->
-      <div class="tool-box theme-img-pdf">
+      <!-- 4. Photos to PDF -->
+      <div class="tool-box theme-img-pdf" data-keywords="photos to pdf images to pdf jpg to pdf png to pdf a4 picture convert">
         <div>
           <div class="card-top">
             <div class="icon-bg">🖼️</div>
@@ -292,8 +404,8 @@
         <a href="/images-to-pdf.html" class="tool-action-btn">Convert Photos &rarr;</a>
       </div>
 
-      <!-- 5. Make an Invoice or Bill (Rank #5 High Commercial/Freelance Intent) -->
-      <div class="tool-box theme-invoice">
+      <!-- 5. Make an Invoice or Bill -->
+      <div class="tool-box theme-invoice" data-keywords="invoice maker bill generator receipt create invoice gst tax freelance business payment">
         <div>
           <div class="card-top">
             <div class="icon-bg">🧾</div>
@@ -307,8 +419,8 @@
         <a href="/invoice-generator.html" class="tool-action-btn">Open Invoice Maker &rarr;</a>
       </div>
 
-      <!-- 6. Word Document Viewer (Rank #6 Utility Demand) -->
-      <div class="tool-box theme-word-view">
+      <!-- 6. Word Document Viewer -->
+      <div class="tool-box theme-word-view" data-keywords="word viewer open docx read word document inspect docx office without ms office">
         <div>
           <div class="card-top">
             <div class="icon-bg">📘</div>
@@ -322,8 +434,8 @@
         <a href="/word-viewer.html" class="tool-action-btn">Open Word Viewer &rarr;</a>
       </div>
 
-      <!-- 7. Open Excel Spreadsheet (Rank #7 Spreadsheet Utility) -->
-      <div class="tool-box theme-excel-view">
+      <!-- 7. Open Excel Spreadsheet -->
+      <div class="tool-box theme-excel-view" data-keywords="open excel read excel file xlsx viewer xls csv spreadsheet table sheet">
         <div>
           <div class="card-top">
             <div class="icon-bg">📊</div>
@@ -337,8 +449,8 @@
         <button type="button" class="tool-action-btn" onclick="document.getElementById('fileInput').click()">Select Excel File &rarr;</button>
       </div>
 
-      <!-- 8. Compare Spreadsheets (Rank #8 Niche Diff Utility) -->
-      <div class="tool-box theme-compare">
+      <!-- 8. Compare Spreadsheets -->
+      <div class="tool-box theme-compare" data-keywords="compare excel diff checker spreadsheet differences compare two csv sheets">
         <div>
           <div class="card-top">
             <div class="icon-bg">🔍</div>
@@ -350,6 +462,11 @@
           <div class="tool-desc">Upload two Excel or CSV sheets to spot differences. Highlights added, removed, or changed rows.</div>
         </div>
         <a href="/compare-excel.html" class="tool-action-btn">Compare Spreadsheets &rarr;</a>
+      </div>
+
+      <!-- Empty Filter State -->
+      <div class="no-results-msg" id="noResultsMsg">
+        No tools match "<span id="missingSearchTerm"></span>". Try searching for <strong>pdf</strong>, <strong>word</strong>, <strong>compress</strong>, or <strong>invoice</strong>.
       </div>
 
     </div>
@@ -366,7 +483,7 @@
       <div class="viewer-display" id="viewerDisplay">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
           <div class="viewer-sheet-tabs" id="vSheetTabs"></div>
-          <span id="vCount" style="font-size: 12px; color: #64748b; font-weight: 600;"></span>
+          <span id="vCount" style="font-size: 12px; color: var(--text-muted); font-weight: 600;"></span>
         </div>
         <div class="v-table-wrapper">
           <table class="v-grid" id="vGrid">
@@ -384,9 +501,9 @@
     <div class="footer-content">
       
       <div style="max-width: 320px;">
-        <div style="font-weight: 800; font-size: 16px; color: #0f172a; margin-bottom: 6px;">SheetBox Studio</div>
-        <p style="color: #64748b; font-size: 12.5px; line-height: 1.5; margin-bottom: 10px;">Fast, private in-browser document tools. All processing happens in local browser memory with zero server uploads.</p>
-        <div style="font-size: 11.5px; color: #94a3b8;">Built by Rahul Chauhan</div>
+        <div style="font-weight: 800; font-size: 16px; color: var(--text-main); margin-bottom: 6px;">SheetBox Studio</div>
+        <p style="color: var(--text-muted); font-size: 12.5px; line-height: 1.5; margin-bottom: 10px;">Fast, private in-browser document tools. All processing happens in local browser memory with zero server uploads.</p>
+        <div style="font-size: 11.5px; color: var(--text-muted);">Built by Rahul Chauhan</div>
       </div>
 
       <div class="footer-links-group">
@@ -423,6 +540,61 @@
   </footer>
 
   <script>
+    // --- 1. DARK MODE LOGIC ---
+    const themeBtn = document.getElementById("themeToggleBtn");
+    const currentTheme = localStorage.getItem("sheetbox_theme") || "light";
+
+    if (currentTheme === "dark") {
+      document.body.classList.add("dark-mode");
+      themeBtn.textContent = "☀️";
+    }
+
+    themeBtn.onclick = () => {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      themeBtn.textContent = isDark ? "☀️" : "🌙";
+      localStorage.setItem("sheetbox_theme", isDark ? "dark" : "light");
+    };
+
+    // --- 2. LIVE SEARCH / FILTER LOGIC ---
+    const searchInput = document.getElementById("toolSearchInput");
+    const clearBtn = document.getElementById("clearSearchBtn");
+    const toolBoxes = document.querySelectorAll(".tool-box");
+    const noResultsMsg = document.getElementById("noResultsMsg");
+    const missingTerm = document.getElementById("missingSearchTerm");
+
+    searchInput.addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      clearBtn.style.display = query ? "block" : "none";
+      let visibleCount = 0;
+
+      toolBoxes.forEach(box => {
+        const text = (box.innerText + " " + box.getAttribute("data-keywords")).toLowerCase();
+        if (text.includes(query)) {
+          box.style.display = "flex";
+          visibleCount++;
+        } else {
+          box.style.display = "none";
+        }
+      });
+
+      if (visibleCount === 0) {
+        missingTerm.textContent = e.target.value;
+        noResultsMsg.style.display = "block";
+      } else {
+        noResultsMsg.style.display = "none";
+      }
+    });
+
+    clearBtn.onclick = () => {
+      searchInput.value = "";
+      clearBtn.style.display = "none";
+      toolBoxes.forEach(box => box.style.display = "flex");
+      noResultsMsg.style.display = "none";
+      searchInput.focus();
+    };
+
+    // --- 3. INLINE SPREADSHEET VIEWER LOGIC ---
     let currentWorkbook = null;
     const fileInput = document.getElementById("fileInput");
     const viewerDisplay = document.getElementById("viewerDisplay");
