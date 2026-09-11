@@ -286,7 +286,7 @@
     /* Footer */
     footer { border-top: 1px solid var(--card-border); background: var(--footer-bg); padding: 32px 16px 24px 16px; margin-top: 40px; }
     .footer-content { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; font-size: 13px; }
-    .footer-links-group { display: flex; gap: 40px; flex-wrap: wrap; }
+    .footer-links-group { display: flex; gap: 36px; flex-wrap: wrap; }
     .footer-col-title { color: var(--text-main); display: block; margin-bottom: 8px; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
     .footer-links-list { list-style: none; padding: 0; line-height: 2.1; }
     .footer-links-list a { color: var(--text-muted); text-decoration: none; }
@@ -296,6 +296,7 @@
       .hero-title { font-size: 22px; }
       .tools-grid { grid-template-columns: 1fr; }
       .header-actions .privacy-tag { display: none; }
+      .footer-links-group { gap: 24px; }
     }
   </style>
 </head>
@@ -499,7 +500,7 @@
 
   </main>
 
-  <!-- Categorized Footer Directory -->
+  <!-- Categorized Footer Directory with Legal & Trust Links -->
   <footer>
     <div class="footer-content">
       
@@ -531,7 +532,17 @@
         </div>
 
         <div>
-          <strong class="footer-col-title">Contact & Support</strong>
+          <strong class="footer-col-title">Company & Legal</strong>
+          <ul class="footer-links-list">
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="/terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <strong class="footer-col-title">Support</strong>
           <ul class="footer-links-list">
             <li><a href="mailto:chauhanr003@gmail.com">chauhanr003@gmail.com</a></li>
             <li><a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer">Buy Me a Coffee ☕</a></li>
