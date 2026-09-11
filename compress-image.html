@@ -95,7 +95,7 @@
     .slider-header { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; }
     .range-slider { width: 100%; height: 6px; border-radius: 4px; accent-color: var(--accent); }
 
-    /* Clean Side-by-Side Comparison Grid */
+    /* Side-by-Side Comparison Grid */
     .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
     .preview-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; }
     .preview-card-title { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
@@ -105,12 +105,29 @@
 
     .action-row { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
 
-    /* SEO Article */
-    .seo-section { margin-top: 36px; background: #fff; padding: 22px; border-radius: 12px; border: 1px solid var(--border); font-size: 13.5px; line-height: 1.6; }
-    .seo-section h2 { font-size: 17px; margin: 16px 0 6px 0; color: #0f172a; }
-    .seo-section h2:first-child { margin-top: 0; }
+    /* Content & Educational SEO Layout */
+    .editorial-content { margin-top: 36px; background: #fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--border); font-size: 14px; line-height: 1.7; color: #334155; }
+    .editorial-content h2 { font-size: 19px; font-weight: 800; color: #0f172a; margin: 26px 0 10px 0; }
+    .editorial-content h2:first-child { margin-top: 0; }
+    .editorial-content h3 { font-size: 15px; font-weight: 700; color: #0f172a; margin: 18px 0 6px 0; }
+    .editorial-content p { margin-bottom: 14px; }
+    .editorial-content ol, .editorial-content ul { margin: 0 0 18px 20px; }
+    .editorial-content li { margin-bottom: 6px; }
 
-    footer { padding: 20px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 30px; }
+    .spec-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px 0; font-size: 13px; }
+    .spec-table th { background: #0f172a; color: #fff; padding: 9px 12px; text-align: left; font-weight: 700; }
+    .spec-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+    .spec-table tr:nth-child(even) { background-color: #f8fafc; }
+
+    /* Collapsible FAQ */
+    .faq-block { margin-top: 20px; }
+    details { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; padding: 12px 16px; }
+    summary { font-weight: 700; color: #0f172a; cursor: pointer; font-size: 14px; outline: none; }
+    details p { margin-top: 10px; margin-bottom: 0; color: #64748b; font-size: 13.5px; }
+
+    footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 36px; }
+    footer a { color: var(--text-muted); text-decoration: none; margin: 0 6px; }
+    footer a:hover { color: var(--primary); }
 
     @media (max-width: 640px) {
       .compare-grid { grid-template-columns: 1fr; }
@@ -134,8 +151,8 @@
   <main class="container">
     <a href="/" class="back-link">&larr; Open Full Tool Suite (PDF, Word, Excel, Invoice)</a>
 
-    <h1 class="hero-title">Compress Image File Size</h1>
-    <p class="hero-sub">Shrink JPG, PNG, and WebP photos to 20KB, 50KB, or 100KB for government and exam portals with 100% privacy.</p>
+    <h1 class="hero-title">Compress Image File Size Online</h1>
+    <p class="hero-sub">Shrink JPG, PNG, and WebP photos to 20KB, 50KB, or 100KB for government portals and exams with 100% privacy.</p>
 
     <!-- Upload Zone -->
     <div class="dropzone" id="dropzoneBox">
@@ -195,17 +212,95 @@
 
     </div>
 
-    <article class="seo-section">
-      <h2>Why Compress Photos in Browser?</h2>
-      <p>Online competitive exams and government application portals across India require strict file dimensions and maximum file size limits (often 20KB for signatures and 50KB for applicant photographs). SheetBox operates directly on your device using Canvas API, guaranteeing instantaneous compression without uploading your personal documents to any external server.</p>
+    <!-- 400+ Words Editorial Guide & FAQ (Satisfies AdSense Content Requirements) -->
+    <article class="editorial-content">
+      <h2>How to Reduce Image Size in KB for Official Job & Exam Portals</h2>
+      <p>Most competitive exam bodies, government recruitment services, and educational portals enforce strict file size thresholds on applicant photos and signatures. When taking pictures from high-resolution smartphone cameras, file sizes commonly range between 2MB and 6MB—far beyond the permissible 20KB to 100KB limits.</p>
+      
+      <p>SheetBox provides an automated client-side compression pipeline. Utilizing progressive browser-native discrete cosine transform (DCT) quantization, our compressor preserves readable facial contours and text clarity while eliminating unnecessary metadata and heavy chroma sub-samples.</p>
+
+      <h2>Standard Requirements for Online Application Portals</h2>
+      <p>Before submitting documents online, refer to standard specifications commonly mandated across major portal categories:</p>
+
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Document Type</th>
+            <th>Typical Target Size</th>
+            <th>Accepted Formats</th>
+            <th>Primary Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Applicant Signature</td>
+            <td>10 KB – 20 KB</td>
+            <td>JPG, JPEG</td>
+            <td>UPSC, SSC, Banking, State PSC portals</td>
+          </tr>
+          <tr>
+            <td>Passport Photograph</td>
+            <td>20 KB – 50 KB</td>
+            <td>JPG, JPEG</td>
+            <td>Job applications, gate entrance passes, student registration</td>
+          </tr>
+          <tr>
+            <td>Photo ID / Identity Card</td>
+            <td>50 KB – 100 KB</td>
+            <td>JPG, PNG, PDF</td>
+            <td>Aadhaar, Voter ID, driving license proofs</td>
+          </tr>
+          <tr>
+            <td>Certificate & Marksheets</td>
+            <td>100 KB – 300 KB</td>
+            <td>JPG, PDF</td>
+            <td>Academic transcripts and degree attestations</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Step-by-Step Compression Guide</h2>
+      <ol>
+        <li><strong>Select or Drop Your File:</strong> Drag and drop your photo into the dotted box above or click <em>Select Photo</em>.</li>
+        <li><strong>Choose an Instant Preset:</strong> Click on <strong>Under 50 KB</strong> for official passport photos or <strong>Under 20 KB</strong> for signatures.</li>
+        <li><strong>Fine-Tune with the Quality Slider:</strong> If your portal has an exact requirement (such as under 40KB), adjust the slider until the green file size badge matches your target.</li>
+        <li><strong>Instant Download:</strong> Click <em>Download Compressed Image</em> to save your optimized JPG file immediately.</li>
+      </ol>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <div class="faq-block">
+        <details>
+          <summary>Are my personal photos uploaded to an external server?</summary>
+          <p>No. SheetBox processes all image manipulation directly inside your local browser memory using the HTML5 Canvas API. Your photos, signatures, and identity cards are never sent over the internet or stored on external servers.</p>
+        </details>
+
+        <details>
+          <summary>Why do government portals reject photos even when they are under 50KB?</summary>
+          <p>Portals often enforce dimension constraints (like 200×230 pixels) alongside file size rules. If your image is distorted, check whether the portal requires specific aspect ratios or strict JPEG formatting.</p>
+        </details>
+
+        <details>
+          <summary>Does compressing an image to 20KB make it blurry?</summary>
+          <p>Signatures maintain sharp legibility because high-contrast black-and-white lines compress efficiently. For photographs, SheetBox strikes a balance between artifact removal and facial edge sharpness.</p>
+        </details>
+
+        <details>
+          <summary>Can I convert a PNG image to a 50KB JPG?</summary>
+          <p>Yes. SheetBox automatically converts uploaded PNG or WebP files to optimized standard JPG format upon download to guarantee portal compliance.</p>
+        </details>
+      </div>
     </article>
   </main>
 
   <footer>
-    <div style="margin-bottom: 6px; font-weight: 500;">SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution</div>
-    <div style="font-size: 11px; color: var(--text-muted);">
-      Contact: <a href="mailto:chauhanr003@gmail.com" style="color: var(--primary); text-decoration: none;">chauhanr003@gmail.com</a> • 
-      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none;">Buy Me a Coffee ☕</a>
+    <div style="margin-bottom: 8px;">
+      <a href="/about.html">About Us</a> • 
+      <a href="/contact.html">Contact</a> • 
+      <a href="/privacy-policy.html">Privacy Policy</a> • 
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <div style="font-size: 11.5px; color: var(--text-muted);">
+      SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
     </div>
   </footer>
 
@@ -244,7 +339,6 @@
       canvas.height = 1200;
       const ctx = canvas.getContext("2d");
 
-      // Draw high-resolution gradient
       const grad = ctx.createLinearGradient(0, 0, 1800, 1200);
       grad.addColorStop(0, "#1e3a8a");
       grad.addColorStop(0.5, "#ea580c");
@@ -252,7 +346,6 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1800, 1200);
 
-      // Add demo stamps
       ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
       ctx.font = "bold 64px -apple-system, sans-serif";
       ctx.textAlign = "center";
@@ -277,7 +370,7 @@
           origImg.src = e.target.result;
           workspace.style.display = "block";
           dropzoneBox.style.display = "none";
-          applyPreset(50); // Default to 50KB govt portal preset
+          applyPreset(50);
         };
       };
       reader.readAsDataURL(file);
@@ -288,7 +381,6 @@
       let width = sourceImageElement.width;
       let height = sourceImageElement.height;
 
-      // Auto scale down if huge dimension
       const maxDim = 1920;
       if (width > maxDim || height > maxDim) {
         if (width > height) {
