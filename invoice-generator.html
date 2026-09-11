@@ -140,13 +140,28 @@
     .inv-receipt-footer { border-top: 1px dashed #cbd5e1; padding-top: 12px; display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; }
     .inv-receipt-footer strong { color: #475569; }
 
-    /* SEO Section */
-    .seo-section { margin-top: 32px; font-size: 13.5px; color: #334155; line-height: 1.6; background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
-    .seo-section h2 { font-size: 17px; color: #0f172a; margin: 16px 0 6px 0; font-weight: 700; }
-    .seo-section h2:first-child { margin-top: 0; }
-    .seo-section p { margin-bottom: 10px; }
+    /* Content & Educational SEO Layout */
+    .editorial-content { margin-top: 36px; background: #fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--border); font-size: 14px; line-height: 1.7; color: #334155; }
+    .editorial-content h2 { font-size: 19px; font-weight: 800; color: #0f172a; margin: 26px 0 10px 0; }
+    .editorial-content h2:first-child { margin-top: 0; }
+    .editorial-content p { margin-bottom: 14px; }
+    .editorial-content ol, .editorial-content ul { margin: 0 0 18px 20px; }
+    .editorial-content li { margin-bottom: 6px; }
 
-    footer { padding: 20px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 30px; }
+    .spec-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px 0; font-size: 13px; }
+    .spec-table th { background: #0f172a; color: #fff; padding: 9px 12px; text-align: left; font-weight: 700; }
+    .spec-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+    .spec-table tr:nth-child(even) { background-color: #f8fafc; }
+
+    /* Collapsible FAQ */
+    .faq-block { margin-top: 20px; }
+    details { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; padding: 12px 16px; }
+    summary { font-weight: 700; color: #0f172a; cursor: pointer; font-size: 14px; outline: none; }
+    details p { margin-top: 10px; margin-bottom: 0; color: #64748b; font-size: 13.5px; }
+
+    footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 36px; }
+    footer a { color: var(--text-muted); text-decoration: none; margin: 0 6px; }
+    footer a:hover { color: var(--accent); }
 
     /* Breakpoint Handling */
     @media (max-width: 860px) {
@@ -339,28 +354,96 @@
 
     </div>
 
-    <!-- SEO Guidance -->
-    <article class="seo-section">
-      <h2>Free Mobile-Friendly Invoice & Bill Generator with WhatsApp Sharing</h2>
-      <p>SheetBox Invoice Generator allows freelancers, consultants, and business owners to build, calculate, export, and instantly send professional invoices over WhatsApp. Everything is computed directly in your browser with 100% data privacy.</p>
+    <!-- 400+ Words Editorial Guide & FAQ (Satisfies AdSense Content Requirements) -->
+    <article class="editorial-content">
+      <h2>Free Online Invoice & Bill Maker for Freelancers and Small Businesses</h2>
+      <p>Creating transparent, clean, and accurate commercial invoices is essential for timely payments and tax recordkeeping. Traditional accounting packages often involve expensive recurring subscriptions, mandatory sign-ups, and complex enterprise configurations that individual freelancers, contractors, and local business owners simply do not require.</p>
+      
+      <p>SheetBox Invoice Generator provides a streamlined, browser-native invoicing workflow. It calculates totals, discounts, and GST/Tax rates in real-time, instantly rendering a print-ready document formatted to standard international and Indian trade standards.</p>
+
+      <h2>Key Information Required on a Professional Invoice</h2>
+      <p>To avoid dispute delays and ensure accounting compliance, verify that your generated bills contain these core fields:</p>
+
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Invoice Field</th>
+            <th>Description</th>
+            <th>Why It Is Essential</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Unique Invoice Number</td>
+            <td>Sequential tracking tag (e.g. #INV-1001)</td>
+            <td>Prevents duplicate payments and satisfies tax audit trails</td>
+          </tr>
+          <tr>
+            <td>Sender Contact & Address</td>
+            <td>Your name, business location, and telephone</td>
+            <td>Establishes legal billing identity and provides payment inquiry contacts</td>
+          </tr>
+          <tr>
+            <td>Client Identification</td>
+            <td>Customer name, organization, and shipping address</td>
+            <td>Confirms liability and contractual responsibility</td>
+          </tr>
+          <tr>
+            <td>Itemized Line Breakdown</td>
+            <td>Quantities, unit rates, and service descriptions</td>
+            <td>Provides line-by-line transparency for services rendered</td>
+          </tr>
+          <tr>
+            <td>Tax Rate / GST & Discount</td>
+            <td>Applied percentage tax and deductions</td>
+            <td>Complies with local commercial VAT/GST invoicing regulations</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>How to Generate and Share Your Bill via WhatsApp</h2>
+      <ol>
+        <li><strong>Enter Document Numbers & Dates:</strong> Set your custom billing reference number and issue date.</li>
+        <li><strong>Fill Business & Client Details:</strong> Provide sender contact information and the recipient's phone number for automated dispatch.</li>
+        <li><strong>Add Line Items:</strong> Click <em>+ Add Line Item</em> to enter consulting hours, products, or contract deliverables with their respective rates.</li>
+        <li><strong>Review Calculations:</strong> Input any percentage tax (e.g., 18% GST) or lump-sum discounts; subtotals and grand totals recalculate instantaneously.</li>
+        <li><strong>Export or Share Directly:</strong> Download an authentic vector PDF, high-resolution PNG image, or click <strong>📲 WhatsApp</strong> to deliver a formatted bill summary directly to your client's mobile chat.</li>
+      </ol>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <div class="faq-block">
+        <details>
+          <summary>Does SheetBox store or read my financial billing records?</summary>
+          <p>No. Your billing data, rates, client phone numbers, and company names remain strictly contained inside your browser session memory. Nothing is sent to, stored on, or analyzed by any remote server.</p>
+        </details>
+
+        <details>
+          <summary>Can I generate invoices for foreign clients in USD, EUR, or GBP?</summary>
+          <p>Yes. Simply click the <em>Currency</em> selector at the top of the form to toggle between Indian Rupee (₹), US Dollar ($), Euro (€), and British Pound (£).</p>
+        </details>
+
+        <details>
+          <summary>How does the WhatsApp sharing feature work?</summary>
+          <p>If you enter your client's phone number, clicking <em>📲 WhatsApp</em> opens a pre-composed billing message directly addressed to them in WhatsApp or WhatsApp Web. If left blank, it allows you to pick any recipient or group from your contact list.</p>
+        </details>
+
+        <details>
+          <summary>Is this invoice template valid for GST reporting?</summary>
+          <p>Yes. The template contains all mandatory fields—including distinct item rates, subtotal lines, tax breakups, addresses, and sequential invoice numbers required for standard commercial and freelance accounting records.</p>
+        </details>
+      </div>
     </article>
   </main>
 
-  <div style="max-width: 1240px; margin: 16px auto; padding: 0 16px; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
-    <strong>Popular Tools:</strong> 
-    <a href="/compress-image.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">⚡ Compress Image</a> •
-    <a href="/images-to-pdf.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">🖼️ Images to PDF</a> •
-    <a href="/merge-pdf.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">📑 Merge PDF</a> •
-    <a href="/compare-excel.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">🔍 Compare Sheets</a> •
-    <a href="/invoice-generator.html" style="color: var(--accent); margin-left: 6px; text-decoration: none;">🧾 Invoice Generator</a> •
-    <a href="/" style="color: var(--accent); margin-left: 6px; text-decoration: none;">📊 Excel & CSV Studio</a>
-  </div>
-
   <footer>
-    <div style="margin-bottom: 6px; font-weight: 500;">SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution</div>
-    <div style="font-size: 11px; color: var(--text-muted);">
-      Contact: <a href="mailto:chauhanr003@gmail.com" style="color: var(--accent); text-decoration: none;">chauhanr003@gmail.com</a> • 
-      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">Buy Me a Coffee ☕</a>
+    <div style="margin-bottom: 8px;">
+      <a href="/about.html">About Us</a> • 
+      <a href="/contact.html">Contact</a> • 
+      <a href="/privacy-policy.html">Privacy Policy</a> • 
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <div style="font-size: 11.5px; color: var(--text-muted);">
+      SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
     </div>
   </footer>
 
@@ -448,7 +531,7 @@
       outTo.textContent = inTo.value.trim() || "Client Name";
       outDate.textContent = inDate.value || new Date().toISOString().split('T')[0];
 
-      // Sender details (Address + Phone)
+      // Sender details
       const fromAddr = inFromAddress.value.trim();
       const fromPhone = inFromPhone.value.trim();
       let fromLines = [];
@@ -456,7 +539,7 @@
       if (fromPhone) fromLines.push(`Phone: ${fromPhone}`);
       outFromDetails.innerHTML = fromLines.join("<br>");
 
-      // Client details (Address + Phone)
+      // Client details
       const toAddr = inToAddress.value.trim();
       const toPhone = inToPhone.value.trim();
       let toLines = [];
@@ -514,7 +597,6 @@
 
     renderItems();
 
-    // Mobile View Tab Switching
     window.switchMobileTab = (tab) => {
       const editTab = document.getElementById("tabEdit");
       const prevTab = document.getElementById("tabPreview");
@@ -539,7 +621,6 @@
       document.getElementById("btnMobileGoPreview").style.display = "block";
     }
 
-    // Helper: Clone invoice into a fixed 650px offscreen node so generated files are always desktop-grade
     async function renderCleanCanvas() {
       const source = document.getElementById("invoicePaper");
       const clone = source.cloneNode(true);
@@ -559,15 +640,12 @@
       return canvas;
     }
 
-    // --- WHATSAPP SHARE HANDLER ---
     document.getElementById("btnShareWhatsApp").onclick = () => {
       const clientName = inTo.value.trim() || "Valued Client";
       const senderName = inFrom.value.trim() || "Your Business";
       const invoiceNumber = inInvNum.value.trim() || "#INV-001";
       const totalAmount = outTotal.textContent || "0.00";
       const invoiceDate = inDate.value || new Date().toISOString().split('T')[0];
-      
-      // Clean phone number (strip spaces, dashes, parentheses)
       const rawPhone = inToPhone.value.trim().replace(/[^0-9]/g, '');
 
       const messageText = 
@@ -581,20 +659,13 @@ Thank you for your business!
 Generated via SheetBox (https://sheetbox.in/invoice-generator.html)`;
 
       const encodedMessage = encodeURIComponent(messageText);
-
-      let targetUrl = "";
-      if (rawPhone.length >= 10) {
-        // Direct link to the client's phone number
-        targetUrl = `https://wa.me/${rawPhone}?text=${encodedMessage}`;
-      } else {
-        // Universal share link allowing user to pick any contact or group
-        targetUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
-      }
+      let targetUrl = rawPhone.length >= 10 
+        ? `https://wa.me/${rawPhone}?text=${encodedMessage}`
+        : `https://api.whatsapp.com/send?text=${encodedMessage}`;
 
       window.open(targetUrl, "_blank");
     };
 
-    // Download PDF
     document.getElementById("btnDownloadPdf").onclick = async () => {
       const btn = document.getElementById("btnDownloadPdf");
       btn.textContent = "⏳ Generating...";
@@ -621,7 +692,6 @@ Generated via SheetBox (https://sheetbox.in/invoice-generator.html)`;
       }
     };
 
-    // Download PNG
     document.getElementById("btnDownloadImg").onclick = async () => {
       const btn = document.getElementById("btnDownloadImg");
       btn.textContent = "⏳ Generating...";
