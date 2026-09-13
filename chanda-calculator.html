@@ -242,7 +242,8 @@
     .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 14px; cursor: pointer; color: var(--text); }
     .chip-btn:active { transform: scale(0.94); }
 
-    .btn { padding: 9px 12px; font-size: 12.5px; font-weight: 800; border-radius: 7px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 5px; justify-content: center; }
+    /* Clean, Perfectly Proportioned Primary Button */
+    .btn { padding: 11px 16px; font-size: 13.5px; font-weight: 800; border-radius: 8px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
     .btn:active { transform: scale(0.96); }
     .btn-orange { background: var(--accent); color: #fff; }
     .btn-outline { background: var(--card-bg); border-color: var(--border); color: var(--text); }
@@ -250,7 +251,7 @@
     .btn-red { background: var(--danger); color: #fff; }
 
     /* Table Toolbar */
-    .table-toolbar { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+    .table-toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
     .search-input-wrap { flex: 1; min-width: 140px; position: relative; }
     .search-input-wrap input { width: 100%; padding: 8px 10px 8px 28px; border: 1.5px solid var(--input-border); border-radius: 7px; font-size: 14px !important; outline: none; background: var(--input-bg); color: var(--text); }
     .search-input-wrap input:focus { border-color: var(--primary); }
@@ -260,7 +261,34 @@
     .fpill { font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
     .fpill.active { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
 
-    /* Table Container - Mobile Friendly Scrolling */
+    /* MOBILE CARD LIST VIEW FOR CONTRIBUTORS */
+    .mobile-cards-list { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
+    .member-card-item {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .member-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .member-card-name { font-size: 14.5px; font-weight: 800; color: var(--text); }
+    .member-card-flat { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+    .member-card-mid { display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed var(--border); }
+    .member-card-amt { font-size: 16px; font-weight: 900; color: var(--text); }
+    
+    .member-card-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Desktop Table Container */
     .table-container { 
       width: 100%; 
       overflow-x: auto; 
@@ -270,16 +298,16 @@
       border-radius: 8px; 
       display: block; 
     }
-    table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
     table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 11px 12px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; white-space: nowrap; }
     table.data-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; }
     table.data-table tr:nth-child(even) { background: rgba(0,0,0,0.015); }
 
     .status-badge { 
-      font-size: 11.5px; 
+      font-size: 11px; 
       font-weight: 800; 
-      padding: 6px 12px; 
-      border-radius: 16px; 
+      padding: 5px 10px; 
+      border-radius: 14px; 
       display: inline-flex; 
       align-items: center; 
       gap: 4px; 
@@ -300,19 +328,19 @@
     .row-btn {
       background: var(--tab-bg);
       border: 1px solid var(--border);
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
-      padding: 7px 12px;
+      padding: 6px 10px;
       border-radius: 6px;
       cursor: pointer;
       color: var(--text);
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
     .row-btn:hover { background: var(--border); color: var(--text); }
-    .row-btn-danger { color: var(--danger); border-color: #fca5a5; background: var(--card-bg); font-weight: 800; }
-    .row-btn-danger:hover { background: #fee2e2; }
+    .row-btn-danger { color: #fff !important; background: var(--danger) !important; border-color: var(--danger) !important; font-weight: 800; }
+    .row-btn-danger:hover { filter: brightness(1.1); }
 
     /* Modals */
     .modal-backdrop {
@@ -404,6 +432,10 @@
       .table-toolbar { flex-direction: column; align-items: stretch; gap: 6px; }
       .filter-pills { width: 100%; justify-content: space-between; }
       .fpill { flex: 1; text-align: center; }
+
+      /* Switch Desktop Table to Mobile Card List to eliminate clipping entirely */
+      .table-container { display: none !important; }
+      .mobile-cards-list { display: flex !important; }
     }
 
     @media print {
@@ -541,7 +573,7 @@
             </select>
           </div>
 
-          <button type="button" class="btn btn-orange" style="width: 100%; margin-top: 4px;" id="btnAddDonor">
+          <button type="button" class="btn btn-orange" style="width: 100%; margin-top: 6px;" id="btnAddDonor">
             <span data-i18n="btnSaveMember">+ Save Contributor</span>
           </button>
         </div>
@@ -570,7 +602,7 @@
         </div>
       </div>
 
-      <!-- Donors Table -->
+      <!-- Donors Table & Mobile Cards -->
       <div class="panel">
         <div class="table-toolbar">
           <div class="search-input-wrap">
@@ -590,6 +622,7 @@
           </div>
         </div>
 
+        <!-- Desktop Table View -->
         <div class="table-container">
           <table class="data-table">
             <thead>
@@ -605,8 +638,12 @@
             <tbody id="donorsTableBody"></tbody>
           </table>
         </div>
+
+        <!-- Mobile Card List View (Zero Horizontal Squeeze) -->
+        <div class="mobile-cards-list" id="donorsCardsList"></div>
+
         <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: var(--text-muted); margin-top: 8px;">
-          <span data-i18n="tipStatusToggle">💡 Tap status pill to switch between Paid and Pending. Scroll right for actions $\rightarrow$</span>
+          <span data-i18n="tipStatusToggle">💡 Tap status pill to switch between Paid and Pending.</span>
         </div>
       </div>
     </div>
@@ -657,7 +694,7 @@
             </select>
           </div>
 
-          <button type="button" class="btn btn-red" style="width: 100%; margin-top: 4px;" id="btnAddExpense">
+          <button type="button" class="btn btn-red" style="width: 100%; margin-top: 6px;" id="btnAddExpense">
             <span data-i18n="btnRecordExpense">+ Record Expense</span>
           </button>
         </div>
@@ -1057,7 +1094,7 @@
         thAmount: "રકમ (₹)",
         thStatus: "સ્થિતિ",
         thAction: "ક્રિયાઓ",
-        tipStatusToggle: "💡 સ્થિતિ બદલવા માટે 'જમા' અથવા 'બાકી' પર ટેપ કરો.",
+        tipStatusToggle: "💡 સ્થિતિ બદલવા માટે 'જમા' અથવા 'બાકી' બટન પર ટેપ કરો.",
         headerAddExpense: "ખર્ચ નોંધો",
         lblExpItem: "ખર્ચની વિગત *",
         lblExpCategory: "ખર્ચ શ્રેણી",
@@ -1151,6 +1188,7 @@
     const outEqualShare = document.getElementById("outEqualShare");
     const outExpenseCount = document.getElementById("outExpenseCount");
     const donorsTableBody = document.getElementById("donorsTableBody");
+    const donorsCardsList = document.getElementById("donorsCardsList");
     const expensesTableBody = document.getElementById("expensesTableBody");
 
     const countAll = document.getElementById("countAll");
@@ -1372,6 +1410,7 @@
     function renderDonorsTable() {
       const q = (document.getElementById("searchDonor") ? document.getElementById("searchDonor").value : "").toLowerCase().trim();
       donorsTableBody.innerHTML = "";
+      donorsCardsList.innerHTML = "";
 
       let visibleList = state.donors.map((d, index) => ({ ...d, originalIndex: index }));
 
@@ -1388,23 +1427,24 @@
 
       if (visibleList.length === 0) {
         let noFoundMsg = "No members found. Add from left.";
-        if (currentLang === 'gu') noFoundMsg = "કોઈ સભ્ય મળ્યા નથી. ડાબી બાજુથી નવો ફાળો ઉમેરો.";
-        else if (currentLang === 'mr') noFoundMsg = "कोणतेही वर्गणीदार सापडले नाहीत. डाव्या बाजूने नवीन वर्गणीदार जोडा.";
-        else if (currentLang === 'hi') noFoundMsg = "कोई सदस्य नहीं मिला। बाईं ओर से सदस्य जोड़ें।";
+        if (currentLang === 'gu') noFoundMsg = "કોઈ સભ્ય મળ્યા નથી.";
+        else if (currentLang === 'mr') noFoundMsg = "कोणतेही वर्गणीदार सापडले नाहीत.";
+        else if (currentLang === 'hi') noFoundMsg = "कोई सदस्य नहीं मिला।";
 
         donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 22px;">${noFoundMsg}</td></tr>`;
+        donorsCardsList.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px; font-size: 13px;">${noFoundMsg}</div>`;
         return;
       }
 
       visibleList.forEach((d, idx) => {
-        const tr = document.createElement("tr");
         const isPaid = d.status === "Paid";
-        
         let statusBadgeText = isPaid ? '✓ Paid' : '⏳ Pending';
         if (currentLang === 'gu') statusBadgeText = isPaid ? '✓ જમા' : '⏳ બાકી';
         else if (currentLang === 'mr') statusBadgeText = isPaid ? '✓ जमा' : '⏳ बाकी';
         else if (currentLang === 'hi') statusBadgeText = isPaid ? '✓ प्राप्त' : '⏳ बाकी';
 
+        // 1. Desktop Table Row
+        const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td style="font-weight: 700;">${d.name}</td>
@@ -1424,6 +1464,31 @@
           </td>
         `;
         donorsTableBody.appendChild(tr);
+
+        // 2. Mobile Clean Card Item (Zero Horizontal Squeeze)
+        const cardDiv = document.createElement("div");
+        cardDiv.className = "member-card-item";
+        cardDiv.innerHTML = `
+          <div class="member-card-top">
+            <div>
+              <div class="member-card-name">${idx + 1}. ${d.name}</div>
+              <div class="member-card-flat">Flat / Unit: <strong>${d.unit}</strong></div>
+            </div>
+            <span class="status-badge ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${d.originalIndex})">
+              ${statusBadgeText}
+            </span>
+          </div>
+          <div class="member-card-mid">
+            <span style="font-size: 11.5px; color: var(--text-muted);">Pledged Amount:</span>
+            <span class="member-card-amt">₹${d.amount.toLocaleString('en-IN')}</span>
+          </div>
+          <div class="member-card-actions">
+            <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})">🧾 Slip</button>
+            <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})">💬 WA</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})">🗑️ Delete</button>
+          </div>
+        `;
+        donorsCardsList.appendChild(cardDiv);
       });
     }
 
