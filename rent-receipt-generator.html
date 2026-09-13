@@ -114,7 +114,7 @@
     .receipt-number { font-size: 11.5px; font-weight: 700; color: var(--text-muted); }
 
     .receipt-body { font-size: 12.5px; line-height: 1.8; color: #1e293b; }
-    .receipt-body strong { color: #0f172a; text-decoration: underline; text-underline-offset: 2px; }
+    .receipt-body strong { color: #0f172a; }
 
     .receipt-footer-grid {
       display: flex;
@@ -174,6 +174,52 @@
       .preview-panel { display: none; }
       .preview-panel.show-mobile { display: flex; }
       .input-panel.hide-mobile { display: none; }
+    }
+
+    /* 🖨️ STRICT PRINT STYLES - HIDES EVERYTHING EXCEPT THE RECEIPTS */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm 15mm;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      /* Hide all website headers, inputs, navigation, and SEO articles */
+      header, footer, .back-link, .hero-title, .hero-sub, .mobile-tab-bar, 
+      .input-panel, .action-bar, .editorial-content {
+        display: none !important;
+      }
+      .container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .app-layout {
+        display: block !important;
+      }
+      .preview-panel {
+        display: block !important;
+      }
+      .receipts-stream {
+        max-height: none !important;
+        overflow: visible !important;
+        gap: 0 !important;
+      }
+      .receipt-card {
+        border: 1px solid #333333 !important;
+        box-shadow: none !important;
+        margin-bottom: 24px !important;
+        padding: 22px 24px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .stamp-slot {
+        border-color: #333333 !important;
+        color: #333333 !important;
+        background: transparent !important;
+      }
     }
   </style>
 </head>
@@ -492,7 +538,7 @@
       }
     };
 
-    // Direct Print
+    // Direct Clean Print Trigger
     document.getElementById("btnPrintReceipts").onclick = () => {
       window.print();
     };
@@ -513,7 +559,6 @@
 
         const cards = document.querySelectorAll(".receipt-card");
         let yOffset = margin;
-        let isFirstPage = true;
 
         for (let i = 0; i < cards.length; i++) {
           const card = cards[i];
@@ -521,14 +566,13 @@
           const imgData = canvas.toDataURL("image/jpeg", 0.95);
           const slipHeight = (canvas.height * printWidth) / canvas.width;
 
-          // If next slip exceeds A4 page height, create a new page
           if (yOffset + slipHeight > pdfHeight - margin) {
             pdf.addPage();
             yOffset = margin;
           }
 
           pdf.addImage(imgData, "JPEG", margin, yOffset, printWidth, slipHeight);
-          yOffset += slipHeight + 20; // 20pt gap between slips
+          yOffset += slipHeight + 20;
         }
 
         pdf.save(`HRA-Rent-Receipts-${inTenant.value.trim() || "Tenant"}.pdf`);
