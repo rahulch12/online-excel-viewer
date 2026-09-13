@@ -82,7 +82,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* Compact Header matching original design */
+    /* Compact Header */
     header { background-color: var(--header-bg); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; flex-shrink: 0; }
     .brand img { width: 30px; height: 30px; border-radius: 6px; }
@@ -181,7 +181,7 @@
       transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Tab Switcher matching original layout */
+    /* Tab Switcher */
     .mode-tab-bar { display: flex; gap: 6px; margin-bottom: 14px; background: var(--tab-bg); padding: 4px; border-radius: 8px; width: 100%; }
     .mode-tab-btn { flex: 1; padding: 8px 10px; border: none; background: transparent; font-size: 13px; font-weight: 800; color: var(--text-muted); border-radius: 6px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 4px; }
     .mode-tab-btn.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
@@ -219,7 +219,7 @@
     .fpill { font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
     .fpill.active { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
 
-    /* Table Container & Mobile Cards */
+    /* Mobile Cards vs Desktop Tables */
     .mobile-cards-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
     .member-card-item {
       background: var(--card-bg);
@@ -294,6 +294,7 @@
       align-items: center;
       gap: 3px;
     }
+    .row-btn:hover { background: var(--border); color: var(--text); }
     .row-btn-danger { color: #fff !important; background: var(--danger) !important; border-color: var(--danger) !important; font-weight: 800; }
 
     /* Modals */
@@ -533,7 +534,7 @@
       </div>
     </div>
 
-    <!-- 2. EXPENSES VIEW (FIXED) -->
+    <!-- 2. EXPENSES VIEW (FIXED & FULLY FUNCTIONAL) -->
     <div id="viewExpenses" class="app-layout">
       <div>
         <div class="panel">
@@ -543,7 +544,7 @@
           
           <div class="form-group">
             <label>Item Description *</label>
-            <input type="text" id="inExpItem" class="input-field" placeholder="e.g. Mandap Stage, Sound System" />
+            <input type="text" id="inExpItem" class="input-field" placeholder="e.g. Mandap Stage, Sound System" autocomplete="off" />
           </div>
 
           <div class="form-group">
@@ -637,6 +638,7 @@
           <button type="button" class="btn btn-orange" style="flex: 1; font-size: 11.5px;" id="btnCopySyncLink">📋 Copy Link</button>
           <button type="button" class="btn btn-outline" style="flex: 1; font-size: 11.5px;" id="btnShareWhatsApp">💬 WhatsApp</button>
         </div>
+        <div id="copySuccessMsg" style="display: none; font-size: 11px; color: var(--success); font-weight: 700; margin-top: 6px;">✓ Sync Link Copied to Clipboard!</div>
       </div>
     </div>
 
@@ -1155,6 +1157,7 @@
       }
     };
 
+    /* FIXED EXPENSE ADDITION HANDLER */
     document.getElementById("btnAddExpense").onclick = () => {
       const item = inExpItem.value.trim();
       const category = inExpCategory.value;
@@ -1299,7 +1302,6 @@
     });
 
     loadSavedState();
-    switchMode('expenses'); // Opens directly on Expenses tab as requested to verify fix
   </script>
 </body>
 </html>
