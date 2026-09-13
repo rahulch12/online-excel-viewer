@@ -35,7 +35,7 @@
   <!-- SEO Metadata -->
   <title>Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox</title>
   <meta name="title" content="Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox" />
-  <meta name="description" content="Free festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Auto-backup, downloadable receipts, and Excel export." />
+  <meta name="description" content="Mobile-friendly festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Auto-backup, downloadable receipts, dark mode, and Excel export." />
   <meta name="keywords" content="festival chanda tracker, ganesh chanda collection register, navratri donation list, vargani hishob marathi, chanda register hindi, falo hisab gujarati, donation receipt maker, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
 
@@ -51,6 +51,25 @@
       --primary: #2563eb;
       --success: #16a34a;
       --danger: #dc2626;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --tab-bg: #e2e8f0;
+    }
+
+    body.dark-mode {
+      --header-bg: #090d16;
+      --bg: #0b0f19;
+      --card-bg: #131b2e;
+      --border: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #f97316;
+      --primary: #38bdf8;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --input-bg: #0b1120;
+      --input-border: #334155;
+      --tab-bg: #1e293b;
     }
 
     html, body {
@@ -61,51 +80,70 @@
       -webkit-text-size-adjust: 100%;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    header { background-color: var(--header-bg); color: #fff; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; }
-    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
-    .brand img { width: 32px; height: 32px; border-radius: 8px; }
-    .header-btns { display: flex; gap: 8px; align-items: center; }
+    /* Compact Header */
+    header { background-color: var(--header-bg); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; flex-shrink: 0; }
+    .brand img { width: 30px; height: 30px; border-radius: 6px; }
+    .brand-title { font-weight: 800; font-size: 15px; }
+    .brand-sub { font-size: 10px; color: #94a3b8; display: block; line-height: 1; }
+    
+    .header-btns { display: flex; gap: 6px; align-items: center; }
     
     .lang-select {
       background: rgba(255, 255, 255, 0.12);
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 6px 10px;
-      border-radius: 18px;
-      font-size: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 5px 8px;
+      border-radius: 16px;
+      font-size: 11.5px;
       font-weight: 700;
       outline: none;
       cursor: pointer;
-      transition: background 0.15s ease;
     }
     .lang-select option { background: #0f172a; color: #fff; }
+
+    .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 13px;
+      padding: 5px 8px;
+      border-radius: 16px;
+      cursor: pointer;
+      line-height: 1;
+    }
 
     .sync-btn { 
       background: rgba(255,255,255,0.12); 
       color: #fff; 
       border: 1px solid rgba(255,255,255,0.25); 
       font-weight: 700; 
-      font-size: 12px; 
-      padding: 6px 12px; 
-      border-radius: 20px; 
+      font-size: 11.5px; 
+      padding: 5px 10px; 
+      border-radius: 16px; 
       cursor: pointer; 
       display: inline-flex; 
       align-items: center; 
-      gap: 5px; 
-      transition: transform 0.15s ease, background 0.15s ease;
+      gap: 4px;
+      white-space: nowrap;
     }
-    .sync-btn:hover { background: rgba(255,255,255,0.22); }
-    .sync-btn:active { transform: scale(0.95); }
 
-    .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 20px; text-decoration: none; transition: transform 0.15s ease; }
-    .bmc-btn:hover { transform: scale(1.05); }
-    .bmc-btn:active { transform: scale(0.95); }
+    .bmc-btn { 
+      background: #ffdd00; 
+      color: #000; 
+      font-weight: 700; 
+      font-size: 11.5px; 
+      padding: 5px 10px; 
+      border-radius: 16px; 
+      text-decoration: none; 
+      white-space: nowrap;
+    }
 
-    .container { max-width: 1180px; width: 100%; margin: 14px auto; padding: 0 14px; flex: 1; }
-    .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 10px; }
+    .container { max-width: 1180px; width: 100%; margin: 12px auto; padding: 0 12px; flex: 1; }
+    .back-link { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 8px; }
 
     /* Undo/Restore Toast Banner */
     .restore-banner {
@@ -113,48 +151,58 @@
       background: #eff6ff;
       border: 1.5px solid #bfdbfe;
       color: #1e40af;
-      padding: 10px 14px;
+      padding: 8px 12px;
       border-radius: 8px;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 600;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      gap: 8px;
+    }
+    body.dark-mode .restore-banner {
+      background: #1e293b;
+      border-color: #3b82f6;
+      color: #60a5fa;
     }
     .restore-banner button {
       background: #2563eb;
       color: #fff;
       border: none;
-      padding: 6px 14px;
+      padding: 5px 10px;
       border-radius: 6px;
       font-weight: 800;
-      font-size: 12px;
+      font-size: 11.5px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
-    .hero-title { font-size: 24px; font-weight: 900; margin-bottom: 2px; }
-    .hero-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .hero-title { font-size: 20px; font-weight: 900; margin-bottom: 2px; }
+    .hero-sub { font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px; }
 
-    /* Summary Metrics with Hover Pop */
-    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; width: 100%; }
+    /* 2x2 Clean Responsive Metric Grid */
+    .metric-grid { 
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 10px; 
+      margin-bottom: 12px; 
+      width: 100%; 
+    }
     .metric-card { 
       background: var(--card-bg); 
       border: 1.5px solid var(--border); 
-      border-radius: 12px; 
-      padding: 14px 16px; 
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+      border-radius: 10px; 
+      padding: 10px 12px; 
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
     }
-    .metric-card:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.06); }
-    .metric-label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
-    .metric-val { font-size: 22px; font-weight: 900; color: var(--text); }
-    .metric-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+    .metric-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; letter-spacing: 0.2px; }
+    .metric-val { font-size: 18px; font-weight: 900; color: var(--text); line-height: 1.2; }
+    .metric-sub { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* Shimmering Progress Bar */
-    .progress-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; }
-    .progress-top { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
-    .progress-bg { height: 10px; width: 100%; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+    /* Progress Bar */
+    .progress-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
+    .progress-top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; margin-bottom: 6px; color: var(--text); }
+    .progress-bg { height: 8px; width: 100%; background: var(--border); border-radius: 4px; overflow: hidden; }
     
     .progress-bar { 
       height: 100%; 
@@ -177,48 +225,43 @@
     }
 
     /* Tab Switcher */
-    .mode-tab-bar { display: flex; gap: 6px; margin-bottom: 16px; background: #e2e8f0; padding: 4px; border-radius: 10px; width: 100%; }
-    .mode-tab-btn { flex: 1; padding: 10px 12px; border: none; background: transparent; font-size: 13.5px; font-weight: 800; color: #475569; border-radius: 7px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.15s, color 0.15s, transform 0.1s; }
-    .mode-tab-btn:active { transform: scale(0.98); }
-    .mode-tab-btn.active { background: #fff; color: var(--text); box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+    .mode-tab-bar { display: flex; gap: 6px; margin-bottom: 14px; background: var(--tab-bg); padding: 4px; border-radius: 8px; width: 100%; }
+    .mode-tab-btn { flex: 1; padding: 8px 10px; border: none; background: transparent; font-size: 13px; font-weight: 800; color: var(--text-muted); border-radius: 6px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .mode-tab-btn.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
 
-    .app-layout { display: grid; grid-template-columns: 360px 1fr; gap: 18px; align-items: start; width: 100%; }
+    .app-layout { display: grid; grid-template-columns: 340px 1fr; gap: 16px; align-items: start; width: 100%; }
 
-    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; width: 100%; }
-    .panel-title { font-size: 13.5px; font-weight: 800; margin-bottom: 12px; color: #0f172a; display: flex; justify-content: space-between; align-items: center; }
+    .panel { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px; width: 100%; }
+    .panel-title { font-size: 13.5px; font-weight: 800; margin-bottom: 10px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
     
-    .form-group { margin-bottom: 12px; }
+    .form-group { margin-bottom: 10px; }
     .form-group label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
-    .input-field { width: 100%; padding: 10px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13.5px; outline: none; background: #fff; transition: border-color 0.15s, box-shadow 0.15s; }
-    .input-field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12); }
+    .input-field { width: 100%; padding: 10px 12px; border: 1.5px solid var(--input-border); border-radius: 8px; font-size: 16px !important; outline: none; background: var(--input-bg); color: var(--text); }
+    .input-field:focus { border-color: var(--accent); }
 
     .quick-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-    .chip-btn { background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 16px; cursor: pointer; color: #334155; transition: transform 0.1s ease, background 0.15s ease; }
-    .chip-btn:hover { background: #e2e8f0; color: #0f172a; }
-    .chip-btn:active { transform: scale(0.92); }
+    .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 14px; cursor: pointer; color: var(--text); }
+    .chip-btn:active { transform: scale(0.94); }
 
-    /* Button Micro-tap Physics */
-    .btn { padding: 9px 14px; font-size: 12.5px; font-weight: 800; border-radius: 8px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; transition: transform 0.1s ease, filter 0.15s ease; }
-    .btn:hover { filter: brightness(1.06); }
+    .btn { padding: 9px 12px; font-size: 12.5px; font-weight: 800; border-radius: 7px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 5px; justify-content: center; }
     .btn:active { transform: scale(0.96); }
     .btn-orange { background: var(--accent); color: #fff; }
-    .btn-outline { background: #fff; border-color: #cbd5e1; color: #334155; }
+    .btn-outline { background: var(--card-bg); border-color: var(--border); color: var(--text); }
     .btn-green { background: var(--success); color: #fff; }
     .btn-red { background: var(--danger); color: #fff; }
 
     /* Table Toolbar */
-    .table-toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
-    .search-input-wrap { flex: 1; min-width: 180px; position: relative; }
-    .search-input-wrap input { width: 100%; padding: 8px 10px 8px 30px; border: 1.5px solid #cbd5e1; border-radius: 7px; font-size: 12px; outline: none; }
+    .table-toolbar { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+    .search-input-wrap { flex: 1; min-width: 140px; position: relative; }
+    .search-input-wrap input { width: 100%; padding: 8px 10px 8px 28px; border: 1.5px solid var(--input-border); border-radius: 7px; font-size: 13px !important; outline: none; background: var(--input-bg); color: var(--text); }
     .search-input-wrap input:focus { border-color: var(--primary); }
-    .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.5; }
+    .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.5; }
 
     .filter-pills { display: flex; gap: 4px; }
-    .fpill { font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; color: #475569; transition: transform 0.1s ease; }
-    .fpill:active { transform: scale(0.94); }
-    .fpill.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+    .fpill { font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
+    .fpill.active { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
 
-    /* Table */
+    /* Table Container */
     .table-container { 
       width: 100%; 
       overflow-x: auto; 
@@ -228,198 +271,121 @@
       border-radius: 8px; 
       display: block; 
     }
-    table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-    table.data-table th { position: sticky; top: 0; background: #0f172a; color: #fff; padding: 9px 10px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; }
-    table.data-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); color: #334155; white-space: nowrap; }
-    table.data-table tr:nth-child(even) { background: #f8fafc; }
-    table.data-table tr:hover { background: #f1f5f9; }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 8px 9px; text-align: left; font-weight: 800; font-size: 11px; z-index: 10; }
+    table.data-table td { padding: 8px 9px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; }
+    table.data-table tr:nth-child(even) { background: rgba(0,0,0,0.015); }
 
-    @keyframes rowSlideIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .data-table tbody tr:first-child {
-      animation: rowSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    
-    .status-badge { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; transition: transform 0.1s ease; }
-    .status-badge:active { transform: scale(0.92); }
+    .status-badge { font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; user-select: none; }
     .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
 
-    /* Action Buttons in Rows */
     .row-btn {
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
+      background: var(--tab-bg);
+      border: 1px solid var(--border);
       font-size: 11px;
       font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 3px 6px;
+      border-radius: 5px;
       cursor: pointer;
-      color: #334155;
+      color: var(--text);
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      margin-right: 4px;
-      transition: background 0.12s, transform 0.1s;
+      gap: 2px;
+      margin-right: 2px;
     }
-    .row-btn:hover { background: #e2e8f0; color: #0f172a; }
-    .row-btn:active { transform: scale(0.94); }
-    .row-btn-danger { color: #dc2626; border-color: #fca5a5; }
-    .row-btn-danger:hover { background: #fee2e2; }
+    .row-btn-danger { color: var(--danger); }
 
     /* Modals */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(15, 23, 42, 0.7);
       z-index: 100;
       align-items: center;
       justify-content: center;
-      padding: 16px;
-    }
-    @keyframes modalPopUp {
-      from { opacity: 0; transform: scale(0.92); }
-      to { opacity: 1; transform: scale(1); }
+      padding: 14px;
     }
     .modal-box {
-      background: #fff;
-      border-radius: 16px;
-      max-width: 440px;
+      background: var(--card-bg);
+      color: var(--text);
+      border-radius: 14px;
+      max-width: 420px;
       width: 100%;
-      padding: 22px 20px;
+      padding: 18px 14px;
       text-align: center;
       position: relative;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-      animation: modalPopUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
     }
     .modal-close-btn {
       position: absolute;
-      top: 14px;
-      right: 14px;
+      top: 12px;
+      right: 12px;
       background: none;
       border: none;
       font-size: 20px;
       font-weight: 700;
-      color: #94a3b8;
+      color: var(--text-muted);
       cursor: pointer;
     }
     .qr-slot {
-      margin: 14px auto;
+      margin: 12px auto;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 190px;
-      padding: 10px;
-      background: #f8fafc;
+      min-height: 180px;
+      padding: 8px;
+      background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 8px;
       width: fit-content;
     }
 
-    /* Receipt Slip Styling */
+    /* Dedicated Receipt Slip Card */
     .receipt-slip-card {
-      background: #ffffff;
+      background: #ffffff !important;
+      color: #0f172a !important;
       border: 2px solid #0f172a;
       border-radius: 10px;
-      padding: 20px 18px;
+      padding: 16px 14px;
       text-align: left;
-      margin: 12px auto;
+      margin: 10px auto;
       position: relative;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      max-width: 380px;
+      max-width: 360px;
       width: 100%;
       box-sizing: border-box;
     }
-    .rcpt-header {
-      text-align: center;
-      border-bottom: 2px dashed #cbd5e1;
-      padding-bottom: 10px;
-      margin-bottom: 12px;
-    }
-    .rcpt-event-name {
-      font-size: 16px;
-      font-weight: 900;
-      color: #0f172a;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .rcpt-tag {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 800;
-      background: #ffedd5;
-      color: #c2410c;
-      padding: 2px 8px;
-      border-radius: 12px;
-      margin-top: 4px;
-    }
-    .rcpt-meta-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: #64748b;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    .rcpt-field {
-      margin-bottom: 8px;
-      font-size: 12.5px;
-      color: #334155;
-    }
-    .rcpt-field strong {
-      color: #0f172a;
-    }
-    .rcpt-amount-box {
-      background: #f0fdf4;
-      border: 1.5px solid #86efac;
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin: 12px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .rcpt-amount-val {
-      font-size: 20px;
-      font-weight: 900;
-      color: #15803d;
-    }
-    .rcpt-footer-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-top: 14px;
-      padding-top: 10px;
-      border-top: 1px dashed #cbd5e1;
-      font-size: 10.5px;
-      color: #64748b;
-    }
-    .rcpt-signature-line {
-      text-align: right;
-    }
-    .rcpt-sig-dash {
-      display: inline-block;
-      width: 100px;
-      border-bottom: 1px solid #0f172a;
-      margin-bottom: 3px;
-    }
+    .rcpt-header { text-align: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 8px; margin-bottom: 10px; }
+    .rcpt-event-name { font-size: 15px; font-weight: 900; color: #0f172a; text-transform: uppercase; }
+    .rcpt-tag { font-size: 9.5px; font-weight: 800; background: #ffedd5; color: #c2410c; padding: 2px 7px; border-radius: 10px; display: inline-block; margin-top: 3px; }
+    .rcpt-meta-row { display: flex; justify-content: space-between; font-size: 10.5px; color: #64748b; font-weight: 600; margin-bottom: 10px; }
+    .rcpt-field { margin-bottom: 6px; font-size: 12px; color: #334155; }
+    .rcpt-amount-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 7px; padding: 8px 10px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+    .rcpt-amount-val { font-size: 18px; font-weight: 900; color: #15803d; }
+    .rcpt-footer-row { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 12px; padding-top: 8px; border-top: 1px dashed #cbd5e1; font-size: 9.5px; color: #64748b; }
+    .rcpt-sig-dash { display: inline-block; width: 80px; border-bottom: 1px solid #0f172a; margin-bottom: 2px; }
 
-    footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 36px; width: 100%; }
-    footer a { color: var(--text-muted); text-decoration: none; margin: 0 6px; }
+    footer { padding: 20px 14px; text-align: center; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); margin-top: 30px; width: 100%; }
+    footer a { color: var(--text-muted); text-decoration: none; margin: 0 4px; }
     footer a:hover { color: var(--primary); }
 
-    @media (max-width: 880px) {
-      .app-layout { grid-template-columns: 1fr; }
-      .container { padding: 0 10px; }
-      input, select, textarea { font-size: 16px !important; }
-      .metric-grid { grid-template-columns: 1fr 1fr; }
-    }
+    /* MOBILE PERFECTION (MAX 768px) */
+    @media (max-width: 768px) {
+      .app-layout { grid-template-columns: 1fr; gap: 14px; }
+      .container { padding: 0 8px; }
+      
+      /* Pack summary cards tightly in 2x2 grid */
+      .metric-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .metric-card { padding: 8px 10px; }
+      .metric-val { font-size: 16.5px; }
 
-    @media (max-width: 480px) {
-      .metric-grid { grid-template-columns: 1fr; }
-      .table-toolbar { flex-direction: column; align-items: stretch; }
+      /* Prevent header squeeze */
+      .brand-sub { display: none; }
+      .header-btns { gap: 4px; }
+      .sync-btn span, .bmc-btn span { display: none; }
+      
+      .table-toolbar { flex-direction: column; align-items: stretch; gap: 6px; }
       .filter-pills { width: 100%; justify-content: space-between; }
       .fpill { flex: 1; text-align: center; }
     }
@@ -428,9 +394,9 @@
       body * { visibility: hidden !important; }
       #receiptModal, #receiptModal * { visibility: visible !important; }
       #receiptModal { display: block !important; position: absolute !important; inset: 0 !important; background: #fff !important; }
-      .modal-box { box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .modal-box { box-shadow: none !important; border: none !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
       .modal-close-btn, #rcptActionButtons { display: none !important; }
-      .receipt-slip-card { border: 2px solid #000 !important; box-shadow: none !important; margin: 20px auto !important; width: 90% !important; max-width: 450px !important; }
+      .receipt-slip-card { border: 2px solid #000 !important; margin: 20px auto !important; width: 90% !important; }
     }
   </style>
 </head>
@@ -440,20 +406,31 @@
     <a href="/" class="brand">
       <img src="/logo.png" alt="SheetBox Logo" />
       <div>
-        <span style="font-weight: 800; font-size: 16px;">SheetBox</span>
-        <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
+        <span class="brand-title">SheetBox</span>
+        <span class="brand-sub">by Rahul Chauhan</span>
       </div>
     </a>
     <div class="header-btns">
+      <!-- Language Selector -->
       <select class="lang-select" id="langSelector" onchange="changeLanguage(this.value)">
-        <option value="en">English</option>
-        <option value="hi">हिंदी (Hindi)</option>
-        <option value="mr">मराठी (Marathi)</option>
-        <option value="gu">ગુજરાતી (Gujarati)</option>
+        <option value="en">EN</option>
+        <option value="hi">हिंदी</option>
+        <option value="mr">मराठी</option>
+        <option value="gu">ગુજરાતી</option>
       </select>
 
-      <button type="button" class="sync-btn" id="btnOpenSync" data-i18n="syncBtn">📲 Sync Device</button>
-      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn">☕ Support</a>
+      <!-- Dark Mode Button -->
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark">🌙</button>
+
+      <!-- Sync Button -->
+      <button type="button" class="sync-btn" id="btnOpenSync" title="Sync Devices">
+        📲 <span>Sync</span>
+      </button>
+
+      <!-- Support Button -->
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn" title="Support SheetBox">
+        ☕ <span>Support</span>
+      </a>
     </div>
   </header>
 
@@ -462,31 +439,31 @@
 
     <!-- Recovery / Undo Toast Banner -->
     <div class="restore-banner" id="restoreBanner">
-      <span id="restoreBannerText">ℹ️ Loaded sample data. You can restore your previous real records at any time.</span>
+      <span id="restoreBannerText">ℹ️ Loaded sample data.</span>
       <button type="button" onclick="restorePreviousBackup()">↩️ Undo & Restore My Data</button>
     </div>
 
     <h1 class="hero-title" data-i18n="heroTitle">Festival Chanda & Event Expense Tracker</h1>
     <p class="hero-sub" data-i18n="heroSub">Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.</p>
 
-    <!-- Top Key Metrics Strip -->
+    <!-- Top Key Metrics Strip (Responsive 2x2 on Mobile, 4x1 on Desktop) -->
     <div class="metric-grid">
       <div class="metric-card">
         <div class="metric-label" data-i18n="lblTarget">Target Budget</div>
         <div class="metric-val" id="metricTarget">₹0</div>
         <div class="metric-sub" id="metricPurpose">Event / Society Fund</div>
       </div>
-      <div class="metric-card" style="border-left: 4px solid var(--success);">
+      <div class="metric-card" style="border-left: 3.5px solid var(--success);">
         <div class="metric-label" data-i18n="lblCollected">Total Collected</div>
         <div class="metric-val" id="metricCollected" style="color: var(--success);">₹0</div>
         <div class="metric-sub" id="metricPaidCount">0 paid members</div>
       </div>
-      <div class="metric-card" style="border-left: 4px solid var(--danger);">
+      <div class="metric-card" style="border-left: 3.5px solid var(--danger);">
         <div class="metric-label" data-i18n="lblSpent">Total Spent</div>
         <div class="metric-val" id="metricSpent" style="color: var(--danger);">₹0</div>
         <div class="metric-sub" id="metricExpenseCount">0 bills logged</div>
       </div>
-      <div class="metric-card" id="metricBalanceCard" style="border-left: 4px solid var(--primary);">
+      <div class="metric-card" id="metricBalanceCard" style="border-left: 3.5px solid var(--primary);">
         <div class="metric-label" data-i18n="lblBalance">Net Balance in Hand</div>
         <div class="metric-val" id="metricNetBalance">₹0</div>
         <div class="metric-sub" id="metricNetSub">Surplus / Deficit</div>
@@ -507,10 +484,10 @@
     <!-- Mode Selector Tabs -->
     <div class="mode-tab-bar">
       <button class="mode-tab-btn active" id="tabDonors" onclick="switchMode('donors')">
-        <span data-i18n="tabCollections">👥 1. Collections Register</span>
+        <span data-i18n="tabCollections">👥 1. Collections</span>
       </button>
       <button class="mode-tab-btn" id="tabExpenses" onclick="switchMode('expenses')">
-        <span data-i18n="tabExpenses">💸 2. Event Expenses</span>
+        <span data-i18n="tabExpenses">💸 2. Expenses</span>
       </button>
     </div>
 
@@ -574,9 +551,9 @@
             <label data-i18n="lblTotalFlats">Total Families / Flats in Society</label>
             <input type="number" id="inTotalFlats" class="input-field" placeholder="50" min="1" />
           </div>
-          <div style="background: #f1f5f9; padding: 10px; border-radius: 7px; font-size: 12px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #475569; font-weight: 600;" data-i18n="lblEqualShare">Equal Member Share:</span>
-            <strong id="outEqualShare" style="color: var(--accent); font-size: 15px;">₹0</strong>
+          <div style="background: var(--tab-bg); padding: 8px 10px; border-radius: 7px; font-size: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: var(--text-muted); font-weight: 600;" data-i18n="lblEqualShare">Equal Member Share:</span>
+            <strong id="outEqualShare" style="color: var(--accent); font-size: 14px;">₹0</strong>
           </div>
         </div>
       </div>
@@ -586,18 +563,18 @@
         <div class="table-toolbar">
           <div class="search-input-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="searchDonor" placeholder="Search by name or flat..." oninput="filterDonorsTable()" />
+            <input type="text" id="searchDonor" placeholder="Search member or flat..." oninput="filterDonorsTable()" />
           </div>
           <div class="filter-pills">
             <button type="button" class="fpill active" onclick="setDonorFilter('all', this)"><span data-i18n="fAll">All</span> (<span id="countAll">0</span>)</button>
             <button type="button" class="fpill" onclick="setDonorFilter('Paid', this)"><span data-i18n="fPaid">Paid</span> (<span id="countPaid">0</span>)</button>
             <button type="button" class="fpill" onclick="setDonorFilter('Pending', this)"><span data-i18n="fPending">Pending</span> (<span id="countPending">0</span>)</button>
           </div>
-          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-            <button type="button" class="btn btn-orange" style="padding: 6px 10px; font-size: 11.5px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
-            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px; border-color: #93c5fd; color: #1d4ed8; background: #eff6ff;" id="btnUndoRestore" onclick="restorePreviousBackup()">↩️ Restore Backup</button>
-            <button type="button" class="btn btn-green" style="padding: 6px 10px; font-size: 11.5px;" id="btnExportExcel">📊 Excel</button>
-            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; width: 100%; justify-content: flex-end; margin-top: 4px;">
+            <button type="button" class="btn btn-orange" style="padding: 5px 8px; font-size: 11px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
+            <button type="button" class="btn btn-outline" style="padding: 5px 8px; font-size: 11px; border-color: #93c5fd; color: #1d4ed8; background: #eff6ff;" id="btnUndoRestore" onclick="restorePreviousBackup()">↩️ Restore</button>
+            <button type="button" class="btn btn-green" style="padding: 5px 8px; font-size: 11px;" id="btnExportExcel">📊 Excel</button>
+            <button type="button" class="btn btn-outline" style="padding: 5px 8px; font-size: 11px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
           </div>
         </div>
 
@@ -605,18 +582,18 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 36px;">#</th>
+                <th style="width: 32px;">#</th>
                 <th data-i18n="thContributor">Contributor</th>
-                <th data-i18n="thFlat">Flat / Unit</th>
+                <th data-i18n="thFlat">Flat</th>
                 <th data-i18n="thAmount">Amount (₹)</th>
                 <th data-i18n="thStatus">Status</th>
-                <th style="width: 170px; text-align: center;" data-i18n="thAction">Actions</th>
+                <th style="width: 140px; text-align: center;" data-i18n="thAction">Actions</th>
               </tr>
             </thead>
             <tbody id="donorsTableBody"></tbody>
           </table>
         </div>
-        <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+        <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: var(--text-muted); margin-top: 8px;">
           <span data-i18n="tipStatusToggle">💡 Tap status pill to switch between Paid and Pending.</span>
         </div>
       </div>
@@ -677,9 +654,9 @@
       <div class="panel">
         <div class="table-toolbar">
           <strong style="font-size: 13.5px;"><span data-i18n="headerExpenseLedger">Expense Ledger</span> (<span id="outExpenseCount">0</span>)</strong>
-          <div style="display: flex; gap: 6px;">
-            <button type="button" class="btn btn-green" style="padding: 6px 10px; font-size: 11.5px;" id="btnExportExcelExp">📊 Excel</button>
-            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
+          <div style="display: flex; gap: 4px;">
+            <button type="button" class="btn btn-green" style="padding: 5px 8px; font-size: 11px;" id="btnExportExcelExp">📊 Excel</button>
+            <button type="button" class="btn btn-outline" style="padding: 5px 8px; font-size: 11px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
           </div>
         </div>
 
@@ -687,21 +664,21 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 36px;">#</th>
-                <th data-i18n="thExpItem">Expense Item</th>
+                <th style="width: 32px;">#</th>
+                <th data-i18n="thExpItem">Item</th>
                 <th data-i18n="thExpCategory">Category</th>
-                <th data-i18n="thExpVendor">Vendor / Mode</th>
+                <th data-i18n="thExpVendor">Vendor</th>
                 <th data-i18n="thExpDate">Date</th>
                 <th data-i18n="thExpAmount">Amount (₹)</th>
-                <th style="width: 60px; text-align: center;">Action</th>
+                <th style="width: 50px; text-align: center;">Action</th>
               </tr>
             </thead>
             <tbody id="expensesTableBody"></tbody>
           </table>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; margin-top: 14px;">
-          <button type="button" class="btn btn-outline" style="font-size: 11px; color: var(--danger); border-color: #fecaca;" onclick="clearAllData()">
+        <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+          <button type="button" class="btn btn-outline" style="font-size: 10.5px; color: var(--danger); border-color: #fca5a5;" onclick="clearAllData()">
             <span data-i18n="btnResetAll">⚠️ Reset All Ledger Data</span>
           </button>
         </div>
@@ -712,24 +689,24 @@
     <div class="modal-backdrop" id="syncModal">
       <div class="modal-box">
         <button type="button" class="modal-close-btn" onclick="closeSyncModal()">&times;</button>
-        <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 4px; color: #0f172a;" data-i18n="syncModalTitle">Sync Across Devices</h3>
-        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;" data-i18n="syncModalSub">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;" data-i18n="syncModalTitle">Sync Across Devices</h3>
+        <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;" data-i18n="syncModalSub">
           Scan with your phone/device camera or share the direct link to open this exact ledger on another computer.
         </p>
         
         <div class="qr-slot" id="qrContainer"></div>
 
-        <div style="display: flex; gap: 8px; margin-top: 10px;">
-          <button type="button" class="btn btn-orange" style="flex: 1;" id="btnCopySyncLink" data-i18n="btnCopyLink">📋 Copy Link</button>
-          <button type="button" class="btn btn-outline" style="flex: 1;" id="btnShareWhatsApp">💬 WhatsApp</button>
+        <div style="display: flex; gap: 6px; margin-top: 8px;">
+          <button type="button" class="btn btn-orange" style="flex: 1; font-size: 11.5px;" id="btnCopySyncLink" data-i18n="btnCopyLink">📋 Copy Link</button>
+          <button type="button" class="btn btn-outline" style="flex: 1; font-size: 11.5px;" id="btnShareWhatsApp">💬 WhatsApp</button>
         </div>
-        <div id="copySuccessMsg" style="display: none; font-size: 11.5px; color: var(--success); font-weight: 700; margin-top: 8px;" data-i18n="msgCopied">✓ Sync Link Copied to Clipboard!</div>
+        <div id="copySuccessMsg" style="display: none; font-size: 11px; color: var(--success); font-weight: 700; margin-top: 6px;" data-i18n="msgCopied">✓ Sync Link Copied to Clipboard!</div>
       </div>
     </div>
 
     <!-- DEDICATED OFFICIAL RECEIPT MODAL -->
     <div class="modal-backdrop" id="receiptModal">
-      <div class="modal-box" style="max-width: 420px; padding: 20px 16px;">
+      <div class="modal-box" style="max-width: 390px; padding: 16px 12px;">
         <button type="button" class="modal-close-btn" onclick="closeReceiptModal()">&times;</button>
         
         <!-- Graphic Printable Receipt Slip -->
@@ -746,7 +723,7 @@
 
           <div class="rcpt-field">
             <span id="rcptReceivedFromLabel">Received with thanks from:</span><br>
-            <strong id="rcptDonorName" style="font-size: 14.5px; color: #0f172a;">Ramesh Kulkarni</strong>
+            <strong id="rcptDonorName" style="font-size: 14px; color: #0f172a;">Ramesh Kulkarni</strong>
           </div>
 
           <div class="rcpt-field">
@@ -756,14 +733,14 @@
 
           <div class="rcpt-amount-box">
             <div>
-              <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #166534;" id="rcptSumLabel">Amount Received</div>
+              <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; color: #166534;" id="rcptSumLabel">Amount Received</div>
               <div class="rcpt-amount-val" id="rcptAmountVal">₹1,000</div>
             </div>
-            <div id="rcptStatusPill" style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">✓ Paid</div>
+            <div id="rcptStatusPill" style="font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 12px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">✓ Paid</div>
           </div>
 
           <div class="rcpt-footer-row">
-            <div style="font-size: 9.5px; color: #94a3b8;">
+            <div style="font-size: 9px; color: #94a3b8;">
               SheetBox.in Digital Slip<br>Verified & Signed
             </div>
             <div class="rcpt-signature-line">
@@ -774,14 +751,14 @@
         </div>
 
         <!-- Action Controls -->
-        <div id="rcptActionButtons" style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
-          <button type="button" class="btn btn-green" style="flex: 1; min-width: 120px;" id="btnDownloadSlipImg">
+        <div id="rcptActionButtons" style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-green" style="flex: 1; min-width: 110px; font-size: 11.5px;" id="btnDownloadSlipImg">
             🖼️ Download Slip
           </button>
-          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 80px;" onclick="window.print()">
+          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 70px; font-size: 11.5px;" onclick="window.print()">
             🖨️ Print
           </button>
-          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 100px;" id="btnSendWhatsAppFromModal">
+          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 90px; font-size: 11.5px;" id="btnSendWhatsAppFromModal">
             💬 WhatsApp
           </button>
         </div>
@@ -791,13 +768,13 @@
   </main>
 
   <footer>
-    <div style="margin-bottom: 8px;">
+    <div style="margin-bottom: 6px;">
       <a href="/about.html">About Us</a> • 
       <a href="/contact.html">Contact</a> • 
       <a href="/privacy-policy.html">Privacy Policy</a> • 
       <a href="/terms.html">Terms of Service</a>
     </div>
-    <div style="font-size: 11.5px; color: var(--text-muted);">
+    <div style="font-size: 11px; color: var(--text-muted);">
       SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
     </div>
   </footer>
@@ -806,9 +783,25 @@
     const STORAGE_KEY = "sheetbox_chanda_ledger_v2";
     const BACKUP_KEY = "sheetbox_chanda_backup";
 
+    // Theme Switcher Logic Synchronized with index.html
+    const themeBtn = document.getElementById("themeToggleBtn");
+    const currentTheme = localStorage.getItem("sheetbox_theme") || "light";
+
+    if (currentTheme === "dark") {
+      document.body.classList.add("dark-mode");
+      themeBtn.textContent = "☀️";
+    }
+
+    themeBtn.onclick = () => {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      themeBtn.textContent = isDark ? "☀️" : "🌙";
+      localStorage.setItem("sheetbox_theme", isDark ? "dark" : "light");
+    };
+
     const translations = {
       en: {
-        syncBtn: "📲 Sync Device",
+        syncBtn: "📲 Sync",
         backLink: "← Back to SheetBox Tools",
         heroTitle: "Festival Chanda & Event Expense Tracker",
         heroSub: "Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.",
@@ -817,8 +810,8 @@
         lblSpent: "Total Spent",
         lblBalance: "Net Balance in Hand",
         lblTargetAchieved: "Collection Target Achieved",
-        tabCollections: "👥 1. Collections Register",
-        tabExpenses: "💸 2. Event Expenses",
+        tabCollections: "👥 1. Collections",
+        tabExpenses: "💸 2. Expenses",
         addContributorHeader: "1. Quick Add Member",
         sampleBtn: "⚡ Sample",
         lblMemberName: "Member / Contributor Name *",
@@ -838,7 +831,7 @@
         fPending: "Pending",
         btnPrint: "🖨️ Print",
         thContributor: "Contributor",
-        thFlat: "Flat / Unit",
+        thFlat: "Flat",
         thAmount: "Amount (₹)",
         thStatus: "Status",
         thAction: "Actions",
@@ -859,9 +852,9 @@
         lblExpMode: "Payment Mode",
         btnRecordExpense: "+ Record Expense",
         headerExpenseLedger: "Expense Ledger",
-        thExpItem: "Expense Item",
+        thExpItem: "Item",
         thExpCategory: "Category",
-        thExpVendor: "Vendor / Mode",
+        thExpVendor: "Vendor",
         thExpDate: "Date",
         thExpAmount: "Amount (₹)",
         btnResetAll: "⚠️ Reset All Ledger Data",
@@ -878,7 +871,7 @@
         receiptThanks: "Thank you for your generous support! ✨"
       },
       hi: {
-        syncBtn: "📲 सिंक करें",
+        syncBtn: "📲 सिंक",
         backLink: "← सभी टूल्स पर वापस जाएं",
         heroTitle: "उत्सव चंदा एवं व्यय रजिस्टर",
         heroSub: "सहयोग राशि एकत्र करें, खर्च दर्ज करें और शेष बची राशि का तुरंत हिसाब रखें।",
@@ -887,8 +880,8 @@
         lblSpent: "कुल खर्च",
         lblBalance: "शेष बची राशि",
         lblTargetAchieved: "बजट लक्ष्य प्रगति",
-        tabCollections: "👥 1. चंदा संग्रह रजिस्टर",
-        tabExpenses: "💸 2. आयोजन खर्च रजिस्टर",
+        tabCollections: "👥 1. चंदा संग्रह",
+        tabExpenses: "💸 2. आयोजन खर्च",
         addContributorHeader: "1. नया सदस्य जोड़ें",
         sampleBtn: "⚡ नमूना",
         lblMemberName: "सदस्य / दानदाता का नाम *",
@@ -898,7 +891,7 @@
         optPaid: "✓ प्राप्त हुआ (Paid)",
         optPending: "⏳ बाकी (Pending)",
         btnSaveMember: "+ सदस्य सुरक्षित करें",
-        headerBudgetSettings: "⚙️ बजट एवं विभाजन सेटिंग्स",
+        headerBudgetSettings: "⚙️ बजट सेटिंग्स",
         lblEventName: "मंडल / आयोजन का नाम",
         lblTargetGoal: "कुल बजट लक्ष्य (₹)",
         lblTotalFlats: "सोसायटी में कुल फ्लैट / परिवार",
@@ -907,48 +900,48 @@
         fPaid: "प्राप्त",
         fPending: "बाकी",
         btnPrint: "🖨️ प्रिंट",
-        thContributor: "सदस्य का नाम",
-        thFlat: "फ्लैट/यूनिट",
+        thContributor: "सदस्य",
+        thFlat: "फ्लैट",
         thAmount: "राशि (₹)",
         thStatus: "स्थिति",
         thAction: "कार्रवाई",
         tipStatusToggle: "💡 स्थिति बदलने के लिए 'प्राप्त' या 'बाकी' पर टैप करें।",
-        headerAddExpense: "खर्च / बिल दर्ज करें",
+        headerAddExpense: "खर्च दर्ज करें",
         lblExpItem: "खर्च का विवरण *",
         lblExpCategory: "खर्च श्रेणी",
         catPandal: "मंडप एवं सजावट",
         catMurti: "मूर्ति / प्रतिमा",
         catSound: "ध्वनि एवं प्रकाश (साउंड)",
-        catPuja: "पूजा सामग्री व पंडित दक्षिणा",
+        catPuja: "पूजा सामग्री व दक्षिणा",
         catPrasad: "प्रसाद व भोजन व्यवस्था",
-        catSecurity: "सुरक्षा व सरकारी परमिशन",
+        catSecurity: "सुरक्षा व परमिशन",
         catPublicity: "बैनर व प्रचार",
         catMisc: "अन्य फुटकर खर्च",
-        lblExpAmount: "खर्च की गई राशि (₹) *",
-        lblExpPaidTo: "दुकानदार / वेंडर का नाम",
+        lblExpAmount: "खर्च राशि (₹) *",
+        lblExpPaidTo: "वेंडर का नाम",
         lblExpMode: "भुगतान माध्यम",
         btnRecordExpense: "+ खर्च जोड़ें",
         headerExpenseLedger: "आयोजन खर्च खाता",
-        thExpItem: "सामग्री विवरण",
+        thExpItem: "सामग्री",
         thExpCategory: "श्रेणी",
-        thExpVendor: "वेंडर / माध्यम",
+        thExpVendor: "वेंडर",
         thExpDate: "दिनांक",
         thExpAmount: "राशि (₹)",
         btnResetAll: "⚠️ पूरा डेटा रीसेट करें",
         syncModalTitle: "अन्य डिवाइस पर सिंक करें",
-        syncModalSub: "अपने फोन से यह QR कोड स्कैन करें या लिंक शेयर करके दूसरे कंप्यूटर पर यही डेटा खोलें।",
+        syncModalSub: "अपने फोन से यह QR कोड स्कैन करें या लिंक शेयर करें।",
         btnCopyLink: "📋 लिंक कॉपी करें",
-        msgCopied: "✓ सिंक लिंक क्लिपबोर्ड पर कॉपी हो गया!",
+        msgCopied: "✓ लिंक कॉपी हो गया!",
         receiptBadge: "चंदा प्राप्ति रसीद",
         receiptFrom: "सप्रेम प्राप्त हुए:",
         receiptUnit: "फ्लैट / दुकान नं:",
         receiptSum: "प्राप्त सहयोग राशि",
         receiptSign: "अधिकृत हस्ताक्षर",
         receiptTitle: "चंदा प्राप्ति रसीद",
-        receiptThanks: "आपके अमूल्य सहयोग के लिए हार्दिक धन्यवाद! ✨"
+        receiptThanks: "आपके सहयोग के लिए धन्यवाद! ✨"
       },
       mr: {
-        syncBtn: "📲 सिंक करा",
+        syncBtn: "📲 सिंक",
         backLink: "← मुख्य मेनूवर परत जा",
         heroTitle: "उत्सव वर्गणी व खर्च हिशोब वही",
         heroSub: "वर्गणी जमा करा, मंडप व इतर खर्च नोंदवा आणि शिल्लक रकमेचा त्वरित हिशोब ठेवा.",
@@ -957,8 +950,8 @@
         lblSpent: "झालेला एकूण खर्च",
         lblBalance: "हातातील शिल्लक रक्कम",
         lblTargetAchieved: "वर्गणी संकलन उद्दिष्ट",
-        tabCollections: "👥 १. वर्गणीदार नोंदवही",
-        tabExpenses: "💸 २. उत्सव खर्च नोंदवही",
+        tabCollections: "👥 १. वर्गणीदार नोंद",
+        tabExpenses: "💸 २. उत्सव खर्च",
         addContributorHeader: "१. नवीन वर्गणीदार जोडा",
         sampleBtn: "⚡ नमुना",
         lblMemberName: "वर्गणीदाराचे नाव *",
@@ -968,30 +961,30 @@
         optPaid: "✓ जमा झाली (Paid)",
         optPending: "⏳ बाकी आहे (Pending)",
         btnSaveMember: "+ वर्गणीदार नोंदवा",
-        headerBudgetSettings: "⚙️ अंदाजपत्रक व वाटा वाटप",
+        headerBudgetSettings: "⚙️ अंदाजपत्रक सेटिंग्स",
         lblEventName: "मंडळ / सोसायटीचे नाव",
         lblTargetGoal: "अंदाजित एकूण बजेट (₹)",
-        lblTotalFlats: "सोसायटीतील एकूण कुटुंबे/फ्लॅट",
-        lblEqualShare: "प्रत्येकी समान वर्गणी वाटा:",
+        lblTotalFlats: "सोसायटीतील कुटुंबे/फ्लॅट",
+        lblEqualShare: "समान वर्गणी वाटा:",
         fAll: "सर्व",
         fPaid: "जमा",
         fPending: "बाकी",
-        btnPrint: "🖨️ प्रिंट करा",
-        thContributor: "वर्गणीदाराचे नाव",
-        thFlat: "फ्लॅट क्र.",
+        btnPrint: "🖨️ प्रिंट",
+        thContributor: "वर्गणीदार",
+        thFlat: "फ्लॅट",
         thAmount: "रक्कम (₹)",
         thStatus: "स्थिती",
         thAction: "कृती",
         tipStatusToggle: "💡 स्थिती बदलण्यासाठी 'जमा' किंवा 'बाकी' बटनावर टॅप करा.",
-        headerAddExpense: "उत्सव खर्च / बिल नोंदवा",
+        headerAddExpense: "उत्सव खर्च नोंदवा",
         lblExpItem: "खर्चाचा तपशील *",
         lblExpCategory: "खर्च प्रकार",
         catPandal: "मंडप आणि सजावट",
         catMurti: "श्रींची मूर्ती",
-        catSound: "ध्वनीक्षेपक व रोषणाई (साउंड)",
-        catPuja: "पूजा साहित्य व भटजी दक्षिणा",
+        catSound: "ध्वनी व रोषणाई (साउंड)",
+        catPuja: "पूजा साहित्य व दक्षिणा",
         catPrasad: "प्रसाद आणि महाप्रसाद",
-        catSecurity: "सुरक्षा व पोलीस परवानग्या",
+        catSecurity: "सुरक्षा व परवानग्या",
         catPublicity: "बॅनर्स व जाहिरात",
         catMisc: "इतर किरकोळ खर्च",
         lblExpAmount: "झालेला खर्च (₹) *",
@@ -999,26 +992,26 @@
         lblExpMode: "पेमेंट प्रकार",
         btnRecordExpense: "+ खर्च नोंदवा",
         headerExpenseLedger: "उत्सव खर्च वही",
-        thExpItem: "खर्चाचा तपशील",
+        thExpItem: "तपशील",
         thExpCategory: "प्रकार",
-        thExpVendor: "दुकानदार / प्रकार",
+        thExpVendor: "दुकानदार",
         thExpDate: "तारीख",
         thExpAmount: "रक्कम (₹)",
         btnResetAll: "⚠️ सर्व डेटा पुसून टाका",
         syncModalTitle: "दुसऱ्या डिव्हाइसवर सिंक करा",
-        syncModalSub: "मोबाईल कॅमेऱ्याने हा QR कोड स्कॅन करा किंवा लिंक कॉम्प्युटरवर उघडून डेटा ट्रान्सफर करा.",
+        syncModalSub: "मोबाईल कॅमेऱ्याने हा QR कोड स्कॅन करा किंवा लिंक कॉम्प्युटरवर उघडा.",
         btnCopyLink: "📋 लिंक कॉपी करा",
-        msgCopied: "✓ सिंक लिंक कॉपी झाली आहे!",
+        msgCopied: "✓ लिंक कॉपी झाली!",
         receiptBadge: "वर्गणी जमा पावती",
         receiptFrom: "यांजकडून सप्रेम स्वीकारली:",
         receiptUnit: "फ्लॅट / रूम क्र:",
         receiptSum: "स्वीकारलेली वर्गणी रक्कम",
-        receiptSign: "खजिनदार / अधिकृत स्वाक्षरी",
+        receiptSign: "खजिनदार / स्वाक्षरी",
         receiptTitle: "वर्गणी जमा पावती",
-        receiptThanks: "आपल्या बहुमूल्य सहकार्याबद्दल मनःपूर्वक धन्यवाद! ✨"
+        receiptThanks: "आपल्या सहकार्याबद्दल धन्यवाद! ✨"
       },
       gu: {
-        syncBtn: "📲 સિન્ક કરો",
+        syncBtn: "📲 સિન્ક",
         backLink: "← મુખ્ય પેજ પર પાછા જાઓ",
         heroTitle: "ઉત્સવ ફાળો અને ખર્ચ હિસાબ વહી",
         heroSub: "ફાળો જમા કરો, મંડપ અને અન્ય ખર્ચ નોંધો અને બાકી રકમનો ત્વરિત હિસાબ રાખો.",
@@ -1027,8 +1020,8 @@
         lblSpent: "થયેલ કુલ ખર્ચ",
         lblBalance: "હાથ પર બચત / પુરાંત",
         lblTargetAchieved: "ફાળો સંગ્રહ પ્રગતિ",
-        tabCollections: "👥 ૧. ફાળો નોંધણી પત્રક",
-        tabExpenses: "💸 ૨. ઉત્સવ ખર્ચ વહી",
+        tabCollections: "👥 ૧. ફાળો નોંધણી",
+        tabExpenses: "💸 ૨. ઉત્સવ ખર્ચ",
         addContributorHeader: "૧. નવો ફાળો ઉમેરો",
         sampleBtn: "⚡ નમૂનો",
         lblMemberName: "સભ્ય / દાતાનું નામ *",
@@ -1038,54 +1031,54 @@
         optPaid: "✓ જમા થયેલ (Paid)",
         optPending: "⏳ બાકી (Pending)",
         btnSaveMember: "+ સભ્ય સેવ કરો",
-        headerBudgetSettings: "⚙️ બજેટ અને સરખા ભાગની ગોઠવણ",
+        headerBudgetSettings: "⚙️ બજેટ ગોઠવણ",
         lblEventName: "મંડળ / સોસાયટીનું નામ",
         lblTargetGoal: "કુલ બજેટ લક્ષ્યાંક (₹)",
-        lblTotalFlats: "સોસાયટીમાં કુલ પરિવારો / ફ્લેટ",
-        lblEqualShare: "દરેક સભ્યનો સરખો ફાળો:",
+        lblTotalFlats: "સોસાયટીમાં કુલ પરિવારો",
+        lblEqualShare: "સરખો ફાળો:",
         fAll: "બધા",
         fPaid: "જમા",
         fPending: "બાકી",
-        btnPrint: "🖨️ પ્રિન્ટ કરો",
-        thContributor: "સભ્યનું નામ",
-        thFlat: "ફ્લેટ નં.",
+        btnPrint: "🖨️ પ્રિન્ટ",
+        thContributor: "સભ્ય",
+        thFlat: "ફ્લેટ",
         thAmount: "રકમ (₹)",
         thStatus: "સ્થિતિ",
         thAction: "ક્રિયાઓ",
-        tipStatusToggle: "💡 સ્થિતિ બદલવા માટે 'જમા' અથવા 'બાકી' બટન પર ટેપ કરો.",
-        headerAddExpense: "ખર્ચ / બિલ નોંધો",
+        tipStatusToggle: "💡 સ્થિતિ બદલવા માટે 'જમા' અથવા 'બાકી' પર ટેપ કરો.",
+        headerAddExpense: "ખર્ચ નોંધો",
         lblExpItem: "ખર્ચની વિગત *",
         lblExpCategory: "ખર્ચ શ્રેણી",
         catPandal: "મંડપ અને ડેકોરેશન",
         catMurti: "શ્રીજીની મૂર્તિ",
         catSound: "સાઉન્ડ અને લાઈટિંગ",
-        catPuja: "પૂજા સામગ્રી અને બ્રાહ્મણ દક્ષિણા",
-        catPrasad: "પ્રસાદ અને અલ્પાહાર / ભોજન",
-        catSecurity: "સિક્યુરિટી અને મંજૂરી ખર્ચ",
+        catPuja: "પૂજા સામગ્રી અને દક્ષિણા",
+        catPrasad: "પ્રસાદ અને ભોજન",
+        catSecurity: "સિક્યુરિટી અને મંજૂરી",
         catPublicity: "બેનર અને જાહેરાત",
         catMisc: "અન્ય પરચૂરણ ખર્ચ",
-        lblExpAmount: "થયેલ ખર્ચની રકમ (₹) *",
-        lblExpPaidTo: "દુકાનદાર / વેપારીનું નામ",
+        lblExpAmount: "ખર્ચની રકમ (₹) *",
+        lblExpPaidTo: "વેપારીનું નામ",
         lblExpMode: "ચુકવણી પદ્ધતિ",
         btnRecordExpense: "+ ખર્ચ નોંધો",
         headerExpenseLedger: "ઉત્સવ ખર્ચ ખાતાવહી",
-        thExpItem: "સામગ્રીની વિગત",
+        thExpItem: "વિગત",
         thExpCategory: "શ્રેણી",
-        thExpVendor: "વેપારી / પદ્ધતિ",
+        thExpVendor: "વેપારી",
         thExpDate: "તારીખ",
         thExpAmount: "રકમ (₹)",
         btnResetAll: "⚠️ તમામ ડેટા સાફ કરો",
         syncModalTitle: "બીજા ડિવાઇસ પર સિન્ક કરો",
-        syncModalSub: "તમારા ફોનના કેમેરાથી આ QR કોડ સ્કેન કરો અથવા લિંક દ્વારા કમ્પ્યુટર પર આ જ ડેટા ખોલો.",
+        syncModalSub: "તમારા ફોનના કેમેરાથી આ QR કોડ સ્કેન કરો.",
         btnCopyLink: "📋 લિંક કૉપિ કરો",
-        msgCopied: "✓ સિન્ક લિંક કૉપિ થઈ ગઈ છે!",
+        msgCopied: "✓ લિંક કૉપિ થઈ ગઈ!",
         receiptBadge: "ફાળો જમા પહોંચ",
         receiptFrom: "તરફથી આદરપૂર્વક મળેલ:",
         receiptUnit: "ફ્લેટ / યુનિટ નં:",
         receiptSum: "મળેલ ફાળાની રકમ",
-        receiptSign: "મંત્રી / અધિકૃત સહી",
+        receiptSign: "અધિકૃત સહી",
         receiptTitle: "ફાળો જમા પહોંચ",
-        receiptThanks: "તમારા સાથ-સહકાર બદલ ખૂબ ખૂબ આભાર! ✨"
+        receiptThanks: "તમારા સાથ-સહકાર બદલ આભાર! ✨"
       }
     };
 
@@ -1309,35 +1302,35 @@
 
       metricCollected.textContent = `₹${totalCollected.toLocaleString('en-IN')}`;
       
-      let paidLabel = `${paidCount} paid members`;
-      if (currentLang === 'gu') paidLabel = `${paidCount} સભ્યોએ ફાળો આપ્યો`;
-      else if (currentLang === 'mr') paidLabel = `${paidCount} वर्गणी जमा`;
-      else if (currentLang === 'hi') paidLabel = `${paidCount} सदस्य भुगतान`;
+      let paidLabel = `${paidCount} paid`;
+      if (currentLang === 'gu') paidLabel = `${paidCount} જમા`;
+      else if (currentLang === 'mr') paidLabel = `${paidCount} जमा`;
+      else if (currentLang === 'hi') paidLabel = `${paidCount} प्राप्त`;
       metricPaidCount.textContent = paidLabel;
 
       metricSpent.textContent = `₹${totalSpent.toLocaleString('en-IN')}`;
       
-      let expLabel = `${state.expenses.length} bills logged`;
-      if (currentLang === 'gu') expLabel = `${state.expenses.length} ખર્ચ બિલ`;
-      else if (currentLang === 'mr') expLabel = `${state.expenses.length} खर्च नोंदी`;
-      else if (currentLang === 'hi') expLabel = `${state.expenses.length} खर्च बिल`;
+      let expLabel = `${state.expenses.length} bills`;
+      if (currentLang === 'gu') expLabel = `${state.expenses.length} બિલ`;
+      else if (currentLang === 'mr') expLabel = `${state.expenses.length} बिले`;
+      else if (currentLang === 'hi') expLabel = `${state.expenses.length} बिल`;
       metricExpenseCount.textContent = expLabel;
 
       metricNetBalance.textContent = `₹${netBalance.toLocaleString('en-IN')}`;
       if (netBalance >= 0) {
         metricNetBalance.style.color = "var(--success)";
-        let surplusText = "Surplus Cash in Hand";
-        if (currentLang === 'gu') surplusText = "હાથ પર બચત / પુરાંત";
-        else if (currentLang === 'mr') surplusText = "शिल्लक रक्कम";
-        else if (currentLang === 'hi') surplusText = "अधिशेष (Surplus)";
+        let surplusText = "Surplus Cash";
+        if (currentLang === 'gu') surplusText = "પુરાંત";
+        else if (currentLang === 'mr') surplusText = "शिल्लक";
+        else if (currentLang === 'hi') surplusText = "अधिशेष";
         metricNetSub.textContent = surplusText;
         metricBalanceCard.style.borderLeftColor = "var(--success)";
       } else {
         metricNetBalance.style.color = "var(--danger)";
-        let deficitText = "Deficit (Shortfall in cash)";
-        if (currentLang === 'gu') deficitText = "ખાધ / ઘટતી રકમ (Deficit)";
-        else if (currentLang === 'mr') deficitText = "तूट / कमी रक्कम";
-        else if (currentLang === 'hi') deficitText = "घाटा / कमी (Deficit)";
+        let deficitText = "Deficit";
+        if (currentLang === 'gu') deficitText = "ખાધ (Deficit)";
+        else if (currentLang === 'mr') deficitText = "तूट (Deficit)";
+        else if (currentLang === 'hi') deficitText = "कमी (Deficit)";
         metricNetSub.textContent = deficitText;
         metricBalanceCard.style.borderLeftColor = "var(--danger)";
       }
@@ -1382,12 +1375,12 @@
       }
 
       if (visibleList.length === 0) {
-        let noFoundMsg = "No members found.";
+        let noFoundMsg = "No members found. Add from left.";
         if (currentLang === 'gu') noFoundMsg = "કોઈ સભ્ય મળ્યા નથી. ડાબી બાજુથી નવો ફાળો ઉમેરો.";
-        else if (currentLang === 'mr') noFoundMsg = "कोणतेही वर्गणीदार सापडले नाहीत. डाव्या बाजूने नवीन वर्गणीदार जोडा.";
-        else if (currentLang === 'hi') noFoundMsg = "कोई सदस्य नहीं मिला। बाईं ओर से सदस्य जोड़ें।";
+        else if (currentLang === 'mr') noFoundMsg = "कोणतेही वर्गणीदार सापडले नाहीत. डाव्या बाजूने जोडा.";
+        else if (currentLang === 'hi') noFoundMsg = "कोई सदस्य नहीं मिला। बाईं ओर से जोड़ें।";
 
-        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 26px;">${noFoundMsg}</td></tr>`;
+        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 22px;">${noFoundMsg}</td></tr>`;
         return;
       }
 
@@ -1402,8 +1395,8 @@
 
         tr.innerHTML = `
           <td>${idx + 1}</td>
-          <td style="font-weight: 700; color: #0f172a;">${d.name}</td>
-          <td style="color: #475569;">${d.unit}</td>
+          <td style="font-weight: 700;">${d.name}</td>
+          <td style="color: var(--text-muted);">${d.unit}</td>
           <td style="font-weight: 800;">₹${d.amount.toLocaleString('en-IN')}</td>
           <td>
             <span class="status-badge ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${d.originalIndex})" title="Tap to toggle status">
@@ -1411,9 +1404,9 @@
             </span>
           </td>
           <td style="text-align: center; white-space: nowrap;">
-            <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})" title="View / Print / Download Slip">🧾 Slip</button>
-            <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})" title="Send WhatsApp Text Receipt">💬 WA</button>
-            <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})" title="Remove Member">&times;</button>
+            <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})" title="Receipt">🧾 Slip</button>
+            <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})" title="WhatsApp">💬 WA</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})" title="Remove">&times;</button>
           </td>
         `;
         donorsTableBody.appendChild(tr);
@@ -1426,9 +1419,9 @@
 
       if (state.expenses.length === 0) {
         let noExpMsg = "No bills recorded yet.";
-        if (currentLang === 'gu') noExpMsg = "હજી સુધી કોઈ ખર્ચ નોંધાયેલ નથી.";
-        else if (currentLang === 'mr') noExpMsg = "अद्याप कोणताही खर्च नोंदवला नाही.";
-        else if (currentLang === 'hi') noExpMsg = "अभी तक कोई खर्च दर्ज नहीं किया गया।";
+        if (currentLang === 'gu') noExpMsg = "કોઈ ખર્ચ નોંધાયેલ નથી.";
+        else if (currentLang === 'mr') noExpMsg = "कोणताही खर्च नोंदवला नाही.";
+        else if (currentLang === 'hi') noExpMsg = "कोई खर्च दर्ज नहीं किया गया।";
 
         expensesTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 22px;">${noExpMsg}</td></tr>`;
         return;
@@ -1438,13 +1431,13 @@
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${idx + 1}</td>
-          <td style="font-weight: 700; color: #0f172a;">${e.item}</td>
-          <td><span style="font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; color: #475569;">${e.category}</span></td>
-          <td>${e.paidTo || "—"} <span style="font-size: 10px; color: var(--text-muted);">(${e.mode})</span></td>
-          <td style="font-size: 11px; color: var(--text-muted);">${e.date}</td>
+          <td style="font-weight: 700;">${e.item}</td>
+          <td><span style="font-size: 10px; font-weight: 700; padding: 2px 5px; border-radius: 4px; background: var(--tab-bg); color: var(--text-muted);">${e.category}</span></td>
+          <td>${e.paidTo || "—"}</td>
+          <td style="font-size: 10.5px; color: var(--text-muted);">${e.date}</td>
           <td style="font-weight: 800; color: var(--danger);">₹${e.amount.toLocaleString('en-IN')}</td>
           <td style="text-align: center;">
-            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" title="Delete bill">Delete</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" title="Delete bill">&times;</button>
           </td>
         `;
         expensesTableBody.appendChild(tr);
@@ -1460,7 +1453,7 @@
 
     window.removeDonor = (idx) => {
       let confirmMsg = `Remove ${state.donors[idx].name}?`;
-      if (currentLang === 'gu') confirmMsg = `શું તમે ${state.donors[idx].name} ને લિસ્ટમાંથી હટાવવા માંગો છો?`;
+      if (currentLang === 'gu') confirmMsg = `શું તમે ${state.donors[idx].name} ને હટાવવા માંગો છો?`;
       if (confirm(confirmMsg)) {
         takeSnapshotBackup();
         state.donors.splice(idx, 1);
@@ -1480,7 +1473,6 @@
       }
     };
 
-    // --- RECEIPT SLIP MODAL & GENERATION LOGIC ---
     window.openLatestReceipt = () => {
       if (state.donors.length === 0) {
         alert(currentLang === 'mr' ? "कृपया आधी किमान एक वर्गणीदार जोडा किंवा नमुना डेटा वापरा." : "Please add at least one member or click '⚡ Sample' to preview a receipt.");
@@ -1526,7 +1518,6 @@
       document.getElementById("receiptModal").style.display = "none";
     };
 
-    // Download Receipt as PNG image
     document.getElementById("btnDownloadSlipImg").onclick = async () => {
       const btn = document.getElementById("btnDownloadSlipImg");
       const originalText = btn.innerHTML;
@@ -1614,20 +1605,8 @@
       const status = inStatus.value;
       const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
 
-      if (!name) {
-        let namePrompt = "Please enter contributor name.";
-        if (currentLang === 'gu') namePrompt = "કૃપા કરીને સભ્યનું નામ લખો.";
-        else if (currentLang === 'mr') namePrompt = "कृपया नाव प्रविष्ट करा.";
-        else if (currentLang === 'hi') namePrompt = "कृपया सदस्य का नाम दर्ज करें।";
-        return alert(namePrompt);
-      }
-      if (amount <= 0) {
-        let amtPrompt = "Please enter an amount.";
-        if (currentLang === 'gu') amtPrompt = "કૃપા કરીને રકમ દાખલ કરો.";
-        else if (currentLang === 'mr') amtPrompt = "कृपया रक्कम टाका.";
-        else if (currentLang === 'hi') amtPrompt = "कृपया मान्य राशि दर्ज करें।";
-        return alert(amtPrompt);
-      }
+      if (!name) return alert("Please enter contributor name.");
+      if (amount <= 0) return alert("Please enter an amount.");
 
       takeSnapshotBackup();
       state.donors.unshift({ name, unit, amount, status, dateAdded: today });
@@ -1650,20 +1629,8 @@
       const mode = inExpMode.value;
       const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
 
-      if (!item) {
-        let itemPrompt = "Please enter expense description.";
-        if (currentLang === 'gu') itemPrompt = "કૃપા કરીને ખર્ચની વિગત દાખલ કરો.";
-        else if (currentLang === 'mr') itemPrompt = "कृपया खर्चाचा तपशील टाका.";
-        else if (currentLang === 'hi') itemPrompt = "कृपया खर्च का विवरण दर्ज करें।";
-        return alert(itemPrompt);
-      }
-      if (amount <= 0) {
-        let amtPrompt = "Please enter a valid expense amount.";
-        if (currentLang === 'gu') amtPrompt = "કૃપા કરીને યોગ્ય ખર્ચ રકમ દાખલ કરો.";
-        else if (currentLang === 'mr') amtPrompt = "कृपया योग्य खर्च रक्कम टाका.";
-        else if (currentLang === 'hi') amtPrompt = "कृपया वैध खर्च राशि दर्ज करें।";
-        return alert(amtPrompt);
-      }
+      if (!item) return alert("Please enter expense description.");
+      if (amount <= 0) return alert("Please enter a valid expense amount.");
 
       takeSnapshotBackup();
       state.expenses.unshift({ item, category, amount, paidTo, mode, date: today });
@@ -1677,13 +1644,7 @@
 
     document.getElementById("btnLoadSample").onclick = () => {
       if (state.donors.length > 0 || state.expenses.length > 0) {
-        const confirmMsg = currentLang === 'gu'
-          ? "સેમ્પલ ડેટા લોડ કરવાથી હાલનો ડેટા બદલાઈ જશે. શું તમે આગળ વધવા માંગો છો? (તમે પૂર્વવત્/Restore કરી શકશો)"
-          : (currentLang === 'mr'
-            ? "नमुना डेटा लोड केल्याने सध्याचा डेटा बदलेल. पुढे जायचे आहे का? (तुम्ही Restore करू शकाल)"
-            : "Loading sample data will replace your current ledger. Do you want to proceed? (You can Undo/Restore at any time)");
-        
-        if (!confirm(confirmMsg)) return;
+        if (!confirm("Loading sample data will replace your current ledger. Do you want to proceed? (You can Undo/Restore at any time)")) return;
       }
 
       takeSnapshotBackup();
@@ -1798,12 +1759,7 @@
     document.getElementById("btnExportExcelExp").onclick = exportExcelBoth;
 
     window.clearAllData = () => {
-      let resetMsg = "Reset both collections and expenses? This cannot be undone.";
-      if (currentLang === 'gu') resetMsg = "શું તમે તમામ ફાળો અને ખર્ચની વિગતો સાફ કરવા માંગો છો? આ ક્રિયા પાછી ખેંચી શકાશે નહીં.";
-      else if (currentLang === 'mr') resetMsg = "सर्व जमा आणि खर्च नोंदी पुसून टाकायच्या आहेत का?";
-      else if (currentLang === 'hi') resetMsg = "क्या आप पूरा डेटा रीसेट करना चाहते हैं?";
-
-      if (confirm(resetMsg)) {
+      if (confirm("Reset both collections and expenses? This cannot be undone.")) {
         takeSnapshotBackup();
         state.donors = [];
         state.expenses = [];
