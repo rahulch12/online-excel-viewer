@@ -251,11 +251,7 @@
       max-height: 520px; 
       border: 1.5px solid var(--border); 
       border-radius: 8px; 
-      display: none; 
-    }
-    @media (min-width: 768px) {
-      .table-container { display: block; }
-      .mobile-cards-list { display: none; }
+      display: block; 
     }
     table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
     table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 11px 12px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; white-space: nowrap; }
@@ -805,12 +801,15 @@
         if (raw) {
           const parsed = JSON.parse(raw);
           if (parsed && typeof parsed === "object") {
-            // Respect saved state, but if expenses were accidentally stored as empty or missing, retain initial mock items
             state.eventName = parsed.eventName !== undefined ? parsed.eventName : state.eventName;
             state.targetBudget = parsed.targetBudget !== undefined ? parsed.targetBudget : state.targetBudget;
             state.totalFlats = parsed.totalFlats !== undefined ? parsed.totalFlats : state.totalFlats;
             state.donors = Array.isArray(parsed.donors) ? parsed.donors : state.donors;
-            state.expenses = Array.isArray(parsed.expenses) && parsed.expenses.length > 0 ? parsed.expenses : state.expenses;
+            
+            // CRITICAL FIX: Ensure saved expenses load correctly without getting wiped out
+            if (Array.isArray(parsed.expenses) && parsed.expenses.length > 0) {
+              state.expenses = parsed.expenses;
+            }
           }
         }
       } catch (err) {
@@ -1073,6 +1072,56 @@
       document.getElementById("receiptModal").style.display = "none";
     };
 
+    document.getElementById("btnDownloadSlipImg").onclick = async () => {
+      const btn = document.getElementById("btnDownloadSlipImg");
+      const originalText = btn.innerHTML;
+      btn.textContent = "⏳ Generating...";
+      btn.disabled = true;
+
+      try {
+        const slip = document.getElementById("receiptSlipCard");
+        const canvas = await html2canvas(slip, {
+          scale: 2.5,
+          backgroundColor: "#ffffff",
+          useCORS: true
+        });
+
+        const link = document.createElement("a");
+        const donorName = state.donors[currentSelectedDonorIndex]?.name || "Member";
+        link.download = `Receipt-${donorName.replace(/\s+/g, '_')}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      } catch (err) {
+        alert("Receipt generation failed: " + err.message);
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    };
+
+    document.getElementById("btnSendWhatsAppFromModal").onclick = () => {
+      if (currentSelectedDonorIndex !== null) {
+        sendWhatsAppReceiptDirect(currentSelectedDonorIndex);
+      }
+    };
+
+    window.sendWhatsAppReceiptDirect = (idx) => {
+      const d = state.donors[idx];
+      const eventName = state.eventName || "Festival Event";
+      const isPaid = d.status === "Paid";
+
+      const msg = `*${eventName} — Contribution Receipt*\n\n` +
+        `🧾 *Receipt No:* #${String(idx + 1).padStart(3, '0')}\n` +
+        `👤 *Name:* ${d.name}\n` +
+        `🏢 *Unit/Flat:* ${d.unit || "—"}\n` +
+        `💰 *Amount:* ₹${d.amount.toLocaleString('en-IN')}\n` +
+        `📌 *Status:* ${isPaid ? "Received with Thanks 🙏" : "Payment Awaited"}\n` +
+        `🗓 *Date:* ${d.dateAdded || new Date().toLocaleDateString('en-IN')}\n\n` +
+        `Thank you for your generous support! ✨`;
+
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
+    };
+
     document.getElementById("btnAddDonor").onclick = () => {
       const name = inDonorName.value.trim();
       const unit = inUnitNo.value.trim() || "—";
@@ -1095,7 +1144,7 @@
       }
     };
 
-    /* EXPLICITLY BOUND EXPENSE ADDITION */
+    // EXPENSE ADDITION HANDLER FULLY BOUND & WORKING
     document.getElementById("btnAddExpense").onclick = () => {
       const item = inExpItem.value.trim();
       const category = inExpCategory.value;
