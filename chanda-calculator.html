@@ -665,7 +665,7 @@
 
           <div class="rcpt-field">
             <span>Received with thanks from:</span><br>
-            <strong id="rcptDonorName" style="font-size: 14px; color: #0f172a;">Ramesh Kulkarni</strong>
+            <strong id="rcptDonorName" style="font-size: 14.5px; color: #0f172a;">Ramesh Kulkarni</strong>
           </div>
 
           <div class="rcpt-field">
@@ -800,7 +800,7 @@
     };
 
     function loadSavedState() {
-      // 1. Check if URL contains incoming sync payload (#sync=...)
+      // 1. Check URL hash first for incoming sync payloads
       try {
         const hash = window.location.hash;
         if (hash && hash.startsWith("#sync=")) {
@@ -812,6 +812,7 @@
               state = incomingState;
               saveState();
               window.history.replaceState(null, null, window.location.pathname);
+              alert("Data synced successfully from your other device!");
             }
           }
         }
@@ -819,7 +820,7 @@
         console.warn("Could not import URL sync data:", err);
       }
 
-      // 2. Load from localStorage if available
+      // 2. Load from localStorage
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
@@ -1266,6 +1267,52 @@
         calculateAll();
       });
     });
+
+    // Universal Sync Modal Generation Logic
+    let syncQrInstance = null;
+    function generateSyncUrl() {
+      saveState();
+      const serialized = JSON.stringify(state);
+      const compressed = LZString.compressToEncodedURIComponent(serialized);
+      return `${window.location.origin}${window.location.pathname}#sync=${compressed}`;
+    }
+
+    document.getElementById("btnOpenSync").onclick = () => {
+      const modal = document.getElementById("syncModal");
+      const qrContainer = document.getElementById("qrContainer");
+      document.getElementById("copySuccessMsg").style.display = "none";
+      const syncUrl = generateSyncUrl();
+
+      qrContainer.innerHTML = "";
+      syncQrInstance = new QRCode(qrContainer, {
+        text: syncUrl,
+        width: 170,
+        height: 170,
+        colorDark: "#0f172a",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L
+      });
+      modal.style.display = "flex";
+    };
+
+    window.closeSyncModal = () => {
+      document.getElementById("syncModal").style.display = "none";
+    };
+
+    document.getElementById("btnCopySyncLink").onclick = () => {
+      const syncUrl = generateSyncUrl();
+      navigator.clipboard.writeText(syncUrl).then(() => {
+        document.getElementById("copySuccessMsg").style.display = "block";
+      }).catch(err => {
+        prompt("Copy this sync URL manually:", syncUrl);
+      });
+    };
+
+    document.getElementById("btnShareWhatsApp").onclick = () => {
+      const syncUrl = generateSyncUrl();
+      const text = encodeURIComponent(`SheetBox Live Ledger for ${state.eventName || "Event"}:\n${syncUrl}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
+    };
 
     loadSavedState();
   </script>
