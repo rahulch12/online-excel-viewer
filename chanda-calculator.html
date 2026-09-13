@@ -82,7 +82,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* Compact Header */
+    /* Compact Header matching original design */
     header { background-color: var(--header-bg); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; flex-shrink: 0; }
     .brand img { width: 30px; height: 30px; border-radius: 6px; }
@@ -202,7 +202,6 @@
     .quick-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
     .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 14px; cursor: pointer; color: var(--text); }
 
-    /* PERFECT BUTTON STYLING */
     .btn { padding: 12px 16px; font-size: 14px; font-weight: 800; border-radius: 8px; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
     .btn:active { transform: scale(0.97); }
     .btn-orange { background: var(--accent); color: #fff; }
@@ -534,7 +533,7 @@
       </div>
     </div>
 
-    <!-- 2. EXPENSES VIEW (ACTIVE BY DEFAULT & FULLY FIXED) -->
+    <!-- 2. EXPENSES VIEW -->
     <div id="viewExpenses" class="app-layout" style="display: grid;">
       <div>
         <div class="panel">
@@ -612,7 +611,7 @@
           </table>
         </div>
 
-        <!-- Mobile Expenses Card List View -->
+        <!-- Mobile Expenses Card List View (RESTORED & ACTIVE) -->
         <div class="mobile-cards-list" id="expensesCardsList"></div>
 
         <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
@@ -718,7 +717,6 @@
   <script>
     const STORAGE_KEY = "sheetbox_chanda_ledger_v2";
 
-    // Theme Switcher Logic Synchronized with index.html
     const themeBtn = document.getElementById("themeToggleBtn");
     const currentTheme = localStorage.getItem("sheetbox_theme") || "dark";
 
@@ -809,7 +807,9 @@
             state.targetBudget = parsed.targetBudget !== undefined ? parsed.targetBudget : state.targetBudget;
             state.totalFlats = parsed.totalFlats !== undefined ? parsed.totalFlats : state.totalFlats;
             state.donors = Array.isArray(parsed.donors) ? parsed.donors : state.donors;
-            state.expenses = Array.isArray(parsed.expenses) && parsed.expenses.length > 0 ? parsed.expenses : state.expenses;
+            if (Array.isArray(parsed.expenses) && parsed.expenses.length > 0) {
+              state.expenses = parsed.expenses;
+            }
           }
         }
       } catch (err) {
@@ -1072,56 +1072,6 @@
       document.getElementById("receiptModal").style.display = "none";
     };
 
-    document.getElementById("btnDownloadSlipImg").onclick = async () => {
-      const btn = document.getElementById("btnDownloadSlipImg");
-      const originalText = btn.innerHTML;
-      btn.textContent = "⏳ Generating...";
-      btn.disabled = true;
-
-      try {
-        const slip = document.getElementById("receiptSlipCard");
-        const canvas = await html2canvas(slip, {
-          scale: 2.5,
-          backgroundColor: "#ffffff",
-          useCORS: true
-        });
-
-        const link = document.createElement("a");
-        const donorName = state.donors[currentSelectedDonorIndex]?.name || "Member";
-        link.download = `Receipt-${donorName.replace(/\s+/g, '_')}.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      } catch (err) {
-        alert("Receipt generation failed: " + err.message);
-      } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-      }
-    };
-
-    document.getElementById("btnSendWhatsAppFromModal").onclick = () => {
-      if (currentSelectedDonorIndex !== null) {
-        sendWhatsAppReceiptDirect(currentSelectedDonorIndex);
-      }
-    };
-
-    window.sendWhatsAppReceiptDirect = (idx) => {
-      const d = state.donors[idx];
-      const eventName = state.eventName || "Festival Event";
-      const isPaid = d.status === "Paid";
-
-      const msg = `*${eventName} — Contribution Receipt*\n\n` +
-        `🧾 *Receipt No:* #${String(idx + 1).padStart(3, '0')}\n` +
-        `👤 *Name:* ${d.name}\n` +
-        `🏢 *Unit/Flat:* ${d.unit || "—"}\n` +
-        `💰 *Amount:* ₹${d.amount.toLocaleString('en-IN')}\n` +
-        `📌 *Status:* ${isPaid ? "Received with Thanks 🙏" : "Payment Awaited"}\n` +
-        `🗓 *Date:* ${d.dateAdded || new Date().toLocaleDateString('en-IN')}\n\n` +
-        `Thank you for your generous support! ✨`;
-
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
-    };
-
     document.getElementById("btnAddDonor").onclick = () => {
       const name = inDonorName.value.trim();
       const unit = inUnitNo.value.trim() || "—";
@@ -1144,7 +1094,6 @@
       }
     };
 
-    // EXPENSE ADDITION HANDLER BOUND DIRECTLY
     document.getElementById("btnAddExpense").onclick = () => {
       const item = inExpItem.value.trim();
       const category = inExpCategory.value;
