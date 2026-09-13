@@ -29,10 +29,9 @@
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="apple-touch-icon" href="/logo.png" />
 
-  <!-- SEO Search-Intent Optimized Metadata -->
   <title>Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox</title>
   <meta name="title" content="Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox" />
-  <meta name="description" content="Free festival chanda collection register and event expense tracker. Record member contributions, log vendor costs, sync across phone & laptop, and export Excel." />
+  <meta name="description" content="Simple, mobile-friendly festival chanda collection register and expense tracker. Instant search, 1-tap WhatsApp receipts, and Excel export." />
   <meta name="keywords" content="festival chanda tracker, ganesh chanda collection register, navratri donation list, puja expense manager, society fund split excel, chanda calculator, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
 
@@ -45,9 +44,12 @@
       --text: #0f172a;
       --text-muted: #64748b;
       --accent: #ea580c;
+      --accent-soft: #fff7ed;
       --primary: #2563eb;
       --success: #16a34a;
+      --success-soft: #f0fdf4;
       --danger: #dc2626;
+      --danger-soft: #fef2f2;
     }
 
     html, body {
@@ -61,7 +63,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    header { background-color: var(--header-bg); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; }
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
     .brand img { width: 32px; height: 32px; border-radius: 8px; }
     .header-btns { display: flex; gap: 8px; align-items: center; }
@@ -69,62 +71,87 @@
     .sync-btn:hover { background: rgba(255,255,255,0.22); }
     .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 20px; text-decoration: none; }
 
-    .container { max-width: 1180px; width: 100%; margin: 16px auto; padding: 0 14px; flex: 1; }
-    .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 12px; }
+    .container { max-width: 1180px; width: 100%; margin: 14px auto; padding: 0 14px; flex: 1; }
+    .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 10px; }
 
-    .hero-title { font-size: 24px; font-weight: 900; margin-bottom: 4px; }
-    .hero-sub { font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; }
+    .hero-title { font-size: 24px; font-weight: 900; margin-bottom: 2px; }
+    .hero-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
 
-    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; width: 100%; }
-    .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-    .metric-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    /* Visual Financial Strip */
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; width: 100%; }
+    .metric-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+    .metric-label { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; letter-spacing: 0.3px; }
     .metric-val { font-size: 22px; font-weight: 900; color: var(--text); }
-    .metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .metric-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
 
-    .progress-wrapper { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 20px; width: 100%; }
-    .progress-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
-    .progress-bar-bg { height: 12px; width: 100%; background: #e2e8f0; border-radius: 6px; overflow: hidden; }
-    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #ea580c, #f97316); width: 0%; transition: width 0.3s ease; }
+    /* Clean Progress Indicator */
+    .progress-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; }
+    .progress-top { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+    .progress-bg { height: 10px; width: 100%; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, #ea580c, #f97316); width: 0%; transition: width 0.3s ease; }
 
-    .mode-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; background: #e2e8f0; padding: 5px; border-radius: 10px; width: 100%; }
-    .mode-tab-btn { flex: 1; padding: 10px 14px; border: none; background: transparent; font-size: 13.5px; font-weight: 800; color: #475569; border-radius: 8px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .mode-tab-btn.active { background: #fff; color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    /* Segmented View Mode Tabs */
+    .mode-tab-bar { display: flex; gap: 6px; margin-bottom: 16px; background: #e2e8f0; padding: 4px; border-radius: 10px; width: 100%; }
+    .mode-tab-btn { flex: 1; padding: 10px 12px; border: none; background: transparent; font-size: 13.5px; font-weight: 800; color: #475569; border-radius: 7px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .mode-tab-btn.active { background: #fff; color: var(--text); box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
 
-    .app-layout { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; width: 100%; }
+    .app-layout { display: grid; grid-template-columns: 360px 1fr; gap: 18px; align-items: start; width: 100%; }
 
-    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; width: 100%; }
-    .panel-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; color: #0f172a; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; width: 100%; }
+    .panel-title { font-size: 13.5px; font-weight: 800; margin-bottom: 12px; color: #0f172a; display: flex; justify-content: space-between; align-items: center; }
+    
     .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 11.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
-    .input-field { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12.5px; outline: none; }
+    .form-group label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+    .input-field { width: 100%; padding: 9px 11px; border: 1.5px solid #cbd5e1; border-radius: 7px; font-size: 13px; outline: none; background: #fff; }
     .input-field:focus { border-color: var(--accent); }
 
-    .btn { padding: 9px 14px; font-size: 12.5px; font-weight: 700; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; }
+    /* Quick Preset Buttons */
+    .quick-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+    .chip-btn { background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 16px; cursor: pointer; color: #334155; }
+    .chip-btn:hover { background: #e2e8f0; color: #0f172a; }
+
+    .btn { padding: 10px 14px; font-size: 13px; font-weight: 800; border-radius: 8px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; transition: transform 0.05s ease; }
+    .btn:active { transform: scale(0.98); }
     .btn-orange { background: var(--accent); color: #fff; }
     .btn-orange:hover { filter: brightness(1.08); }
     .btn-outline { background: #fff; border-color: #cbd5e1; color: #334155; }
+    .btn-outline:hover { background: #f8fafc; }
     .btn-green { background: var(--success); color: #fff; }
     .btn-red { background: var(--danger); color: #fff; }
 
-    .table-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    /* Search & Filter Toolbar */
+    .table-toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+    .search-input-wrap { flex: 1; min-width: 180px; position: relative; }
+    .search-input-wrap input { width: 100%; padding: 8px 10px 8px 30px; border: 1.5px solid #cbd5e1; border-radius: 7px; font-size: 12px; outline: none; }
+    .search-input-wrap input:focus { border-color: var(--primary); }
+    .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.5; }
+
+    .filter-pills { display: flex; gap: 4px; }
+    .fpill { font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; color: #475569; }
+    .fpill.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+
+    /* Tables */
     .table-container { 
       width: 100%; 
       overflow-x: auto; 
       -webkit-overflow-scrolling: touch; 
-      max-height: 480px; 
-      border: 1px solid var(--border); 
+      max-height: 520px; 
+      border: 1.5px solid var(--border); 
       border-radius: 8px; 
       display: block; 
     }
     table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-    table.data-table th { position: sticky; top: 0; background: #0f172a; color: #fff; padding: 9px 10px; text-align: left; font-weight: 700; font-size: 11.5px; }
-    table.data-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: #334155; white-space: nowrap; }
+    table.data-table th { position: sticky; top: 0; background: #0f172a; color: #fff; padding: 9px 10px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; }
+    table.data-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); color: #334155; white-space: nowrap; }
     table.data-table tr:nth-child(even) { background: #f8fafc; }
+    table.data-table tr:hover { background: #f1f5f9; }
     
-    .status-pill { font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 12px; display: inline-block; cursor: pointer; }
+    .status-badge { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; }
     .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
-    .cat-pill { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+    .action-icon-btn { background: none; border: none; cursor: pointer; font-size: 15px; padding: 3px 5px; border-radius: 4px; }
+    .action-icon-btn:hover { background: #e2e8f0; }
 
     /* Modal Styles */
     .modal-backdrop {
@@ -142,7 +169,7 @@
       border-radius: 16px;
       max-width: 440px;
       width: 100%;
-      padding: 24px 20px;
+      padding: 22px 20px;
       text-align: center;
       position: relative;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
@@ -159,11 +186,11 @@
       cursor: pointer;
     }
     .qr-slot {
-      margin: 16px auto;
+      margin: 14px auto;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 200px;
+      min-height: 190px;
       padding: 10px;
       background: #f8fafc;
       border: 1px solid var(--border);
@@ -171,17 +198,11 @@
       width: fit-content;
     }
 
-    .editorial-content { margin-top: 36px; background: #fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--border); font-size: 14px; line-height: 1.7; color: #334155; width: 100%; }
-    .editorial-content h2 { font-size: 19px; font-weight: 800; color: #0f172a; margin: 26px 0 10px 0; }
-    .editorial-content h2:first-child { margin-top: 0; }
-    .editorial-content p { margin-bottom: 14px; }
-    .editorial-content ul { margin: 0 0 18px 20px; }
-    .editorial-content li { margin-bottom: 6px; }
-
     footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 36px; width: 100%; }
     footer a { color: var(--text-muted); text-decoration: none; margin: 0 6px; }
     footer a:hover { color: var(--primary); }
 
+    /* Mobile UX Optimizations */
     @media (max-width: 880px) {
       .app-layout { grid-template-columns: 1fr; }
       .container { padding: 0 10px; }
@@ -191,11 +212,13 @@
 
     @media (max-width: 480px) {
       .metric-grid { grid-template-columns: 1fr; }
-      .mode-tab-btn { font-size: 12px; padding: 8px 6px; }
+      .table-toolbar { flex-direction: column; align-items: stretch; }
+      .filter-pills { width: 100%; justify-content: space-between; }
+      .fpill { flex: 1; text-align: center; }
     }
 
     @media print {
-      header, footer, .back-link, .mode-tab-bar, .app-layout > div:first-child, .table-actions, .editorial-content, .modal-backdrop { display: none !important; }
+      header, footer, .back-link, .mode-tab-bar, .app-layout > div:first-child, .table-toolbar, .modal-backdrop { display: none !important; }
       .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
       .panel { border: none !important; padding: 0 !important; }
       .table-container { max-height: none !important; overflow: visible !important; border: 1px solid #333 !important; }
@@ -209,7 +232,7 @@
     <a href="/" class="brand">
       <img src="/logo.png" alt="SheetBox Logo" />
       <div>
-        <span style="font-weight: 700; font-size: 16px;">SheetBox</span>
+        <span style="font-weight: 800; font-size: 16px;">SheetBox</span>
         <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
       </div>
     </a>
@@ -223,116 +246,136 @@
     <a href="/" class="back-link">&larr; Back to SheetBox Tools</a>
 
     <h1 class="hero-title">Festival Chanda & Event Expense Tracker</h1>
-    <p class="hero-sub">Plan budgets, record member contributions, track vendor expenses, and sync live between your phone and laptop.</p>
+    <p class="hero-sub">Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.</p>
 
-    <!-- Top Summary Cards -->
+    <!-- Top Key Metrics Strip -->
     <div class="metric-grid">
       <div class="metric-card">
         <div class="metric-label">Target Budget</div>
         <div class="metric-val" id="metricTarget">₹0</div>
         <div class="metric-sub" id="metricPurpose">Event / Society Fund</div>
       </div>
-      <div class="metric-card">
+      <div class="metric-card" style="border-left: 4px solid var(--success);">
         <div class="metric-label">Total Collected</div>
         <div class="metric-val" id="metricCollected" style="color: var(--success);">₹0</div>
-        <div class="metric-sub" id="metricPaidCount">0 contributors paid</div>
+        <div class="metric-sub" id="metricPaidCount">0 paid members</div>
       </div>
-      <div class="metric-card">
+      <div class="metric-card" style="border-left: 4px solid var(--danger);">
         <div class="metric-label">Total Spent</div>
         <div class="metric-val" id="metricSpent" style="color: var(--danger);">₹0</div>
-        <div class="metric-sub" id="metricExpenseCount">0 expense entries</div>
+        <div class="metric-sub" id="metricExpenseCount">0 bills logged</div>
       </div>
-      <div class="metric-card">
+      <div class="metric-card" id="metricBalanceCard" style="border-left: 4px solid var(--primary);">
         <div class="metric-label">Net Balance in Hand</div>
         <div class="metric-val" id="metricNetBalance">₹0</div>
-        <div class="metric-sub" id="metricNetSub">Collected vs Spent</div>
+        <div class="metric-sub" id="metricNetSub">Surplus / Deficit</div>
       </div>
     </div>
 
-    <!-- Progress Bar -->
-    <div class="progress-wrapper">
-      <div class="progress-header">
-        <span>Collection Target Progress</span>
+    <!-- Collection Progress Bar -->
+    <div class="progress-box">
+      <div class="progress-top">
+        <span>Collection Target Achieved</span>
         <span id="progressPercentage">0%</span>
       </div>
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progressBarFill"></div>
+      <div class="progress-bg">
+        <div class="progress-bar" id="progressBarFill"></div>
       </div>
     </div>
 
-    <!-- Tab Buttons -->
+    <!-- Mode Selector Tabs -->
     <div class="mode-tab-bar">
       <button class="mode-tab-btn active" id="tabDonors" onclick="switchMode('donors')">
-        👥 1. Collections (Chanda)
+        👥 1. Collections Register
       </button>
       <button class="mode-tab-btn" id="tabExpenses" onclick="switchMode('expenses')">
-        💸 2. Expenses Ledger
+        💸 2. Event Expenses
       </button>
     </div>
 
-    <!-- 1. DONORS TAB -->
+    <!-- 1. COLLECTIONS VIEW -->
     <div id="viewDonors" class="app-layout">
       <div>
         <div class="panel">
-          <h3 class="panel-title">1. Event Configuration</h3>
-          <div class="form-group">
-            <label>Event / Committee Name</label>
-            <input type="text" id="inEventName" class="input-field" placeholder="e.g. Bal Gopal Mitra Mandal" value="Ganesh Utsav Samiti" />
-          </div>
-          <div class="form-group">
-            <label>Target Budget (₹)</label>
-            <input type="number" id="inTargetBudget" class="input-field" placeholder="100000" value="75000" min="100" />
+          <div class="panel-title">
+            <span>1. Quick Add Member</span>
+            <button type="button" class="chip-btn" id="btnLoadSample">⚡ Sample</button>
           </div>
 
-          <h3 class="panel-title" style="margin-top: 18px;">2. Add Contributor</h3>
           <div class="form-group">
-            <label>Donor / Member Name</label>
-            <input type="text" id="inDonorName" class="input-field" placeholder="e.g. Ramesh Kulkarni" />
+            <label>Member / Contributor Name *</label>
+            <input type="text" id="inDonorName" class="input-field" placeholder="e.g. Ramesh Kulkarni" autocomplete="off" />
           </div>
+
           <div class="form-group">
             <label>Flat / Shop / Unit No.</label>
             <input type="text" id="inUnitNo" class="input-field" placeholder="e.g. 402 / Shop 3" />
           </div>
+
           <div class="form-group">
-            <label>Contribution Amount (₹)</label>
-            <input type="number" id="inAmount" class="input-field" placeholder="1000" value="1000" min="10" />
+            <label>Pledged Amount (₹) *</label>
+            <input type="number" id="inAmount" class="input-field" placeholder="1000" value="1000" min="1" />
+            <!-- Quick Amount Chips for Mobile -->
+            <div class="quick-chips">
+              <span class="chip-btn" onclick="setQuickAmount(500)">+ ₹500</span>
+              <span class="chip-btn" onclick="setQuickAmount(1000)">+ ₹1,000</span>
+              <span class="chip-btn" onclick="setQuickAmount(2100)">+ ₹2,100</span>
+              <span class="chip-btn" onclick="setQuickAmount(5100)">+ ₹5,100</span>
+            </div>
           </div>
+
           <div class="form-group">
-            <label>Status</label>
+            <label>Payment Status</label>
             <select id="inStatus" class="input-field">
-              <option value="Paid">Paid</option>
-              <option value="Pending">Pending</option>
+              <option value="Paid">✓ Paid (Cash / Online)</option>
+              <option value="Pending">⏳ Pending (Pledged Only)</option>
             </select>
           </div>
 
-          <div style="display: flex; gap: 8px; margin-top: 12px;">
-            <button type="button" class="btn btn-orange" style="flex: 1;" id="btnAddDonor">+ Add Member</button>
-            <button type="button" class="btn btn-outline" id="btnLoadSample">⚡ Sample</button>
-          </div>
+          <button type="button" class="btn btn-orange" style="width: 100%; margin-top: 4px;" id="btnAddDonor">
+            + Save Contributor
+          </button>
         </div>
 
+        <!-- Committee Settings & Split Estimator (Collapsible Panel) -->
         <div class="panel" style="margin-top: 14px;">
-          <h3 class="panel-title">Equal Split Estimator</h3>
-          <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
-            Divide target budget equally among all members:
-          </p>
-          <div class="form-group">
-            <label>Number of Flats / Families</label>
-            <input type="number" id="inTotalFlats" class="input-field" placeholder="50" value="50" min="1" />
+          <div class="panel-title">
+            <span>⚙️ Budget & Split Settings</span>
           </div>
-          <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; font-size: 12px;">
-            Equal Contribution: <strong id="outEqualShare" style="color: var(--accent); font-size: 14px;">₹1,500</strong> / member
+          <div class="form-group">
+            <label>Event / Mandal Name</label>
+            <input type="text" id="inEventName" class="input-field" placeholder="e.g. Bal Gopal Mitra Mandal" />
+          </div>
+          <div class="form-group">
+            <label>Target Budget Goal (₹)</label>
+            <input type="number" id="inTargetBudget" class="input-field" placeholder="e.g. 50000" min="0" />
+          </div>
+          <div class="form-group">
+            <label>Total Families / Flats in Society</label>
+            <input type="number" id="inTotalFlats" class="input-field" placeholder="50" min="1" />
+          </div>
+          <div style="background: #f1f5f9; padding: 10px; border-radius: 7px; font-size: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #475569; font-weight: 600;">Equal Member Share:</span>
+            <strong id="outEqualShare" style="color: var(--accent); font-size: 15px;">₹0</strong>
           </div>
         </div>
       </div>
 
+      <!-- Donors Table & Search Bar -->
       <div class="panel">
-        <div class="table-actions">
-          <strong style="font-size: 14px;">Collection Register (<span id="outDonorCount">0</span>)</strong>
-          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-            <button type="button" class="btn btn-green" id="btnExportExcel">📊 Export Full Excel</button>
-            <button type="button" class="btn btn-outline" onclick="openSyncModal()">📲 Sync / Share</button>
-            <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchDonor" placeholder="Search by name or flat..." oninput="filterDonorsTable()" />
+          </div>
+          <div class="filter-pills">
+            <button type="button" class="fpill active" onclick="setDonorFilter('all', this)">All (<span id="countAll">0</span>)</button>
+            <button type="button" class="fpill" onclick="setDonorFilter('Paid', this)">Paid (<span id="countPaid">0</span>)</button>
+            <button type="button" class="fpill" onclick="setDonorFilter('Pending', this)">Pending (<span id="countPending">0</span>)</button>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn-green" style="padding: 6px 10px; font-size: 11.5px;" id="btnExportExcel">📊 Excel</button>
+            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()">🖨️ Print</button>
           </div>
         </div>
 
@@ -340,37 +383,39 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 40px;">#</th>
-                <th>Member / Donor</th>
+                <th style="width: 36px;">#</th>
+                <th>Contributor</th>
                 <th>Flat / Unit</th>
-                <th style="width: 80px;">Date</th>
-                <th>Pledged (₹)</th>
+                <th>Amount (₹)</th>
                 <th>Status</th>
-                <th style="width: 50px; text-align: center;">Action</th>
+                <th style="width: 70px; text-align: center;">Receipt / Del</th>
               </tr>
             </thead>
             <tbody id="donorsTableBody"></tbody>
           </table>
         </div>
-        <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
-          💡 Tip: Click on any <strong>Status pill</strong> to toggle Paid vs. Pending immediately.
-        </p>
+        <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+          <span>💡 Tap status pill to switch between <strong>Paid</strong> and <strong>Pending</strong>.</span>
+          <span id="filteredStats"></span>
+        </div>
       </div>
     </div>
 
-    <!-- 2. EXPENSES TAB -->
+    <!-- 2. EXPENSES VIEW -->
     <div id="viewExpenses" class="app-layout" style="display: none;">
       <div>
         <div class="panel">
-          <h3 class="panel-title">Log Event Expense</h3>
+          <div class="panel-title">
+            <span>Log Vendor Bill / Expense</span>
+          </div>
           
           <div class="form-group">
-            <label>Expense Description / Item</label>
-            <input type="text" id="inExpItem" class="input-field" placeholder="e.g. Pandal Setup, Sound System" />
+            <label>Item Description *</label>
+            <input type="text" id="inExpItem" class="input-field" placeholder="e.g. Mandap Stage, Sound System" />
           </div>
 
           <div class="form-group">
-            <label>Category</label>
+            <label>Expense Category</label>
             <select id="inExpCategory" class="input-field">
               <option value="Pandal & Decoration">Pandal & Decoration</option>
               <option value="Idol / Murti">Idol / Murti</option>
@@ -384,12 +429,12 @@
           </div>
 
           <div class="form-group">
-            <label>Amount Spent (₹)</label>
-            <input type="number" id="inExpAmount" class="input-field" placeholder="5000" min="1" />
+            <label>Amount Spent (₹) *</label>
+            <input type="number" id="inExpAmount" class="input-field" placeholder="e.g. 5000" min="1" />
           </div>
 
           <div class="form-group">
-            <label>Paid To / Vendor Name</label>
+            <label>Vendor Name / Paid To</label>
             <input type="text" id="inExpPaidTo" class="input-field" placeholder="e.g. Ramesh Decorators" />
           </div>
 
@@ -402,17 +447,18 @@
             </select>
           </div>
 
-          <button type="button" class="btn btn-red" style="width: 100%; margin-top: 6px;" id="btnAddExpense">+ Log Expense</button>
+          <button type="button" class="btn btn-red" style="width: 100%; margin-top: 4px;" id="btnAddExpense">
+            + Record Expense
+          </button>
         </div>
       </div>
 
       <div class="panel">
-        <div class="table-actions">
-          <strong style="font-size: 14px;">Expense Register (<span id="outExpenseCount">0</span> entries)</strong>
-          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-            <button type="button" class="btn btn-green" id="btnExportExcelExp">📊 Export Full Excel</button>
-            <button type="button" class="btn btn-outline" onclick="openSyncModal()">📲 Sync / Share</button>
-            <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+        <div class="table-toolbar">
+          <strong style="font-size: 13.5px;">Expense Ledger (<span id="outExpenseCount">0</span>)</strong>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn-green" style="padding: 6px 10px; font-size: 11.5px;" id="btnExportExcelExp">📊 Excel</button>
+            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()">🖨️ Print</button>
           </div>
         </div>
 
@@ -420,21 +466,23 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 40px;">#</th>
+                <th style="width: 36px;">#</th>
                 <th>Expense Item</th>
                 <th>Category</th>
-                <th>Vendor / Paid To</th>
-                <th style="width: 75px;">Date</th>
+                <th>Vendor / Mode</th>
+                <th>Date</th>
                 <th>Amount (₹)</th>
-                <th style="width: 50px; text-align: center;">Action</th>
+                <th style="width: 40px; text-align: center;">Del</th>
               </tr>
             </thead>
             <tbody id="expensesTableBody"></tbody>
           </table>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; margin-top: 12px; gap: 10px;">
-          <button type="button" class="btn btn-outline" style="font-size: 11px;" onclick="clearAllData()">⚠️ Reset All Data</button>
+        <div style="display: flex; justify-content: flex-end; margin-top: 14px;">
+          <button type="button" class="btn btn-outline" style="font-size: 11px; color: var(--danger); border-color: #fecaca;" onclick="clearAllData()">
+            ⚠️ Reset All Ledger Data
+          </button>
         </div>
       </div>
     </div>
@@ -443,25 +491,20 @@
     <div class="modal-backdrop" id="syncModal">
       <div class="modal-box">
         <button type="button" class="modal-close-btn" onclick="closeSyncModal()">&times;</button>
-        <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 6px; color: #0f172a;">Sync to Another Device</h3>
-        <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.4;">
-          Scan this QR code with your phone/device camera, or copy and open the link on any browser to transfer your data instantly.
+        <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 4px; color: #0f172a;">Sync Across Devices</h3>
+        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+          Scan with your phone/device camera or share the direct link to open this exact ledger on another computer.
         </p>
         
         <div class="qr-slot" id="qrContainer"></div>
 
         <div style="display: flex; gap: 8px; margin-top: 10px;">
-          <button type="button" class="btn btn-orange" style="flex: 1;" id="btnCopySyncLink">📋 Copy Sync Link</button>
+          <button type="button" class="btn btn-orange" style="flex: 1;" id="btnCopySyncLink">📋 Copy Link</button>
           <button type="button" class="btn btn-outline" style="flex: 1;" id="btnShareWhatsApp">💬 WhatsApp</button>
         </div>
         <div id="copySuccessMsg" style="display: none; font-size: 11.5px; color: var(--success); font-weight: 700; margin-top: 8px;">✓ Sync Link Copied to Clipboard!</div>
       </div>
     </div>
-
-    <article class="editorial-content">
-      <h2>Cross-Device Community Financial Accounting</h2>
-      <p>Managing collections across festivals like Ganesh Utsav or society repairs requires entering pledges on the go (from a phone) and later auditing or printing from a laptop. SheetBox enables 100% private, server-free sync: the entire ledger compresses into a single QR code or URL string that loads effortlessly across any device.</p>
-    </article>
   </main>
 
   <footer>
@@ -481,12 +524,15 @@
 
     let state = {
       eventName: "Ganesh Utsav Samiti",
-      targetBudget: 75000,
+      targetBudget: 50000,
       totalFlats: 50,
       donors: [],
       expenses: []
     };
 
+    let activeFilter = 'all';
+
+    // Inputs
     const inEventName = document.getElementById("inEventName");
     const inTargetBudget = document.getElementById("inTargetBudget");
     const inTotalFlats = document.getElementById("inTotalFlats");
@@ -501,6 +547,7 @@
     const inExpPaidTo = document.getElementById("inExpPaidTo");
     const inExpMode = document.getElementById("inExpMode");
 
+    // Metrics
     const metricTarget = document.getElementById("metricTarget");
     const metricCollected = document.getElementById("metricCollected");
     const metricSpent = document.getElementById("metricSpent");
@@ -509,15 +556,20 @@
     const metricPurpose = document.getElementById("metricPurpose");
     const metricPaidCount = document.getElementById("metricPaidCount");
     const metricExpenseCount = document.getElementById("metricExpenseCount");
+    const metricBalanceCard = document.getElementById("metricBalanceCard");
 
     const progressBarFill = document.getElementById("progressBarFill");
     const progressPercentage = document.getElementById("progressPercentage");
     const outEqualShare = document.getElementById("outEqualShare");
-    const outDonorCount = document.getElementById("outDonorCount");
     const outExpenseCount = document.getElementById("outExpenseCount");
     const donorsTableBody = document.getElementById("donorsTableBody");
     const expensesTableBody = document.getElementById("expensesTableBody");
 
+    const countAll = document.getElementById("countAll");
+    const countPaid = document.getElementById("countPaid");
+    const countPending = document.getElementById("countPending");
+
+    // Tab Switcher
     window.switchMode = (mode) => {
       const isDonors = mode === 'donors';
       document.getElementById("tabDonors").classList.toggle("active", isDonors);
@@ -526,6 +578,12 @@
       document.getElementById("viewExpenses").style.display = !isDonors ? "grid" : "none";
     };
 
+    // Quick Amount Chip Helper
+    window.setQuickAmount = (val) => {
+      inAmount.value = val;
+    };
+
+    // Check URL Sync
     function checkIncomingUrlSync() {
       try {
         const hash = window.location.hash;
@@ -573,15 +631,17 @@
     }
 
     function populateFormFields() {
-      inEventName.value = state.eventName || "";
-      inTargetBudget.value = state.targetBudget || "";
-      inTotalFlats.value = state.totalFlats || "";
+      inEventName.value = state.eventName !== undefined ? state.eventName : "Ganesh Utsav Samiti";
+      inTargetBudget.value = state.targetBudget !== undefined ? state.targetBudget : 50000;
+      inTotalFlats.value = state.totalFlats !== undefined ? state.totalFlats : 50;
     }
 
     function saveState() {
       state.eventName = inEventName.value.trim();
-      state.targetBudget = parseFloat(inTargetBudget.value) || 0;
-      state.totalFlats = parseInt(inTotalFlats.value) || 1;
+      const parsedBudget = parseFloat(inTargetBudget.value);
+      if (!isNaN(parsedBudget)) state.targetBudget = parsedBudget;
+      const parsedFlats = parseInt(inTotalFlats.value);
+      if (!isNaN(parsedFlats)) state.totalFlats = parsedFlats;
 
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -591,19 +651,26 @@
     }
 
     function calculateAll() {
-      const target = parseFloat(inTargetBudget.value) || 0;
+      const target = state.targetBudget !== undefined ? state.targetBudget : (parseFloat(inTargetBudget.value) || 0);
       metricTarget.textContent = `₹${target.toLocaleString('en-IN')}`;
       metricPurpose.textContent = inEventName.value.trim() || "Event Fund";
 
       let totalCollected = 0;
       let paidCount = 0;
+      let pendingCount = 0;
 
       state.donors.forEach(d => {
         if (d.status === "Paid") {
           totalCollected += d.amount;
           paidCount++;
+        } else {
+          pendingCount++;
         }
       });
+
+      countAll.textContent = state.donors.length;
+      countPaid.textContent = paidCount;
+      countPending.textContent = pendingCount;
 
       let totalSpent = 0;
       state.expenses.forEach(e => {
@@ -617,54 +684,79 @@
       metricPaidCount.textContent = `${paidCount} member${paidCount === 1 ? '' : 's'} paid`;
 
       metricSpent.textContent = `₹${totalSpent.toLocaleString('en-IN')}`;
-      metricExpenseCount.textContent = `${state.expenses.length} expenses logged`;
+      metricExpenseCount.textContent = `${state.expenses.length} bills logged`;
 
       metricNetBalance.textContent = `₹${netBalance.toLocaleString('en-IN')}`;
       if (netBalance >= 0) {
         metricNetBalance.style.color = "var(--success)";
         metricNetSub.textContent = "Surplus Cash in Hand";
+        metricBalanceCard.style.borderLeftColor = "var(--success)";
       } else {
         metricNetBalance.style.color = "var(--danger)";
-        metricNetSub.textContent = "Deficit (Expenses exceed collected funds)";
+        metricNetSub.textContent = "Deficit (Shortfall in cash)";
+        metricBalanceCard.style.borderLeftColor = "var(--danger)";
       }
 
       progressBarFill.style.width = `${pct}%`;
       progressPercentage.textContent = `${pct}% of target`;
 
-      const flats = parseInt(inTotalFlats.value) || 1;
+      const flats = state.totalFlats || (parseInt(inTotalFlats.value) || 1);
       const equalShare = target > 0 ? Math.ceil(target / flats) : 0;
       outEqualShare.textContent = `₹${equalShare.toLocaleString('en-IN')}`;
 
       renderDonorsTable();
       renderExpensesTable();
-      saveState();
     }
 
+    window.setDonorFilter = (filter, el) => {
+      activeFilter = filter;
+      document.querySelectorAll(".fpill").forEach(p => p.classList.remove("active"));
+      el.classList.add("active");
+      renderDonorsTable();
+    };
+
+    window.filterDonorsTable = () => {
+      renderDonorsTable();
+    };
+
     function renderDonorsTable() {
-      outDonorCount.textContent = state.donors.length;
+      const q = (document.getElementById("searchDonor") ? document.getElementById("searchDonor").value : "").toLowerCase().trim();
       donorsTableBody.innerHTML = "";
 
-      if (state.donors.length === 0) {
-        donorsTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 18px;">No members added yet.</td></tr>`;
+      let visibleList = state.donors.map((d, index) => ({ ...d, originalIndex: index }));
+
+      if (activeFilter !== 'all') {
+        visibleList = visibleList.filter(d => d.status === activeFilter);
+      }
+
+      if (q) {
+        visibleList = visibleList.filter(d => 
+          (d.name && d.name.toLowerCase().includes(q)) || 
+          (d.unit && d.unit.toLowerCase().includes(q))
+        );
+      }
+
+      if (visibleList.length === 0) {
+        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 22px;">No members found. Add your first contributor on the left.</td></tr>`;
         return;
       }
 
-      state.donors.forEach((d, idx) => {
+      visibleList.forEach((d, idx) => {
         const tr = document.createElement("tr");
         const isPaid = d.status === "Paid";
         tr.innerHTML = `
           <td>${idx + 1}</td>
-          <td style="font-weight: 600; color: #0f172a;">${d.name}</td>
-          <td>${d.unit}</td>
-          <td style="font-size: 11px; color: var(--text-muted);">${d.dateAdded || "—"}</td>
-          <td style="font-weight: 700;">₹${d.amount.toLocaleString('en-IN')}</td>
+          <td style="font-weight: 700; color: #0f172a;">${d.name}</td>
+          <td style="color: #475569;">${d.unit}</td>
+          <td style="font-weight: 800;">₹${d.amount.toLocaleString('en-IN')}</td>
           <td>
-            <span class="status-pill ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${idx})" title="Click to toggle">
+            <span class="status-badge ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${d.originalIndex})" title="Tap to toggle status">
               ${isPaid ? '✓ Paid' : '⏳ Pending'}
             </span>
           </td>
-          <td style="text-align: center;">
-            <button type="button" style="background: none; border: none; color: #ef4444; font-weight: 700; cursor: pointer; font-size: 14px;" onclick="removeDonor(${idx})">&times;</button>
+          <td style="text-align: center; white-space: nowrap;">
+            <button type="button" class="action-icon-btn" onclick="sendWhatsAppReceipt(${d.originalIndex})" title="Send WhatsApp Receipt">💬</button>
+            <button type="button" class="action-icon-btn" style="color: #dc2626;" onclick="removeDonor(${d.originalIndex})" title="Remove Member">&times;</button>
           </td>
         `;
         donorsTableBody.appendChild(tr);
@@ -676,7 +768,7 @@
       expensesTableBody.innerHTML = "";
 
       if (state.expenses.length === 0) {
-        expensesTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 18px;">No expenses logged yet.</td></tr>`;
+        expensesTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 22px;">No bills recorded yet. Add your vendor costs on the left.</td></tr>`;
         return;
       }
 
@@ -684,13 +776,13 @@
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${idx + 1}</td>
-          <td style="font-weight: 600; color: #0f172a;">${e.item}</td>
-          <td><span class="cat-pill">${e.category}</span></td>
+          <td style="font-weight: 700; color: #0f172a;">${e.item}</td>
+          <td><span style="font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; color: #475569;">${e.category}</span></td>
           <td>${e.paidTo || "—"} <span style="font-size: 10px; color: var(--text-muted);">(${e.mode})</span></td>
           <td style="font-size: 11px; color: var(--text-muted);">${e.date}</td>
-          <td style="font-weight: 700; color: var(--danger);">₹${e.amount.toLocaleString('en-IN')}</td>
+          <td style="font-weight: 800; color: var(--danger);">₹${e.amount.toLocaleString('en-IN')}</td>
           <td style="text-align: center;">
-            <button type="button" style="background: none; border: none; color: #ef4444; font-weight: 700; cursor: pointer; font-size: 14px;" onclick="removeExpense(${idx})">&times;</button>
+            <button type="button" class="action-icon-btn" style="color: #dc2626;" onclick="removeExpense(${idx})" title="Delete bill">&times;</button>
           </td>
         `;
         expensesTableBody.appendChild(tr);
@@ -699,21 +791,41 @@
 
     window.toggleStatus = (idx) => {
       state.donors[idx].status = state.donors[idx].status === "Paid" ? "Pending" : "Paid";
+      saveState();
       calculateAll();
     };
 
     window.removeDonor = (idx) => {
       if (confirm(`Remove ${state.donors[idx].name}?`)) {
         state.donors.splice(idx, 1);
+        saveState();
         calculateAll();
       }
     };
 
     window.removeExpense = (idx) => {
-      if (confirm(`Remove expense "${state.expenses[idx].item}"?`)) {
+      if (confirm(`Remove bill for "${state.expenses[idx].item}"?`)) {
         state.expenses.splice(idx, 1);
+        saveState();
         calculateAll();
       }
+    };
+
+    // Send Polite Receipt via WhatsApp
+    window.sendWhatsAppReceipt = (idx) => {
+      const d = state.donors[idx];
+      const eventName = state.eventName || "Festival Event";
+      const statusText = d.status === "Paid" ? "Received with Thanks 🙏" : "Payment Awaited";
+      
+      const msg = `*${eventName} — Contribution Receipt*\n\n` +
+        `👤 *Name:* ${d.name}\n` +
+        `🏢 *Unit/Flat:* ${d.unit || "—"}\n` +
+        `💰 *Amount:* ₹${d.amount.toLocaleString('en-IN')}\n` +
+        `📌 *Status:* ${statusText}\n` +
+        `🗓 *Date:* ${d.dateAdded || new Date().toLocaleDateString('en-IN')}\n\n` +
+        `Thank you for your generous support! ✨`;
+
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
     };
 
     document.getElementById("btnAddDonor").onclick = () => {
@@ -723,12 +835,14 @@
       const status = inStatus.value;
       const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
 
-      if (!name) return alert("Please enter donor name.");
+      if (!name) return alert("Please enter contributor name.");
+      if (amount <= 0) return alert("Please enter an amount.");
 
-      state.donors.push({ name, unit, amount, status, dateAdded: today });
+      state.donors.unshift({ name, unit, amount, status, dateAdded: today });
       inDonorName.value = "";
       inUnitNo.value = "";
       inDonorName.focus();
+      saveState();
       calculateAll();
     };
 
@@ -743,30 +857,33 @@
       if (!item) return alert("Please enter expense description.");
       if (amount <= 0) return alert("Please enter a valid expense amount.");
 
-      state.expenses.push({ item, category, amount, paidTo, mode, date: today });
+      state.expenses.unshift({ item, category, amount, paidTo, mode, date: today });
       inExpItem.value = "";
       inExpAmount.value = "";
       inExpPaidTo.value = "";
       inExpItem.focus();
+      saveState();
       calculateAll();
     };
 
     document.getElementById("btnLoadSample").onclick = () => {
-      inEventName.value = "Ganesh Utsav Mandal 2026";
-      inTargetBudget.value = 85000;
-      inTotalFlats.value = 35;
+      state.eventName = "Ganesh Utsav Mandal 2026";
+      state.targetBudget = 85000;
+      state.totalFlats = 35;
       state.donors = [
-        { name: "Rahul Chauhan", unit: "Flat 402", amount: 2500, status: "Paid", dateAdded: "Day 1" },
-        { name: "Amitabh Verma", unit: "Flat 101", amount: 2000, status: "Paid", dateAdded: "Day 1" },
-        { name: "Sachin Tendulkar", unit: "Penthouse", amount: 5000, status: "Paid", dateAdded: "Day 1" },
-        { name: "Pooja Hegde", unit: "Flat 203", amount: 2000, status: "Pending", dateAdded: "Day 2" },
-        { name: "Sunita Deshmukh", unit: "Flat 304", amount: 2000, status: "Paid", dateAdded: "Day 2" }
+        { name: "Rahul Chauhan", unit: "Flat 402", amount: 2500, status: "Paid", dateAdded: "Today" },
+        { name: "Amitabh Verma", unit: "Flat 101", amount: 2000, status: "Paid", dateAdded: "Today" },
+        { name: "Sachin Tendulkar", unit: "Penthouse", amount: 5000, status: "Paid", dateAdded: "Today" },
+        { name: "Pooja Hegde", unit: "Flat 203", amount: 2000, status: "Pending", dateAdded: "Yesterday" },
+        { name: "Sunita Deshmukh", unit: "Flat 304", amount: 2000, status: "Paid", dateAdded: "Yesterday" }
       ];
       state.expenses = [
-        { item: "Pandal Structure", category: "Pandal & Decoration", amount: 22000, paidTo: "Omkar Mandap", mode: "UPI / Online", date: "Day 1" },
-        { item: "Clay Ganpati Murti Advance", category: "Idol / Murti", amount: 8500, paidTo: "Pen Murti Arts", mode: "Cash", date: "Day 1" },
-        { item: "PA Sound & Mic System", category: "Sound & Lighting", amount: 7000, paidTo: "Vicky Sounds", mode: "UPI / Online", date: "Day 2" }
+        { item: "Pandal Structure", category: "Pandal & Decoration", amount: 22000, paidTo: "Omkar Mandap", mode: "UPI / Online", date: "Today" },
+        { item: "Clay Ganpati Murti Advance", category: "Idol / Murti", amount: 8500, paidTo: "Pen Murti Arts", mode: "Cash", date: "Today" },
+        { item: "PA Sound & Mic System", category: "Sound & Lighting", amount: 7000, paidTo: "Vicky Sounds", mode: "UPI / Online", date: "Yesterday" }
       ];
+      populateFormFields();
+      saveState();
       calculateAll();
     };
 
@@ -789,8 +906,8 @@
       qrContainer.innerHTML = "";
       syncQrInstance = new QRCode(qrContainer, {
         text: syncUrl,
-        width: 180,
-        height: 180,
+        width: 170,
+        height: 170,
         colorDark: "#0f172a",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.L
@@ -856,13 +973,19 @@
       if (confirm("Reset both collections and expenses? This cannot be undone.")) {
         state.donors = [];
         state.expenses = [];
+        state.targetBudget = 50000;
+        state.totalFlats = 50;
         localStorage.removeItem(STORAGE_KEY);
+        populateFormFields();
         calculateAll();
       }
     };
 
     [inEventName, inTargetBudget, inTotalFlats].forEach(el => {
-      el.addEventListener("input", calculateAll);
+      el.addEventListener("input", () => {
+        saveState();
+        calculateAll();
+      });
     });
 
     loadSavedState();
