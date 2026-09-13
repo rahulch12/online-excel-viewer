@@ -805,38 +805,22 @@
         if (raw) {
           const parsed = JSON.parse(raw);
           if (parsed && typeof parsed === "object") {
-            state = Object.assign(state, parsed);
-            // GUARANTEE: If stored state has empty expenses but user expects mock items or previous data, merge properly
-            if (!state.expenses || state.expenses.length === 0) {
-              state.expenses = [
-                { item: "Pandal Structure", category: "Pandal & Decoration", amount: 450, paidTo: "Omkar Mandap", mode: "Cash", date: "10-Sep" },
-                { item: "Sound System", category: "Sound & Lighting", amount: 350, paidTo: "Vicky Sounds", mode: "Cash", date: "11-Sep" },
-                { item: "Puja Samagri", category: "Puja & Priest", amount: 245, paidTo: "Local Store", mode: "Cash", date: "12-Sep" }
-              ];
-            }
+            // Respect saved state, but if expenses were accidentally stored as empty or missing, retain initial mock items
+            state.eventName = parsed.eventName !== undefined ? parsed.eventName : state.eventName;
+            state.targetBudget = parsed.targetBudget !== undefined ? parsed.targetBudget : state.targetBudget;
+            state.totalFlats = parsed.totalFlats !== undefined ? parsed.totalFlats : state.totalFlats;
+            state.donors = Array.isArray(parsed.donors) ? parsed.donors : state.donors;
+            state.expenses = Array.isArray(parsed.expenses) && parsed.expenses.length > 0 ? parsed.expenses : state.expenses;
           }
         }
       } catch (err) {
         console.warn("Could not read localStorage:", err);
       }
 
-      populateFormFields();
       calculateAll();
     }
 
-    function populateFormFields() {
-      inEventName.value = state.eventName !== undefined ? state.eventName : "Chauhan Family Ganesh Utsav 2026";
-      inTargetBudget.value = state.targetBudget !== undefined ? state.targetBudget : 20000;
-      inTotalFlats.value = state.totalFlats !== undefined ? state.totalFlats : 50;
-    }
-
     function saveState() {
-      state.eventName = inEventName.value.trim();
-      const parsedBudget = parseFloat(inTargetBudget.value);
-      if (!isNaN(parsedBudget)) state.targetBudget = parsedBudget;
-      const parsedFlats = parseInt(inTotalFlats.value);
-      if (!isNaN(parsedFlats)) state.totalFlats = parsedFlats;
-
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (err) {
@@ -845,9 +829,9 @@
     }
 
     function calculateAll() {
-      const target = state.targetBudget !== undefined ? state.targetBudget : (parseFloat(inTargetBudget.value) || 20000);
+      const target = state.targetBudget !== undefined ? state.targetBudget : 20000;
       metricTarget.textContent = `₹${target.toLocaleString('en-IN')}`;
-      metricPurpose.textContent = inEventName.value.trim() || "Ganesh Utsav Samiti";
+      metricPurpose.textContent = state.eventName || "Ganesh Utsav Samiti";
 
       let totalCollected = 0;
       let paidCount = 0;
@@ -894,7 +878,7 @@
       progressBarFill.style.width = `${pct}%`;
       progressPercentage.textContent = `${pct}%`;
 
-      const flats = state.totalFlats || (parseInt(inTotalFlats.value) || 50);
+      const flats = state.totalFlats || 50;
       const equalShare = target > 0 ? Math.ceil(target / flats) : 0;
       outEqualShare.textContent = `₹${equalShare.toLocaleString('en-IN')}`;
 
@@ -1089,56 +1073,6 @@
       document.getElementById("receiptModal").style.display = "none";
     };
 
-    document.getElementById("btnDownloadSlipImg").onclick = async () => {
-      const btn = document.getElementById("btnDownloadSlipImg");
-      const originalText = btn.innerHTML;
-      btn.textContent = "⏳ Generating...";
-      btn.disabled = true;
-
-      try {
-        const slip = document.getElementById("receiptSlipCard");
-        const canvas = await html2canvas(slip, {
-          scale: 2.5,
-          backgroundColor: "#ffffff",
-          useCORS: true
-        });
-
-        const link = document.createElement("a");
-        const donorName = state.donors[currentSelectedDonorIndex]?.name || "Member";
-        link.download = `Receipt-${donorName.replace(/\s+/g, '_')}.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      } catch (err) {
-        alert("Receipt generation failed: " + err.message);
-      } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-      }
-    };
-
-    document.getElementById("btnSendWhatsAppFromModal").onclick = () => {
-      if (currentSelectedDonorIndex !== null) {
-        sendWhatsAppReceiptDirect(currentSelectedDonorIndex);
-      }
-    };
-
-    window.sendWhatsAppReceiptDirect = (idx) => {
-      const d = state.donors[idx];
-      const eventName = state.eventName || "Festival Event";
-      const isPaid = d.status === "Paid";
-
-      const msg = `*${eventName} — Contribution Receipt*\n\n` +
-        `🧾 *Receipt No:* #${String(idx + 1).padStart(3, '0')}\n` +
-        `👤 *Name:* ${d.name}\n` +
-        `🏢 *Unit/Flat:* ${d.unit || "—"}\n` +
-        `💰 *Amount:* ₹${d.amount.toLocaleString('en-IN')}\n` +
-        `📌 *Status:* ${isPaid ? "Received with Thanks 🙏" : "Payment Awaited"}\n` +
-        `🗓 *Date:* ${d.dateAdded || new Date().toLocaleDateString('en-IN')}\n\n` +
-        `Thank you for your generous support! ✨`;
-
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
-    };
-
     document.getElementById("btnAddDonor").onclick = () => {
       const name = inDonorName.value.trim();
       const unit = inUnitNo.value.trim() || "—";
@@ -1161,7 +1095,7 @@
       }
     };
 
-    // EXPENSE ADDITION HANDLER FULLY BOUND & WORKING
+    /* EXPLICITLY BOUND EXPENSE ADDITION */
     document.getElementById("btnAddExpense").onclick = () => {
       const item = inExpItem.value.trim();
       const category = inExpCategory.value;
@@ -1213,25 +1147,6 @@
 
     document.getElementById("btnExportExcel").onclick = exportExcelBoth;
     document.getElementById("btnExportExcelExp").onclick = exportExcelBoth;
-
-    window.clearAllData = () => {
-      if (confirm("Reset both collections and expenses? This cannot be undone.")) {
-        state.donors = [];
-        state.expenses = [];
-        state.targetBudget = 20000;
-        state.totalFlats = 50;
-        localStorage.removeItem(STORAGE_KEY);
-        populateFormFields();
-        calculateAll();
-      }
-    };
-
-    [inEventName, inTargetBudget, inTotalFlats].forEach(el => {
-      el.addEventListener("input", () => {
-        saveState();
-        calculateAll();
-      });
-    });
 
     loadSavedState();
   </script>
