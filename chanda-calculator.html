@@ -48,13 +48,9 @@
       --text: #0f172a;
       --text-muted: #64748b;
       --accent: #ea580c;
-      --accent-soft: #fff7ed;
       --primary: #2563eb;
-      --primary-soft: #eff6ff;
       --success: #16a34a;
-      --success-soft: #f0fdf4;
       --danger: #dc2626;
-      --danger-soft: #fef2f2;
     }
 
     html, body {
@@ -130,9 +126,9 @@
       background: #2563eb;
       color: #fff;
       border: none;
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 6px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 12px;
       cursor: pointer;
     }
@@ -599,7 +595,7 @@
           </div>
           <div style="display: flex; gap: 6px; flex-wrap: wrap;">
             <button type="button" class="btn btn-orange" style="padding: 6px 10px; font-size: 11.5px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
-            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px; display: none;" id="btnUndoRestore" onclick="restorePreviousBackup()">↩️ Restore</button>
+            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px; border-color: #93c5fd; color: #1d4ed8; background: #eff6ff;" id="btnUndoRestore" onclick="restorePreviousBackup()">↩️ Restore Backup</button>
             <button type="button" class="btn btn-green" style="padding: 6px 10px; font-size: 11.5px;" id="btnExportExcel">📊 Excel</button>
             <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
           </div>
@@ -1155,7 +1151,6 @@
     const countAll = document.getElementById("countAll");
     const countPaid = document.getElementById("countPaid");
     const countPending = document.getElementById("countPending");
-    const btnUndoRestore = document.getElementById("btnUndoRestore");
     const restoreBanner = document.getElementById("restoreBanner");
 
     let currentSelectedDonorIndex = null;
@@ -1164,19 +1159,9 @@
       if (state.donors.length > 0 || state.expenses.length > 0) {
         try {
           localStorage.setItem(BACKUP_KEY, JSON.stringify(state));
-          updateRestoreButtonVisibility();
         } catch (e) {
           console.warn("Could not save backup snapshot:", e);
         }
-      }
-    }
-
-    function updateRestoreButtonVisibility() {
-      const backupRaw = localStorage.getItem(BACKUP_KEY);
-      if (backupRaw && btnUndoRestore) {
-        btnUndoRestore.style.display = "inline-flex";
-      } else if (btnUndoRestore) {
-        btnUndoRestore.style.display = "none";
       }
     }
 
@@ -1264,7 +1249,6 @@
 
       populateFormFields();
       calculateAll();
-      updateRestoreButtonVisibility();
     }
 
     function populateFormFields() {
@@ -1729,7 +1713,6 @@
       calculateAll();
 
       restoreBanner.style.display = "flex";
-      updateRestoreButtonVisibility();
     };
 
     let syncQrInstance = null;
@@ -1829,7 +1812,6 @@
         localStorage.removeItem(STORAGE_KEY);
         populateFormFields();
         calculateAll();
-        updateRestoreButtonVisibility();
       }
     };
 
