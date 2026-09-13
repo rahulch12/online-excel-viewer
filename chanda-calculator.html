@@ -15,6 +15,12 @@
 
   <!-- SheetJS for Excel Export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  
+  <!-- LZ-String for URL Payload Compression -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+
+  <!-- QRCode.js for Screen Sync -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <meta charset="UTF-8" />
   <!-- Fixed Viewport: Prevents auto-zoom jumps and horizontal page drifting -->
@@ -26,8 +32,8 @@
 
   <title>Chanda, Donation & Expense Calculator | SheetBox</title>
   <meta name="title" content="Chanda, Donation & Expense Calculator | SheetBox" />
-  <meta name="description" content="Manage festival chanda collections, track event expenses, calculate remaining balance/shortfall, and export complete audit registers to Excel." />
-  <meta name="keywords" content="chanda calculator, donation expense tracker, festival budget planner, ganesh chanda excel register, society maintenance expense ledger, sheetbox" />
+  <meta name="description" content="Manage festival chanda collections, track event expenses, sync across phone and laptop via QR code, and export complete audit registers to Excel." />
+  <meta name="keywords" content="chanda calculator, donation expense tracker, sync chanda data qr code, ganesh chanda excel register, society maintenance ledger, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
 
   <style>
@@ -59,7 +65,10 @@
     header { background-color: var(--header-bg); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
     .brand img { width: 32px; height: 32px; border-radius: 8px; }
-    .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
+    .header-btns { display: flex; gap: 8px; align-items: center; }
+    .sync-btn { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25); font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+    .sync-btn:hover { background: rgba(255,255,255,0.22); }
+    .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 20px; text-decoration: none; }
 
     .container { max-width: 1180px; width: 100%; margin: 16px auto; padding: 0 14px; flex: 1; }
     .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 12px; }
@@ -121,8 +130,52 @@
     .status-pill { font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 12px; display: inline-block; cursor: pointer; }
     .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
-
     .cat-pill { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+    /* Sync Modal Styles */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-box {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 440px;
+      width: 100%;
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: 700;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+    .qr-slot {
+      margin: 16px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+      padding: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: fit-content;
+    }
 
     /* Editorial & FAQ */
     .editorial-content { margin-top: 36px; background: #fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--border); font-size: 14px; line-height: 1.7; color: #334155; width: 100%; }
@@ -141,33 +194,21 @@
     footer a { color: var(--text-muted); text-decoration: none; margin: 0 6px; }
     footer a:hover { color: var(--primary); }
 
-    /* --- CRITICAL MOBILE REFINEMENTS --- */
+    /* Mobile Refinements */
     @media (max-width: 880px) {
       .app-layout { grid-template-columns: 1fr; }
       .container { padding: 0 10px; }
-      
-      /* Input Font Fix: Stops browser from auto-zooming and shifting page margins on mobile */
-      input, select, textarea {
-        font-size: 16px !important;
-      }
-      
-      .metric-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+      input, select, textarea { font-size: 16px !important; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 480px) {
-      .metric-grid {
-        grid-template-columns: 1fr;
-      }
-      .mode-tab-btn {
-        font-size: 12px;
-        padding: 8px 6px;
-      }
+      .metric-grid { grid-template-columns: 1fr; }
+      .mode-tab-btn { font-size: 12px; padding: 8px 6px; }
     }
 
     @media print {
-      header, footer, .back-link, .mode-tab-bar, .app-layout > div:first-child, .table-actions, .editorial-content { display: none !important; }
+      header, footer, .back-link, .mode-tab-bar, .app-layout > div:first-child, .table-actions, .editorial-content, .modal-backdrop { display: none !important; }
       .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
       .panel { border: none !important; padding: 0 !important; }
       .table-container { max-height: none !important; overflow: visible !important; border: 1px solid #333 !important; }
@@ -185,14 +226,17 @@
         <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
       </div>
     </a>
-    <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn">☕ Support</a>
+    <div class="header-btns">
+      <button type="button" class="sync-btn" id="btnOpenSync">📲 Sync Device</button>
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn">☕ Support</a>
+    </div>
   </header>
 
   <main class="container">
     <a href="/" class="back-link">&larr; Back to SheetBox Tools</a>
 
     <h1 class="hero-title">Chanda, Donation & Expense Calculator</h1>
-    <p class="hero-sub">Plan budgets, collect member contributions, log event expenses, and track net surplus/shortfall in real time.</p>
+    <p class="hero-sub">Plan budgets, collect member contributions, log event expenses, and sync live between your mobile & laptop.</p>
 
     <!-- Top High-Level Financial Metrics -->
     <div class="metric-grid">
@@ -241,7 +285,6 @@
 
     <!-- 1. DONOR / CHANDA VIEW -->
     <div id="viewDonors" class="app-layout">
-      <!-- LEFT: Donor Inputs -->
       <div>
         <div class="panel">
           <h3 class="panel-title">1. Event Configuration</h3>
@@ -296,12 +339,12 @@
         </div>
       </div>
 
-      <!-- RIGHT: Donor Table -->
       <div class="panel">
         <div class="table-actions">
           <strong style="font-size: 14px;">Collection Register (<span id="outDonorCount">0</span>)</strong>
-          <div style="display: flex; gap: 6px;">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
             <button type="button" class="btn btn-green" id="btnExportExcel">📊 Export Full Excel</button>
+            <button type="button" class="btn btn-outline" onclick="openSyncModal()">📲 Sync / Share</button>
             <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
           </div>
         </div>
@@ -330,7 +373,6 @@
 
     <!-- 2. EXPENSES VIEW -->
     <div id="viewExpenses" class="app-layout" style="display: none;">
-      <!-- LEFT: Expense Inputs -->
       <div>
         <div class="panel">
           <h3 class="panel-title">Log Event Expense</h3>
@@ -377,12 +419,12 @@
         </div>
       </div>
 
-      <!-- RIGHT: Expense Table -->
       <div class="panel">
         <div class="table-actions">
           <strong style="font-size: 14px;">Expense Register (<span id="outExpenseCount">0</span> entries)</strong>
-          <div style="display: flex; gap: 6px;">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
             <button type="button" class="btn btn-green" id="btnExportExcelExp">📊 Export Full Excel</button>
+            <button type="button" class="btn btn-outline" onclick="openSyncModal()">📲 Sync / Share</button>
             <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
           </div>
         </div>
@@ -410,24 +452,26 @@
       </div>
     </div>
 
-    <!-- Editorial Guide for SEO & AdSense Content Depth -->
-    <article class="editorial-content">
-      <h2>Complete Financial Accounting for Community & Festival Committees</h2>
-      <p>Managing public contributions for festivals like Ganesh Utsav, Durga Puja, and Navratri, or collecting society repair funds, requires total accounting transparency. When committee members record cash collections and vendor payouts in physical notebooks, receipts get misplaced, leading to auditing disputes during annual general body meetings (AGM).</p>
+    <!-- SYNC MODAL WITH DYNAMIC QR CODE -->
+    <div class="modal-backdrop" id="syncModal">
+      <div class="modal-box">
+        <button type="button" class="modal-close-btn" onclick="closeSyncModal()">&times;</button>
+        <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 6px; color: #0f172a;">Sync to Another Device</h3>
+        <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.4;">Scan this QR code with your laptop camera or open the link on your computer to import this exact data.</p>
+        
+        <div class="qr-slot" id="qrContainer"></div>
 
-      <p>The SheetBox Chanda & Expense Calculator provides a complete, double-entry financial overview. It balances incoming member contributions directly against real outgoing vendor expenses (decorations, sound, idol procurement, priest honorarium, and catering) entirely in your browser.</p>
-
-      <h2>Frequently Asked Questions (FAQ)</h2>
-      <div class="faq-block">
-        <details>
-          <summary>Does SheetBox store our financial records on a server?</summary>
-          <p>No. All calculations, member names, and vendor expenses remain stored strictly in your browser's private local storage. No data is ever transmitted to an external server.</p>
-        </details>
-        <details>
-          <summary>How does the Excel export work?</summary>
-          <p>Clicking <strong>Export Full Excel</strong> creates a clean <code>.xlsx</code> workbook containing two distinct tabs: one for member collections and another for categorized expenses, ready to share on WhatsApp groups.</p>
-        </details>
+        <div style="display: flex; gap: 8px; margin-top: 10px;">
+          <button type="button" class="btn btn-orange" style="flex: 1;" id="btnCopySyncLink">📋 Copy Sync Link</button>
+          <button type="button" class="btn btn-outline" style="flex: 1;" id="btnShareWhatsApp">💬 WhatsApp</button>
+        </div>
+        <div id="copySuccessMsg" style="display: none; font-size: 11.5px; color: var(--success); font-weight: 700; margin-top: 8px;">✓ Sync Link Copied to Clipboard!</div>
       </div>
+    </div>
+
+    <article class="editorial-content">
+      <h2>Cross-Device Community Financial Accounting</h2>
+      <p>Managing collections across festivals like Ganesh Utsav or society repairs requires entering pledges on the go (from a phone) and later auditing or printing from a laptop. SheetBox enables 100% private, server-free sync: the entire ledger compresses into a single QR code or URL string that loads effortlessly across any device.</p>
     </article>
   </main>
 
@@ -493,7 +537,39 @@
       document.getElementById("viewExpenses").style.display = !isDonors ? "grid" : "none";
     };
 
+    // 1. CHECK URL HASH FOR INCOMING SYNC DATA
+    function checkIncomingUrlSync() {
+      try {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith("#sync=")) {
+          const compressed = hash.replace("#sync=", "");
+          const decompressed = LZString.decompressFromEncodedURIComponent(compressed);
+          if (decompressed) {
+            const incomingState = JSON.parse(decompressed);
+            if (incomingState && (Array.isArray(incomingState.donors) || Array.isArray(incomingState.expenses))) {
+              state = incomingState;
+              saveState();
+              // Clean URL without triggering page reload
+              window.history.replaceState(null, null, window.location.pathname);
+              alert("Data synced successfully from your other device!");
+              return true;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Could not import URL sync data:", err);
+      }
+      return false;
+    }
+
+    // 2. LOAD FROM LOCAL STORAGE OR URL
     function loadSavedState() {
+      if (checkIncomingUrlSync()) {
+        populateFormFields();
+        calculateAll();
+        return;
+      }
+
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
@@ -506,12 +582,17 @@
         console.warn("Could not read localStorage:", err);
       }
 
-      inEventName.value = state.eventName || "";
-      inTargetBudget.value = state.targetBudget || "";
-      inTotalFlats.value = state.totalFlats || "";
+      populateFormFields();
       calculateAll();
     }
 
+    function populateFormFields() {
+      inEventName.value = state.eventName || "";
+      inTargetBudget.value = state.targetBudget || "";
+      inTotalFlats.value = state.totalFlats || "";
+    }
+
+    // 3. SAVE TO LOCAL STORAGE
     function saveState() {
       state.eventName = inEventName.value.trim();
       state.targetBudget = parseFloat(inTargetBudget.value) || 0;
@@ -524,6 +605,7 @@
       }
     }
 
+    // 4. CORE CALCULATIONS
     function calculateAll() {
       const target = parseFloat(inTargetBudget.value) || 0;
       metricTarget.textContent = `₹${target.toLocaleString('en-IN')}`;
@@ -702,6 +784,57 @@
         { item: "PA Sound & Mic System", category: "Sound & Lighting", amount: 7000, paidTo: "Vicky Sounds", mode: "UPI / Online", date: "Day 2" }
       ];
       calculateAll();
+    };
+
+    // --- CROSS DEVICE QR SYNC LOGIC ---
+    let syncQrInstance = null;
+
+    function generateSyncUrl() {
+      saveState();
+      const serialized = JSON.stringify(state);
+      const compressed = LZString.compressToEncodedURIComponent(serialized);
+      return `${window.location.origin}${window.location.pathname}#sync=${compressed}`;
+    }
+
+    window.openSyncModal = () => {
+      const modal = document.getElementById("syncModal");
+      const qrContainer = document.getElementById("qrContainer");
+      document.getElementById("copySuccessMsg").style.display = "none";
+
+      const syncUrl = generateSyncUrl();
+
+      qrContainer.innerHTML = "";
+      syncQrInstance = new QRCode(qrContainer, {
+        text: syncUrl,
+        width: 180,
+        height: 180,
+        colorDark: "#0f172a",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L
+      });
+
+      modal.style.display = "flex";
+    };
+
+    window.closeSyncModal = () => {
+      document.getElementById("syncModal").style.display = "none";
+    };
+
+    document.getElementById("btnOpenSync").onclick = openSyncModal;
+
+    document.getElementById("btnCopySyncLink").onclick = () => {
+      const syncUrl = generateSyncUrl();
+      navigator.clipboard.writeText(syncUrl).then(() => {
+        document.getElementById("copySuccessMsg").style.display = "block";
+      }).catch(err => {
+        prompt("Copy this sync URL manually:", syncUrl);
+      });
+    };
+
+    document.getElementById("btnShareWhatsApp").onclick = () => {
+      const syncUrl = generateSyncUrl();
+      const text = encodeURIComponent(`SheetBox Live Ledger for ${state.eventName || "Event"}:\n${syncUrl}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
     };
 
     const exportExcelBoth = () => {
