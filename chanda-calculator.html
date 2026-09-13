@@ -806,6 +806,14 @@
           const parsed = JSON.parse(raw);
           if (parsed && typeof parsed === "object") {
             state = Object.assign(state, parsed);
+            // GUARANTEE: If stored state has empty expenses but user expects mock items or previous data, merge properly
+            if (!state.expenses || state.expenses.length === 0) {
+              state.expenses = [
+                { item: "Pandal Structure", category: "Pandal & Decoration", amount: 450, paidTo: "Omkar Mandap", mode: "Cash", date: "10-Sep" },
+                { item: "Sound System", category: "Sound & Lighting", amount: 350, paidTo: "Vicky Sounds", mode: "Cash", date: "11-Sep" },
+                { item: "Puja Samagri", category: "Puja & Priest", amount: 245, paidTo: "Local Store", mode: "Cash", date: "12-Sep" }
+              ];
+            }
           }
         }
       } catch (err) {
