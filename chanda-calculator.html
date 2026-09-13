@@ -1,548 +1,1223 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Festival Chanda & Event Expense Tracker | SheetBox</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS8Z05TBZY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CS8Z05TBZY');
+  </script>
 
-<style>
-:root {
-  --bg:#f8fafc; --card:#fff; --border:#e2e8f0;
-  --text:#0f172a; --muted:#64748b; --accent:#ea580c;
-  --success:#16a34a; --danger:#dc2626; --input:#fff;
-}
-body.dark-mode {
-  --bg:#0b0f19; --card:#131b2e; --border:#334155;
-  --text:#f8fafc; --muted:#94a3b8; --accent:#f97316;
-  --success:#22c55e; --danger:#ef4444; --input:#0b1120;
-}
-* { box-sizing:border-box; margin:0; padding:0; font-family:Arial,sans-serif; }
-body { background:var(--bg); color:var(--text); min-height:100vh; }
-header {
-  background:#0f172a; color:white; padding:12px;
-  display:flex; justify-content:space-between; align-items:center;
-  gap:8px; flex-wrap:wrap;
-}
-.brand { color:white; text-decoration:none; font-weight:800; font-size:18px; }
-.header-buttons { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
-header button, header select {
-  padding:7px 10px; border:1px solid #475569;
-  border-radius:7px; background:#1e293b; color:white; cursor:pointer;
-}
-.container { max-width:1180px; margin:auto; padding:16px 12px; }
-h1 { font-size:22px; margin-bottom:5px; }
-.subtitle { color:var(--muted); font-size:13px; margin-bottom:15px; }
-.metrics {
-  display:grid; grid-template-columns:repeat(2,1fr);
-  gap:10px; margin-bottom:15px;
-}
-.metric {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:10px; padding:12px;
-}
-.metric label { display:block; font-size:11px; color:var(--muted); font-weight:bold; margin-bottom:4px; }
-.metric strong { font-size:20px; }
-.green { color:var(--success); }
-.red { color:var(--danger); }
-.progress-box {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:10px; padding:12px; margin-bottom:15px;
-}
-.progress-top { display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:7px; }
-.progress-bg { height:8px; background:var(--border); border-radius:5px; overflow:hidden; }
-.progress-bar { height:100%; width:0; background:var(--accent); transition:width .3s; }
-.tabs { display:flex; gap:5px; margin-bottom:15px; }
-.tab {
-  flex:1; padding:11px; border:0; border-radius:8px;
-  background:var(--border); color:var(--text); font-weight:bold; cursor:pointer;
-}
-.tab.active { background:var(--accent); color:white; }
-.layout { display:grid; grid-template-columns:340px 1fr; gap:15px; align-items:start; }
-.panel {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:12px; padding:15px; min-width:0;
-}
-.panel h2 { font-size:16px; margin-bottom:13px; }
-.form-group { margin-bottom:11px; }
-label { display:block; font-size:12px; color:var(--muted); font-weight:bold; margin-bottom:5px; }
-input, select {
-  width:100%; padding:11px; font-size:15px;
-  background:var(--input); color:var(--text);
-  border:1px solid var(--border); border-radius:8px; outline:none;
-}
-input:focus, select:focus { border-color:var(--accent); }
-button { cursor:pointer; }
-.btn {
-  width:100%; border:0; border-radius:8px; padding:12px;
-  font-weight:bold; font-size:14px;
-}
-.btn-orange { background:var(--accent); color:white; }
-.btn-green { background:var(--success); color:white; }
-.btn-outline { background:var(--card); color:var(--text); border:1px solid var(--border); }
-.toolbar {
-  display:flex; gap:8px; align-items:center;
-  justify-content:space-between; flex-wrap:wrap; margin-bottom:12px;
-}
-.toolbar .actions { display:flex; gap:6px; flex-wrap:wrap; }
-.toolbar button { width:auto; padding:9px 12px; font-size:12px; }
-.search { max-width:260px; }
-.table-wrap { width:100%; overflow-x:auto; border:1px solid var(--border); border-radius:8px; }
-table { width:100%; border-collapse:collapse; font-size:12px; min-width:550px; }
-th { background:#0f172a; color:white; padding:11px 10px; text-align:left; white-space:nowrap; }
-td { padding:11px 10px; border-bottom:1px solid var(--border); white-space:nowrap; }
-.cards { display:none; flex-direction:column; gap:8px; }
-.expense-card {
-  border:1px solid var(--border); border-radius:10px;
-  padding:12px; background:var(--card);
-}
-.card-top { display:flex; justify-content:space-between; gap:8px; }
-.card-title { font-weight:bold; font-size:14px; }
-.card-category { font-size:11px; color:var(--muted); margin-top:3px; }
-.card-bottom { border-top:1px dashed var(--border); margin-top:8px; padding-top:8px; display:flex; justify-content:space-between; gap:5px; }
-.card-amount { color:var(--danger); font-weight:bold; }
-.delete-btn { background:var(--danger); color:white; border:0; border-radius:6px; padding:6px 10px; font-size:11px; }
-.empty { text-align:center; color:var(--muted); padding:25px; font-size:13px; }
-footer { text-align:center; color:var(--muted); font-size:12px; padding:25px; }
-#viewDonors { display:none; }
-@media(max-width:879px) { .layout { grid-template-columns:1fr; } }
-@media(max-width:767px) {
-  .table-wrap { display:none; }
-  .cards { display:flex; }
-  .metrics { grid-template-columns:repeat(2,1fr); }
-  .search { max-width:100%; width:100%; }
-  .toolbar { align-items:stretch; }
-  .toolbar .actions { width:100%; }
-  .toolbar .actions button { flex:1; }
-}
-@media(min-width:768px) {
-  .metrics { grid-template-columns:repeat(4,1fr); }
-}
-@media print {
-  body { background:white !important; color:black !important; }
-  body * { visibility:hidden !important; }
-  #printArea, #printArea * { visibility:visible !important; }
-  #printArea {
-    display:block !important; position:absolute; left:0; top:0;
-    width:100%; color:black !important; background:white !important;
-    padding:10px;
-  }
-  #printArea h1 { font-size:20px; margin-bottom:5px; }
-  #printArea p { font-size:12px; margin-bottom:10px; }
-  #printArea table { width:100%; min-width:0; border-collapse:collapse; font-size:11px; }
-  #printArea th, #printArea td { border:1px solid #aaa; padding:6px; color:black !important; background:white !important; white-space:normal; }
-  #printArea th { font-weight:bold; }
-  #printArea .print-total { margin-top:12px; font-weight:bold; font-size:13px; }
-}
-</style>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
+
+  <!-- SheetJS for Excel Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  
+  <!-- LZ-String for URL Payload Compression -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+
+  <!-- QRCode.js for Screen Sync -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- html2canvas for Downloadable Image Receipts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+
+  <!-- SEO Metadata -->
+  <title>Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox</title>
+  <meta name="title" content="Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox" />
+  <meta name="description" content="Free festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Auto-backup, downloadable receipts, and Excel export." />
+  <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
+
+  <style>
+    :root {
+      --header-bg: #0f172a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #ea580c;
+      --primary: #2563eb;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --tab-bg: #e2e8f0;
+    }
+
+    body.dark-mode {
+      --header-bg: #090d16;
+      --bg: #0b0f19;
+      --card-bg: #131b2e;
+      --border: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #f97316;
+      --primary: #38bdf8;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --input-bg: #0b1120;
+      --input-border: #334155;
+      --tab-bg: #1e293b;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Streamlined Header Design */
+    header { background-color: var(--header-bg); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; flex-shrink: 0; }
+    .brand img { width: 30px; height: 30px; border-radius: 6px; }
+    .brand-title { font-weight: 800; font-size: 15px; line-height: 1.1; }
+    .brand-sub { font-size: 10px; color: #94a3b8; display: block; line-height: 1; }
+    
+    .header-btns { display: flex; gap: 5px; align-items: center; flex-wrap: nowrap; }
+    
+    .lang-select {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 5px 6px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+    }
+    .lang-select option { background: #0f172a; color: #fff; }
+
+    .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 12px;
+      padding: 5px 7px;
+      border-radius: 14px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .sync-btn { 
+      background: rgba(255,255,255,0.12); 
+      color: #fff; 
+      border: 1px solid rgba(255,255,255,0.25); 
+      font-weight: 700; 
+      font-size: 11px; 
+      padding: 5px 8px; 
+      border-radius: 14px; 
+      cursor: pointer; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 3px;
+      white-space: nowrap;
+    }
+
+    .bmc-btn { 
+      background: #ffdd00; 
+      color: #000; 
+      font-weight: 700; 
+      font-size: 11px; 
+      padding: 5px 8px; 
+      border-radius: 14px; 
+      text-decoration: none; 
+      white-space: nowrap;
+    }
+
+    .container { max-width: 1180px; width: 100%; margin: 12px auto; padding: 0 12px; flex: 1; }
+    .back-link { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 8px; }
+
+    .hero-title { font-size: 20px; font-weight: 900; margin-bottom: 2px; }
+    .hero-sub { font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px; }
+
+    /* Metric Grid */
+    .metric-grid { 
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 10px; 
+      margin-bottom: 12px; 
+      width: 100%; 
+    }
+    @media (min-width: 768px) {
+      .metric-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .metric-card { 
+      background: var(--card-bg); 
+      border: 1.5px solid var(--border); 
+      border-radius: 10px; 
+      padding: 10px 12px; 
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+    }
+    .metric-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; letter-spacing: 0.2px; }
+    .metric-val { font-size: 18px; font-weight: 900; color: var(--text); line-height: 1.2; }
+    .metric-sub { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Progress Bar */
+    .progress-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
+    .progress-top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; margin-bottom: 6px; color: var(--text); }
+    .progress-bg { height: 8px; width: 100%; background: var(--border); border-radius: 4px; overflow: hidden; }
+    
+    .progress-bar { 
+      height: 100%; 
+      background: linear-gradient(90deg, #ea580c, #f97316); 
+      width: 0%; 
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Tab Switcher */
+    .mode-tab-bar { display: flex; gap: 6px; margin-bottom: 14px; background: var(--tab-bg); padding: 4px; border-radius: 8px; width: 100%; }
+    .mode-tab-btn { flex: 1; padding: 8px 10px; border: none; background: transparent; font-size: 13px; font-weight: 800; color: var(--text-muted); border-radius: 6px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .mode-tab-btn.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+
+    .app-layout { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; width: 100%; }
+    @media (min-width: 880px) {
+      .app-layout { grid-template-columns: 340px 1fr; }
+    }
+
+    .panel { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px; width: 100%; }
+    .panel-title { font-size: 13.5px; font-weight: 800; margin-bottom: 10px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
+    
+    .form-group { margin-bottom: 10px; }
+    .form-group label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+    .input-field { width: 100%; padding: 10px 12px; border: 1.5px solid var(--input-border); border-radius: 8px; font-size: 16px !important; outline: none; background: var(--input-bg); color: var(--text); }
+    .input-field:focus { border-color: var(--accent); }
+
+    .quick-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+    .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 14px; cursor: pointer; color: var(--text); }
+
+    .btn { padding: 12px 16px; font-size: 14px; font-weight: 800; border-radius: 8px; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+    .btn:active { transform: scale(0.97); }
+    .btn-orange { background: var(--accent); color: #fff; }
+    .btn-outline { background: var(--card-bg); border: 1.5px solid var(--border); color: var(--text); width: auto; padding: 8px 12px; font-size: 12px; }
+    .btn-green { background: var(--success); color: #fff; width: auto; padding: 8px 12px; font-size: 12px; }
+
+    /* Table Toolbar */
+    .table-toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+    .search-input-wrap { flex: 1; min-width: 140px; position: relative; }
+    .search-input-wrap input { width: 100%; padding: 8px 10px 8px 28px; border: 1.5px solid var(--input-border); border-radius: 7px; font-size: 14px !important; outline: none; background: var(--input-bg); color: var(--text); }
+    .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.5; }
+
+    .filter-pills { display: flex; gap: 4px; }
+    .fpill { font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
+    .fpill.active { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
+
+    /* Mobile Cards vs Desktop Tables */
+    .mobile-cards-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+    .member-card-item {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .member-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .member-card-name { font-size: 14.5px; font-weight: 800; color: var(--text); }
+    .member-card-flat { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+    .member-card-mid { display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed var(--border); }
+    .member-card-amt { font-size: 16px; font-weight: 900; color: var(--text); }
+    .member-card-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+
+    .table-container { 
+      width: 100%; 
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch; 
+      max-height: 520px; 
+      border: 1.5px solid var(--border); 
+      border-radius: 8px; 
+      display: none; 
+    }
+    @media (min-width: 768px) {
+      .table-container { display: block; }
+      .mobile-cards-list { display: none; }
+    }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
+    table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 11px 12px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; white-space: nowrap; }
+    table.data-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; }
+
+    .status-badge { 
+      font-size: 11.5px; 
+      font-weight: 800; 
+      padding: 6px 12px; 
+      border-radius: 16px; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 4px; 
+      cursor: pointer; 
+      user-select: none; 
+    }
+    .status-paid { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
+    .status-pending { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fecaca; }
+
+    .row-actions-group {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .row-btn {
+      background: var(--tab-bg);
+      border: 1px solid var(--border);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .row-btn:hover { background: var(--border); color: var(--text); }
+    .row-btn-danger { color: #fff !important; background: var(--danger) !important; border-color: var(--danger) !important; font-weight: 800; }
+
+    /* Modals */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+    .modal-box {
+      background: var(--card-bg);
+      color: var(--text);
+      border-radius: 14px;
+      max-width: 420px;
+      width: 100%;
+      padding: 18px 14px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .qr-slot {
+      margin: 12px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 180px;
+      padding: 8px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: fit-content;
+    }
+
+    /* Receipt Slip Card */
+    .receipt-slip-card {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border: 2px solid #0f172a;
+      border-radius: 10px;
+      padding: 16px 14px;
+      text-align: left;
+      margin: 10px auto;
+      position: relative;
+      max-width: 360px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .rcpt-header { text-align: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 8px; margin-bottom: 10px; }
+    .rcpt-event-name { font-size: 15px; font-weight: 900; color: #0f172a; text-transform: uppercase; }
+    .rcpt-tag { font-size: 9.5px; font-weight: 800; background: #ffedd5; color: #c2410c; padding: 2px 7px; border-radius: 10px; display: inline-block; margin-top: 3px; }
+    .rcpt-meta-row { display: flex; justify-content: space-between; font-size: 10.5px; color: #64748b; font-weight: 600; margin-bottom: 10px; }
+    .rcpt-field { margin-bottom: 6px; font-size: 12px; color: #334155; }
+    .rcpt-amount-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 7px; padding: 8px 10px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+    .rcpt-amount-val { font-size: 18px; font-weight: 900; color: #15803d; }
+    .rcpt-footer-row { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 12px; padding-top: 8px; border-top: 1px dashed #cbd5e1; font-size: 9.5px; color: #64748b; }
+    .rcpt-sig-dash { display: inline-block; width: 80px; border-bottom: 1px solid #0f172a; margin-bottom: 2px; }
+
+    footer { padding: 20px 14px; text-align: center; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); margin-top: 30px; width: 100%; }
+    footer a { color: var(--text-muted); text-decoration: none; margin: 0 4px; }
+    footer a:hover { color: var(--primary); }
+  </style>
 </head>
-
 <body>
-<header>
-  <a class="brand" href="/">SheetBox</a>
-  <div class="header-buttons">
-    <select id="langSelector">
-      <option value="en">EN</option>
-      <option value="hi">हिंदी</option>
-      <option value="mr">मराठी</option>
-      <option value="gu">ગુજરાતી</option>
-    </select>
-    <button id="themeBtn">☀️ / 🌙</button>
-  </div>
-</header>
 
-<main class="container">
-  <h1>Festival Chanda & Event Expense Tracker</h1>
-  <p class="subtitle">Collect contributions, record vendor bills, and monitor your cash-in-hand balance.</p>
-
-  <div class="metrics">
-    <div class="metric">
-      <label>Target Budget</label>
-      <strong id="metricTarget">₹20,000</strong>
-      <small id="metricPurpose">Ganesh Utsav Samiti</small>
-    </div>
-    <div class="metric">
-      <label>Total Collected</label>
-      <strong id="metricCollected" class="green">₹0</strong>
-      <small id="metricPaidCount">0 paid</small>
-    </div>
-    <div class="metric">
-      <label>Total Spent</label>
-      <strong id="metricSpent" class="red">₹0</strong>
-      <small id="metricExpenseCount">0 bills</small>
-    </div>
-    <div class="metric">
-      <label>Net Balance in Hand</label>
-      <strong id="metricNetBalance">₹0</strong>
-      <small id="metricNetSub">Surplus</small>
-    </div>
-  </div>
-
-  <div class="progress-box">
-    <div class="progress-top">
-      <span>Collection Target Achieved</span>
-      <span id="progressPercentage">0%</span>
-    </div>
-    <div class="progress-bg"><div class="progress-bar" id="progressBarFill"></div></div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab" id="tabDonors">👥 1. Collections</button>
-    <button class="tab active" id="tabExpenses">💸 2. Expenses</button>
-  </div>
-
-  <section id="viewDonors" class="layout">
-    <div class="panel">
-      <h2>Quick Add Member</h2>
-      <div class="form-group"><label>Member / Contributor Name *</label><input id="inDonorName" placeholder="e.g. Ramesh Kulkarni"></div>
-      <div class="form-group"><label>Flat / Shop / Unit No.</label><input id="inUnitNo" placeholder="e.g. 402"></div>
-      <div class="form-group"><label>Pledged Amount (₹) *</label><input type="number" id="inAmount" value="1000" min="1"></div>
-      <div class="form-group"><label>Payment Status</label><select id="inStatus"><option>Paid</option><option>Pending</option></select></div>
-      <button class="btn btn-orange" id="btnAddDonor">+ Save Contributor</button>
-    </div>
-    <div class="panel">
-      <div class="toolbar">
-        <input class="search" id="searchDonor" placeholder="Search member or flat">
-        <div class="actions"><button class="btn btn-green" id="btnExportExcel">📊 Excel</button><button class="btn btn-outline" id="btnPrintDonors">🖨️ Print</button></div>
+  <header>
+    <a href="/" class="brand">
+      <img src="/logo.png" alt="SheetBox Logo" />
+      <div>
+        <span class="brand-title">SheetBox</span>
+        <span class="brand-sub">by Rahul Chauhan</span>
       </div>
-      <div class="table-wrap"><table><thead><tr><th>#</th><th>Contributor</th><th>Flat</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="donorsTableBody"></tbody></table></div>
-      <div class="cards" id="donorsCardsList"></div>
-    </div>
-  </section>
+    </a>
+    <div class="header-btns">
+      <select class="lang-select" id="langSelector">
+        <option value="en">EN</option>
+        <option value="hi">हिंदी</option>
+        <option value="mr">मराठी</option>
+        <option value="gu">ગુજરાતી</option>
+      </select>
 
-  <section id="viewExpenses" class="layout">
-    <div class="panel">
-      <h2>Log Vendor Bill / Expense</h2>
-      <div class="form-group"><label>Item Description *</label><input id="inExpItem" placeholder="e.g. Mandap Stage, Sound System"></div>
-      <div class="form-group"><label>Expense Category</label><select id="inExpCategory">
-        <option>Pandal & Decoration</option><option>Idol / Murti</option><option>Sound & Lighting</option><option>Puja & Priest</option><option>Prasad & Catering</option><option>Security & Permissions</option><option>Publicity & Banners</option><option>Miscellaneous</option>
-      </select></div>
-      <div class="form-group"><label>Amount Spent (₹) *</label><input type="number" id="inExpAmount" placeholder="e.g. 5000" min="1"></div>
-      <div class="form-group"><label>Vendor Name / Paid To</label><input id="inExpPaidTo" placeholder="e.g. Ramesh Decorators"></div>
-      <div class="form-group"><label>Payment Mode</label><select id="inExpMode"><option>Cash</option><option>UPI / Online</option><option>Cheque</option></select></div>
-      <button class="btn btn-orange" id="btnAddExpense">+ Record Expense</button>
-    </div>
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark">🌙</button>
 
-    <div class="panel">
-      <div class="toolbar">
-        <strong>Expense Ledger (<span id="outExpenseCount">0</span>)</strong>
-        <div class="actions"><button class="btn btn-green" id="btnExportExcelExp">📊 Excel</button><button class="btn btn-outline" id="btnPrintExpenses">🖨️ Print</button></div>
+      <button type="button" class="sync-btn" id="btnOpenSync" title="Sync Devices">
+        📲 Sync
+      </button>
+
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn" title="Support SheetBox">
+        ☕ Support
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="/" class="back-link">&larr; Back to SheetBox Tools</a>
+
+    <h1 class="hero-title">Festival Chanda & Event Expense Tracker</h1>
+    <p class="hero-sub">Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.</p>
+
+    <!-- Top Metrics -->
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Target Budget</div>
+        <div class="metric-val" id="metricTarget">₹20,000</div>
+        <div class="metric-sub" id="metricPurpose">Ganesh Utsav Samiti</div>
       </div>
-      <div class="table-wrap"><table><thead><tr><th>#</th><th>Item</th><th>Category</th><th>Vendor</th><th>Date</th><th>Amount</th><th>Action</th></tr></thead><tbody id="expensesTableBody"></tbody></table></div>
-      <div class="cards" id="expensesCardsList"></div>
-      <button class="btn btn-outline" style="color:var(--danger);margin-top:12px" id="btnReset">⚠️ Reset All Ledger Data</button>
+      <div class="metric-card" style="border-left: 3.5px solid var(--success);">
+        <div class="metric-label">Total Collected</div>
+        <div class="metric-val" id="metricCollected" style="color: var(--success);">₹0</div>
+        <div class="metric-sub" id="metricPaidCount">0 paid</div>
+      </div>
+      <div class="metric-card" style="border-left: 3.5px solid var(--danger);">
+        <div class="metric-label">Total Spent</div>
+        <div class="metric-val" id="metricSpent" style="color: var(--danger);">₹0</div>
+        <div class="metric-sub" id="metricExpenseCount">0 bills</div>
+      </div>
+      <div class="metric-card" id="metricBalanceCard" style="border-left: 3.5px solid var(--primary);">
+        <div class="metric-label">Net Balance in Hand</div>
+        <div class="metric-val" id="metricNetBalance">₹0</div>
+        <div class="metric-sub" id="metricNetSub">Surplus</div>
+      </div>
     </div>
-  </section>
-</main>
 
-<div id="printArea" style="display:none"></div>
+    <!-- Collection Progress Bar -->
+    <div class="progress-box">
+      <div class="progress-top">
+        <span>Collection Target Achieved</span>
+        <span id="progressPercentage">0%</span>
+      </div>
+      <div class="progress-bg">
+        <div class="progress-bar" id="progressBarFill"></div>
+      </div>
+    </div>
 
-<footer>SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution</footer>
+    <!-- Mode Selector Tabs -->
+    <div class="mode-tab-bar">
+      <button class="mode-tab-btn" id="tabDonors" onclick="switchMode('donors')">
+        👥 1. Collections
+      </button>
+      <button class="mode-tab-btn active" id="tabExpenses" onclick="switchMode('expenses')">
+        💸 2. Expenses
+      </button>
+    </div>
 
-<script>
-"use strict";
+    <!-- 1. COLLECTIONS VIEW -->
+    <div id="viewDonors" class="app-layout" style="display: none;">
+      <div>
+        <div class="panel">
+          <div class="panel-title">
+            <span>1. Quick Add Member</span>
+            <button type="button" class="chip-btn" id="btnLoadSample">⚡ Sample</button>
+          </div>
 
-const STORAGE_KEY = "sheetbox_chanda_ledger_v2";
+          <div class="form-group">
+            <label>Member / Contributor Name *</label>
+            <input type="text" id="inDonorName" class="input-field" placeholder="e.g. Ramesh Kulkarni" autocomplete="off" />
+          </div>
 
-let state = {
-  eventName: "Chauhan Family Ganesh Utsav 2026",
-  targetBudget: 20000,
-  donors: [],
-  expenses: [
-    {item:"Pandal Structure",category:"Pandal & Decoration",amount:450,paidTo:"Omkar Mandap",mode:"Cash",date:"10-Sep"},
-    {item:"Sound System",category:"Sound & Lighting",amount:350,paidTo:"Vicky Sounds",mode:"Cash",date:"11-Sep"},
-    {item:"Puja Samagri",category:"Puja & Priest",amount:245,paidTo:"Local Store",mode:"Cash",date:"12-Sep"}
-  ]
-};
+          <div class="form-group">
+            <label>Flat / Shop / Unit No.</label>
+            <input type="text" id="inUnitNo" class="input-field" placeholder="e.g. 402 / Shop 3" />
+          </div>
 
-let activeMode = "expenses";
+          <div class="form-group">
+            <label>Pledged Amount (₹) *</label>
+            <input type="number" id="inAmount" class="input-field" placeholder="1000" value="1000" min="1" />
+            <div class="quick-chips">
+              <span class="chip-btn" onclick="setQuickAmount(500)">+ ₹500</span>
+              <span class="chip-btn" onclick="setQuickAmount(1000)">+ ₹1,000</span>
+              <span class="chip-btn" onclick="setQuickAmount(2100)">+ ₹2,100</span>
+              <span class="chip-btn" onclick="setQuickAmount(5100)">+ ₹5,100</span>
+            </div>
+          </div>
 
-const $ = id => document.getElementById(id);
-const money = n => "₹" + Number(n || 0).toLocaleString("en-IN");
-const today = () => new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short"});
+          <div class="form-group">
+            <label>Payment Status</label>
+            <select id="inStatus" class="input-field">
+              <option value="Paid">✓ Paid (Cash / Online)</option>
+              <option value="Pending">⏳ Pending (Pledged Only)</option>
+            </select>
+          </div>
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
-}
+          <button type="button" class="btn btn-orange" id="btnAddDonor">
+            + Save Contributor
+          </button>
+        </div>
+      </div>
 
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
+      <div class="panel">
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchDonor" placeholder="Search member or flat..." oninput="filterDonorsTable()" />
+          </div>
+          <div class="filter-pills">
+            <button type="button" class="fpill active" onclick="setDonorFilter('all', this)">All (<span id="countAll">0</span>)</button>
+            <button type="button" class="fpill" onclick="setDonorFilter('Paid', this)">Paid (<span id="countPaid">0</span>)</button>
+            <button type="button" class="fpill" onclick="setDonorFilter('Pending', this)">Pending (<span id="countPending">0</span>)</button>
+          </div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; width: 100%; justify-content: flex-end; margin-top: 4px;">
+            <button type="button" class="btn btn-orange" style="width: auto; padding: 8px 12px; font-size: 12px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
+            <button type="button" class="btn btn-green" id="btnExportExcel">📊 Excel</button>
+            <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+          </div>
+        </div>
 
-function loadSavedState() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (!saved || typeof saved !== "object") return;
-    if (saved.eventName !== undefined) state.eventName = saved.eventName;
-    if (saved.targetBudget !== undefined) state.targetBudget = Number(saved.targetBudget) || 20000;
-    if (Array.isArray(saved.donors)) state.donors = saved.donors;
-    if (Array.isArray(saved.expenses)) state.expenses = saved.expenses;
-  } catch (err) {
-    console.warn("Could not load saved ledger:", err);
-  }
-}
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 32px;">#</th>
+                <th>Contributor</th>
+                <th>Flat</th>
+                <th>Amount (₹)</th>
+                <th>Status</th>
+                <th style="width: 210px; text-align: center;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="donorsTableBody"></tbody>
+          </table>
+        </div>
+        <div class="mobile-cards-list" id="donorsCardsList"></div>
+      </div>
+    </div>
 
-function calculateAll() {
-  const collected = state.donors
-    .filter(d => d.status === "Paid")
-    .reduce((sum,d) => sum + Number(d.amount || 0),0);
+    <!-- 2. EXPENSES VIEW -->
+    <div id="viewExpenses" class="app-layout" style="display: grid;">
+      <div>
+        <div class="panel">
+          <div class="panel-title">
+            <span>Log Vendor Bill / Expense</span>
+          </div>
+          
+          <div class="form-group">
+            <label>Item Description *</label>
+            <input type="text" id="inExpItem" class="input-field" placeholder="e.g. Mandap Stage, Sound System" autocomplete="off" />
+          </div>
 
-  const spent = state.expenses
-    .reduce((sum,e) => sum + Number(e.amount || 0),0);
+          <div class="form-group">
+            <label>Expense Category</label>
+            <select id="inExpCategory" class="input-field">
+              <option value="Pandal & Decoration">Pandal & Decoration</option>
+              <option value="Idol / Murti">Idol / Murti</option>
+              <option value="Sound & Lighting">Sound & Lighting</option>
+              <option value="Puja & Priest">Puja & Priest</option>
+              <option value="Prasad & Catering">Prasad & Catering</option>
+              <option value="Security & Police Permission">Security & Permissions</option>
+              <option value="Publicity & Banners">Publicity & Banners</option>
+              <option value="Miscellaneous">Miscellaneous</option>
+            </select>
+          </div>
 
-  const balance = collected - spent;
-  const target = Number(state.targetBudget) || 20000;
-  const percentage = target > 0 ? Math.min(100,Math.round(collected / target * 100)) : 0;
+          <div class="form-group">
+            <label>Amount Spent (₹) *</label>
+            <input type="number" id="inExpAmount" class="input-field" placeholder="e.g. 5000" min="1" />
+          </div>
 
-  $("metricTarget").textContent = money(target);
-  $("metricPurpose").textContent = state.eventName;
-  $("metricCollected").textContent = money(collected);
-  $("metricPaidCount").textContent = state.donors.filter(d => d.status === "Paid").length + " paid";
-  $("metricSpent").textContent = money(spent);
-  $("metricExpenseCount").textContent = state.expenses.length + " bills";
-  $("metricNetBalance").textContent = money(balance);
-  $("metricNetBalance").className = balance >= 0 ? "green" : "red";
-  $("metricNetSub").textContent = balance >= 0 ? "Surplus" : "Deficit";
-  $("progressBarFill").style.width = percentage + "%";
-  $("progressPercentage").textContent = percentage + "%";
+          <div class="form-group">
+            <label>Vendor Name / Paid To</label>
+            <input type="text" id="inExpPaidTo" class="input-field" placeholder="e.g. Ramesh Decorators" />
+          </div>
 
-  renderDonors();
-  renderExpenses();
-}
+          <div class="form-group">
+            <label>Payment Mode</label>
+            <select id="inExpMode" class="input-field">
+              <option value="Cash">Cash</option>
+              <option value="UPI / Online">UPI / Online</option>
+              <option value="Cheque">Cheque</option>
+            </select>
+          </div>
 
-function renderDonors() {
-  const query = $("searchDonor").value.toLowerCase().trim();
-  const list = state.donors.map((d,i)=>({...d,index:i})).filter(d =>
-    (d.name || "").toLowerCase().includes(query) ||
-    (d.unit || "").toLowerCase().includes(query)
-  );
+          <button type="button" class="btn btn-orange" id="btnAddExpense">
+            + Record Expense
+          </button>
+        </div>
+      </div>
 
-  $("donorsTableBody").innerHTML = "";
-  $("donorsCardsList").innerHTML = "";
+      <div class="panel">
+        <div class="table-toolbar">
+          <strong style="font-size: 13.5px;">Expense Ledger (<span id="outExpenseCount">0</span>)</strong>
+          <div style="display: flex; gap: 4px;">
+            <button type="button" class="btn btn-green" id="btnExportExcelExp">📊 Excel</button>
+            <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+          </div>
+        </div>
 
-  if (!list.length) {
-    $("donorsTableBody").innerHTML = '<tr><td colspan="6" class="empty">No members found.</td></tr>';
-    $("donorsCardsList").innerHTML = '<div class="empty">No members found.</div>';
-    return;
-  }
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 32px;">#</th>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Vendor</th>
+                <th>Date</th>
+                <th>Amount (₹)</th>
+                <th style="width: 70px; text-align: center;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="expensesTableBody"></tbody>
+          </table>
+        </div>
 
-  list.forEach((d,i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${i+1}</td>
-      <td><strong>${escapeHTML(d.name)}</strong></td>
-      <td>${escapeHTML(d.unit || "—")}</td>
-      <td>${money(d.amount)}</td>
-      <td>${escapeHTML(d.status)}</td>
-      <td><button class="delete-btn" data-delete-donor="${d.index}">🗑️ Delete</button></td>
-    `;
-    $("donorsTableBody").appendChild(tr);
+        <!-- Mobile Expenses Card List View -->
+        <div class="mobile-cards-list" id="expensesCardsList"></div>
 
-    const card = document.createElement("div");
-    card.className = "expense-card";
-    card.innerHTML = `
-      <div class="card-top"><div><div class="card-title">${i+1}. ${escapeHTML(d.name)}</div><div class="card-category">Flat / Unit: ${escapeHTML(d.unit || "—")}</div></div><strong>${money(d.amount)}</strong></div>
-      <div class="card-bottom"><span>${escapeHTML(d.status)}</span><button class="delete-btn" data-delete-donor="${d.index}">🗑️ Delete</button></div>
-    `;
-    $("donorsCardsList").appendChild(card);
-  });
-}
+        <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+          <button type="button" class="btn btn-outline" style="color: var(--danger); border-color: #fca5a5;" onclick="clearAllData()">
+            ⚠️ Reset All Ledger Data
+          </button>
+        </div>
+      </div>
+    </div>
 
-function renderExpenses() {
-  $("outExpenseCount").textContent = state.expenses.length;
-  $("expensesTableBody").innerHTML = "";
-  $("expensesCardsList").innerHTML = "";
+    <!-- UNIVERSAL SYNC MODAL -->
+    <div class="modal-backdrop" id="syncModal">
+      <div class="modal-box">
+        <button type="button" class="modal-close-btn" onclick="closeSyncModal()">&times;</button>
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;">Sync Across Devices</h3>
+        <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+          Scan with your phone/device camera or share the direct link to open this exact ledger on another computer.
+        </p>
+        
+        <div class="qr-slot" id="qrContainer"></div>
 
-  if (!state.expenses.length) {
-    $("expensesTableBody").innerHTML = '<tr><td colspan="7" class="empty">No bills recorded yet.</td></tr>';
-    $("expensesCardsList").innerHTML = '<div class="empty">No bills recorded yet.</div>';
-    return;
-  }
+        <div style="display: flex; gap: 6px; margin-top: 8px;">
+          <button type="button" class="btn btn-orange" style="flex: 1; font-size: 11.5px;" id="btnCopySyncLink">📋 Copy Link</button>
+          <button type="button" class="btn btn-outline" style="flex: 1; font-size: 11.5px;" id="btnShareWhatsApp">💬 WhatsApp</button>
+        </div>
+        <div id="copySuccessMsg" style="display: none; font-size: 11px; color: var(--success); font-weight: 700; margin-top: 6px;">✓ Sync Link Copied to Clipboard!</div>
+      </div>
+    </div>
 
-  state.expenses.forEach((e,i) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${i+1}</td>
-      <td><strong>${escapeHTML(e.item)}</strong></td>
-      <td>${escapeHTML(e.category)}</td>
-      <td>${escapeHTML(e.paidTo || "—")}</td>
-      <td>${escapeHTML(e.date || "—")}</td>
-      <td style="color:var(--danger);font-weight:bold">${money(e.amount)}</td>
-      <td><button class="delete-btn" data-delete-expense="${i}">🗑️ Delete</button></td>
-    `;
-    $("expensesTableBody").appendChild(tr);
+    <!-- DEDICATED OFFICIAL RECEIPT MODAL -->
+    <div class="modal-backdrop" id="receiptModal">
+      <div class="modal-box" style="max-width: 390px; padding: 16px 12px;">
+        <button type="button" class="modal-close-btn" onclick="closeReceiptModal()">&times;</button>
+        
+        <div class="receipt-slip-card" id="receiptSlipCard">
+          <div class="rcpt-header">
+            <div class="rcpt-event-name" id="rcptEventTitle">Event Name</div>
+            <span class="rcpt-tag" id="rcptBadgeTag">FESTIVAL RECEIPT</span>
+          </div>
 
-    const card = document.createElement("div");
-    card.className = "expense-card";
-    card.innerHTML = `
-      <div class="card-top"><div><div class="card-title">${i+1}. ${escapeHTML(e.item)}</div><div class="card-category">${escapeHTML(e.category)}</div></div><strong class="card-amount">${money(e.amount)}</strong></div>
-      <div class="card-bottom"><span>${escapeHTML(e.paidTo || "—")} • ${escapeHTML(e.mode)}</span><button class="delete-btn" data-delete-expense="${i}">🗑️ Delete</button></div>
-    `;
-    $("expensesCardsList").appendChild(card);
-  });
-}
+          <div class="rcpt-meta-row">
+            <span><strong>No:</strong> <span id="rcptNumber">#001</span></span>
+            <span><strong>Date:</strong> <span id="rcptDate">13-Sep-2026</span></span>
+          </div>
 
-function switchMode(mode) {
-  activeMode = mode;
-  $("viewDonors").style.display = mode === "donors" ? "grid" : "none";
-  $("viewExpenses").style.display = mode === "expenses" ? "grid" : "none";
-  $("tabDonors").classList.toggle("active",mode === "donors");
-  $("tabExpenses").classList.toggle("active",mode === "expenses");
-}
+          <div class="rcpt-field">
+            <span>Received with thanks from:</span><br>
+            <strong id="rcptDonorName" style="font-size: 14px; color: #0f172a;">Ramesh Kulkarni</strong>
+          </div>
 
-$("tabDonors").onclick = () => switchMode("donors");
-$("tabExpenses").onclick = () => switchMode("expenses");
-$("searchDonor").oninput = renderDonors;
+          <div class="rcpt-field">
+            <span>Flat / Shop / Unit:</span> 
+            <strong id="rcptDonorUnit">402</strong>
+          </div>
 
-$("btnAddExpense").onclick = () => {
-  const item = $("inExpItem").value.trim();
-  const amount = Number($("inExpAmount").value);
+          <div class="rcpt-amount-box">
+            <div>
+              <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; color: #166534;">Amount Received</div>
+              <div class="rcpt-amount-val" id="rcptAmountVal">₹1,000</div>
+            </div>
+            <div id="rcptStatusPill" style="font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 12px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">✓ Paid</div>
+          </div>
 
-  if (!item) return alert("Please enter expense description.");
-  if (!Number.isFinite(amount) || amount <= 0) return alert("Please enter a valid expense amount.");
+          <div class="rcpt-footer-row">
+            <div style="font-size: 9px; color: #94a3b8;">
+              SheetBox.in Digital Slip<br>Verified & Signed
+            </div>
+            <div class="rcpt-signature-line">
+              <div class="rcpt-sig-dash"></div><br>
+              <span>Authorized Signatory</span>
+            </div>
+          </div>
+        </div>
 
-  state.expenses.unshift({
-    item,
-    category: $("inExpCategory").value,
-    amount,
-    paidTo: $("inExpPaidTo").value.trim(),
-    mode: $("inExpMode").value,
-    date: today()
-  });
+        <div id="rcptActionButtons" style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-green" style="flex: 1; min-width: 110px; font-size: 11.5px;" id="btnDownloadSlipImg">
+            🖼️ Download Slip
+          </button>
+          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 70px; font-size: 11.5px;" onclick="window.print()">
+            🖨️ Print
+          </button>
+          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 90px; font-size: 11.5px;" id="btnSendWhatsAppFromModal">
+            💬 WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
 
-  $("inExpItem").value = "";
-  $("inExpAmount").value = "";
-  $("inExpPaidTo").value = "";
-  saveState();
-  calculateAll();
-  $("inExpItem").focus();
-};
+  </main>
 
-$("btnAddDonor").onclick = () => {
-  const name = $("inDonorName").value.trim();
-  const amount = Number($("inAmount").value);
+  <footer>
+    <div style="margin-bottom: 6px;">
+      <a href="/about.html">About Us</a> • 
+      <a href="/contact.html">Contact</a> • 
+      <a href="/privacy-policy.html">Privacy Policy</a> • 
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <div style="font-size: 11px; color: var(--text-muted);">
+      SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
+    </div>
+  </footer>
 
-  if (!name) return alert("Please enter contributor name.");
-  if (!Number.isFinite(amount) || amount <= 0) return alert("Please enter a valid amount.");
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const STORAGE_KEY = "sheetbox_chanda_ledger_v2";
 
-  state.donors.unshift({
-    name,
-    unit: $("inUnitNo").value.trim() || "—",
-    amount,
-    status: $("inStatus").value,
-    dateAdded: today()
-  });
+    const themeBtn = document.getElementById("themeToggleBtn");
+    const currentTheme = localStorage.getItem("sheetbox_theme") || "dark";
 
-  $("inDonorName").value = "";
-  $("inUnitNo").value = "";
-  saveState();
-  calculateAll();
-  $("inDonorName").focus();
-};
+    if (currentTheme === "dark") {
+      document.body.classList.add("dark-mode");
+      themeBtn.textContent = "☀️";
+    }
 
-document.addEventListener("click", e => {
-  const donor = e.target.closest("[data-delete-donor]");
-  const expense = e.target.closest("[data-delete-expense]");
+    themeBtn.onclick = () => {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      themeBtn.textContent = isDark ? "☀️" : "🌙";
+      localStorage.setItem("sheetbox_theme", isDark ? "dark" : "light");
+    };
 
-  if (donor) {
-    const index = Number(donor.dataset.deleteDonor);
-    if (confirm("Remove this contributor?")) {
-      state.donors.splice(index,1);
-      saveState();
+    let state = {
+      eventName: "Chauhan Family Ganesh Utsav 2026",
+      targetBudget: 20000,
+      totalFlats: 50,
+      donors: [],
+      expenses: [
+        { item: "Pandal Structure", category: "Pandal & Decoration", amount: 450, paidTo: "Omkar Mandap", mode: "Cash", date: "10-Sep" },
+        { item: "Sound System", category: "Sound & Lighting", amount: 350, paidTo: "Vicky Sounds", mode: "Cash", date: "11-Sep" },
+        { item: "Puja Samagri", category: "Puja & Priest", amount: 245, paidTo: "Local Store", mode: "Cash", date: "12-Sep" }
+      ]
+    };
+
+    let activeFilter = 'all';
+
+    const inDonorName = document.getElementById("inDonorName");
+    const inUnitNo = document.getElementById("inUnitNo");
+    const inAmount = document.getElementById("inAmount");
+    const inStatus = document.getElementById("inStatus");
+
+    const inExpItem = document.getElementById("inExpItem");
+    const inExpCategory = document.getElementById("inExpCategory");
+    const inExpAmount = document.getElementById("inExpAmount");
+    const inExpPaidTo = document.getElementById("inExpPaidTo");
+    const inExpMode = document.getElementById("inExpMode");
+
+    const metricTarget = document.getElementById("metricTarget");
+    const metricCollected = document.getElementById("metricCollected");
+    const metricSpent = document.getElementById("metricSpent");
+    const metricNetBalance = document.getElementById("metricNetBalance");
+    const metricNetSub = document.getElementById("metricNetSub");
+    const metricPurpose = document.getElementById("metricPurpose");
+    const metricPaidCount = document.getElementById("metricPaidCount");
+    const metricExpenseCount = document.getElementById("metricExpenseCount");
+    const metricBalanceCard = document.getElementById("metricBalanceCard");
+
+    const progressBarFill = document.getElementById("progressBarFill");
+    const progressPercentage = document.getElementById("progressPercentage");
+    const outExpenseCount = document.getElementById("outExpenseCount");
+    const donorsTableBody = document.getElementById("donorsTableBody");
+    const donorsCardsList = document.getElementById("donorsCardsList");
+    const expensesTableBody = document.getElementById("expensesTableBody");
+    const expensesCardsList = document.getElementById("expensesCardsList");
+
+    const countAll = document.getElementById("countAll");
+    const countPaid = document.getElementById("countPaid");
+    const countPending = document.getElementById("countPending");
+
+    let currentSelectedDonorIndex = null;
+
+    window.switchMode = (mode) => {
+      const isDonors = mode === 'donors';
+      document.getElementById("tabDonors").classList.toggle("active", isDonors);
+      document.getElementById("tabExpenses").classList.toggle("active", !isDonors);
+      document.getElementById("viewDonors").style.display = isDonors ? "grid" : "none";
+      document.getElementById("viewExpenses").style.display = !isDonors ? "grid" : "none";
+    };
+
+    window.setQuickAmount = (val) => {
+      inAmount.value = val;
+    };
+
+    function loadSavedState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === "object") {
+            if (parsed.eventName !== undefined) state.eventName = parsed.eventName;
+            if (parsed.targetBudget !== undefined) state.targetBudget = parsed.targetBudget;
+            if (parsed.totalFlats !== undefined) state.totalFlats = parsed.totalFlats;
+            if (Array.isArray(parsed.donors)) state.donors = parsed.donors;
+            if (Array.isArray(parsed.expenses) && parsed.expenses.length > 0) {
+              state.expenses = parsed.expenses;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Could not read localStorage:", err);
+      }
+
       calculateAll();
     }
-  }
 
-  if (expense) {
-    const index = Number(expense.dataset.deleteExpense);
-    if (confirm('Remove bill for "' + state.expenses[index].item + '"?')) {
-      state.expenses.splice(index,1);
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        console.warn("Could not save to localStorage:", err);
+      }
+    }
+
+    function calculateAll() {
+      const target = state.targetBudget !== undefined ? state.targetBudget : 20000;
+      metricTarget.textContent = "₹" + Number(target).toLocaleString('en-IN');
+      metricPurpose.textContent = state.eventName || "Ganesh Utsav Samiti";
+
+      let totalCollected = 0;
+      let paidCount = 0;
+      let pendingCount = 0;
+
+      state.donors.forEach(d => {
+        if (d.status === "Paid") {
+          totalCollected += Number(d.amount || 0);
+          paidCount++;
+        } else {
+          pendingCount++;
+        }
+      });
+
+      countAll.textContent = state.donors.length;
+      countPaid.textContent = paidCount;
+      countPending.textContent = pendingCount;
+
+      let totalSpent = 0;
+      state.expenses.forEach(e => {
+        totalSpent += Number(e.amount || 0);
+      });
+
+      const netBalance = totalCollected - totalSpent;
+      const pct = target > 0 ? Math.min(100, Math.round((totalCollected / target) * 100)) : 0;
+
+      metricCollected.textContent = "₹" + totalCollected.toLocaleString('en-IN');
+      metricPaidCount.textContent = paidCount + " paid";
+
+      metricSpent.textContent = "₹" + totalSpent.toLocaleString('en-IN');
+      metricExpenseCount.textContent = state.expenses.length + " bills";
+
+      metricNetBalance.textContent = "₹" + netBalance.toLocaleString('en-IN');
+      if (netBalance >= 0) {
+        metricNetBalance.style.color = "var(--success)";
+        metricNetSub.textContent = "Surplus";
+        metricBalanceCard.style.borderLeftColor = "var(--success)";
+      } else {
+        metricNetBalance.style.color = "var(--danger)";
+        metricNetSub.textContent = "Deficit";
+        metricBalanceCard.style.borderLeftColor = "var(--danger)";
+      }
+
+      progressBarFill.style.width = pct + "%";
+      progressPercentage.textContent = pct + "%";
+
+      renderDonorsTable();
+      renderExpensesTable();
+    }
+
+    window.setDonorFilter = (filter, el) => {
+      activeFilter = filter;
+      document.querySelectorAll(".fpill").forEach(p => p.classList.remove("active"));
+      el.classList.add("active");
+      renderDonorsTable();
+    };
+
+    window.filterDonorsTable = () => {
+      renderDonorsTable();
+    };
+
+    function renderDonorsTable() {
+      const q = (document.getElementById("searchDonor") ? document.getElementById("searchDonor").value : "").toLowerCase().trim();
+      donorsTableBody.innerHTML = "";
+      donorsCardsList.innerHTML = "";
+
+      let visibleList = state.donors.map((d, index) => ({ ...d, originalIndex: index }));
+
+      if (activeFilter !== 'all') {
+        visibleList = visibleList.filter(d => d.status === activeFilter);
+      }
+
+      if (q) {
+        visibleList = visibleList.filter(d => 
+          (d.name && d.name.toLowerCase().includes(q)) || 
+          (d.unit && d.unit.toLowerCase().includes(q))
+        );
+      }
+
+      if (visibleList.length === 0) {
+        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 22px;">No members found.</td></tr>`;
+        donorsCardsList.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px; font-size: 13px;">No members found.</div>`;
+        return;
+      }
+
+      visibleList.forEach((d, idx) => {
+        const isPaid = d.status === "Paid";
+        let statusBadgeText = isPaid ? '✓ Paid' : '⏳ Pending';
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td style="font-weight: 700;">${d.name}</td>
+          <td style="color: var(--text-muted);">${d.unit}</td>
+          <td style="font-weight: 800;">₹${Number(d.amount).toLocaleString('en-IN')}</td>
+          <td>
+            <span class="status-badge ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${d.originalIndex})">
+              ${statusBadgeText}
+            </span>
+          </td>
+          <td style="text-align: center; white-space: nowrap;">
+            <div class="row-actions-group">
+              <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})">🧾 Slip</button>
+              <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})">💬 WA</button>
+              <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})">🗑️ Delete</button>
+            </div>
+          </td>
+        `;
+        donorsTableBody.appendChild(tr);
+
+        const cardDiv = document.createElement("div");
+        cardDiv.className = "member-card-item";
+        cardDiv.innerHTML = `
+          <div class="member-card-top">
+            <div>
+              <div class="member-card-name">${idx + 1}. ${d.name}</div>
+              <div class="member-card-flat">Flat / Unit: <strong>${d.unit}</strong></div>
+            </div>
+            <span class="status-badge ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${d.originalIndex})" style="padding: 6px 12px; font-size: 12px;">
+              ${statusBadgeText}
+            </span>
+          </div>
+          <div class="member-card-mid">
+            <span style="font-size: 11.5px; color: var(--text-muted);">Pledged Amount:</span>
+            <span class="member-card-amt">₹${Number(d.amount).toLocaleString('en-IN')}</span>
+          </div>
+          <div class="member-card-actions">
+            <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})" style="padding: 6px 12px; font-size: 12px;">🧾 Slip</button>
+            <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})" style="padding: 6px 12px; font-size: 12px;">💬 WA</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})" style="padding: 6px 12px; font-size: 12px; background: #dc2626 !important; color: #fff !important;">🗑️ Delete</button>
+          </div>
+        `;
+        donorsCardsList.appendChild(cardDiv);
+      });
+    }
+
+    function renderExpensesTable() {
+      outExpenseCount.textContent = state.expenses.length;
+      expensesTableBody.innerHTML = "";
+      expensesCardsList.innerHTML = "";
+
+      if (state.expenses.length === 0) {
+        expensesTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 22px;">No bills recorded yet.</td></tr>`;
+        expensesCardsList.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px; font-size: 13px;">No bills recorded yet.</div>`;
+        return;
+      }
+
+      state.expenses.forEach((e, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td style="font-weight: 700;">${e.item}</td>
+          <td><span style="font-size: 10px; font-weight: 700; padding: 2px 5px; border-radius: 4px; background: var(--tab-bg); color: var(--text-muted);">${e.category}</span></td>
+          <td>${e.paidTo || "—"}</td>
+          <td style="font-size: 10.5px; color: var(--text-muted);">${e.date}</td>
+          <td style="font-weight: 800; color: var(--danger);">₹${Number(e.amount).toLocaleString('en-IN')}</td>
+          <td style="text-align: center;">
+            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" style="padding: 5px 10px; background: #dc2626 !important; color: #fff !important;">🗑️ Delete</button>
+          </td>
+        `;
+        expensesTableBody.appendChild(tr);
+
+        const cardDiv = document.createElement("div");
+        cardDiv.className = "expense-card-item";
+        cardDiv.innerHTML = `
+          <div class="expense-card-top">
+            <div>
+              <div class="expense-card-title">${idx + 1}. ${e.item}</div>
+              <span class="expense-card-cat">${e.category}</span>
+            </div>
+            <span style="font-size: 11px; color: var(--text-muted); font-weight: 700;">${e.date}</span>
+          </div>
+          <div class="expense-card-mid">
+            <span style="font-size: 11.5px; color: var(--text-muted);">Paid to: <strong>${e.paidTo || "—"}</strong> (${e.mode})</span>
+            <span class="expense-card-amt">₹${Number(e.amount).toLocaleString('en-IN')}</span>
+          </div>
+          <div class="expense-card-actions">
+            <span style="font-size: 10.5px; color: var(--text-muted);">Recorded Bill</span>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" style="padding: 6px 14px; font-size: 12px; background: #dc2626 !important; color: #fff !important;">🗑️ Delete Bill</button>
+          </div>
+        `;
+        expensesCardsList.appendChild(cardDiv);
+      });
+    }
+
+    window.toggleStatus = (idx) => {
+      state.donors[idx].status = state.donors[idx].status === "Paid" ? "Pending" : "Paid";
       saveState();
       calculateAll();
+    };
+
+    window.removeDonor = (idx) => {
+      if (confirm(`Remove ${state.donors[idx].name}?`)) {
+        state.donors.splice(idx, 1);
+        saveState();
+        calculateAll();
+      }
+    };
+
+    window.removeExpense = (idx) => {
+      if (confirm(`Remove bill for "${state.expenses[idx].item}"?`)) {
+        state.expenses.splice(idx, 1);
+        saveState();
+        calculateAll();
+      }
+    };
+
+    window.openLatestReceipt = () => {
+      if (state.donors.length === 0) {
+        alert("Please add at least one member or click '⚡ Sample' to preview a receipt.");
+        return;
+      }
+      openReceiptModal(0);
+    };
+
+    window.openReceiptModal = (idx) => {
+      currentSelectedDonorIndex = idx;
+      const d = state.donors[idx];
+
+      document.getElementById("rcptEventTitle").textContent = state.eventName || "Festival Event";
+      document.getElementById("rcptNumber").textContent = `#${String(idx + 1).padStart(3, '0')}`;
+      document.getElementById("rcptDate").textContent = d.dateAdded || new Date().toLocaleDateString('en-IN');
+      document.getElementById("rcptDonorName").textContent = d.name;
+      document.getElementById("rcptDonorUnit").textContent = d.unit || "—";
+      document.getElementById("rcptAmountVal").textContent = `₹${Number(d.amount).toLocaleString('en-IN')}`;
+      
+      const isPaid = d.status === "Paid";
+      const pill = document.getElementById("rcptStatusPill");
+      pill.className = isPaid ? "status-badge status-paid" : "status-badge status-pending";
+      pill.textContent = isPaid ? "✓ Paid" : "⏳ Pending";
+
+      document.getElementById("receiptModal").style.display = "flex";
+    };
+
+    window.closeReceiptModal = () => {
+      document.getElementById("receiptModal").style.display = "none";
+    };
+
+    document.getElementById("btnAddDonor").onclick = () => {
+      const name = inDonorName.value.trim();
+      const unit = inUnitNo.value.trim() || "—";
+      const amount = parseFloat(inAmount.value) || 0;
+      const status = inStatus.value;
+      const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+
+      if (!name) return alert("Please enter contributor name.");
+      if (amount <= 0) return alert("Please enter an amount.");
+
+      state.donors.unshift({ name, unit, amount, status, dateAdded: today });
+      inDonorName.value = "";
+      inUnitNo.value = "";
+      inDonorName.focus();
+      saveState();
+      calculateAll();
+
+      if (status === "Paid") {
+        openReceiptModal(0);
+      }
+    };
+
+    // FIXED EXPENSE BUTTON BINDING
+    document.getElementById("btnAddExpense").onclick = () => {
+      const item = inExpItem.value.trim();
+      const category = inExpCategory.value;
+      const amount = parseFloat(inExpAmount.value) || 0;
+      const paidTo = inExpPaidTo.value.trim();
+      const mode = inExpMode.value;
+      const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+
+      if (!item) return alert("Please enter expense description.");
+      if (amount <= 0) return alert("Please enter a valid expense amount.");
+
+      state.expenses.unshift({ item, category, amount, paidTo, mode, date: today });
+      inExpItem.value = "";
+      inExpAmount.value = "";
+      inExpPaidTo.value = "";
+      inExpItem.focus();
+      saveState();
+      calculateAll();
+    };
+
+    const exportExcelBoth = () => {
+      if (typeof XLSX === "undefined") return alert("Excel library could not be loaded.");
+      const wb = XLSX.utils.book_new();
+
+      const donorRows = state.donors.map((d, i) => ({
+        "Sr No": i + 1,
+        "Member / Donor Name": d.name,
+        "Flat / Unit No": d.unit,
+        "Date": d.dateAdded || "",
+        "Contribution (INR)": d.amount,
+        "Status": d.status
+      }));
+      const wsDonors = XLSX.utils.json_to_sheet(donorRows);
+      XLSX.utils.book_append_sheet(wb, wsDonors, "Collections");
+
+      const expRows = state.expenses.map((e, i) => ({
+        "Sr No": i + 1,
+        "Expense Item": e.item,
+        "Category": e.category,
+        "Paid To / Vendor": e.paidTo || "—",
+        "Mode": e.mode,
+        "Date": e.date,
+        "Amount (INR)": e.amount
+      }));
+      const wsExpenses = XLSX.utils.json_to_sheet(expRows);
+      XLSX.utils.book_append_sheet(wb, wsExpenses, "Expenses");
+
+      XLSX.writeFile(wb, `${(state.eventName || "Event").replace(/\s+/g, '_')}-Register.xlsx`);
+    };
+
+    document.getElementById("btnExportExcel").onclick = exportExcelBoth;
+    document.getElementById("btnExportExcelExp").onclick = exportExcelBoth;
+
+    window.clearAllData = () => {
+      if (confirm("Reset both collections and expenses? This cannot be undone.")) {
+        state.donors = [];
+        state.expenses = [];
+        localStorage.removeItem(STORAGE_KEY);
+        calculateAll();
+      }
+    };
+
+    // Universal Sync Modal Hook
+    let syncQrInstance = null;
+    function generateSyncUrl() {
+      saveState();
+      const serialized = JSON.stringify(state);
+      const compressed = LZString.compressToEncodedURIComponent(serialized);
+      return `${window.location.origin}${window.location.pathname}#sync=${compressed}`;
     }
-  }
-});
 
-function exportExcel() {
-  if (typeof XLSX === "undefined") return alert("Excel library could not be loaded.");
+    document.getElementById("btnOpenSync").onclick = () => {
+      const modal = document.getElementById("syncModal");
+      const qrContainer = document.getElementById("qrContainer");
+      document.getElementById("copySuccessMsg").style.display = "none";
+      const syncUrl = generateSyncUrl();
 
-  const wb = XLSX.utils.book_new();
+      qrContainer.innerHTML = "";
+      syncQrInstance = new QRCode(qrContainer, {
+        text: syncUrl,
+        width: 170,
+        height: 170,
+        colorDark: "#0f172a",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L
+      });
+      modal.style.display = "flex";
+    };
 
-  const donors = state.donors.map((d,i)=>({
-    "Sr No":i+1,"Member / Donor Name":d.name,
-    "Flat / Unit No":d.unit,"Date":d.dateAdded || "",
-    "Contribution (INR)":d.amount,"Status":d.status
-  }));
+    window.closeSyncModal = () => {
+      document.getElementById("syncModal").style.display = "none";
+    };
 
-  const expenses = state.expenses.map((e,i)=>({
-    "Sr No":i+1,"Expense Item":e.item,
-    "Category":e.category,"Paid To / Vendor":e.paidTo || "—",
-    "Mode":e.mode,"Date":e.date,"Amount (INR)":e.amount
-  }));
+    document.getElementById("btnCopySyncLink").onclick = () => {
+      const syncUrl = generateSyncUrl();
+      navigator.clipboard.writeText(syncUrl).then(() => {
+        document.getElementById("copySuccessMsg").style.display = "block";
+      }).catch(err => {
+        prompt("Copy this sync URL manually:", syncUrl);
+      });
+    };
 
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(donors),"Collections");
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(expenses),"Expenses");
+    document.getElementById("btnShareWhatsApp").onclick = () => {
+      const syncUrl = generateSyncUrl();
+      const text = encodeURIComponent(`SheetBox Live Ledger for ${state.eventName || "Event"}:\n${syncUrl}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
+    };
 
-  XLSX.writeFile(wb,(state.eventName || "Event").replace(/\s+/g,"_") + "-Register.xlsx");
-}
+    // Handle Incoming URL Sync Payload if present
+    try {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith("#sync=")) {
+        const compressed = hash.replace("#sync=", "");
+        const decompressed = LZString.decompressFromEncodedURIComponent(compressed);
+        if (decompressed) {
+          const incomingState = JSON.parse(decompressed);
+          if (incomingState && typeof incomingState === "object") {
+            state = incomingState;
+            saveState();
+            window.history.replaceState(null, null, window.location.pathname);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("Sync import failed:", e);
+    }
 
-$("btnExportExcel").onclick = exportExcel;
-$("btnExportExcelExp").onclick = exportExcel;
-
-function printLedger(type) {
-  const isExpenses = type === "expenses";
-  const rows = isExpenses ? state.expenses : state.donors;
-  const total = rows.reduce((sum,r)=>sum + Number(r.amount || 0),0);
-
-  const headers = isExpenses
-    ? ["#","Item","Category","Vendor","Date","Amount (₹)"]
-    : ["#","Contributor","Flat / Unit","Date","Amount (₹)","Status"];
-
-  const body = rows.map((r,i) => isExpenses
-    ? [i+1,r.item,r.category,r.paidTo || "—",r.date,money(r.amount)]
-    : [i+1,r.name,r.unit || "—",r.dateAdded || "—",money(r.amount),r.status]
-  );
-
-  $("printArea").innerHTML = `
-    <h1>${escapeHTML(state.eventName)}</h1>
-    <p>${isExpenses ? "Expense Ledger" : "Contribution Collection Register"} | Printed on ${new Date().toLocaleDateString("en-IN")}</p>
-    <table>
-      <thead><tr>${headers.map(h=>"<th>"+h+"</th>").join("")}</tr></thead>
-      <tbody>${body.map(row=>"<tr>"+row.map(v=>"<td>"+escapeHTML(v)+"</td>").join("")+"</tr>").join("")}</tbody>
-    </table>
-    <div class="print-total">Total ${isExpenses ? "Spent" : "Collected"}: ${money(total)}</div>
-  `;
-
-  window.print();
-}
-
-$("btnPrintExpenses").onclick = () => printLedger("expenses");
-$("btnPrintDonors").onclick = () => printLedger("donors");
-
-$("btnReset").onclick = () => {
-  if (confirm("Delete all contributors and expenses?")) {
-    state.donors = [];
-    state.expenses = [];
-    saveState();
-    calculateAll();
-  }
-};
-
-$("themeBtn").onclick = () => {
-  document.body.classList.toggle("dark-mode");
-  localStorage.setItem("sheetbox_theme",document.body.classList.contains("dark-mode") ? "dark" : "light");
-};
-
-if (localStorage.getItem("sheetbox_theme") === "dark") {
-  document.body.classList.add("dark-mode");
-}
-
-loadSavedState();
-switchMode("expenses");
-calculateAll();
-</script>
+    loadSavedState();
+    switchMode("expenses");
+  </script>
 </body>
 </html>
