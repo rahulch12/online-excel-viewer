@@ -611,7 +611,7 @@
           </table>
         </div>
 
-        <!-- Mobile Expenses Card List View -->
+        <!-- Mobile Expenses Card List View (RESTORED & ACTIVE) -->
         <div class="mobile-cards-list" id="expensesCardsList"></div>
 
         <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
@@ -807,7 +807,8 @@
             state.targetBudget = parsed.targetBudget !== undefined ? parsed.targetBudget : state.targetBudget;
             state.totalFlats = parsed.totalFlats !== undefined ? parsed.totalFlats : state.totalFlats;
             state.donors = Array.isArray(parsed.donors) ? parsed.donors : state.donors;
-            if (Array.isArray(parsed.expenses) && parsed.expenses.length > 0) {
+            // Always respect saved expenses if they exist; otherwise keep defaults
+            if (Array.isArray(parsed.expenses)) {
               state.expenses = parsed.expenses;
             }
           }
@@ -1094,6 +1095,7 @@
       }
     };
 
+    // EXPENSE ADDITION HANDLER BOUND DIRECTLY
     document.getElementById("btnAddExpense").onclick = () => {
       const item = inExpItem.value.trim();
       const category = inExpCategory.value;
