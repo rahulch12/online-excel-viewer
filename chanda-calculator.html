@@ -35,7 +35,7 @@
   <!-- SEO Metadata -->
   <title>Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox</title>
   <meta name="title" content="Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox" />
-  <meta name="description" content="Free festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Record member contributions, generate receipts, log vendor costs, and export Excel." />
+  <meta name="description" content="Free festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Auto-backup, downloadable receipts, and Excel export." />
   <meta name="keywords" content="festival chanda tracker, ganesh chanda collection register, navratri donation list, vargani hishob marathi, chanda register hindi, falo hisab gujarati, donation receipt maker, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
 
@@ -48,9 +48,13 @@
       --text: #0f172a;
       --text-muted: #64748b;
       --accent: #ea580c;
+      --accent-soft: #fff7ed;
       --primary: #2563eb;
+      --primary-soft: #eff6ff;
       --success: #16a34a;
+      --success-soft: #f0fdf4;
       --danger: #dc2626;
+      --danger-soft: #fef2f2;
     }
 
     html, body {
@@ -73,7 +77,7 @@
       background: rgba(255, 255, 255, 0.12);
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 5px 8px;
+      padding: 6px 10px;
       border-radius: 18px;
       font-size: 12px;
       font-weight: 700;
@@ -107,6 +111,32 @@
     .container { max-width: 1180px; width: 100%; margin: 14px auto; padding: 0 14px; flex: 1; }
     .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 10px; }
 
+    /* Undo/Restore Toast Banner */
+    .restore-banner {
+      display: none;
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      color: #1e40af;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .restore-banner button {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
     .hero-title { font-size: 24px; font-weight: 900; margin-bottom: 2px; }
     .hero-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
 
@@ -125,7 +155,7 @@
     .metric-val { font-size: 22px; font-weight: 900; color: var(--text); }
     .metric-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
 
-    /* Shimmering Animated Progress Bar */
+    /* Shimmering Progress Bar */
     .progress-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; }
     .progress-top { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
     .progress-bg { height: 10px; width: 100%; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
@@ -163,16 +193,16 @@
     
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
-    .input-field { width: 100%; padding: 9px 11px; border: 1.5px solid #cbd5e1; border-radius: 7px; font-size: 13px; outline: none; background: #fff; transition: border-color 0.15s; }
-    .input-field:focus { border-color: var(--accent); }
+    .input-field { width: 100%; padding: 10px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13.5px; outline: none; background: #fff; transition: border-color 0.15s, box-shadow 0.15s; }
+    .input-field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12); }
 
     .quick-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-    .chip-btn { background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 16px; cursor: pointer; color: #334155; transition: transform 0.1s ease, background 0.15s ease; }
+    .chip-btn { background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 16px; cursor: pointer; color: #334155; transition: transform 0.1s ease, background 0.15s ease; }
     .chip-btn:hover { background: #e2e8f0; color: #0f172a; }
     .chip-btn:active { transform: scale(0.92); }
 
     /* Button Micro-tap Physics */
-    .btn { padding: 10px 14px; font-size: 13px; font-weight: 800; border-radius: 8px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; transition: transform 0.1s ease, filter 0.15s ease; }
+    .btn { padding: 9px 14px; font-size: 12.5px; font-weight: 800; border-radius: 8px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; transition: transform 0.1s ease, filter 0.15s ease; }
     .btn:hover { filter: brightness(1.06); }
     .btn:active { transform: scale(0.96); }
     .btn-orange { background: var(--accent); color: #fff; }
@@ -216,14 +246,31 @@
       animation: rowSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     
-    .status-badge { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; transition: transform 0.1s ease; }
+    .status-badge { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; transition: transform 0.1s ease; }
     .status-badge:active { transform: scale(0.92); }
     .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
 
-    .action-icon-btn { background: none; border: none; cursor: pointer; font-size: 15px; padding: 3px 5px; border-radius: 4px; transition: transform 0.1s ease; }
-    .action-icon-btn:hover { background: #e2e8f0; }
-    .action-icon-btn:active { transform: scale(0.9); }
+    /* Action Buttons in Rows */
+    .row-btn {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #334155;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-right: 4px;
+      transition: background 0.12s, transform 0.1s;
+    }
+    .row-btn:hover { background: #e2e8f0; color: #0f172a; }
+    .row-btn:active { transform: scale(0.94); }
+    .row-btn-danger { color: #dc2626; border-color: #fca5a5; }
+    .row-btn-danger:hover { background: #fee2e2; }
 
     /* Modals */
     .modal-backdrop {
@@ -275,7 +322,7 @@
       width: fit-content;
     }
 
-    /* --- DEDICATED RECEIPT SLIP STYLING --- */
+    /* Receipt Slip Styling */
     .receipt-slip-card {
       background: #ffffff;
       border: 2px solid #0f172a;
@@ -417,6 +464,12 @@
   <main class="container">
     <a href="/" class="back-link" data-i18n="backLink">&larr; Back to SheetBox Tools</a>
 
+    <!-- Recovery / Undo Toast Banner -->
+    <div class="restore-banner" id="restoreBanner">
+      <span id="restoreBannerText">ℹ️ Loaded sample data. You can restore your previous real records at any time.</span>
+      <button type="button" onclick="restorePreviousBackup()">↩️ Undo & Restore My Data</button>
+    </div>
+
     <h1 class="hero-title" data-i18n="heroTitle">Festival Chanda & Event Expense Tracker</h1>
     <p class="hero-sub" data-i18n="heroSub">Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.</p>
 
@@ -544,7 +597,9 @@
             <button type="button" class="fpill" onclick="setDonorFilter('Paid', this)"><span data-i18n="fPaid">Paid</span> (<span id="countPaid">0</span>)</button>
             <button type="button" class="fpill" onclick="setDonorFilter('Pending', this)"><span data-i18n="fPending">Pending</span> (<span id="countPending">0</span>)</button>
           </div>
-          <div style="display: flex; gap: 6px;">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-orange" style="padding: 6px 10px; font-size: 11.5px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
+            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px; display: none;" id="btnUndoRestore" onclick="restorePreviousBackup()">↩️ Restore</button>
             <button type="button" class="btn btn-green" style="padding: 6px 10px; font-size: 11.5px;" id="btnExportExcel">📊 Excel</button>
             <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
           </div>
@@ -559,7 +614,7 @@
                 <th data-i18n="thFlat">Flat / Unit</th>
                 <th data-i18n="thAmount">Amount (₹)</th>
                 <th data-i18n="thStatus">Status</th>
-                <th style="width: 90px; text-align: center;" data-i18n="thAction">Action</th>
+                <th style="width: 170px; text-align: center;" data-i18n="thAction">Actions</th>
               </tr>
             </thead>
             <tbody id="donorsTableBody"></tbody>
@@ -642,7 +697,7 @@
                 <th data-i18n="thExpVendor">Vendor / Mode</th>
                 <th data-i18n="thExpDate">Date</th>
                 <th data-i18n="thExpAmount">Amount (₹)</th>
-                <th style="width: 40px; text-align: center;">Del</th>
+                <th style="width: 60px; text-align: center;">Action</th>
               </tr>
             </thead>
             <tbody id="expensesTableBody"></tbody>
@@ -708,7 +763,7 @@
               <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #166534;" id="rcptSumLabel">Amount Received</div>
               <div class="rcpt-amount-val" id="rcptAmountVal">₹1,000</div>
             </div>
-            <div id="rcptStatusPill" style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 12px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">✓ Paid</div>
+            <div id="rcptStatusPill" style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">✓ Paid</div>
           </div>
 
           <div class="rcpt-footer-row">
@@ -724,10 +779,10 @@
 
         <!-- Action Controls -->
         <div id="rcptActionButtons" style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
-          <button type="button" class="btn btn-green" style="flex: 1; min-width: 110px;" id="btnDownloadSlipImg">
+          <button type="button" class="btn btn-green" style="flex: 1; min-width: 120px;" id="btnDownloadSlipImg">
             🖼️ Download Slip
           </button>
-          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 90px;" onclick="window.print()">
+          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 80px;" onclick="window.print()">
             🖨️ Print
           </button>
           <button type="button" class="btn btn-outline" style="flex: 1; min-width: 100px;" id="btnSendWhatsAppFromModal">
@@ -753,6 +808,7 @@
 
   <script>
     const STORAGE_KEY = "sheetbox_chanda_ledger_v2";
+    const BACKUP_KEY = "sheetbox_chanda_backup";
 
     const translations = {
       en: {
@@ -789,7 +845,7 @@
         thFlat: "Flat / Unit",
         thAmount: "Amount (₹)",
         thStatus: "Status",
-        thAction: "Action",
+        thAction: "Actions",
         tipStatusToggle: "💡 Tap status pill to switch between Paid and Pending.",
         headerAddExpense: "Log Vendor Bill / Expense",
         lblExpItem: "Item Description *",
@@ -859,7 +915,7 @@
         thFlat: "फ्लैट/यूनिट",
         thAmount: "राशि (₹)",
         thStatus: "स्थिति",
-        thAction: "रसीद/हटाएं",
+        thAction: "कार्रवाई",
         tipStatusToggle: "💡 स्थिति बदलने के लिए 'प्राप्त' या 'बाकी' पर टैप करें।",
         headerAddExpense: "खर्च / बिल दर्ज करें",
         lblExpItem: "खर्च का विवरण *",
@@ -929,7 +985,7 @@
         thFlat: "फ्लॅट क्र.",
         thAmount: "रक्कम (₹)",
         thStatus: "स्थिती",
-        thAction: "पावती/डिलीट",
+        thAction: "कृती",
         tipStatusToggle: "💡 स्थिती बदलण्यासाठी 'जमा' किंवा 'बाकी' बटनावर टॅप करा.",
         headerAddExpense: "उत्सव खर्च / बिल नोंदवा",
         lblExpItem: "खर्चाचा तपशील *",
@@ -999,7 +1055,7 @@
         thFlat: "ફ્લેટ નં.",
         thAmount: "રકમ (₹)",
         thStatus: "સ્થિતિ",
-        thAction: "પહોંચ/ડિલીટ",
+        thAction: "ક્રિયાઓ",
         tipStatusToggle: "💡 સ્થિતિ બદલવા માટે 'જમા' અથવા 'બાકી' બટન પર ટેપ કરો.",
         headerAddExpense: "ખર્ચ / બિલ નોંધો",
         lblExpItem: "ખર્ચની વિગત *",
@@ -1099,8 +1155,51 @@
     const countAll = document.getElementById("countAll");
     const countPaid = document.getElementById("countPaid");
     const countPending = document.getElementById("countPending");
+    const btnUndoRestore = document.getElementById("btnUndoRestore");
+    const restoreBanner = document.getElementById("restoreBanner");
 
     let currentSelectedDonorIndex = null;
+
+    function takeSnapshotBackup() {
+      if (state.donors.length > 0 || state.expenses.length > 0) {
+        try {
+          localStorage.setItem(BACKUP_KEY, JSON.stringify(state));
+          updateRestoreButtonVisibility();
+        } catch (e) {
+          console.warn("Could not save backup snapshot:", e);
+        }
+      }
+    }
+
+    function updateRestoreButtonVisibility() {
+      const backupRaw = localStorage.getItem(BACKUP_KEY);
+      if (backupRaw && btnUndoRestore) {
+        btnUndoRestore.style.display = "inline-flex";
+      } else if (btnUndoRestore) {
+        btnUndoRestore.style.display = "none";
+      }
+    }
+
+    window.restorePreviousBackup = () => {
+      try {
+        const raw = localStorage.getItem(BACKUP_KEY);
+        if (!raw) {
+          alert("No previous backup found to restore.");
+          return;
+        }
+        const recoveredState = JSON.parse(raw);
+        if (recoveredState) {
+          state = recoveredState;
+          saveState();
+          populateFormFields();
+          calculateAll();
+          restoreBanner.style.display = "none";
+          alert("Your previous ledger records have been successfully restored!");
+        }
+      } catch (err) {
+        alert("Failed to restore data: " + err.message);
+      }
+    };
 
     window.switchMode = (mode) => {
       const isDonors = mode === 'donors';
@@ -1123,6 +1222,7 @@
           if (decompressed) {
             const incomingState = JSON.parse(decompressed);
             if (incomingState && (Array.isArray(incomingState.donors) || Array.isArray(incomingState.expenses))) {
+              takeSnapshotBackup();
               state = incomingState;
               saveState();
               window.history.replaceState(null, null, window.location.pathname);
@@ -1164,6 +1264,7 @@
 
       populateFormFields();
       calculateAll();
+      updateRestoreButtonVisibility();
     }
 
     function populateFormFields() {
@@ -1298,11 +1399,11 @@
 
       if (visibleList.length === 0) {
         let noFoundMsg = "No members found.";
-        if (currentLang === 'gu') noFoundMsg = "કોઈ સભ્ય મળ્યા નથી.";
-        else if (currentLang === 'mr') noFoundMsg = "कोणतेही वर्गणीदार सापडले नाहीत.";
-        else if (currentLang === 'hi') noFoundMsg = "कोई सदस्य नहीं मिला।";
+        if (currentLang === 'gu') noFoundMsg = "કોઈ સભ્ય મળ્યા નથી. ડાબી બાજુથી નવો ફાળો ઉમેરો.";
+        else if (currentLang === 'mr') noFoundMsg = "कोणतेही वर्गणीदार सापडले नाहीत. डाव्या बाजूने नवीन वर्गणीदार जोडा.";
+        else if (currentLang === 'hi') noFoundMsg = "कोई सदस्य नहीं मिला। बाईं ओर से सदस्य जोड़ें।";
 
-        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 22px;">${noFoundMsg}</td></tr>`;
+        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 26px;">${noFoundMsg}</td></tr>`;
         return;
       }
 
@@ -1326,9 +1427,9 @@
             </span>
           </td>
           <td style="text-align: center; white-space: nowrap;">
-            <button type="button" class="action-icon-btn" onclick="openReceiptModal(${d.originalIndex})" title="View / Print / Download Receipt Slip">🧾</button>
-            <button type="button" class="action-icon-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})" title="Send WhatsApp Text Receipt">💬</button>
-            <button type="button" class="action-icon-btn" style="color: #dc2626;" onclick="removeDonor(${d.originalIndex})" title="Remove Member">&times;</button>
+            <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})" title="View / Print / Download Slip">🧾 Slip</button>
+            <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})" title="Send WhatsApp Text Receipt">💬 WA</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})" title="Remove Member">&times;</button>
           </td>
         `;
         donorsTableBody.appendChild(tr);
@@ -1359,7 +1460,7 @@
           <td style="font-size: 11px; color: var(--text-muted);">${e.date}</td>
           <td style="font-weight: 800; color: var(--danger);">₹${e.amount.toLocaleString('en-IN')}</td>
           <td style="text-align: center;">
-            <button type="button" class="action-icon-btn" style="color: #dc2626;" onclick="removeExpense(${idx})" title="Delete bill">&times;</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" title="Delete bill">Delete</button>
           </td>
         `;
         expensesTableBody.appendChild(tr);
@@ -1367,6 +1468,7 @@
     }
 
     window.toggleStatus = (idx) => {
+      takeSnapshotBackup();
       state.donors[idx].status = state.donors[idx].status === "Paid" ? "Pending" : "Paid";
       saveState();
       calculateAll();
@@ -1376,6 +1478,7 @@
       let confirmMsg = `Remove ${state.donors[idx].name}?`;
       if (currentLang === 'gu') confirmMsg = `શું તમે ${state.donors[idx].name} ને લિસ્ટમાંથી હટાવવા માંગો છો?`;
       if (confirm(confirmMsg)) {
+        takeSnapshotBackup();
         state.donors.splice(idx, 1);
         saveState();
         calculateAll();
@@ -1386,6 +1489,7 @@
       let confirmExpMsg = `Remove bill for "${state.expenses[idx].item}"?`;
       if (currentLang === 'gu') confirmExpMsg = `શું તમે "${state.expenses[idx].item}" નું બિલ હટાવવા માંગો છો?`;
       if (confirm(confirmExpMsg)) {
+        takeSnapshotBackup();
         state.expenses.splice(idx, 1);
         saveState();
         calculateAll();
@@ -1393,6 +1497,14 @@
     };
 
     // --- RECEIPT SLIP MODAL & GENERATION LOGIC ---
+    window.openLatestReceipt = () => {
+      if (state.donors.length === 0) {
+        alert(currentLang === 'mr' ? "कृपया आधी किमान एक वर्गणीदार जोडा किंवा नमुना डेटा वापरा." : "Please add at least one member or click '⚡ Sample' to preview a receipt.");
+        return;
+      }
+      openReceiptModal(0);
+    };
+
     window.openReceiptModal = (idx) => {
       currentSelectedDonorIndex = idx;
       const d = state.donors[idx];
@@ -1533,6 +1645,7 @@
         return alert(amtPrompt);
       }
 
+      takeSnapshotBackup();
       state.donors.unshift({ name, unit, amount, status, dateAdded: today });
       inDonorName.value = "";
       inUnitNo.value = "";
@@ -1540,7 +1653,6 @@
       saveState();
       calculateAll();
 
-      // Open receipt automatically if contributor paid upfront
       if (status === "Paid") {
         openReceiptModal(0);
       }
@@ -1569,6 +1681,7 @@
         return alert(amtPrompt);
       }
 
+      takeSnapshotBackup();
       state.expenses.unshift({ item, category, amount, paidTo, mode, date: today });
       inExpItem.value = "";
       inExpAmount.value = "";
@@ -1579,6 +1692,18 @@
     };
 
     document.getElementById("btnLoadSample").onclick = () => {
+      if (state.donors.length > 0 || state.expenses.length > 0) {
+        const confirmMsg = currentLang === 'gu'
+          ? "સેમ્પલ ડેટા લોડ કરવાથી હાલનો ડેટા બદલાઈ જશે. શું તમે આગળ વધવા માંગો છો? (તમે પૂર્વવત્/Restore કરી શકશો)"
+          : (currentLang === 'mr'
+            ? "नमुना डेटा लोड केल्याने सध्याचा डेटा बदलेल. पुढे जायचे आहे का? (तुम्ही Restore करू शकाल)"
+            : "Loading sample data will replace your current ledger. Do you want to proceed? (You can Undo/Restore at any time)");
+        
+        if (!confirm(confirmMsg)) return;
+      }
+
+      takeSnapshotBackup();
+
       let sampleEvent = "Ganesh Utsav Mandal 2026";
       if (currentLang === 'gu') sampleEvent = "શ્રી ગણેશ ઉત્સવ મંડળ ૨૦૨૬";
       else if (currentLang === 'mr') sampleEvent = "बाल गोपाळ मित्र मंडळ २०२६";
@@ -1602,6 +1727,9 @@
       populateFormFields();
       saveState();
       calculateAll();
+
+      restoreBanner.style.display = "flex";
+      updateRestoreButtonVisibility();
     };
 
     let syncQrInstance = null;
@@ -1693,6 +1821,7 @@
       else if (currentLang === 'hi') resetMsg = "क्या आप पूरा डेटा रीसेट करना चाहते हैं?";
 
       if (confirm(resetMsg)) {
+        takeSnapshotBackup();
         state.donors = [];
         state.expenses = [];
         state.targetBudget = 50000;
@@ -1700,6 +1829,7 @@
         localStorage.removeItem(STORAGE_KEY);
         populateFormFields();
         calculateAll();
+        updateRestoreButtonVisibility();
       }
     };
 
