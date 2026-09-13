@@ -36,7 +36,6 @@
   <title>Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox</title>
   <meta name="title" content="Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox" />
   <meta name="description" content="Free festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Auto-backup, downloadable receipts, and Excel export." />
-  <meta name="keywords" content="festival chanda tracker, ganesh chanda collection register, navratri donation list, vargani hishob marathi, chanda register hindi, falo hisab gujarati, donation receipt maker, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
 
   <style>
@@ -145,47 +144,19 @@
     .container { max-width: 1180px; width: 100%; margin: 12px auto; padding: 0 12px; flex: 1; }
     .back-link { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 8px; }
 
-    .restore-banner {
-      display: none;
-      background: #eff6ff;
-      border: 1.5px solid #bfdbfe;
-      color: #1e40af;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-    body.dark-mode .restore-banner {
-      background: #1e293b;
-      border-color: #3b82f6;
-      color: #60a5fa;
-    }
-    .restore-banner button {
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-weight: 800;
-      font-size: 11.5px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
     .hero-title { font-size: 20px; font-weight: 900; margin-bottom: 2px; }
     .hero-sub { font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px; }
 
     /* Metric Grid */
     .metric-grid { 
       display: grid; 
-      grid-template-columns: repeat(4, 1fr); 
+      grid-template-columns: repeat(2, 1fr); 
       gap: 10px; 
       margin-bottom: 12px; 
       width: 100%; 
+    }
+    @media (min-width: 768px) {
+      .metric-grid { grid-template-columns: repeat(4, 1fr); }
     }
     .metric-card { 
       background: var(--card-bg); 
@@ -208,8 +179,6 @@
       background: linear-gradient(90deg, #ea580c, #f97316); 
       width: 0%; 
       transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
     }
 
     /* Tab Switcher matching original layout */
@@ -217,7 +186,10 @@
     .mode-tab-btn { flex: 1; padding: 8px 10px; border: none; background: transparent; font-size: 13px; font-weight: 800; color: var(--text-muted); border-radius: 6px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 4px; }
     .mode-tab-btn.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
 
-    .app-layout { display: grid; grid-template-columns: 340px 1fr; gap: 16px; align-items: start; width: 100%; }
+    .app-layout { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; width: 100%; }
+    @media (min-width: 880px) {
+      .app-layout { grid-template-columns: 340px 1fr; }
+    }
 
     .panel { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px; width: 100%; }
     .panel-title { font-size: 13.5px; font-weight: 800; margin-bottom: 10px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
@@ -229,7 +201,6 @@
 
     .quick-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
     .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 14px; cursor: pointer; color: var(--text); }
-    .chip-btn:active { transform: scale(0.94); }
 
     .btn { padding: 11px 16px; font-size: 13.5px; font-weight: 800; border-radius: 8px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
     .btn:active { transform: scale(0.96); }
@@ -242,15 +213,14 @@
     .table-toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
     .search-input-wrap { flex: 1; min-width: 140px; position: relative; }
     .search-input-wrap input { width: 100%; padding: 8px 10px 8px 28px; border: 1.5px solid var(--input-border); border-radius: 7px; font-size: 14px !important; outline: none; background: var(--input-bg); color: var(--text); }
-    .search-input-wrap input:focus { border-color: var(--primary); }
     .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.5; }
 
     .filter-pills { display: flex; gap: 4px; }
     .fpill { font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
     .fpill.active { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
 
-    /* Clean Mobile Cards & Desktop Tables */
-    .mobile-cards-list { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
+    /* Table Container & Mobile Cards */
+    .mobile-cards-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
     .member-card-item {
       background: var(--card-bg);
       border: 1.5px solid var(--border);
@@ -259,7 +229,6 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
     .member-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
     .member-card-name { font-size: 14.5px; font-weight: 800; color: var(--text); }
@@ -282,12 +251,15 @@
       max-height: 520px; 
       border: 1.5px solid var(--border); 
       border-radius: 8px; 
-      display: block; 
+      display: none; 
+    }
+    @media (min-width: 768px) {
+      .table-container { display: block; }
+      .mobile-cards-list { display: none; }
     }
     table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
     table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 11px 12px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; white-space: nowrap; }
     table.data-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; }
-    table.data-table tr:nth-child(even) { background: rgba(0,0,0,0.015); }
 
     .status-badge { 
       font-size: 11.5px; 
@@ -299,7 +271,6 @@
       gap: 4px; 
       cursor: pointer; 
       user-select: none; 
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
     .status-paid { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
     .status-pending { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
@@ -323,9 +294,7 @@
       align-items: center;
       gap: 3px;
     }
-    .row-btn:hover { background: var(--border); color: var(--text); }
     .row-btn-danger { color: #fff !important; background: var(--danger) !important; border-color: var(--danger) !important; font-weight: 800; }
-    .row-btn-danger:hover { filter: brightness(1.1); }
 
     /* Modals */
     .modal-backdrop {
@@ -400,36 +369,6 @@
     footer { padding: 20px 14px; text-align: center; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); margin-top: 30px; width: 100%; }
     footer a { color: var(--text-muted); text-decoration: none; margin: 0 4px; }
     footer a:hover { color: var(--primary); }
-
-    /* MOBILE PERFECTION (MAX 768px) */
-    @media (max-width: 768px) {
-      .app-layout { grid-template-columns: 1fr; gap: 14px; }
-      .container { padding: 0 8px; }
-      
-      .metric-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .metric-card { padding: 8px 10px; }
-      .metric-val { font-size: 16.5px; }
-
-      .brand-sub { display: none; }
-      .header-btns { gap: 4px; }
-      .sync-btn span, .bmc-btn span { display: none; }
-      
-      .table-toolbar { flex-direction: column; align-items: stretch; gap: 6px; }
-      .filter-pills { width: 100%; justify-content: space-between; }
-      .fpill { flex: 1; text-align: center; }
-
-      .table-container { display: none !important; }
-      .mobile-cards-list { display: flex !important; }
-    }
-
-    @media print {
-      body * { visibility: hidden !important; }
-      #receiptModal, #receiptModal * { visibility: visible !important; }
-      #receiptModal { display: block !important; position: absolute !important; inset: 0 !important; background: #fff !important; }
-      .modal-box { box-shadow: none !important; border: none !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
-      .modal-close-btn, #rcptActionButtons { display: none !important; }
-      .receipt-slip-card { border: 2px solid #000 !important; margin: 20px auto !important; width: 90% !important; }
-    }
   </style>
 </head>
 <body>
@@ -463,36 +402,30 @@
   </header>
 
   <main class="container">
-    <a href="/" class="back-link" data-i18n="backLink">&larr; Back to SheetBox Tools</a>
+    <a href="/" class="back-link">&larr; Back to SheetBox Tools</a>
 
-    <!-- Recovery / Undo Toast Banner -->
-    <div class="restore-banner" id="restoreBanner">
-      <span id="restoreBannerText">ℹ️ Loaded sample data.</span>
-      <button type="button" onclick="restorePreviousBackup()">↩️ Undo & Restore My Data</button>
-    </div>
+    <h1 class="hero-title">Festival Chanda & Event Expense Tracker</h1>
+    <p class="hero-sub">Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.</p>
 
-    <h1 class="hero-title" data-i18n="heroTitle">Festival Chanda & Event Expense Tracker</h1>
-    <p class="hero-sub" data-i18n="heroSub">Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.</p>
-
-    <!-- Top Key Metrics Strip matching the original design -->
+    <!-- Top Metrics matching your dark visual style -->
     <div class="metric-grid">
       <div class="metric-card">
-        <div class="metric-label" data-i18n="lblTarget">Target Budget</div>
+        <div class="metric-label">Target Budget</div>
         <div class="metric-val" id="metricTarget">₹20,000</div>
         <div class="metric-sub" id="metricPurpose">Ganesh Utsav Samiti</div>
       </div>
       <div class="metric-card" style="border-left: 3.5px solid var(--success);">
-        <div class="metric-label" data-i18n="lblCollected">Total Collected</div>
+        <div class="metric-label">Total Collected</div>
         <div class="metric-val" id="metricCollected" style="color: var(--success);">₹0</div>
         <div class="metric-sub" id="metricPaidCount">0 paid</div>
       </div>
       <div class="metric-card" style="border-left: 3.5px solid var(--danger);">
-        <div class="metric-label" data-i18n="lblSpent">Total Spent</div>
+        <div class="metric-label">Total Spent</div>
         <div class="metric-val" id="metricSpent" style="color: var(--danger);">₹1,045</div>
         <div class="metric-sub" id="metricExpenseCount">3 bills</div>
       </div>
       <div class="metric-card" id="metricBalanceCard" style="border-left: 3.5px solid var(--danger);">
-        <div class="metric-label" data-i18n="lblBalance">Net Balance in Hand</div>
+        <div class="metric-label">Net Balance in Hand</div>
         <div class="metric-val" id="metricNetBalance" style="color: var(--danger);">₹-1,045</div>
         <div class="metric-sub" id="metricNetSub">Deficit</div>
       </div>
@@ -501,7 +434,7 @@
     <!-- Collection Progress Bar -->
     <div class="progress-box">
       <div class="progress-top">
-        <span data-i18n="lblTargetAchieved">Collection Target Achieved</span>
+        <span>Collection Target Achieved</span>
         <span id="progressPercentage">0%</span>
       </div>
       <div class="progress-bg">
@@ -509,37 +442,37 @@
       </div>
     </div>
 
-    <!-- Mode Selector Tabs matching original layout -->
+    <!-- Mode Selector Tabs -->
     <div class="mode-tab-bar">
       <button class="mode-tab-btn active" id="tabDonors" onclick="switchMode('donors')">
-        <span data-i18n="tabCollections">👥 1. Collections</span>
+        👥 1. Collections
       </button>
       <button class="mode-tab-btn" id="tabExpenses" onclick="switchMode('expenses')">
-        <span data-i18n="tabExpenses">💸 2. Expenses</span>
+        💸 2. Expenses
       </button>
     </div>
 
     <!-- 1. COLLECTIONS VIEW -->
-    <div id="viewDonors" class="app-layout">
+    <div id="viewDonors" class="app-layout" style="display: none;">
       <div>
         <div class="panel">
           <div class="panel-title">
-            <span data-i18n="addContributorHeader">1. Quick Add Member</span>
-            <button type="button" class="chip-btn" id="btnLoadSample" data-i18n="sampleBtn">⚡ Sample</button>
+            <span>1. Quick Add Member</span>
+            <button type="button" class="chip-btn" id="btnLoadSample">⚡ Sample</button>
           </div>
 
           <div class="form-group">
-            <label data-i18n="lblMemberName">Member / Contributor Name *</label>
+            <label>Member / Contributor Name *</label>
             <input type="text" id="inDonorName" class="input-field" placeholder="e.g. Ramesh Kulkarni" autocomplete="off" />
           </div>
 
           <div class="form-group">
-            <label data-i18n="lblUnitNo">Flat / Shop / Unit No.</label>
+            <label>Flat / Shop / Unit No.</label>
             <input type="text" id="inUnitNo" class="input-field" placeholder="e.g. 402 / Shop 3" />
           </div>
 
           <div class="form-group">
-            <label data-i18n="lblAmount">Pledged Amount (₹) *</label>
+            <label>Pledged Amount (₹) *</label>
             <input type="number" id="inAmount" class="input-field" placeholder="1000" value="1000" min="1" />
             <div class="quick-chips">
               <span class="chip-btn" onclick="setQuickAmount(500)">+ ₹500</span>
@@ -550,43 +483,19 @@
           </div>
 
           <div class="form-group">
-            <label data-i18n="lblStatus">Payment Status</label>
+            <label>Payment Status</label>
             <select id="inStatus" class="input-field">
-              <option value="Paid" data-i18n="optPaid">✓ Paid (Cash / Online)</option>
-              <option value="Pending" data-i18n="optPending">⏳ Pending (Pledged Only)</option>
+              <option value="Paid">✓ Paid (Cash / Online)</option>
+              <option value="Pending">⏳ Pending (Pledged Only)</option>
             </select>
           </div>
 
           <button type="button" class="btn btn-orange" style="width: 100%; margin-top: 6px;" id="btnAddDonor">
-            <span data-i18n="btnSaveMember">+ Save Contributor</span>
+            + Save Contributor
           </button>
-        </div>
-
-        <!-- Budget & Split Settings -->
-        <div class="panel" style="margin-top: 14px;">
-          <div class="panel-title">
-            <span data-i18n="headerBudgetSettings">⚙️ Budget & Split Settings</span>
-          </div>
-          <div class="form-group">
-            <label data-i18n="lblEventName">Event / Mandal Name</label>
-            <input type="text" id="inEventName" class="input-field" placeholder="e.g. Bal Gopal Mitra Mandal" />
-          </div>
-          <div class="form-group">
-            <label data-i18n="lblTargetGoal">Target Budget Goal (₹)</label>
-            <input type="number" id="inTargetBudget" class="input-field" placeholder="e.g. 50000" min="0" />
-          </div>
-          <div class="form-group">
-            <label data-i18n="lblTotalFlats">Total Families / Flats in Society</label>
-            <input type="number" id="inTotalFlats" class="input-field" placeholder="50" min="1" />
-          </div>
-          <div style="background: var(--tab-bg); padding: 8px 10px; border-radius: 7px; font-size: 12px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: var(--text-muted); font-weight: 600;" data-i18n="lblEqualShare">Equal Member Share:</span>
-            <strong id="outEqualShare" style="color: var(--accent); font-size: 14px;">₹0</strong>
-          </div>
         </div>
       </div>
 
-      <!-- Donors Table & Mobile Cards -->
       <div class="panel">
         <div class="table-toolbar">
           <div class="search-input-wrap">
@@ -594,46 +503,38 @@
             <input type="text" id="searchDonor" placeholder="Search member or flat..." oninput="filterDonorsTable()" />
           </div>
           <div class="filter-pills">
-            <button type="button" class="fpill active" onclick="setDonorFilter('all', this)"><span data-i18n="fAll">All</span> (<span id="countAll">0</span>)</button>
-            <button type="button" class="fpill" onclick="setDonorFilter('Paid', this)"><span data-i18n="fPaid">Paid</span> (<span id="countPaid">0</span>)</button>
-            <button type="button" class="fpill" onclick="setDonorFilter('Pending', this)"><span data-i18n="fPending">Pending</span> (<span id="countPending">0</span>)</button>
+            <button type="button" class="fpill active" onclick="setDonorFilter('all', this)">All (<span id="countAll">0</span>)</button>
+            <button type="button" class="fpill" onclick="setDonorFilter('Paid', this)">Paid (<span id="countPaid">0</span>)</button>
+            <button type="button" class="fpill" onclick="setDonorFilter('Pending', this)">Pending (<span id="countPending">0</span>)</button>
           </div>
           <div style="display: flex; gap: 4px; flex-wrap: wrap; width: 100%; justify-content: flex-end; margin-top: 4px;">
             <button type="button" class="btn btn-orange" style="padding: 6px 10px; font-size: 11.5px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
-            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px; border-color: #93c5fd; color: #1d4ed8; background: #eff6ff;" id="btnUndoRestore" onclick="restorePreviousBackup()">↩️ Restore</button>
             <button type="button" class="btn btn-green" style="padding: 6px 10px; font-size: 11.5px;" id="btnExportExcel">📊 Excel</button>
-            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
+            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()">🖨️ Print</button>
           </div>
         </div>
 
-        <!-- Desktop Table View -->
         <div class="table-container">
           <table class="data-table">
             <thead>
               <tr>
                 <th style="width: 32px;">#</th>
-                <th data-i18n="thContributor">Contributor</th>
-                <th data-i18n="thFlat">Flat</th>
-                <th data-i18n="thAmount">Amount (₹)</th>
-                <th data-i18n="thStatus">Status</th>
-                <th style="width: 210px; text-align: center;" data-i18n="thAction">Actions</th>
+                <th>Contributor</th>
+                <th>Flat</th>
+                <th>Amount (₹)</th>
+                <th>Status</th>
+                <th style="width: 210px; text-align: center;">Actions</th>
               </tr>
             </thead>
             <tbody id="donorsTableBody"></tbody>
           </table>
         </div>
-
-        <!-- Mobile Card List View (Zero Horizontal Squeeze) -->
         <div class="mobile-cards-list" id="donorsCardsList"></div>
-
-        <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: var(--text-muted); margin-top: 8px;">
-          <span data-i18n="tipStatusToggle">💡 Tap status pill to switch between Paid and Pending.</span>
-        </div>
       </div>
     </div>
 
-    <!-- 2. EXPENSES VIEW (Fixed matching user's original design) -->
-    <div id="viewExpenses" class="app-layout" style="display: none;">
+    <!-- 2. EXPENSES VIEW (FIXED) -->
+    <div id="viewExpenses" class="app-layout">
       <div>
         <div class="panel">
           <div class="panel-title">
@@ -710,6 +611,9 @@
           </table>
         </div>
 
+        <!-- Mobile Expenses Card List View -->
+        <div class="mobile-cards-list" id="expensesCardsList"></div>
+
         <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
           <button type="button" class="btn btn-outline" style="font-size: 10.5px; color: var(--danger); border-color: #fca5a5;" onclick="clearAllData()">
             ⚠️ Reset All Ledger Data
@@ -733,7 +637,6 @@
           <button type="button" class="btn btn-orange" style="flex: 1; font-size: 11.5px;" id="btnCopySyncLink">📋 Copy Link</button>
           <button type="button" class="btn btn-outline" style="flex: 1; font-size: 11.5px;" id="btnShareWhatsApp">💬 WhatsApp</button>
         </div>
-        <div id="copySuccessMsg" style="display: none; font-size: 11px; color: var(--success); font-weight: 700; margin-top: 6px;">✓ Sync Link Copied to Clipboard!</div>
       </div>
     </div>
 
@@ -742,7 +645,6 @@
       <div class="modal-box" style="max-width: 390px; padding: 16px 12px;">
         <button type="button" class="modal-close-btn" onclick="closeReceiptModal()">&times;</button>
         
-        <!-- Graphic Printable Receipt Slip -->
         <div class="receipt-slip-card" id="receiptSlipCard">
           <div class="rcpt-header">
             <div class="rcpt-event-name" id="rcptEventTitle">Event Name</div>
@@ -755,18 +657,18 @@
           </div>
 
           <div class="rcpt-field">
-            <span id="rcptReceivedFromLabel">Received with thanks from:</span><br>
+            <span>Received with thanks from:</span><br>
             <strong id="rcptDonorName" style="font-size: 14px; color: #0f172a;">Ramesh Kulkarni</strong>
           </div>
 
           <div class="rcpt-field">
-            <span id="rcptUnitLabel">Flat / Shop / Unit:</span> 
+            <span>Flat / Shop / Unit:</span> 
             <strong id="rcptDonorUnit">402</strong>
           </div>
 
           <div class="rcpt-amount-box">
             <div>
-              <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; color: #166534;" id="rcptSumLabel">Amount Received</div>
+              <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; color: #166534;">Amount Received</div>
               <div class="rcpt-amount-val" id="rcptAmountVal">₹1,000</div>
             </div>
             <div id="rcptStatusPill" style="font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 12px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">✓ Paid</div>
@@ -778,12 +680,11 @@
             </div>
             <div class="rcpt-signature-line">
               <div class="rcpt-sig-dash"></div><br>
-              <span id="rcptAuthorizedSignLabel">Authorized Signatory</span>
+              <span>Authorized Signatory</span>
             </div>
           </div>
         </div>
 
-        <!-- Action Controls -->
         <div id="rcptActionButtons" style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
           <button type="button" class="btn btn-green" style="flex: 1; min-width: 110px; font-size: 11.5px;" id="btnDownloadSlipImg">
             🖼️ Download Slip
@@ -814,11 +715,10 @@
 
   <script>
     const STORAGE_KEY = "sheetbox_chanda_ledger_v2";
-    const BACKUP_KEY = "sheetbox_chanda_backup";
 
     // Theme Switcher Logic Synchronized with index.html
     const themeBtn = document.getElementById("themeToggleBtn");
-    const currentTheme = localStorage.getItem("sheetbox_theme") || "light";
+    const currentTheme = localStorage.getItem("sheetbox_theme") || "dark";
 
     if (currentTheme === "dark") {
       document.body.classList.add("dark-mode");
@@ -832,309 +732,8 @@
       localStorage.setItem("sheetbox_theme", isDark ? "dark" : "light");
     };
 
-    const translations = {
-      en: {
-        syncBtn: "📲 Sync",
-        backLink: "← Back to SheetBox Tools",
-        heroTitle: "Festival Chanda & Event Expense Tracker",
-        heroSub: "Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.",
-        lblTarget: "Target Budget",
-        lblCollected: "Total Collected",
-        lblSpent: "Total Spent",
-        lblBalance: "Net Balance in Hand",
-        lblTargetAchieved: "Collection Target Achieved",
-        tabCollections: "👥 1. Collections",
-        tabExpenses: "💸 2. Expenses",
-        addContributorHeader: "1. Quick Add Member",
-        sampleBtn: "⚡ Sample",
-        lblMemberName: "Member / Contributor Name *",
-        lblUnitNo: "Flat / Shop / Unit No.",
-        lblAmount: "Pledged Amount (₹) *",
-        lblStatus: "Payment Status",
-        optPaid: "✓ Paid (Cash / Online)",
-        optPending: "⏳ Pending (Pledged Only)",
-        btnSaveMember: "+ Save Contributor",
-        headerBudgetSettings: "⚙️ Budget & Split Settings",
-        lblEventName: "Event / Mandal Name",
-        lblTargetGoal: "Target Budget Goal (₹)",
-        lblTotalFlats: "Total Families / Flats in Society",
-        lblEqualShare: "Equal Member Share:",
-        fAll: "All",
-        fPaid: "Paid",
-        fPending: "Pending",
-        btnPrint: "🖨️ Print",
-        thContributor: "Contributor",
-        thFlat: "Flat",
-        thAmount: "Amount (₹)",
-        thStatus: "Status",
-        thAction: "Actions",
-        tipStatusToggle: "💡 Tap status pill to switch between Paid and Pending.",
-        headerAddExpense: "Log Vendor Bill / Expense",
-        lblExpItem: "Item Description *",
-        lblExpCategory: "Expense Category",
-        catPandal: "Pandal & Decoration",
-        catMurti: "Idol / Murti",
-        catSound: "Sound & Lighting",
-        catPuja: "Puja & Priest",
-        catPrasad: "Prasad & Catering",
-        catSecurity: "Security & Permissions",
-        catPublicity: "Publicity & Banners",
-        catMisc: "Miscellaneous",
-        lblExpAmount: "Amount Spent (₹) *",
-        lblExpPaidTo: "Vendor Name / Paid To",
-        lblExpMode: "Payment Mode",
-        btnRecordExpense: "+ Record Expense",
-        headerExpenseLedger: "Expense Ledger",
-        thExpItem: "Item",
-        thExpCategory: "Category",
-        thExpVendor: "Vendor",
-        thExpDate: "Date",
-        thExpAmount: "Amount (₹)",
-        btnResetAll: "⚠️ Reset All Ledger Data",
-        syncModalTitle: "Sync Across Devices",
-        syncModalSub: "Scan with your phone/device camera or share the direct link to open this exact ledger on another computer.",
-        btnCopyLink: "📋 Copy Link",
-        msgCopied: "✓ Sync Link Copied to Clipboard!",
-        receiptBadge: "FESTIVAL RECEIPT",
-        receiptFrom: "Received with thanks from:",
-        receiptUnit: "Flat / Shop / Unit:",
-        receiptSum: "Amount Received",
-        receiptSign: "Authorized Signatory",
-        receiptTitle: "Contribution Receipt",
-        receiptThanks: "Thank you for your generous support! ✨"
-      },
-      hi: {
-        syncBtn: "📲 सिंक",
-        backLink: "← सभी टूल्स पर वापस जाएं",
-        heroTitle: "उत्सव चंदा एवं व्यय रजिस्टर",
-        heroSub: "सहयोग राशि एकत्र करें, खर्च दर्ज करें और शेष बची राशि का तुरंत हिसाब रखें。",
-        lblTarget: "कुल बजट लक्ष्य",
-        lblCollected: "कुल जमा चंदा",
-        lblSpent: "कुल खर्च",
-        lblBalance: "शेष बची राशि",
-        lblTargetAchieved: "बजट लक्ष्य प्रगति",
-        tabCollections: "👥 1. चंदा संग्रह",
-        tabExpenses: "💸 2. आयोजन खर्च",
-        addContributorHeader: "1. नया सदस्य जोड़ें",
-        sampleBtn: "⚡ नमूना",
-        lblMemberName: "सदस्य / दानदाता का नाम *",
-        lblUnitNo: "फ्लैट / दुकान क्रमांक",
-        lblAmount: "सहयोग राशि (₹) *",
-        lblStatus: "भुगतान स्थिति",
-        optPaid: "✓ प्राप्त हुआ (Paid)",
-        optPending: "⏳ बाकी (Pending)",
-        btnSaveMember: "+ सदस्य सुरक्षित करें",
-        headerBudgetSettings: "⚙️ बजट सेटिंग्स",
-        lblEventName: "मंडल / आयोजन का नाम",
-        lblTargetGoal: "कुल बजट लक्ष्य (₹)",
-        lblTotalFlats: "सोसायटी में कुल फ्लैट / परिवार",
-        lblEqualShare: "प्रति सदस्य बराबर हिस्सा:",
-        fAll: "सभी",
-        fPaid: "प्राप्त",
-        fPending: "बाकी",
-        btnPrint: "🖨️ प्रिंट",
-        thContributor: "सदस्य",
-        thFlat: "फ्लैट",
-        thAmount: "राशि (₹)",
-        thStatus: "स्थिति",
-        thAction: "कार्रवाई",
-        tipStatusToggle: "💡 स्थिति बदलने के लिए 'प्राप्त' या 'बाकी' पर टैप करें।",
-        headerAddExpense: "खर्च दर्ज करें",
-        lblExpItem: "खर्च का विवरण *",
-        lblExpCategory: "खर्च श्रेणी",
-        catPandal: "मंडप एवं सजावट",
-        catMurti: "मूर्ति / प्रतिमा",
-        catSound: "ध्वनि एवं प्रकाश (साउंड)",
-        catPuja: "पूजा सामग्री व दक्षिणा",
-        catPrasad: "प्रसाद व भोजन व्यवस्था",
-        catSecurity: "सुरक्षा व परमिशन",
-        catPublicity: "बैनर व प्रचार",
-        catMisc: "अन्य फुटकर खर्च",
-        lblExpAmount: "खर्च राशि (₹) *",
-        lblExpPaidTo: "वेंडर का नाम",
-        lblExpMode: "भुगतान माध्यम",
-        btnRecordExpense: "+ खर्च जोड़ें",
-        headerExpenseLedger: "आयोजन खर्च खाता",
-        thExpItem: "सामग्री",
-        thExpCategory: "श्रेणी",
-        thExpVendor: "वेंडर",
-        thExpDate: "दिनांक",
-        thExpAmount: "राशि (₹)",
-        btnResetAll: "⚠️ पूरा डेटा रीसेट करें",
-        syncModalTitle: "अन्य डिवाइस पर सिंक करें",
-        syncModalSub: "अपने फोन से यह QR कोड स्कैन करें या लिंक शेयर करें।",
-        btnCopyLink: "📋 लिंक कॉपी करें",
-        msgCopied: "✓ लिंक कॉपी हो गया!",
-        receiptBadge: "चंदा प्राप्ति रसीद",
-        receiptFrom: "सप्रेम प्राप्त हुए:",
-        receiptUnit: "फ्लैट / दुकान नं:",
-        receiptSum: "प्राप्त सहयोग राशि",
-        receiptSign: "अधिकृत हस्ताक्षर",
-        receiptTitle: "चंदा प्राप्ति रसीद",
-        receiptThanks: "आपके सहयोग के लिए धन्यवाद! ✨"
-      },
-      mr: {
-        syncBtn: "📲 सिंक",
-        backLink: "← मुख्य मेनूवर परत जा",
-        heroTitle: "उत्सव वर्गणी व खर्च हिशोब वही",
-        heroSub: "वर्गणी जमा करा, मंडप व इतर खर्च नोंदवा आणि शिल्लक रकमेचा त्वरित हिशोब ठेवा.",
-        lblTarget: "अंदाजित अर्थसंकल्प",
-        lblCollected: "एकूण जमा वर्गणी",
-        lblSpent: "झालेला एकूण खर्च",
-        lblBalance: "हातातील शिल्लक रक्कम",
-        lblTargetAchieved: "वर्गणी संकलन उद्दिष्ट",
-        tabCollections: "👥 १. वर्गणीदार नोंद",
-        tabExpenses: "💸 २. उत्सव खर्च",
-        addContributorHeader: "१. नवीन वर्गणीदार जोडा",
-        sampleBtn: "⚡ नमुना",
-        lblMemberName: "वर्गणीदाराचे नाव *",
-        lblUnitNo: "फ्लॅट / रूम / दुकान क्र.",
-        lblAmount: "वर्गणी रक्कम (₹) *",
-        lblStatus: "वर्गणी स्थिती",
-        optPaid: "✓ जमा झाली (Paid)",
-        optPending: "⏳ बाकी आहे (Pending)",
-        btnSaveMember: "+ वर्गणीदार नोंदवा",
-        headerBudgetSettings: "⚙️ अंदाजपत्रक सेटिंग्स",
-        lblEventName: "मंडळ / सोसायटीचे नाव",
-        lblTargetGoal: "अंदाजित एकूण बजेट (₹)",
-        lblTotalFlats: "सोसायटीतील कुटुंबे/फ्लॅट",
-        lblEqualShare: "समान वर्गणी वाटा:",
-        fAll: "सर्व",
-        fPaid: "जमा",
-        fPending: "बाकी",
-        btnPrint: "🖨️ प्रिंट",
-        thContributor: "वर्गणीदार",
-        thFlat: "फ्लॅट",
-        thAmount: "रक्कम (₹)",
-        thStatus: "स्थिती",
-        thAction: "कृती",
-        tipStatusToggle: "💡 स्थिती बदलण्यासाठी 'जमा' किंवा 'बाकी' बटनावर टॅप करा.",
-        headerAddExpense: "उत्सव खर्च नोंदवा",
-        lblExpItem: "खर्चाचा तपशील *",
-        lblExpCategory: "खर्च प्रकार",
-        catPandal: "मंडप आणि सजावट",
-        catMurti: "श्रींची मूर्ती",
-        catSound: "ध्वनी व रोषणाई (साउंड)",
-        catPuja: "पूजा साहित्य व दक्षिणा",
-        catPrasad: "प्रसाद आणि महाप्रसाद",
-        catSecurity: "सुरक्षा व पोलीस परवानग्या",
-        catPublicity: "बॅनर्स व जाहिरात",
-        catMisc: "इतर किरकोळ खर्च",
-        lblExpAmount: "झालेला खर्च (₹) *",
-        lblExpPaidTo: "दुकानदार / कारागीर",
-        lblExpMode: "पेमेंट प्रकार",
-        btnRecordExpense: "+ खर्च नोंदवा",
-        headerExpenseLedger: "उत्सव खर्च वही",
-        thExpItem: "तपशील",
-        thExpCategory: "प्रकार",
-        thExpVendor: "दुकानदार",
-        thExpDate: "तारीख",
-        thExpAmount: "रक्कम (₹)",
-        btnResetAll: "⚠️ सर्व डेटा पुसून टाका",
-        syncModalTitle: "दुसऱ्या डिव्हाइसवर सिंक करा",
-        syncModalSub: "मोबाईल कॅमेऱ्याने हा QR कोड स्कॅन करा किंवा लिंक कॉम्प्युटरवर उघडा.",
-        btnCopyLink: "📋 लिंक कॉपी करा",
-        msgCopied: "✓ लिंक कॉपी झाली!",
-        receiptBadge: "वर्गणी जमा पावती",
-        receiptFrom: "यांजकडून सप्रेम स्वीकारली:",
-        receiptUnit: "फ्लॅट / रूम क्र:",
-        receiptSum: "स्वीकारलेली वर्गणी रक्कम",
-        receiptSign: "खजिनदार / स्वाक्षरी",
-        receiptTitle: "वर्गणी जमा पावती",
-        receiptThanks: "आपल्या सहकार्याबद्दल धन्यवाद! ✨"
-      },
-      gu: {
-        syncBtn: "📲 સિન્ક",
-        backLink: "← મુખ્ય પેજ પર પાછા જાઓ",
-        heroTitle: "ઉત્સવ ફાળો અને ખર્ચ હિસાબ વહી",
-        heroSub: "ફાળો જમા કરો, મંડપ અને અન્ય ખર્ચ નોંધો અને બાકી રકમનો ત્વરિત હિસાબ રાખો.",
-        lblTarget: "અંદાજિત બજેટ લક્ષ્ય",
-        lblCollected: "કુલ જમા ફાળો",
-        lblSpent: "થયેલ કુલ ખર્ચ",
-        lblBalance: "હાથ પર બચત / પુરાંત",
-        lblTargetAchieved: "ફાળો સંગ્રહ પ્રગતિ",
-        tabCollections: "👥 ૧. ફાળો નોંધણી",
-        tabExpenses: "💸 ૨. ઉત્સવ ખર્ચ",
-        addContributorHeader: "૧. નવો ફાળો ઉમેરો",
-        sampleBtn: "⚡ નમૂનો",
-        lblMemberName: "સભ્ય / દાતાનું નામ *",
-        lblUnitNo: "ફ્લેટ / દુકાન નંબર",
-        lblAmount: "ફાળાની રકમ (₹) *",
-        lblStatus: "ચુકવણી સ્થિતિ",
-        optPaid: "✓ જમા થયેલ (Paid)",
-        optPending: "⏳ બાકી (Pending)",
-        btnSaveMember: "+ સભ્ય સેવ કરો",
-        headerBudgetSettings: "⚙️ બજેટ ગોઠવણ",
-        lblEventName: "મંડળ / સોસાયટીનું નામ",
-        lblTargetGoal: "કુલ બજેટ લક્ષ્યાંક (₹)",
-        lblTotalFlats: "સોસાયટીમાં કુલ પરિવારો",
-        lblEqualShare: "સરખો ફાળો:",
-        fAll: "બધા",
-        fPaid: "જમા",
-        fPending: "બાકી",
-        btnPrint: "🖨️ પ્રિન્ટ",
-        thContributor: "સભ્ય",
-        thFlat: "ફ્લેટ",
-        thAmount: "રકમ (₹)",
-        thStatus: "સ્થિતિ",
-        thAction: "ક્રિયાઓ",
-        tipStatusToggle: "💡 સ્થિતિ બદલવા માટે 'જમા' અથવા 'બાકી' બટન પર ટેપ કરો.",
-        headerAddExpense: "ખર્ચ નોંધો",
-        lblExpItem: "ખર્ચની વિગત *",
-        lblExpCategory: "ખર્ચ શ્રેણી",
-        catPandal: "મંડપ અને ડેકોરેશન",
-        catMurti: "શ્રીજીની મૂર્તિ",
-        catSound: "સાઉન્ડ અને લાઈટિંગ",
-        catPuja: "પૂજા સામગ્રી અને દક્ષિણા",
-        catPrasad: "પ્રસાદ અને ભોજન",
-        catSecurity: "સિક્યુરિટી અને મંજૂરી",
-        catPublicity: "બેનર અને જાહેરાત",
-        catMisc: "અન્ય પરચૂરણ ખર્ચ",
-        lblExpAmount: "ખર્ચની રકમ (₹) *",
-        lblExpPaidTo: "વેપારીનું નામ",
-        lblExpMode: "ચુકવણી પદ્ધતિ",
-        btnRecordExpense: "+ ખર્ચ નોંધો",
-        headerExpenseLedger: "ઉત્સવ ખર્ચ ખાતાવહી",
-        thExpItem: "વિગત",
-        thExpCategory: "શ્રેણી",
-        thExpVendor: "વેપારી",
-        thExpDate: "તારીખ",
-        thExpAmount: "રકમ (₹)",
-        btnResetAll: "⚠️ તમામ ડેટા સાફ કરો",
-        syncModalTitle: "બીજા ડિવાઇસ પર સિન્ક કરો",
-        syncModalSub: "તમારા ફોનના કેમેરાથી આ QR કોડ સ્કેન કરો.",
-        btnCopyLink: "📋 લિંક કૉપિ કરો",
-        msgCopied: "✓ લિંક કૉપિ થઈ ગઈ!",
-        receiptBadge: "ફાળો જમા પહોંચ",
-        receiptFrom: "તરફથી આદરપૂર્વક મળેલ:",
-        receiptUnit: "ફ્લેટ / યુનિટ નં:",
-        receiptSum: "મળેલ ફાળાની રકમ",
-        receiptSign: "અધિકૃત સહી",
-        receiptTitle: "ફાળો જમા પહોંચ",
-        receiptThanks: "તમારા સાથ-સહકાર બદલ આભાર! ✨"
-      }
-    };
-
-    let currentLang = localStorage.getItem("sheetbox_chanda_lang") || "en";
-
-    window.changeLanguage = (lang) => {
-      currentLang = lang;
-      localStorage.setItem("sheetbox_chanda_lang", lang);
-      document.getElementById("langSelector").value = lang;
-
-      const dict = translations[lang] || translations.en;
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (dict[key]) {
-          el.textContent = dict[key];
-        }
-      });
-
-      calculateAll();
-    };
-
     let state = {
-      eventName: "Ganesh Utsav Samiti",
+      eventName: "Chauhan Family Ganesh Utsav 2026",
       targetBudget: 20000,
       totalFlats: 50,
       donors: [],
@@ -1178,44 +777,13 @@
     const donorsTableBody = document.getElementById("donorsTableBody");
     const donorsCardsList = document.getElementById("donorsCardsList");
     const expensesTableBody = document.getElementById("expensesTableBody");
+    const expensesCardsList = document.getElementById("expensesCardsList");
 
     const countAll = document.getElementById("countAll");
     const countPaid = document.getElementById("countPaid");
     const countPending = document.getElementById("countPending");
-    const restoreBanner = document.getElementById("restoreBanner");
 
     let currentSelectedDonorIndex = null;
-
-    function takeSnapshotBackup() {
-      if (state.donors.length > 0 || state.expenses.length > 0) {
-        try {
-          localStorage.setItem(BACKUP_KEY, JSON.stringify(state));
-        } catch (e) {
-          console.warn("Could not save backup snapshot:", e);
-        }
-      }
-    }
-
-    window.restorePreviousBackup = () => {
-      try {
-        const raw = localStorage.getItem(BACKUP_KEY);
-        if (!raw) {
-          alert("No previous backup found to restore.");
-          return;
-        }
-        const recoveredState = JSON.parse(raw);
-        if (recoveredState) {
-          state = recoveredState;
-          saveState();
-          populateFormFields();
-          calculateAll();
-          restoreBanner.style.display = "none";
-          alert("Your previous ledger records have been successfully restored!");
-        }
-      } catch (err) {
-        alert("Failed to restore data: " + err.message);
-      }
-    };
 
     window.switchMode = (mode) => {
       const isDonors = mode === 'donors';
@@ -1229,37 +797,7 @@
       inAmount.value = val;
     };
 
-    function checkIncomingUrlSync() {
-      try {
-        const hash = window.location.hash;
-        if (hash && hash.startsWith("#sync=")) {
-          const compressed = hash.replace("#sync=", "");
-          const decompressed = LZString.decompressFromEncodedURIComponent(compressed);
-          if (decompressed) {
-            const incomingState = JSON.parse(decompressed);
-            if (incomingState && (Array.isArray(incomingState.donors) || Array.isArray(incomingState.expenses))) {
-              takeSnapshotBackup();
-              state = incomingState;
-              saveState();
-              window.history.replaceState(null, null, window.location.pathname);
-              alert("Data synced successfully from your other device!");
-              return true;
-            }
-          }
-        }
-      } catch (err) {
-        console.warn("Could not import URL sync data:", err);
-      }
-      return false;
-    }
-
     function loadSavedState() {
-      if (checkIncomingUrlSync()) {
-        populateFormFields();
-        calculateAll();
-        return;
-      }
-
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
@@ -1277,7 +815,7 @@
     }
 
     function populateFormFields() {
-      inEventName.value = state.eventName !== undefined ? state.eventName : "Ganesh Utsav Samiti";
+      inEventName.value = state.eventName !== undefined ? state.eventName : "Chauhan Family Ganesh Utsav 2026";
       inTargetBudget.value = state.targetBudget !== undefined ? state.targetBudget : 20000;
       inTotalFlats.value = state.totalFlats !== undefined ? state.totalFlats : 50;
     }
@@ -1384,8 +922,8 @@
       }
 
       if (visibleList.length === 0) {
-        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 22px;">No members found. Add from left.</td></tr>`;
-        donorsCardsList.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px; font-size: 13px;">No members found. Add from left.</div>`;
+        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 22px;">No members found.</td></tr>`;
+        donorsCardsList.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px; font-size: 13px;">No members found.</div>`;
         return;
       }
 
@@ -1415,7 +953,7 @@
         `;
         donorsTableBody.appendChild(tr);
 
-        // 2. Mobile Clean Card Item (Zero Horizontal Squeeze, prominent Delete button)
+        // 2. Mobile Card Item with fully visible Delete Button
         const cardDiv = document.createElement("div");
         cardDiv.className = "member-card-item";
         cardDiv.innerHTML = `
@@ -1445,13 +983,16 @@
     function renderExpensesTable() {
       outExpenseCount.textContent = state.expenses.length;
       expensesTableBody.innerHTML = "";
+      expensesCardsList.innerHTML = "";
 
       if (state.expenses.length === 0) {
         expensesTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 22px;">No bills recorded yet.</td></tr>`;
+        expensesCardsList.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px; font-size: 13px;">No bills recorded yet.</div>`;
         return;
       }
 
       state.expenses.forEach((e, idx) => {
+        // Desktop Table Row
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${idx + 1}</td>
@@ -1465,11 +1006,31 @@
           </td>
         `;
         expensesTableBody.appendChild(tr);
+
+        // Mobile Expense Card Item
+        const cardDiv = document.createElement("div");
+        cardDiv.className = "member-card-item";
+        cardDiv.innerHTML = `
+          <div class="member-card-top">
+            <div>
+              <div class="member-card-name">${idx + 1}. ${e.item}</div>
+              <div class="member-card-flat">Category: <strong>${e.category}</strong></div>
+            </div>
+            <span style="font-size: 11px; color: var(--text-muted); font-weight: 700;">${e.date}</span>
+          </div>
+          <div class="member-card-mid">
+            <span style="font-size: 11.5px; color: var(--text-muted);">Paid to: ${e.paidTo || "—"} (${e.mode})</span>
+            <span class="member-card-amt" style="color: var(--danger);">₹${e.amount.toLocaleString('en-IN')}</span>
+          </div>
+          <div class="member-card-actions">
+            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" style="padding: 6px 14px; font-size: 12px; background: #dc2626 !important; color: #fff !important;">🗑️ Delete Bill</button>
+          </div>
+        `;
+        expensesCardsList.appendChild(cardDiv);
       });
     }
 
     window.toggleStatus = (idx) => {
-      takeSnapshotBackup();
       state.donors[idx].status = state.donors[idx].status === "Paid" ? "Pending" : "Paid";
       saveState();
       calculateAll();
@@ -1477,7 +1038,6 @@
 
     window.removeDonor = (idx) => {
       if (confirm(`Remove ${state.donors[idx].name}?`)) {
-        takeSnapshotBackup();
         state.donors.splice(idx, 1);
         saveState();
         calculateAll();
@@ -1486,7 +1046,6 @@
 
     window.removeExpense = (idx) => {
       if (confirm(`Remove bill for "${state.expenses[idx].item}"?`)) {
-        takeSnapshotBackup();
         state.expenses.splice(idx, 1);
         saveState();
         calculateAll();
@@ -1504,30 +1063,18 @@
     window.openReceiptModal = (idx) => {
       currentSelectedDonorIndex = idx;
       const d = state.donors[idx];
-      const dict = translations[currentLang] || translations.en;
 
       document.getElementById("rcptEventTitle").textContent = state.eventName || "Festival Event";
-      document.getElementById("rcptBadgeTag").textContent = dict.receiptBadge;
       document.getElementById("rcptNumber").textContent = `#${String(idx + 1).padStart(3, '0')}`;
       document.getElementById("rcptDate").textContent = d.dateAdded || new Date().toLocaleDateString('en-IN');
-      
-      document.getElementById("rcptReceivedFromLabel").textContent = dict.receiptFrom;
       document.getElementById("rcptDonorName").textContent = d.name;
-      document.getElementById("rcptUnitLabel").textContent = dict.receiptUnit;
       document.getElementById("rcptDonorUnit").textContent = d.unit || "—";
-      
-      document.getElementById("rcptSumLabel").textContent = dict.receiptSum;
       document.getElementById("rcptAmountVal").textContent = `₹${d.amount.toLocaleString('en-IN')}`;
       
       const isPaid = d.status === "Paid";
       const pill = document.getElementById("rcptStatusPill");
-      if (isPaid) {
-        pill.className = "status-badge status-paid";
-        pill.textContent = "✓ Paid";
-      } else {
-        pill.className = "status-badge status-pending";
-        pill.textContent = "⏳ Pending";
-      }
+      pill.className = isPaid ? "status-badge status-paid" : "status-badge status-pending";
+      pill.textContent = isPaid ? "✓ Paid" : "⏳ Pending";
 
       document.getElementById("receiptModal").style.display = "flex";
     };
@@ -1596,7 +1143,6 @@
       if (!name) return alert("Please enter contributor name.");
       if (amount <= 0) return alert("Please enter an amount.");
 
-      takeSnapshotBackup();
       state.donors.unshift({ name, unit, amount, status, dateAdded: today });
       inDonorName.value = "";
       inUnitNo.value = "";
@@ -1620,7 +1166,6 @@
       if (!item) return alert("Please enter expense description.");
       if (amount <= 0) return alert("Please enter a valid expense amount.");
 
-      takeSnapshotBackup();
       state.expenses.unshift({ item, category, amount, paidTo, mode, date: today });
       inExpItem.value = "";
       inExpAmount.value = "";
@@ -1632,12 +1177,10 @@
 
     document.getElementById("btnLoadSample").onclick = () => {
       if (state.donors.length > 0 || state.expenses.length > 0) {
-        if (!confirm("Loading sample data will replace your current ledger. Do you want to proceed? (You can Undo/Restore at any time)")) return;
+        if (!confirm("Loading sample data will replace your current ledger. Do you want to proceed?")) return;
       }
 
-      takeSnapshotBackup();
-
-      state.eventName = "Ganesh Utsav Samiti";
+      state.eventName = "Chauhan Family Ganesh Utsav 2026";
       state.targetBudget = 20000;
       state.totalFlats = 50;
       state.donors = [
@@ -1652,8 +1195,6 @@
       populateFormFields();
       saveState();
       calculateAll();
-
-      restoreBanner.style.display = "flex";
     };
 
     let syncQrInstance = null;
@@ -1740,7 +1281,6 @@
 
     window.clearAllData = () => {
       if (confirm("Reset both collections and expenses? This cannot be undone.")) {
-        takeSnapshotBackup();
         state.donors = [];
         state.expenses = [];
         state.targetBudget = 20000;
@@ -1759,6 +1299,7 @@
     });
 
     loadSavedState();
+    switchMode('expenses'); // Opens directly on Expenses tab as requested to verify fix
   </script>
 </body>
 </html>
