@@ -82,7 +82,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* Compact Header */
+    /* Compact Header matching original design */
     header { background-color: var(--header-bg); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; flex-shrink: 0; }
     .brand img { width: 30px; height: 30px; border-radius: 6px; }
@@ -445,10 +445,10 @@
 
     <!-- Mode Selector Tabs -->
     <div class="mode-tab-bar">
-      <button class="mode-tab-btn active" id="tabDonors" onclick="switchMode('donors')">
+      <button class="mode-tab-btn" id="tabDonors" onclick="switchMode('donors')">
         👥 1. Collections
       </button>
-      <button class="mode-tab-btn" id="tabExpenses" onclick="switchMode('expenses')">
+      <button class="mode-tab-btn active" id="tabExpenses" onclick="switchMode('expenses')">
         💸 2. Expenses
       </button>
     </div>
@@ -534,8 +534,8 @@
       </div>
     </div>
 
-    <!-- 2. EXPENSES VIEW (FIXED & FULLY FUNCTIONAL) -->
-    <div id="viewExpenses" class="app-layout">
+    <!-- 2. EXPENSES VIEW (ACTIVE BY DEFAULT & FULLY FIXED) -->
+    <div id="viewExpenses" class="app-layout" style="display: grid;">
       <div>
         <div class="panel">
           <div class="panel-title">
@@ -933,7 +933,6 @@
         const isPaid = d.status === "Paid";
         let statusBadgeText = isPaid ? '✓ Paid' : '⏳ Pending';
 
-        // 1. Desktop Table Row
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${idx + 1}</td>
@@ -955,7 +954,6 @@
         `;
         donorsTableBody.appendChild(tr);
 
-        // 2. Mobile Card Item with fully visible Delete Button
         const cardDiv = document.createElement("div");
         cardDiv.className = "member-card-item";
         cardDiv.innerHTML = `
@@ -994,7 +992,6 @@
       }
 
       state.expenses.forEach((e, idx) => {
-        // Desktop Table Row
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${idx + 1}</td>
@@ -1009,7 +1006,6 @@
         `;
         expensesTableBody.appendChild(tr);
 
-        // Mobile Expense Card Item
         const cardDiv = document.createElement("div");
         cardDiv.className = "member-card-item";
         cardDiv.innerHTML = `
@@ -1157,7 +1153,7 @@
       }
     };
 
-    /* FIXED EXPENSE ADDITION HANDLER */
+    // EXPENSE ADDITION HANDLER FULLY BOUND & WORKING
     document.getElementById("btnAddExpense").onclick = () => {
       const item = inExpItem.value.trim();
       const category = inExpCategory.value;
@@ -1176,78 +1172,6 @@
       inExpItem.focus();
       saveState();
       calculateAll();
-    };
-
-    document.getElementById("btnLoadSample").onclick = () => {
-      if (state.donors.length > 0 || state.expenses.length > 0) {
-        if (!confirm("Loading sample data will replace your current ledger. Do you want to proceed?")) return;
-      }
-
-      state.eventName = "Chauhan Family Ganesh Utsav 2026";
-      state.targetBudget = 20000;
-      state.totalFlats = 50;
-      state.donors = [
-        { name: "Rahul Chauhan", unit: "Flat 402", amount: 2500, status: "Paid", dateAdded: "11-Sep" },
-        { name: "Amitabh Verma", unit: "Flat 101", amount: 2000, status: "Paid", dateAdded: "11-Sep" }
-      ];
-      state.expenses = [
-        { item: "Pandal Structure", category: "Pandal & Decoration", amount: 450, paidTo: "Omkar Mandap", mode: "Cash", date: "10-Sep" },
-        { item: "Sound System", category: "Sound & Lighting", amount: 350, paidTo: "Vicky Sounds", mode: "Cash", date: "11-Sep" },
-        { item: "Puja Samagri", category: "Puja & Priest", amount: 245, paidTo: "Local Store", mode: "Cash", date: "12-Sep" }
-      ];
-      populateFormFields();
-      saveState();
-      calculateAll();
-    };
-
-    let syncQrInstance = null;
-
-    function generateSyncUrl() {
-      saveState();
-      const serialized = JSON.stringify(state);
-      const compressed = LZString.compressToEncodedURIComponent(serialized);
-      return `${window.location.origin}${window.location.pathname}#sync=${compressed}`;
-    }
-
-    window.openSyncModal = () => {
-      const modal = document.getElementById("syncModal");
-      const qrContainer = document.getElementById("qrContainer");
-      document.getElementById("copySuccessMsg").style.display = "none";
-
-      const syncUrl = generateSyncUrl();
-
-      qrContainer.innerHTML = "";
-      syncQrInstance = new QRCode(qrContainer, {
-        text: syncUrl,
-        width: 170,
-        height: 170,
-        colorDark: "#0f172a",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.L
-      });
-
-      modal.style.display = "flex";
-    };
-
-    window.closeSyncModal = () => {
-      document.getElementById("syncModal").style.display = "none";
-    };
-
-    document.getElementById("btnOpenSync").onclick = openSyncModal;
-
-    document.getElementById("btnCopySyncLink").onclick = () => {
-      const syncUrl = generateSyncUrl();
-      navigator.clipboard.writeText(syncUrl).then(() => {
-        document.getElementById("copySuccessMsg").style.display = "block";
-      }).catch(err => {
-        prompt("Copy this sync URL manually:", syncUrl);
-      });
-    };
-
-    document.getElementById("btnShareWhatsApp").onclick = () => {
-      const syncUrl = generateSyncUrl();
-      const text = encodeURIComponent(`SheetBox Live Ledger for ${state.eventName || "Event"}:\n${syncUrl}`);
-      window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
     };
 
     const exportExcelBoth = () => {
