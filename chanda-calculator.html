@@ -145,7 +145,6 @@
     .container { max-width: 1180px; width: 100%; margin: 12px auto; padding: 0 12px; flex: 1; }
     .back-link { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 8px; }
 
-    /* Undo/Restore Toast Banner */
     .restore-banner {
       display: none;
       background: #eff6ff;
@@ -180,7 +179,7 @@
     .hero-title { font-size: 20px; font-weight: 900; margin-bottom: 2px; }
     .hero-sub { font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px; }
 
-    /* 2x2 Clean Responsive Metric Grid */
+    /* Metric Grid */
     .metric-grid { 
       display: grid; 
       grid-template-columns: repeat(4, 1fr); 
@@ -253,15 +252,15 @@
     /* Table Toolbar */
     .table-toolbar { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
     .search-input-wrap { flex: 1; min-width: 140px; position: relative; }
-    .search-input-wrap input { width: 100%; padding: 8px 10px 8px 28px; border: 1.5px solid var(--input-border); border-radius: 7px; font-size: 13px !important; outline: none; background: var(--input-bg); color: var(--text); }
+    .search-input-wrap input { width: 100%; padding: 8px 10px 8px 28px; border: 1.5px solid var(--input-border); border-radius: 7px; font-size: 14px !important; outline: none; background: var(--input-bg); color: var(--text); }
     .search-input-wrap input:focus { border-color: var(--primary); }
     .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.5; }
 
     .filter-pills { display: flex; gap: 4px; }
-    .fpill { font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
+    .fpill { font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
     .fpill.active { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
 
-    /* Table Container */
+    /* Table Container - ALLOW HORIZONTAL SCROLL WITHOUT CLIPPING */
     .table-container { 
       width: 100%; 
       overflow-x: auto; 
@@ -271,29 +270,40 @@
       border-radius: 8px; 
       display: block; 
     }
-    table.data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 9px 10px; text-align: left; font-weight: 800; font-size: 11px; z-index: 10; }
-    table.data-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--text); }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 10px 12px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; white-space: nowrap; }
+    table.data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
     table.data-table tr:nth-child(even) { background: rgba(0,0,0,0.015); }
 
-    .status-badge { font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; user-select: none; }
-    .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-    .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    /* LARGER, EASY-TO-TAP STATUS BADGE & ACTION BUTTONS */
+    .status-badge { 
+      font-size: 11.5px; 
+      font-weight: 800; 
+      padding: 6px 12px; 
+      border-radius: 16px; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 4px; 
+      cursor: pointer; 
+      user-select: none; 
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .status-paid { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
+    .status-pending { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
 
-    /* CLEAN MOBILE-FRIENDLY ACTION BUTTONS (NO CLIPPING) */
     .row-actions-group {
       display: inline-flex;
-      gap: 4px;
+      gap: 6px;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       white-space: nowrap;
     }
     .row-btn {
       background: var(--tab-bg);
       border: 1px solid var(--border);
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
-      padding: 5px 8px;
+      padding: 6px 10px;
       border-radius: 6px;
       cursor: pointer;
       color: var(--text);
@@ -574,10 +584,10 @@
             <button type="button" class="fpill" onclick="setDonorFilter('Pending', this)"><span data-i18n="fPending">Pending</span> (<span id="countPending">0</span>)</button>
           </div>
           <div style="display: flex; gap: 4px; flex-wrap: wrap; width: 100%; justify-content: flex-end; margin-top: 4px;">
-            <button type="button" class="btn btn-orange" style="padding: 5px 8px; font-size: 11px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
-            <button type="button" class="btn btn-outline" style="padding: 5px 8px; font-size: 11px; border-color: #93c5fd; color: #1d4ed8; background: #eff6ff;" id="btnUndoRestore" onclick="restorePreviousBackup()">↩️ Restore</button>
-            <button type="button" class="btn btn-green" style="padding: 5px 8px; font-size: 11px;" id="btnExportExcel">📊 Excel</button>
-            <button type="button" class="btn btn-outline" style="padding: 5px 8px; font-size: 11px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
+            <button type="button" class="btn btn-orange" style="padding: 6px 10px; font-size: 11.5px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
+            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px; border-color: #93c5fd; color: #1d4ed8; background: #eff6ff;" id="btnUndoRestore" onclick="restorePreviousBackup()">↩️ Restore</button>
+            <button type="button" class="btn btn-green" style="padding: 6px 10px; font-size: 11.5px;" id="btnExportExcel">📊 Excel</button>
+            <button type="button" class="btn btn-outline" style="padding: 6px 10px; font-size: 11.5px;" onclick="window.print()" data-i18n="btnPrint">🖨️ Print</button>
           </div>
         </div>
 
@@ -590,7 +600,7 @@
                 <th data-i18n="thFlat">Flat</th>
                 <th data-i18n="thAmount">Amount (₹)</th>
                 <th data-i18n="thStatus">Status</th>
-                <th style="width: 150px; text-align: center;" data-i18n="thAction">Actions</th>
+                <th style="width: 180px; text-align: center;" data-i18n="thAction">Actions</th>
               </tr>
             </thead>
             <tbody id="donorsTableBody"></tbody>
@@ -673,7 +683,7 @@
                 <th data-i18n="thExpVendor">Vendor</th>
                 <th data-i18n="thExpDate">Date</th>
                 <th data-i18n="thExpAmount">Amount (₹)</th>
-                <th style="width: 60px; text-align: center;">Action</th>
+                <th style="width: 70px; text-align: center;">Action</th>
               </tr>
             </thead>
             <tbody id="expensesTableBody"></tbody>
@@ -987,7 +997,7 @@
         catSound: "ध्वनी व रोषणाई (साउंड)",
         catPuja: "पूजा साहित्य व दक्षिणा",
         catPrasad: "प्रसाद आणि महाप्रसाद",
-        catSecurity: "सुरक्षा व परवानग्या",
+        catSecurity: "सुरक्षा व पोलीस परवानग्या",
         catPublicity: "बॅनर्स व जाहिरात",
         catMisc: "इतर किरकोळ खर्च",
         lblExpAmount: "झालेला खर्च (₹) *",
