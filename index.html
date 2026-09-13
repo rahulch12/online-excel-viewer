@@ -26,14 +26,14 @@
   <!-- Primary SEO Meta Tags -->
   <title>SheetBox — Free Online PDF, Image & Document Tools (100% Private)</title>
   <meta name="title" content="SheetBox — Free Online PDF, Image & Document Tools (100% Private)" />
-  <meta name="description" content="Free, simple tools to convert PDF to Word, view DOCX files, merge PDFs, compress photos, create bills & invoices, and compare sheets right in your browser. 100% secure and private." />
-  <meta name="keywords" content="pdf to word converter, compress image to 50kb, merge pdf online, jpg to pdf, word viewer online, simple invoice maker, view excel file online, sheetbox" />
+  <meta name="description" content="Free, simple tools to convert PDF to Word, view DOCX files, merge PDFs, compress photos, create bills & invoices, calculate chanda, and generate HRA rent receipts. 100% secure and private." />
+  <meta name="keywords" content="pdf to word converter, compress image to 50kb, merge pdf online, jpg to pdf, word viewer online, simple invoice maker, rent receipt generator hra, chanda calculator, view excel file online, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/" />
 
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sheetbox.in/" />
-  <meta property="og:title" content="SheetBox — Easy, Free Document & PDF Tools" />
+  <meta property="og:title" content="SheetBox — Easy, Free Document & Utility Tools" />
   <meta property="og:description" content="Click and get your work done in seconds. 100% free, safe, and private in your browser." />
   <meta property="og:image" content="https://sheetbox.in/logo.png" />
 
@@ -160,7 +160,7 @@
       display: none;
     }
 
-    /* 4-Column / 2-Column Responsive Grid */
+    /* Responsive Grid */
     .tools-grid { 
       display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
@@ -183,7 +183,7 @@
       box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
     }
 
-    /* Distinct Themes */
+    /* Theme Accents */
     .theme-pdf-word { border-color: #ddd6fe; }
     .theme-pdf-word:hover { border-color: #7c3aed; }
     .theme-pdf-word .icon-bg { background: #f5f3ff; color: #7c3aed; }
@@ -223,6 +223,16 @@
     .theme-compare:hover { border-color: #0284c7; }
     .theme-compare .icon-bg { background: #f0f9ff; color: #0284c7; }
     .theme-compare .tool-action-btn { background: #0284c7; color: #fff; }
+
+    .theme-rent { border-color: #a7f3d0; }
+    .theme-rent:hover { border-color: #059669; }
+    .theme-rent .icon-bg { background: #ecfdf5; color: #059669; }
+    .theme-rent .tool-action-btn { background: #059669; color: #fff; }
+
+    .theme-chanda { border-color: #fed7aa; }
+    .theme-chanda:hover { border-color: #ea580c; }
+    .theme-chanda .icon-bg { background: #fff7ed; color: #ea580c; }
+    .theme-chanda .tool-action-btn { background: #ea580c; color: #fff; }
 
     body.dark-mode .icon-bg { background: rgba(255,255,255,0.05) !important; }
     body.dark-mode .tool-box { border-color: var(--card-border); }
@@ -332,14 +342,14 @@
           type="text" 
           id="toolSearchInput" 
           class="search-input" 
-          placeholder="Search any tool (e.g. compress, word, merge, invoice)..." 
+          placeholder="Search any tool (e.g. compress, rent, chanda, word, invoice)..." 
           autocomplete="off"
         />
         <button class="clear-search-btn" id="clearSearchBtn">&times;</button>
       </div>
     </div>
 
-    <!-- Ranked 8 Tool Cards -->
+    <!-- Ranked 10 Tool Cards -->
     <div class="tools-grid" id="toolsGrid">
 
       <!-- 1. PDF to Word -->
@@ -372,7 +382,37 @@
         <a href="/compress-image.html" class="tool-action-btn">Compress Photos &rarr;</a>
       </div>
 
-      <!-- 3. Join Multiple PDFs -->
+      <!-- 3. HRA Rent Receipts (NEW) -->
+      <div class="tool-box theme-rent" data-keywords="rent receipt generator hra tax exemption 12 month receipts landlord pan revenue stamp income tax section 10 13a">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">🏠</div>
+            <div class="card-heading-group">
+              <div class="tool-name">HRA Rent Receipts</div>
+              <span class="tool-pill" style="background: #d1fae5; color: #065f46;">Tax Season</span>
+            </div>
+          </div>
+          <div class="tool-desc">Generate 12-month or quarterly rent receipts for corporate HRA tax claims with Landlord PAN & revenue stamp.</div>
+        </div>
+        <a href="/rent-receipt-generator.html" class="tool-action-btn">Make Rent Receipts &rarr;</a>
+      </div>
+
+      <!-- 4. Chanda & Expense Calculator (NEW) -->
+      <div class="tool-box theme-chanda" data-keywords="chanda calculator donation contribution split society festival ganesh durga budget planner expense ledger">
+        <div>
+          <div class="card-top">
+            <div class="icon-bg">🪔</div>
+            <div class="card-heading-group">
+              <div class="tool-name">Chanda & Expense Calculator</div>
+              <span class="tool-pill" style="background: #ffedd5; color: #9a3412;">Community</span>
+            </div>
+          </div>
+          <div class="tool-desc">Budget festival chanda and society funds, split contributions evenly, track expenses, and export Excel registers.</div>
+        </div>
+        <a href="/chanda-calculator.html" class="tool-action-btn">Open Chanda Tool &rarr;</a>
+      </div>
+
+      <!-- 5. Join Multiple PDFs -->
       <div class="tool-box theme-pdf-merge" data-keywords="merge pdf combine pdfs join multiple document pdf binder">
         <div>
           <div class="card-top">
@@ -387,7 +427,7 @@
         <a href="/merge-pdf.html" class="tool-action-btn">Merge PDFs Now &rarr;</a>
       </div>
 
-      <!-- 4. Photos to PDF -->
+      <!-- 6. Photos to PDF -->
       <div class="tool-box theme-img-pdf" data-keywords="photos to pdf images to pdf jpg to pdf png to pdf a4 picture convert">
         <div>
           <div class="card-top">
@@ -402,7 +442,7 @@
         <a href="/images-to-pdf.html" class="tool-action-btn">Convert Photos &rarr;</a>
       </div>
 
-      <!-- 5. Make an Invoice or Bill -->
+      <!-- 7. Make an Invoice or Bill -->
       <div class="tool-box theme-invoice" data-keywords="invoice maker bill generator receipt create invoice gst tax freelance business payment">
         <div>
           <div class="card-top">
@@ -412,12 +452,12 @@
               <span class="tool-pill" style="background: #e0e7ff; color: #3730a3;">Business</span>
             </div>
           </div>
-          <div class="tool-desc">Create professional invoices and receipts. Auto-calculate totals and download as PDF or image.</div>
+          <div class="tool-desc">Create professional invoices and receipts. Auto-calculate totals and download as PDF, image, or WhatsApp.</div>
         </div>
         <a href="/invoice-generator.html" class="tool-action-btn">Open Invoice Maker &rarr;</a>
       </div>
 
-      <!-- 6. Word Document Viewer -->
+      <!-- 8. Word Document Viewer -->
       <div class="tool-box theme-word-view" data-keywords="word viewer open docx read word document inspect docx office without ms office">
         <div>
           <div class="card-top">
@@ -432,7 +472,7 @@
         <a href="/word-viewer.html" class="tool-action-btn">Open Word Viewer &rarr;</a>
       </div>
 
-      <!-- 7. Open Excel Spreadsheet -->
+      <!-- 9. Open Excel Spreadsheet -->
       <div class="tool-box theme-excel-view" data-keywords="open excel read excel file xlsx viewer xls csv spreadsheet table sheet">
         <div>
           <div class="card-top">
@@ -447,7 +487,7 @@
         <button type="button" class="tool-action-btn" onclick="document.getElementById('fileInput').click()">Select Excel File &rarr;</button>
       </div>
 
-      <!-- 8. Compare Spreadsheets -->
+      <!-- 10. Compare Spreadsheets -->
       <div class="tool-box theme-compare" data-keywords="compare excel diff checker spreadsheet differences compare two csv sheets">
         <div>
           <div class="card-top">
@@ -461,23 +501,10 @@
         </div>
         <a href="/compare-excel.html" class="tool-action-btn">Compare Spreadsheets &rarr;</a>
       </div>
-      <div class="tool-box" style="border-color: #a7f3d0;" data-keywords="rent receipt generator hra tax exemption 12 month receipts landlord pan revenue stamp">
-  <div>
-    <div class="card-top">
-      <div class="icon-bg" style="background: #ecfdf5; color: #059669;">🏠</div>
-      <div class="card-heading-group">
-        <div class="tool-name">HRA Rent Receipts</div>
-        <span class="tool-pill" style="background: #d1fae5; color: #065f46;">Tax Season</span>
-      </div>
-    </div>
-    <div class="tool-desc">Generate 12-month or quarterly rent receipts for corporate HRA tax claims under Section 10(13A).</div>
-  </div>
-  <a href="/rent-receipt-generator.html" class="tool-action-btn" style="background: #059669; color: #fff;">Make Rent Receipts &rarr;</a>
-</div>
 
       <!-- Empty Filter State -->
       <div class="no-results-msg" id="noResultsMsg">
-        No tools match "<span id="missingSearchTerm"></span>". Try searching for <strong>pdf</strong>, <strong>word</strong>, <strong>compress</strong>, or <strong>invoice</strong>.
+        No tools match "<span id="missingSearchTerm"></span>". Try searching for <strong>rent</strong>, <strong>chanda</strong>, <strong>compress</strong>, or <strong>invoice</strong>.
       </div>
 
     </div>
@@ -535,12 +562,13 @@
         </div>
 
         <div>
-          <strong class="footer-col-title">Office & Business</strong>
+          <strong class="footer-col-title">Tax & Community</strong>
           <ul class="footer-links-list">
+            <li><a href="/rent-receipt-generator.html">HRA Rent Receipts</a></li>
+            <li><a href="/chanda-calculator.html">Chanda & Expense Calculator</a></li>
             <li><a href="/invoice-generator.html">Invoice & Bill Generator</a></li>
-            <li><a href="/word-viewer.html">Word (.docx) Viewer</a></li>
             <li><a href="/compare-excel.html">Compare Spreadsheets</a></li>
-            <li><a href="/">Excel & CSV Viewer</a></li>
+            <li><a href="/word-viewer.html">Word (.docx) Viewer</a></li>
           </ul>
         </div>
 
