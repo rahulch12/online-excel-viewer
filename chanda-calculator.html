@@ -82,7 +82,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* Compact Header matching original design */
+    /* Compact Header */
     header { background-color: var(--header-bg); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; flex-shrink: 0; }
     .brand img { width: 30px; height: 30px; border-radius: 6px; }
@@ -254,7 +254,6 @@
     }
     @media (min-width: 768px) {
       .table-container { display: block; }
-      .mobile-cards-list { display: none; }
     }
     table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
     table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 11px 12px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; white-space: nowrap; }
@@ -272,7 +271,7 @@
       user-select: none; 
     }
     .status-paid { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
-    .status-pending { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
+    .status-pending { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fecaca; }
 
     .row-actions-group {
       display: inline-flex;
@@ -421,13 +420,13 @@
       </div>
       <div class="metric-card" style="border-left: 3.5px solid var(--danger);">
         <div class="metric-label">Total Spent</div>
-        <div class="metric-val" id="metricSpent" style="color: var(--danger);">₹1,045</div>
-        <div class="metric-sub" id="metricExpenseCount">3 bills</div>
+        <div class="metric-val" id="metricSpent" style="color: var(--danger);">₹0</div>
+        <div class="metric-sub" id="metricExpenseCount">0 bills</div>
       </div>
-      <div class="metric-card" id="metricBalanceCard" style="border-left: 3.5px solid var(--danger);">
+      <div class="metric-card" id="metricBalanceCard" style="border-left: 3.5px solid var(--primary);">
         <div class="metric-label">Net Balance in Hand</div>
-        <div class="metric-val" id="metricNetBalance" style="color: var(--danger);">₹-1,045</div>
-        <div class="metric-sub" id="metricNetSub">Deficit</div>
+        <div class="metric-val" id="metricNetBalance">₹0</div>
+        <div class="metric-sub" id="metricNetSub">Surplus</div>
       </div>
     </div>
 
@@ -533,7 +532,7 @@
       </div>
     </div>
 
-    <!-- 2. EXPENSES VIEW -->
+    <!-- 2. EXPENSES VIEW (ACTIVE BY DEFAULT) -->
     <div id="viewExpenses" class="app-layout" style="display: grid;">
       <div>
         <div class="panel">
@@ -611,7 +610,7 @@
           </table>
         </div>
 
-        <!-- Mobile Expenses Card List View (RESTORED & ACTIVE) -->
+        <!-- Mobile Expenses Card List View -->
         <div class="mobile-cards-list" id="expensesCardsList"></div>
 
         <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
@@ -637,7 +636,6 @@
           <button type="button" class="btn btn-orange" style="flex: 1; font-size: 11.5px;" id="btnCopySyncLink">📋 Copy Link</button>
           <button type="button" class="btn btn-outline" style="flex: 1; font-size: 11.5px;" id="btnShareWhatsApp">💬 WhatsApp</button>
         </div>
-        <div id="copySuccessMsg" style="display: none; font-size: 11px; color: var(--success); font-weight: 700; margin-top: 6px;">✓ Sync Link Copied to Clipboard!</div>
       </div>
     </div>
 
@@ -737,11 +735,7 @@
       targetBudget: 20000,
       totalFlats: 50,
       donors: [],
-      expenses: [
-        { item: "Pandal Structure", category: "Pandal & Decoration", amount: 450, paidTo: "Omkar Mandap", mode: "Cash", date: "10-Sep" },
-        { item: "Sound System", category: "Sound & Lighting", amount: 350, paidTo: "Vicky Sounds", mode: "Cash", date: "11-Sep" },
-        { item: "Puja Samagri", category: "Puja & Priest", amount: 245, paidTo: "Local Store", mode: "Cash", date: "12-Sep" }
-      ]
+      expenses: []
     };
 
     let activeFilter = 'all';
@@ -807,7 +801,6 @@
             state.targetBudget = parsed.targetBudget !== undefined ? parsed.targetBudget : state.targetBudget;
             state.totalFlats = parsed.totalFlats !== undefined ? parsed.totalFlats : state.totalFlats;
             state.donors = Array.isArray(parsed.donors) ? parsed.donors : state.donors;
-            // Always respect saved expenses if they exist; otherwise keep defaults
             if (Array.isArray(parsed.expenses)) {
               state.expenses = parsed.expenses;
             }
@@ -1095,7 +1088,6 @@
       }
     };
 
-    // EXPENSE ADDITION HANDLER BOUND DIRECTLY
     document.getElementById("btnAddExpense").onclick = () => {
       const item = inExpItem.value.trim();
       const category = inExpCategory.value;
