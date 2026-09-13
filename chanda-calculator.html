@@ -17,7 +17,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <!-- Fixed Viewport: Prevents auto-zoom jumps and horizontal page drifting -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" href="/logo.png" />
@@ -42,10 +43,20 @@
       --success: #16a34a;
       --danger: #dc2626;
     }
+
+    /* Universal Mobile Lock */
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-text-size-adjust: 100%;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    header { background-color: var(--header-bg); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
     .brand img { width: 32px; height: 32px; border-radius: 8px; }
     .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
@@ -57,62 +68,68 @@
     .hero-sub { font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; }
 
     /* Top Metric Summary Grid */
-    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; width: 100%; }
     .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
     .metric-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
     .metric-val { font-size: 22px; font-weight: 900; color: var(--text); }
     .metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
     /* Progress Bar */
-    .progress-wrapper { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+    .progress-wrapper { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 20px; width: 100%; }
     .progress-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
     .progress-bar-bg { height: 12px; width: 100%; background: #e2e8f0; border-radius: 6px; overflow: hidden; }
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #ea580c, #f97316); width: 0%; transition: width 0.3s ease; }
 
     /* Mode Navigation Tabs */
-    .mode-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; background: #e2e8f0; padding: 5px; border-radius: 10px; }
-    .mode-tab-btn { flex: 1; padding: 10px 14px; border: none; background: transparent; font-size: 13.5px; font-weight: 800; color: #475569; border-radius: 8px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.15s ease; }
+    .mode-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; background: #e2e8f0; padding: 5px; border-radius: 10px; width: 100%; }
+    .mode-tab-btn { flex: 1; padding: 10px 14px; border: none; background: transparent; font-size: 13.5px; font-weight: 800; color: #475569; border-radius: 8px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .mode-tab-btn.active { background: #fff; color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
 
     /* Layout */
-    .app-layout { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
+    .app-layout { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; width: 100%; }
 
-    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; width: 100%; }
     .panel-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; color: #0f172a; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 11.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
     .input-field { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12.5px; outline: none; }
     .input-field:focus { border-color: var(--accent); }
 
-    .btn { padding: 8px 14px; font-size: 12.5px; font-weight: 700; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; }
+    .btn { padding: 9px 14px; font-size: 12.5px; font-weight: 700; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; }
     .btn-orange { background: var(--accent); color: #fff; }
     .btn-orange:hover { filter: brightness(1.08); }
     .btn-outline { background: #fff; border-color: #cbd5e1; color: #334155; }
-    .btn-outline:hover { background: #f8fafc; }
     .btn-green { background: var(--success); color: #fff; }
     .btn-red { background: var(--danger); color: #fff; }
 
     /* Tables */
     .table-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-    .table-container { overflow-x: auto; max-height: 480px; border: 1px solid var(--border); border-radius: 8px; }
+    .table-container { 
+      width: 100%; 
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch; 
+      max-height: 480px; 
+      border: 1px solid var(--border); 
+      border-radius: 8px; 
+      display: block; 
+    }
     table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
     table.data-table th { position: sticky; top: 0; background: #0f172a; color: #fff; padding: 9px 10px; text-align: left; font-weight: 700; font-size: 11.5px; }
     table.data-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: #334155; white-space: nowrap; }
     table.data-table tr:nth-child(even) { background: #f8fafc; }
     
-    .status-pill { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 12px; display: inline-block; cursor: pointer; }
+    .status-pill { font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 12px; display: inline-block; cursor: pointer; }
     .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
 
-    /* Category Pill */
     .cat-pill { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
 
     /* Editorial & FAQ */
-    .editorial-content { margin-top: 36px; background: #fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--border); font-size: 14px; line-height: 1.7; color: #334155; }
+    .editorial-content { margin-top: 36px; background: #fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--border); font-size: 14px; line-height: 1.7; color: #334155; width: 100%; }
     .editorial-content h2 { font-size: 19px; font-weight: 800; color: #0f172a; margin: 26px 0 10px 0; }
     .editorial-content h2:first-child { margin-top: 0; }
     .editorial-content p { margin-bottom: 14px; }
-    .editorial-content ol, .editorial-content ul { margin: 0 0 18px 20px; }
+    .editorial-content ul { margin: 0 0 18px 20px; }
     .editorial-content li { margin-bottom: 6px; }
 
     .faq-block { margin-top: 20px; }
@@ -120,12 +137,33 @@
     summary { font-weight: 700; color: #0f172a; cursor: pointer; font-size: 14px; }
     details p { margin-top: 10px; color: #64748b; font-size: 13.5px; }
 
-    footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 36px; }
+    footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 36px; width: 100%; }
     footer a { color: var(--text-muted); text-decoration: none; margin: 0 6px; }
     footer a:hover { color: var(--primary); }
 
+    /* --- CRITICAL MOBILE REFINEMENTS --- */
     @media (max-width: 880px) {
       .app-layout { grid-template-columns: 1fr; }
+      .container { padding: 0 10px; }
+      
+      /* Input Font Fix: Stops browser from auto-zooming and shifting page margins on mobile */
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+      
+      .metric-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+      .mode-tab-btn {
+        font-size: 12px;
+        padding: 8px 6px;
+      }
     }
 
     @media print {
@@ -194,10 +232,10 @@
     <!-- Mode Navigation Tabs -->
     <div class="mode-tab-bar">
       <button class="mode-tab-btn active" id="tabDonors" onclick="switchMode('donors')">
-        👥 1. Member Collections (Chanda)
+        👥 1. Collections (Chanda)
       </button>
       <button class="mode-tab-btn" id="tabExpenses" onclick="switchMode('expenses')">
-        💸 2. Event Expenses Ledger
+        💸 2. Expenses Ledger
       </button>
     </div>
 
@@ -299,7 +337,7 @@
           
           <div class="form-group">
             <label>Expense Description / Item</label>
-            <input type="text" id="inExpItem" class="input-field" placeholder="e.g. Pandal Setup, Sound System, Idol Advance" />
+            <input type="text" id="inExpItem" class="input-field" placeholder="e.g. Pandal Setup, Sound System" />
           </div>
 
           <div class="form-group">
@@ -379,16 +417,6 @@
 
       <p>The SheetBox Chanda & Expense Calculator provides a complete, double-entry financial overview. It balances incoming member contributions directly against real outgoing vendor expenses (decorations, sound, idol procurement, priest honorarium, and catering) entirely in your browser.</p>
 
-      <h2>Recommended Expense Breakdown for Festival Mandals</h2>
-      <p>Most community committees budget their funds across these core operational buckets:</p>
-      <ul>
-        <li><strong>Pandal & Mandap Setup (30%–40%):</strong> Structural frames, waterproofing, seating, and floral backdrops.</li>
-        <li><strong>Sound & Illumination (15%–20%):</strong> Lighting fixtures, generator sets, and PA audio systems.</li>
-        <li><strong>Murti & Puja Rituals (10%–15%):</strong> Clay idol procurement, flowers, priest fees, and daily aarti materials.</li>
-        <li><strong>Prasad & Mahaprasad (15%–20%):</strong> Sweets, community catering, and biodegradable plates.</li>
-        <li><strong>Contingency & Emergency Reserves (5%–10%):</strong> Municipal permits, security guards, and post-event cleanup.</li>
-      </ul>
-
       <h2>Frequently Asked Questions (FAQ)</h2>
       <div class="faq-block">
         <details>
@@ -398,10 +426,6 @@
         <details>
           <summary>How does the Excel export work?</summary>
           <p>Clicking <strong>Export Full Excel</strong> creates a clean <code>.xlsx</code> workbook containing two distinct tabs: one for member collections and another for categorized expenses, ready to share on WhatsApp groups.</p>
-        </details>
-        <details>
-          <summary>What does Net Balance in Hand indicate?</summary>
-          <p>It represents your true liquid balance: <code>Total Paid Collections minus Total Incurred Expenses</code>. If it turns red, the committee is in an operational deficit and must collect remaining pending pledges.</p>
         </details>
       </div>
     </article>
@@ -430,7 +454,6 @@
       expenses: []
     };
 
-    // DOM Elements
     const inEventName = document.getElementById("inEventName");
     const inTargetBudget = document.getElementById("inTargetBudget");
     const inTotalFlats = document.getElementById("inTotalFlats");
@@ -439,14 +462,12 @@
     const inAmount = document.getElementById("inAmount");
     const inStatus = document.getElementById("inStatus");
 
-    // Expense Inputs
     const inExpItem = document.getElementById("inExpItem");
     const inExpCategory = document.getElementById("inExpCategory");
     const inExpAmount = document.getElementById("inExpAmount");
     const inExpPaidTo = document.getElementById("inExpPaidTo");
     const inExpMode = document.getElementById("inExpMode");
 
-    // Metrics
     const metricTarget = document.getElementById("metricTarget");
     const metricCollected = document.getElementById("metricCollected");
     const metricSpent = document.getElementById("metricSpent");
@@ -464,7 +485,6 @@
     const donorsTableBody = document.getElementById("donorsTableBody");
     const expensesTableBody = document.getElementById("expensesTableBody");
 
-    // 1. SWITCH TAB MODES
     window.switchMode = (mode) => {
       const isDonors = mode === 'donors';
       document.getElementById("tabDonors").classList.toggle("active", isDonors);
@@ -473,7 +493,6 @@
       document.getElementById("viewExpenses").style.display = !isDonors ? "grid" : "none";
     };
 
-    // 2. LOAD FROM LOCAL STORAGE
     function loadSavedState() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -493,7 +512,6 @@
       calculateAll();
     }
 
-    // 3. SAVE TO LOCAL STORAGE
     function saveState() {
       state.eventName = inEventName.value.trim();
       state.targetBudget = parseFloat(inTargetBudget.value) || 0;
@@ -506,7 +524,6 @@
       }
     }
 
-    // 4. CORE CALCULATION ENGINE
     function calculateAll() {
       const target = parseFloat(inTargetBudget.value) || 0;
       metricTarget.textContent = `₹${target.toLocaleString('en-IN')}`;
@@ -557,7 +574,6 @@
       saveState();
     }
 
-    // 5. RENDER DONORS TABLE
     function renderDonorsTable() {
       outDonorCount.textContent = state.donors.length;
       donorsTableBody.innerHTML = "";
@@ -589,13 +605,12 @@
       });
     }
 
-    // 6. RENDER EXPENSES TABLE
     function renderExpensesTable() {
       outExpenseCount.textContent = state.expenses.length;
       expensesTableBody.innerHTML = "";
 
       if (state.expenses.length === 0) {
-        expensesTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 18px;">No expenses logged yet. Add your first vendor cost.</td></tr>`;
+        expensesTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 18px;">No expenses logged yet.</td></tr>`;
         return;
       }
 
@@ -616,7 +631,6 @@
       });
     }
 
-    // Handlers
     window.toggleStatus = (idx) => {
       state.donors[idx].status = state.donors[idx].status === "Paid" ? "Pending" : "Paid";
       calculateAll();
@@ -636,7 +650,6 @@
       }
     };
 
-    // Add Donor
     document.getElementById("btnAddDonor").onclick = () => {
       const name = inDonorName.value.trim();
       const unit = inUnitNo.value.trim() || "—";
@@ -653,7 +666,6 @@
       calculateAll();
     };
 
-    // Add Expense
     document.getElementById("btnAddExpense").onclick = () => {
       const item = inExpItem.value.trim();
       const category = inExpCategory.value;
@@ -673,7 +685,6 @@
       calculateAll();
     };
 
-    // Sample Data
     document.getElementById("btnLoadSample").onclick = () => {
       inEventName.value = "Ganesh Utsav Mandal 2026";
       inTargetBudget.value = 85000;
@@ -686,18 +697,16 @@
         { name: "Sunita Deshmukh", unit: "Flat 304", amount: 2000, status: "Paid", dateAdded: "Day 2" }
       ];
       state.expenses = [
-        { item: "Pandal Structure & Tarpaulin", category: "Pandal & Decoration", amount: 22000, paidTo: "Omkar Mandap", mode: "UPI / Online", date: "Day 1" },
+        { item: "Pandal Structure", category: "Pandal & Decoration", amount: 22000, paidTo: "Omkar Mandap", mode: "UPI / Online", date: "Day 1" },
         { item: "Clay Ganpati Murti Advance", category: "Idol / Murti", amount: 8500, paidTo: "Pen Murti Arts", mode: "Cash", date: "Day 1" },
         { item: "PA Sound & Mic System", category: "Sound & Lighting", amount: 7000, paidTo: "Vicky Sounds", mode: "UPI / Online", date: "Day 2" }
       ];
       calculateAll();
     };
 
-    // Dual-Sheet Excel (.xlsx) Export
     const exportExcelBoth = () => {
       const wb = XLSX.utils.book_new();
 
-      // Sheet 1: Collections
       const donorRows = state.donors.map((d, i) => ({
         "Sr No": i + 1,
         "Member / Donor Name": d.name,
@@ -709,7 +718,6 @@
       const wsDonors = XLSX.utils.json_to_sheet(donorRows);
       XLSX.utils.book_append_sheet(wb, wsDonors, "Chanda Collections");
 
-      // Sheet 2: Expenses
       const expRows = state.expenses.map((e, i) => ({
         "Sr No": i + 1,
         "Expense Item": e.item,
