@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS8Z05TBZY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CS8Z05TBZY');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1480165809213798" crossorigin="anonymous"></script>
+
+  <!-- SheetJS for Excel Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+
+  <title>Chanda & Donation Contribution Calculator | SheetBox</title>
+  <meta name="title" content="Chanda & Donation Contribution Calculator | SheetBox" />
+  <meta name="description" content="Calculate festival chanda, society maintenance splits, and community contributions. Plan budgets, track paid vs pending, and export Excel registers." />
+  <meta name="keywords" content="chanda calculator, donation split calculator, ganesh chanda budget planner, society contribution calculator, event chanda collection excel, sheetbox" />
+  <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
+
+  <style>
+    :root {
+      --header-bg: #0f172a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #ea580c;
+      --primary: #2563eb;
+      --success: #16a34a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    header { background-color: var(--header-bg); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+    .brand img { width: 32px; height: 32px; border-radius: 8px; }
+    .bmc-btn { background: #ffdd00; color: #000; font-weight: 700; font-size: 12px; padding: 5px 12px; border-radius: 20px; text-decoration: none; }
+
+    .container { max-width: 1180px; width: 100%; margin: 16px auto; padding: 0 14px; flex: 1; }
+    .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 12px; }
+
+    .hero-title { font-size: 24px; font-weight: 900; margin-bottom: 4px; }
+    .hero-sub { font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; }
+
+    /* Summary Metric Cards */
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+    .metric-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .metric-val { font-size: 22px; font-weight: 900; color: var(--text); }
+    .metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Progress Bar */
+    .progress-wrapper { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+    .progress-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+    .progress-bar-bg { height: 12px; width: 100%; background: #e2e8f0; border-radius: 6px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #ea580c, #f97316); width: 0%; transition: width 0.3s ease; }
+
+    /* Form and Table Layout */
+    .app-layout { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
+
+    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+    .panel-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; color: #0f172a; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 11.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
+    .input-field { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12.5px; outline: none; }
+    .input-field:focus { border-color: var(--accent); }
+
+    .btn { padding: 8px 14px; font-size: 12.5px; font-weight: 700; border-radius: 6px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; }
+    .btn-orange { background: var(--accent); color: #fff; }
+    .btn-orange:hover { filter: brightness(1.08); }
+    .btn-outline { background: #fff; border-color: #cbd5e1; color: #334155; }
+    .btn-outline:hover { background: #f8fafc; }
+    .btn-green { background: var(--success); color: #fff; }
+
+    /* Donor Table */
+    .table-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .table-container { overflow-x: auto; max-height: 480px; border: 1px solid var(--border); border-radius: 8px; }
+    table.chanda-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    table.chanda-table th { position: sticky; top: 0; background: #0f172a; color: #fff; padding: 9px 10px; text-align: left; font-weight: 700; font-size: 11.5px; }
+    table.chanda-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: #334155; white-space: nowrap; }
+    table.chanda-table tr:nth-child(even) { background: #f8fafc; }
+    
+    .status-pill { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 12px; display: inline-block; cursor: pointer; }
+    .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+    /* Editorial & FAQ */
+    .editorial-content { margin-top: 36px; background: #fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--border); font-size: 14px; line-height: 1.7; color: #334155; }
+    .editorial-content h2 { font-size: 19px; font-weight: 800; color: #0f172a; margin: 26px 0 10px 0; }
+    .editorial-content h2:first-child { margin-top: 0; }
+    .editorial-content p { margin-bottom: 14px; }
+    .editorial-content ol, .editorial-content ul { margin: 0 0 18px 20px; }
+    .editorial-content li { margin-bottom: 6px; }
+
+    .faq-block { margin-top: 20px; }
+    details { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; padding: 12px 16px; }
+    summary { font-weight: 700; color: #0f172a; cursor: pointer; font-size: 14px; }
+    details p { margin-top: 10px; color: #64748b; font-size: 13.5px; }
+
+    footer { padding: 24px 16px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: #fff; margin-top: 36px; }
+    footer a { color: var(--text-muted); text-decoration: none; margin: 0 6px; }
+    footer a:hover { color: var(--primary); }
+
+    @media (max-width: 880px) {
+      .app-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Print Formatting */
+    @media print {
+      header, footer, .back-link, .app-layout > div:first-child, .table-actions, .editorial-content { display: none !important; }
+      .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .panel { border: none !important; padding: 0 !important; }
+      .table-container { max-height: none !important; overflow: visible !important; border: 1px solid #333 !important; }
+      table.chanda-table th { background: #222 !important; color: #fff !important; }
+      .status-pill { border: none !important; font-weight: 800 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="brand">
+      <img src="/logo.png" alt="SheetBox Logo" />
+      <div>
+        <span style="font-weight: 700; font-size: 16px;">SheetBox</span>
+        <span style="font-size: 11px; color: #94a3b8; display: block;">by Rahul Chauhan</span>
+      </div>
+    </a>
+    <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn">☕ Support</a>
+  </header>
+
+  <main class="container">
+    <a href="/" class="back-link">&larr; Back to SheetBox Tools</a>
+
+    <h1 class="hero-title">Chanda & Donation Contribution Calculator</h1>
+    <p class="hero-sub">Plan event budgets, split contributions fairly across members, track collections, and export complete registers.</p>
+
+    <!-- Top Metric Overview Cards -->
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Target Budget</div>
+        <div class="metric-val" id="metricTarget">₹0</div>
+        <div class="metric-sub" id="metricPurpose">Event / Society Fund</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Total Collected</div>
+        <div class="metric-val" id="metricCollected" style="color: var(--success);">₹0</div>
+        <div class="metric-sub" id="metricPaidCount">0 contributors paid</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Shortfall / Deficit</div>
+        <div class="metric-val" id="metricDeficit" style="color: var(--accent);">₹0</div>
+        <div class="metric-sub" id="metricPendingCount">0 contributors pending</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Shortfall Per Pending Member</div>
+        <div class="metric-val" id="metricPerHeadPending">₹0</div>
+        <div class="metric-sub">Needed to hit budget</div>
+      </div>
+    </div>
+
+    <!-- Live Progress Bar -->
+    <div class="progress-wrapper">
+      <div class="progress-header">
+        <span>Collection Progress</span>
+        <span id="progressPercentage">0%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+    </div>
+
+    <!-- Form and Table Layout -->
+    <div class="app-layout">
+      
+      <!-- LEFT: Configuration & Donor Addition -->
+      <div>
+        <div class="panel">
+          <h3 class="panel-title">1. Event / Budget Configuration</h3>
+          <div class="form-group">
+            <label>Event / Committee Name</label>
+            <input type="text" id="inEventName" class="input-field" placeholder="e.g. Bal Gopal Mitra Mandal / Wing A Maintenance" value="Ganesh Utsav Samiti" />
+          </div>
+          <div class="form-group">
+            <label>Target Budget (₹)</label>
+            <input type="number" id="inTargetBudget" class="input-field" placeholder="100000" value="75000" min="100" />
+          </div>
+
+          <h3 class="panel-title" style="margin-top: 18px;">2. Add Contributor</h3>
+          <div class="form-group">
+            <label>Donor / Member Name</label>
+            <input type="text" id="inDonorName" class="input-field" placeholder="e.g. Ramesh Kulkarni" />
+          </div>
+          <div class="form-group">
+            <label>Flat / Shop / Unit No.</label>
+            <input type="text" id="inUnitNo" class="input-field" placeholder="e.g. 402 / Shop 3" />
+          </div>
+          <div class="form-group">
+            <label>Contribution Amount (₹)</label>
+            <input type="number" id="inAmount" class="input-field" placeholder="1000" value="1000" min="10" />
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="inStatus" class="input-field">
+              <option value="Paid">Paid</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 12px;">
+            <button type="button" class="btn btn-orange" style="flex: 1;" id="btnAddDonor">+ Add Member</button>
+            <button type="button" class="btn btn-outline" id="btnLoadSample">⚡ Sample Data</button>
+          </div>
+        </div>
+
+        <!-- Quick Equal Split Generator -->
+        <div class="panel" style="margin-top: 14px;">
+          <h3 class="panel-title">Equal Split Estimator</h3>
+          <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+            Divide the target budget equally among all members:
+          </p>
+          <div class="form-group">
+            <label>Number of Flats / Families</label>
+            <input type="number" id="inTotalFlats" class="input-field" placeholder="50" value="50" min="1" />
+          </div>
+          <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; font-size: 12px;">
+            Equal Contribution: <strong id="outEqualShare" style="color: var(--accent); font-size: 14px;">₹1,500</strong> / member
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Register Table & Actions -->
+      <div class="panel">
+        <div class="table-actions">
+          <strong style="font-size: 14px;">Collection Register (<span id="outDonorCount">0</span>)</strong>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn-green" id="btnExportExcel">📊 Export Excel</button>
+            <button type="button" class="btn btn-outline" id="btnPrintRegister">🖨️ Print List</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="chanda-table">
+            <thead>
+              <tr>
+                <th style="width: 40px;">#</th>
+                <th>Member / Donor</th>
+                <th>Flat / Unit</th>
+                <th>Pledged (₹)</th>
+                <th>Status</th>
+                <th style="width: 80px; text-align: center;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="donorsTableBody"></tbody>
+          </table>
+        </div>
+
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+          💡 Tip: Click on any <strong>Status pill (Paid/Pending)</strong> to toggle it instantly.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Editorial Guide for SEO & AdSense Content Depth -->
+    <article class="editorial-content">
+      <h2>How to Transparently Manage Festival & Society Chanda Collections</h2>
+      <p>Collecting festival funds for Ganesh Utsav, Navratri, Durga Puja, or managing housing society building repair contributions often leads to accounting friction. When paper registers or loose notebooks are used, discrepancies arise regarding who has paid, who is pending, and whether the targeted budget covers major expenses such as pandal decoration, idol procurement, lighting, and prasad distribution.</p>
+
+      <p>The SheetBox Chanda & Contribution Calculator replaces manual notebook record-keeping with a secure, browser-native budgeting system. All entries are calculated locally in your browser, guaranteeing member confidentiality while generating clear, shareable reports.</p>
+
+      <h2>Key Features of the Chanda Calculator</h2>
+      <ul>
+        <li><strong>Dynamic Budget Deficit Tracking:</strong> Set your gross committee target. The system recalculates live collections, outstanding deficits, and per-head pending amounts with every entered donor.</li>
+        <li><strong>Equal Split & Flat-Wise Apportionment:</strong> Easily estimate per-flat contributions based on society flat counts or unit dimensions.</li>
+        <li><strong>Instant Excel Export:</strong> Download formatted <code>.xlsx</code> registers with a single click to share on society WhatsApp groups for complete fiscal transparency.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <div class="faq-block">
+        <details>
+          <summary>Does SheetBox store our society member names or amounts on a server?</summary>
+          <p>No. All calculations, tables, and Excel file generation happen 100% inside your local browser memory. No names, phone numbers, or contribution amounts are stored on remote servers.</p>
+        </details>
+        <details>
+          <summary>Can I print the collection list for the society notice board?</summary>
+          <p>Yes. Simply click <strong>Print List</strong>. The tool isolates the clean collection ledger into a print-ready A4 document without showing input buttons or website menus.</p>
+        </details>
+        <details>
+          <summary>Can I open the exported spreadsheet in Microsoft Excel or Google Sheets?</summary>
+          <p>Yes. The exported file is standard <code>.xlsx</code> format, fully compatible with MS Excel, LibreOffice, and Google Sheets.</p>
+        </details>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div style="margin-bottom: 8px;">
+      <a href="/about.html">About Us</a> • 
+      <a href="/contact.html">Contact</a> • 
+      <a href="/privacy-policy.html">Privacy Policy</a> • 
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+    <div style="font-size: 11.5px; color: var(--text-muted);">
+      SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
+    </div>
+  </footer>
+
+  <script>
+    let donors = [];
+
+    const inEventName = document.getElementById("inEventName");
+    const inTargetBudget = document.getElementById("inTargetBudget");
+    const inDonorName = document.getElementById("inDonorName");
+    const inUnitNo = document.getElementById("inUnitNo");
+    const inAmount = document.getElementById("inAmount");
+    const inStatus = document.getElementById("inStatus");
+    const inTotalFlats = document.getElementById("inTotalFlats");
+
+    const metricTarget = document.getElementById("metricTarget");
+    const metricCollected = document.getElementById("metricCollected");
+    const metricDeficit = document.getElementById("metricDeficit");
+    const metricPerHeadPending = document.getElementById("metricPerHeadPending");
+    const metricPurpose = document.getElementById("metricPurpose");
+    const metricPaidCount = document.getElementById("metricPaidCount");
+    const metricPendingCount = document.getElementById("metricPendingCount");
+
+    const progressBarFill = document.getElementById("progressBarFill");
+    const progressPercentage = document.getElementById("progressPercentage");
+    const outEqualShare = document.getElementById("outEqualShare");
+    const outDonorCount = document.getElementById("outDonorCount");
+    const donorsTableBody = document.getElementById("donorsTableBody");
+
+    function calculate() {
+      const target = parseFloat(inTargetBudget.value) || 0;
+      metricTarget.textContent = `₹${target.toLocaleString('en-IN')}`;
+      metricPurpose.textContent = inEventName.value.trim() || "Event Fund";
+
+      let collected = 0;
+      let paidCount = 0;
+      let pendingCount = 0;
+
+      donors.forEach(d => {
+        if (d.status === "Paid") {
+          collected += d.amount;
+          paidCount++;
+        } else {
+          pendingCount++;
+        }
+      });
+
+      const deficit = Math.max(0, target - collected);
+      const perHeadPending = pendingCount > 0 ? Math.ceil(deficit / pendingCount) : 0;
+      const pct = target > 0 ? Math.min(100, Math.round((collected / target) * 100)) : 0;
+
+      metricCollected.textContent = `₹${collected.toLocaleString('en-IN')}`;
+      metricPaidCount.textContent = `${paidCount} member${paidCount === 1 ? '' : 's'} paid`;
+
+      metricDeficit.textContent = `₹${deficit.toLocaleString('en-IN')}`;
+      metricPendingCount.textContent = `${pendingCount} member${pendingCount === 1 ? '' : 's'} pending`;
+
+      metricPerHeadPending.textContent = `₹${perHeadPending.toLocaleString('en-IN')}`;
+
+      progressBarFill.style.width = `${pct}%`;
+      progressPercentage.textContent = `${pct}% of target`;
+
+      // Equal Split
+      const flats = parseInt(inTotalFlats.value) || 1;
+      const equalShare = target > 0 ? Math.ceil(target / flats) : 0;
+      outEqualShare.textContent = `₹${equalShare.toLocaleString('en-IN')}`;
+
+      renderTable();
+    }
+
+    function renderTable() {
+      outDonorCount.textContent = donors.length;
+      donorsTableBody.innerHTML = "";
+
+      if (donors.length === 0) {
+        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 18px;">No members added yet. Add a member above or click "Sample Data".</td></tr>`;
+        return;
+      }
+
+      donors.forEach((d, idx) => {
+        const tr = document.createElement("tr");
+        const isPaid = d.status === "Paid";
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td style="font-weight: 600; color: #0f172a;">${d.name}</td>
+          <td>${d.unit}</td>
+          <td style="font-weight: 700;">₹${d.amount.toLocaleString('en-IN')}</td>
+          <td>
+            <span class="status-pill ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${idx})">
+              ${isPaid ? '✓ Paid' : '⏳ Pending'}
+            </span>
+          </td>
+          <td style="text-align: center;">
+            <button type="button" style="background: none; border: none; color: #ef4444; font-weight: 700; cursor: pointer; font-size: 14px;" onclick="removeDonor(${idx})" title="Remove">&times;</button>
+          </td>
+        `;
+        donorsTableBody.appendChild(tr);
+      });
+    }
+
+    window.toggleStatus = (idx) => {
+      donors[idx].status = donors[idx].status === "Paid" ? "Pending" : "Paid";
+      calculate();
+    };
+
+    window.removeDonor = (idx) => {
+      donors.splice(idx, 1);
+      calculate();
+    };
+
+    document.getElementById("btnAddDonor").onclick = () => {
+      const name = inDonorName.value.trim();
+      const unit = inUnitNo.value.trim() || "—";
+      const amount = parseFloat(inAmount.value) || 0;
+      const status = inStatus.value;
+
+      if (!name) {
+        alert("Please enter a donor / member name.");
+        return;
+      }
+
+      donors.push({ name, unit, amount, status });
+      inDonorName.value = "";
+      inUnitNo.value = "";
+      inDonorName.focus();
+      calculate();
+    };
+
+    // Sample Dataset Generator
+    document.getElementById("btnLoadSampleRent")?.addEventListener("click", () => {});
+    document.getElementById("btnLoadSample").onclick = () => {
+      inEventName.value = "Ganesh Utsav Mandal 2026";
+      inTargetBudget.value = 50000;
+      inTotalFlats.value = 25;
+      donors = [
+        { name: "Rahul Chauhan", unit: "Flat 402", amount: 2000, status: "Paid" },
+        { name: "Amitabh Verma", unit: "Flat 101", amount: 2000, status: "Paid" },
+        { name: "Sachin Tendulkar", unit: "Penthouse", amount: 5000, status: "Paid" },
+        { name: "Pooja Hegde", unit: "Flat 203", amount: 2000, status: "Pending" },
+        { name: "Rajesh Iyer", unit: "Shop 1", amount: 3500, status: "Pending" },
+        { name: "Sunita Deshmukh", unit: "Flat 304", amount: 2000, status: "Paid" }
+      ];
+      calculate();
+    };
+
+    // Excel (.xlsx) Register Export
+    document.getElementById("btnExportExcel").onclick = () => {
+      if (donors.length === 0) {
+        alert("No member data to export.");
+        return;
+      }
+
+      const rows = donors.map((d, i) => ({
+        "Sr No": i + 1,
+        "Member / Donor Name": d.name,
+        "Flat / Unit No": d.unit,
+        "Contribution (INR)": d.amount,
+        "Payment Status": d.status
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(rows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Chanda Register");
+      XLSX.writeFile(wb, `${inEventName.value.trim() || "Chanda"}-Collection-Register.xlsx`);
+    };
+
+    // Print Register
+    document.getElementById("btnPrintRegister").onclick = () => {
+      window.print();
+    };
+
+    [inEventName, inTargetBudget, inTotalFlats].forEach(el => {
+      el.addEventListener("input", calculate);
+    });
+
+    calculate();
+  </script>
+</body>
+</html>
