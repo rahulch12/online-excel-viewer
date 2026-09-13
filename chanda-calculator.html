@@ -35,7 +35,7 @@
   <!-- SEO Metadata -->
   <title>Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox</title>
   <meta name="title" content="Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox" />
-  <meta name="description" content="Free festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Auto-backup, downloadable receipts, and Excel export." />
+  <meta name="description" content="Free festival chanda collection register and expense tracker. Auto-backup, downloadable receipts, and Excel export." />
   <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
 
   <style>
@@ -83,33 +83,20 @@
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
     /* Compact Header */
-    header { background-color: var(--header-bg); color: #fff; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.08); }
-    .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; flex-shrink: 0; }
-    .brand img { width: 30px; height: 30px; border-radius: 6px; }
-    .brand-title { font-weight: 800; font-size: 15px; }
-    .brand-sub { font-size: 10px; color: #94a3b8; display: block; line-height: 1; }
+    header { background-color: var(--header-bg); color: #fff; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; width: 100%; position: sticky; top: 0; z-index: 40; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; flex-shrink: 0; }
+    .brand img { width: 32px; height: 32px; border-radius: 8px; }
+    .brand-title { font-weight: 800; font-size: 16px; }
+    .brand-sub { font-size: 11px; color: #94a3b8; display: block; line-height: 1; }
     
-    .header-btns { display: flex; gap: 6px; align-items: center; }
-    
-    .lang-select {
-      background: rgba(255, 255, 255, 0.12);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 5px 8px;
-      border-radius: 16px;
-      font-size: 11.5px;
-      font-weight: 700;
-      outline: none;
-      cursor: pointer;
-    }
-    .lang-select option { background: #0f172a; color: #fff; }
+    .header-btns { display: flex; gap: 8px; align-items: center; }
 
     .theme-toggle-btn {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      font-size: 13px;
-      padding: 5px 8px;
+      font-size: 14px;
+      padding: 6px 10px;
       border-radius: 16px;
       cursor: pointer;
       line-height: 1;
@@ -120,13 +107,13 @@
       color: #fff; 
       border: 1px solid rgba(255,255,255,0.25); 
       font-weight: 700; 
-      font-size: 11.5px; 
-      padding: 5px 10px; 
+      font-size: 12px; 
+      padding: 6px 12px; 
       border-radius: 16px; 
       cursor: pointer; 
       display: inline-flex; 
       align-items: center; 
-      gap: 4px;
+      gap: 5px;
       white-space: nowrap;
     }
 
@@ -134,25 +121,25 @@
       background: #ffdd00; 
       color: #000; 
       font-weight: 700; 
-      font-size: 11.5px; 
-      padding: 5px 10px; 
+      font-size: 12px; 
+      padding: 6px 12px; 
       border-radius: 16px; 
       text-decoration: none; 
       white-space: nowrap;
     }
 
-    .container { max-width: 1180px; width: 100%; margin: 12px auto; padding: 0 12px; flex: 1; }
-    .back-link { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 8px; }
+    .container { max-width: 1180px; width: 100%; margin: 16px auto; padding: 0 14px; flex: 1; }
+    .back-link { display: inline-block; font-size: 13px; font-weight: 600; color: var(--primary); text-decoration: none; margin-bottom: 10px; }
 
-    .hero-title { font-size: 20px; font-weight: 900; margin-bottom: 2px; }
-    .hero-sub { font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px; }
+    .hero-title { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+    .hero-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
 
     /* Metric Grid */
     .metric-grid { 
       display: grid; 
       grid-template-columns: repeat(2, 1fr); 
-      gap: 10px; 
-      margin-bottom: 12px; 
+      gap: 12px; 
+      margin-bottom: 14px; 
       width: 100%; 
     }
     @media (min-width: 768px) {
@@ -161,18 +148,18 @@
     .metric-card { 
       background: var(--card-bg); 
       border: 1.5px solid var(--border); 
-      border-radius: 10px; 
-      padding: 10px 12px; 
-      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+      border-radius: 12px; 
+      padding: 12px 14px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
-    .metric-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; letter-spacing: 0.2px; }
-    .metric-val { font-size: 18px; font-weight: 900; color: var(--text); line-height: 1.2; }
-    .metric-sub { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .metric-label { font-size: 10.5px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; letter-spacing: 0.3px; }
+    .metric-val { font-size: 20px; font-weight: 900; color: var(--text); line-height: 1.2; }
+    .metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* Progress Bar */
-    .progress-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
-    .progress-top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; margin-bottom: 6px; color: var(--text); }
-    .progress-bg { height: 8px; width: 100%; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .progress-box { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; }
+    .progress-top { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+    .progress-bg { height: 9px; width: 100%; background: var(--border); border-radius: 5px; overflow: hidden; }
     
     .progress-bar { 
       height: 100%; 
@@ -182,65 +169,73 @@
     }
 
     /* Tab Switcher */
-    .mode-tab-bar { display: flex; gap: 6px; margin-bottom: 14px; background: var(--tab-bg); padding: 4px; border-radius: 8px; width: 100%; }
-    .mode-tab-btn { flex: 1; padding: 8px 10px; border: none; background: transparent; font-size: 13px; font-weight: 800; color: var(--text-muted); border-radius: 6px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 4px; }
-    .mode-tab-btn.active { background: var(--card-bg); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .mode-tab-bar { display: flex; gap: 6px; margin-bottom: 16px; background: var(--tab-bg); padding: 5px; border-radius: 10px; width: 100%; }
+    .mode-tab-btn { flex: 1; padding: 10px 12px; border: none; background: transparent; font-size: 13.5px; font-weight: 800; color: var(--text-muted); border-radius: 7px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .mode-tab-btn.active { background: var(--card-bg); color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
 
-    .app-layout { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; width: 100%; }
+    .app-layout { display: grid; grid-template-columns: 1fr; gap: 18px; align-items: start; width: 100%; }
     @media (min-width: 880px) {
-      .app-layout { grid-template-columns: 340px 1fr; }
+      .app-layout { grid-template-columns: 360px 1fr; }
     }
 
-    .panel { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px; width: 100%; margin-bottom: 14px; }
-    .panel-title { font-size: 13.5px; font-weight: 800; margin-bottom: 10px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
+    .panel { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px; width: 100%; margin-bottom: 16px; }
+    .panel-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
     
-    .form-group { margin-bottom: 10px; }
-    .form-group label { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; }
     .input-field { width: 100%; padding: 10px 12px; border: 1.5px solid var(--input-border); border-radius: 8px; font-size: 16px !important; outline: none; background: var(--input-bg); color: var(--text); }
-    .input-field:focus { border-color: var(--accent); }
+    .input-field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12); }
 
     .quick-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-    .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 14px; cursor: pointer; color: var(--text); }
+    .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 16px; cursor: pointer; color: var(--text); }
 
-    .btn { padding: 11px 16px; font-size: 13.5px; font-weight: 800; border-radius: 8px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
-    .btn:active { transform: scale(0.96); }
+    .btn { padding: 12px 18px; font-size: 14px; font-weight: 800; border-radius: 8px; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+    .btn:active { transform: scale(0.97); }
     .btn-orange { background: var(--accent); color: #fff; }
-    .btn-outline { background: var(--card-bg); border-color: var(--border); color: var(--text); }
-    .btn-green { background: var(--success); color: #fff; }
-    .btn-red { background: var(--danger); color: #fff; }
+    .btn-outline { background: var(--card-bg); border: 1.5px solid var(--border); color: var(--text); width: auto; padding: 8px 12px; font-size: 12px; }
+    .btn-green { background: var(--success); color: #fff; width: auto; padding: 8px 12px; font-size: 12px; }
 
     /* Table Toolbar */
-    .table-toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
-    .search-input-wrap { flex: 1; min-width: 140px; position: relative; }
-    .search-input-wrap input { width: 100%; padding: 8px 10px 8px 28px; border: 1.5px solid var(--input-border); border-radius: 7px; font-size: 14px !important; outline: none; background: var(--input-bg); color: var(--text); }
-    .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.5; }
+    .table-toolbar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+    .search-input-wrap { flex: 1; min-width: 160px; position: relative; }
+    .search-input-wrap input { width: 100%; padding: 8px 10px 8px 30px; border: 1.5px solid var(--input-border); border-radius: 8px; font-size: 14px !important; outline: none; background: var(--input-bg); color: var(--text); }
+    .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.5; }
 
     .filter-pills { display: flex; gap: 4px; }
-    .fpill { font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
+    .fpill { font-size: 11.5px; font-weight: 700; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; color: var(--text-muted); }
     .fpill.active { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
 
-    /* Mobile Cards vs Desktop Tables */
+    /* Clean Mobile Cards */
     .mobile-cards-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-    .member-card-item {
+    .record-card-item {
       background: var(--card-bg);
       border: 1.5px solid var(--border);
       border-radius: 10px;
-      padding: 12px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
-    .member-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .member-card-name { font-size: 14.5px; font-weight: 800; color: var(--text); }
-    .member-card-flat { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-    .member-card-mid { display: flex; justify-content: space-between; align-items: center; padding-top: 4px; border-top: 1px dashed var(--border); }
-    .member-card-amt { font-size: 16px; font-weight: 900; color: var(--text); }
-    .member-card-actions {
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .card-title { font-size: 15px; font-weight: 800; color: var(--text); }
+    .card-subtitle { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+    
+    .card-mid { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding-top: 8px; 
+      border-top: 1px dashed var(--border); 
+    }
+    .card-amt { font-size: 17px; font-weight: 900; color: var(--danger); }
+    .card-amt-green { font-size: 17px; font-weight: 900; color: var(--success); }
+
+    .card-bottom {
       display: flex;
-      gap: 6px;
+      justify-content: space-between;
       align-items: center;
-      justify-content: flex-end;
-      padding-top: 6px;
+      padding-top: 8px;
       border-top: 1px solid var(--border);
     }
 
@@ -257,9 +252,9 @@
       .table-container { display: block; }
       .mobile-cards-list { display: none; }
     }
-    table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
-    table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 11px 12px; text-align: left; font-weight: 800; font-size: 11.5px; z-index: 10; white-space: nowrap; }
-    table.data-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 520px; }
+    table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 12px; text-align: left; font-weight: 800; font-size: 12px; z-index: 10; white-space: nowrap; }
+    table.data-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; }
 
     .status-badge { 
       font-size: 11.5px; 
@@ -283,16 +278,16 @@
     }
     .row-btn {
       background: var(--tab-bg);
-      border: 1px solid var(--border);
-      font-size: 11.5px;
+      border: 1.5px solid var(--border);
+      font-size: 12px;
       font-weight: 700;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
       color: var(--text);
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
     }
     .row-btn:hover { background: var(--border); color: var(--text); }
     .row-btn-danger { color: #fff !important; background: var(--danger) !important; border-color: var(--danger) !important; font-weight: 800; }
@@ -314,32 +309,32 @@
       border-radius: 14px;
       max-width: 420px;
       width: 100%;
-      padding: 18px 14px;
+      padding: 20px;
       text-align: center;
       position: relative;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
     }
     .modal-close-btn {
       position: absolute;
-      top: 12px;
-      right: 12px;
+      top: 14px;
+      right: 14px;
       background: none;
       border: none;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
     }
     .qr-slot {
-      margin: 12px auto;
+      margin: 14px auto;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 180px;
-      padding: 8px;
+      padding: 10px;
       background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
       width: fit-content;
     }
 
@@ -349,25 +344,25 @@
       color: #0f172a !important;
       border: 2px solid #0f172a;
       border-radius: 10px;
-      padding: 16px 14px;
+      padding: 18px 16px;
       text-align: left;
-      margin: 10px auto;
+      margin: 12px auto;
       position: relative;
       max-width: 360px;
       width: 100%;
       box-sizing: border-box;
     }
-    .rcpt-header { text-align: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 8px; margin-bottom: 10px; }
-    .rcpt-event-name { font-size: 15px; font-weight: 900; color: #0f172a; text-transform: uppercase; }
-    .rcpt-tag { font-size: 9.5px; font-weight: 800; background: #ffedd5; color: #c2410c; padding: 2px 7px; border-radius: 10px; display: inline-block; margin-top: 3px; }
-    .rcpt-meta-row { display: flex; justify-content: space-between; font-size: 10.5px; color: #64748b; font-weight: 600; margin-bottom: 10px; }
-    .rcpt-field { margin-bottom: 6px; font-size: 12px; color: #334155; }
-    .rcpt-amount-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 7px; padding: 8px 10px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; }
-    .rcpt-amount-val { font-size: 18px; font-weight: 900; color: #15803d; }
-    .rcpt-footer-row { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 12px; padding-top: 8px; border-top: 1px dashed #cbd5e1; font-size: 9.5px; color: #64748b; }
+    .rcpt-header { text-align: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 10px; margin-bottom: 12px; }
+    .rcpt-event-name { font-size: 16px; font-weight: 900; color: #0f172a; text-transform: uppercase; }
+    .rcpt-tag { font-size: 10px; font-weight: 800; background: #ffedd5; color: #c2410c; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 4px; }
+    .rcpt-meta-row { display: flex; justify-content: space-between; font-size: 11px; color: #64748b; font-weight: 600; margin-bottom: 10px; }
+    .rcpt-field { margin-bottom: 8px; font-size: 12.5px; color: #334155; }
+    .rcpt-amount-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 10px 12px; margin: 12px 0; display: flex; justify-content: space-between; align-items: center; }
+    .rcpt-amount-val { font-size: 20px; font-weight: 900; color: #15803d; }
+    .rcpt-footer-row { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 14px; padding-top: 10px; border-top: 1px dashed #cbd5e1; font-size: 10px; color: #64748b; }
     .rcpt-sig-dash { display: inline-block; width: 80px; border-bottom: 1px solid #0f172a; margin-bottom: 2px; }
 
-    footer { padding: 20px 14px; text-align: center; font-size: 11.5px; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); margin-top: 30px; width: 100%; }
+    footer { padding: 24px 14px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); margin-top: 36px; width: 100%; }
     footer a { color: var(--text-muted); text-decoration: none; margin: 0 4px; }
     footer a:hover { color: var(--primary); }
   </style>
@@ -383,22 +378,9 @@
       </div>
     </a>
     <div class="header-btns">
-      <select class="lang-select" id="langSelector">
-        <option value="en">EN</option>
-        <option value="hi">हिंदी</option>
-        <option value="mr">मराठी</option>
-        <option value="gu">ગુજરાતી</option>
-      </select>
-
       <button type="button" class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark">🌙</button>
-
-      <button type="button" class="sync-btn" id="btnOpenSync" title="Sync Devices">
-        📲 Sync
-      </button>
-
-      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn" title="Support SheetBox">
-        ☕ Support
-      </a>
+      <button type="button" class="sync-btn" id="btnOpenSync" title="Sync Devices">📲 Sync</button>
+      <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn" title="Support SheetBox">☕ Support</a>
     </div>
   </header>
 
@@ -415,17 +397,17 @@
         <div class="metric-val" id="metricTarget">₹20,000</div>
         <div class="metric-sub" id="metricPurpose">Ganesh Utsav Samiti</div>
       </div>
-      <div class="metric-card" style="border-left: 3.5px solid var(--success);">
+      <div class="metric-card" style="border-left: 4px solid var(--success);">
         <div class="metric-label">Total Collected</div>
         <div class="metric-val" id="metricCollected" style="color: var(--success);">₹0</div>
         <div class="metric-sub" id="metricPaidCount">0 paid</div>
       </div>
-      <div class="metric-card" style="border-left: 3.5px solid var(--danger);">
+      <div class="metric-card" style="border-left: 4px solid var(--danger);">
         <div class="metric-label">Total Spent</div>
         <div class="metric-val" id="metricSpent" style="color: var(--danger);">₹0</div>
         <div class="metric-sub" id="metricExpenseCount">0 bills</div>
       </div>
-      <div class="metric-card" id="metricBalanceCard" style="border-left: 3.5px solid var(--primary);">
+      <div class="metric-card" id="metricBalanceCard" style="border-left: 4px solid var(--primary);">
         <div class="metric-label">Net Balance in Hand</div>
         <div class="metric-val" id="metricNetBalance">₹0</div>
         <div class="metric-sub" id="metricNetSub">Surplus</div>
@@ -445,16 +427,16 @@
 
     <!-- Mode Selector Tabs -->
     <div class="mode-tab-bar">
-      <button class="mode-tab-btn active" id="tabDonors" onclick="switchMode('donors')">
+      <button class="mode-tab-btn" id="tabDonors" onclick="switchMode('donors')">
         👥 1. Collections
       </button>
-      <button class="mode-tab-btn" id="tabExpenses" onclick="switchMode('expenses')">
+      <button class="mode-tab-btn active" id="tabExpenses" onclick="switchMode('expenses')">
         💸 2. Expenses
       </button>
     </div>
 
     <!-- 1. COLLECTIONS VIEW -->
-    <div id="viewDonors" class="app-layout">
+    <div id="viewDonors" class="app-layout" style="display: none;">
       <div>
         <div class="panel">
           <div class="panel-title">
@@ -496,7 +478,7 @@
           </button>
         </div>
 
-        <!-- Budget & Split Settings Panel (Restored) -->
+        <!-- Budget & Split Settings Panel (Fully Editable) -->
         <div class="panel">
           <div class="panel-title">
             <span>⚙️ Budget & Split Settings</span>
@@ -513,9 +495,9 @@
             <label>Total Families / Flats in Society</label>
             <input type="number" id="inTotalFlats" class="input-field" placeholder="50" min="1" />
           </div>
-          <div style="background: var(--tab-bg); padding: 8px 10px; border-radius: 7px; font-size: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="background: var(--tab-bg); padding: 10px 12px; border-radius: 8px; font-size: 12.5px; display: flex; justify-content: space-between; align-items: center;">
             <span style="color: var(--text-muted); font-weight: 600;">Equal Member Share:</span>
-            <strong id="outEqualShare" style="color: var(--accent); font-size: 14px;">₹0</strong>
+            <strong id="outEqualShare" style="color: var(--accent); font-size: 15px;">₹0</strong>
           </div>
         </div>
       </div>
@@ -531,8 +513,8 @@
             <button type="button" class="fpill" onclick="setDonorFilter('Paid', this)">Paid (<span id="countPaid">0</span>)</button>
             <button type="button" class="fpill" onclick="setDonorFilter('Pending', this)">Pending (<span id="countPending">0</span>)</button>
           </div>
-          <div style="display: flex; gap: 4px; flex-wrap: wrap; width: 100%; justify-content: flex-end; margin-top: 4px;">
-            <button type="button" class="btn btn-orange" style="width: auto; padding: 8px 12px; font-size: 12px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; width: 100%; justify-content: flex-end; margin-top: 6px;">
+            <button type="button" class="btn btn-orange" style="width: auto; padding: 8px 14px; font-size: 12px;" onclick="openLatestReceipt()">🧾 View Receipt</button>
             <button type="button" class="btn btn-green" id="btnExportExcel">📊 Excel</button>
             <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
           </div>
@@ -542,7 +524,7 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 32px;">#</th>
+                <th style="width: 36px;">#</th>
                 <th>Contributor</th>
                 <th>Flat</th>
                 <th>Amount (₹)</th>
@@ -558,7 +540,7 @@
     </div>
 
     <!-- 2. EXPENSES VIEW -->
-    <div id="viewExpenses" class="app-layout" style="display: none;">
+    <div id="viewExpenses" class="app-layout" style="display: grid;">
       <div>
         <div class="panel">
           <div class="panel-title">
@@ -611,8 +593,8 @@
 
       <div class="panel">
         <div class="table-toolbar">
-          <strong style="font-size: 13.5px;">Expense Ledger (<span id="outExpenseCount">0</span>)</strong>
-          <div style="display: flex; gap: 4px;">
+          <strong style="font-size: 14px;">Expense Ledger (<span id="outExpenseCount">0</span>)</strong>
+          <div style="display: flex; gap: 6px;">
             <button type="button" class="btn btn-green" id="btnExportExcelExp">📊 Excel</button>
             <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
           </div>
@@ -622,23 +604,23 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 32px;">#</th>
+                <th style="width: 36px;">#</th>
                 <th>Item</th>
                 <th>Category</th>
                 <th>Vendor</th>
                 <th>Date</th>
                 <th>Amount (₹)</th>
-                <th style="width: 70px; text-align: center;">Action</th>
+                <th style="width: 80px; text-align: center;">Action</th>
               </tr>
             </thead>
             <tbody id="expensesTableBody"></tbody>
           </table>
         </div>
 
-        <!-- Mobile Expenses Card List View -->
+        <!-- Systematic Formatted Mobile Expenses Card List View -->
         <div class="mobile-cards-list" id="expensesCardsList"></div>
 
-        <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+        <div style="display: flex; justify-content: flex-end; margin-top: 14px;">
           <button type="button" class="btn btn-outline" style="color: var(--danger); border-color: #fca5a5;" onclick="clearAllData()">
             ⚠️ Reset All Ledger Data
           </button>
@@ -650,24 +632,24 @@
     <div class="modal-backdrop" id="syncModal">
       <div class="modal-box">
         <button type="button" class="modal-close-btn" onclick="closeSyncModal()">&times;</button>
-        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;">Sync Across Devices</h3>
-        <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
-          Scan with your phone/device camera or share the direct link to open this exact ledger on another computer.
+        <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 6px;">Sync Across Devices</h3>
+        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+          Scan with your phone camera or copy the direct link to open this ledger on another device.
         </p>
         
         <div class="qr-slot" id="qrContainer"></div>
 
-        <div style="display: flex; gap: 6px; margin-top: 8px;">
-          <button type="button" class="btn btn-orange" style="flex: 1; font-size: 11.5px;" id="btnCopySyncLink">📋 Copy Link</button>
-          <button type="button" class="btn btn-outline" style="flex: 1; font-size: 11.5px;" id="btnShareWhatsApp">💬 WhatsApp</button>
+        <div style="display: flex; gap: 8px; margin-top: 10px;">
+          <button type="button" class="btn btn-orange" style="flex: 1; font-size: 12px; padding: 10px;" id="btnCopySyncLink">📋 Copy Link</button>
+          <button type="button" class="btn btn-outline" style="flex: 1; font-size: 12px; padding: 10px;" id="btnShareWhatsApp">💬 WhatsApp</button>
         </div>
-        <div id="copySuccessMsg" style="display: none; font-size: 11px; color: var(--success); font-weight: 700; margin-top: 6px;">✓ Sync Link Copied to Clipboard!</div>
+        <div id="copySuccessMsg" style="display: none; font-size: 11.5px; color: var(--success); font-weight: 700; margin-top: 8px;">✓ Sync Link Copied to Clipboard!</div>
       </div>
     </div>
 
     <!-- DEDICATED OFFICIAL RECEIPT MODAL -->
     <div class="modal-backdrop" id="receiptModal">
-      <div class="modal-box" style="max-width: 390px; padding: 16px 12px;">
+      <div class="modal-box" style="max-width: 390px; padding: 18px 14px;">
         <button type="button" class="modal-close-btn" onclick="closeReceiptModal()">&times;</button>
         
         <div class="receipt-slip-card" id="receiptSlipCard">
@@ -683,7 +665,7 @@
 
           <div class="rcpt-field">
             <span>Received with thanks from:</span><br>
-            <strong id="rcptDonorName" style="font-size: 14px; color: #0f172a;">Ramesh Kulkarni</strong>
+            <strong id="rcptDonorName" style="font-size: 14.5px; color: #0f172a;">Ramesh Kulkarni</strong>
           </div>
 
           <div class="rcpt-field">
@@ -693,14 +675,14 @@
 
           <div class="rcpt-amount-box">
             <div>
-              <div style="font-size: 9.5px; font-weight: 800; text-transform: uppercase; color: #166534;">Amount Received</div>
+              <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #166534;">Amount Received</div>
               <div class="rcpt-amount-val" id="rcptAmountVal">₹1,000</div>
             </div>
-            <div id="rcptStatusPill" style="font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 12px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">✓ Paid</div>
+            <div id="rcptStatusPill" style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">✓ Paid</div>
           </div>
 
           <div class="rcpt-footer-row">
-            <div style="font-size: 9px; color: #94a3b8;">
+            <div style="font-size: 9.5px; color: #94a3b8;">
               SheetBox.in Digital Slip<br>Verified & Signed
             </div>
             <div class="rcpt-signature-line">
@@ -710,14 +692,14 @@
           </div>
         </div>
 
-        <div id="rcptActionButtons" style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
-          <button type="button" class="btn btn-green" style="flex: 1; min-width: 110px; font-size: 11.5px;" id="btnDownloadSlipImg">
+        <div id="rcptActionButtons" style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-green" style="flex: 1; min-width: 110px; font-size: 12px;" id="btnDownloadSlipImg">
             🖼️ Download Slip
           </button>
-          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 70px; font-size: 11.5px;" onclick="window.print()">
+          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 70px; font-size: 12px;" onclick="window.print()">
             🖨️ Print
           </button>
-          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 90px; font-size: 11.5px;" id="btnSendWhatsAppFromModal">
+          <button type="button" class="btn btn-outline" style="flex: 1; min-width: 90px; font-size: 12px;" id="btnSendWhatsAppFromModal">
             💬 WhatsApp
           </button>
         </div>
@@ -727,13 +709,13 @@
   </main>
 
   <footer>
-    <div style="margin-bottom: 6px;">
+    <div style="margin-bottom: 8px;">
       <a href="/about.html">About Us</a> • 
       <a href="/contact.html">Contact</a> • 
       <a href="/privacy-policy.html">Privacy Policy</a> • 
       <a href="/terms.html">Terms of Service</a>
     </div>
-    <div style="font-size: 11px; color: var(--text-muted);">
+    <div style="font-size: 11.5px; color: var(--text-muted);">
       SheetBox Studio • Built by Rahul Chauhan • 100% In-Browser Execution
     </div>
   </footer>
@@ -978,25 +960,25 @@
         donorsTableBody.appendChild(tr);
 
         const cardDiv = document.createElement("div");
-        cardDiv.className = "member-card-item";
+        cardDiv.className = "record-card-item";
         cardDiv.innerHTML = `
-          <div class="member-card-top">
+          <div class="card-top">
             <div>
-              <div class="member-card-name">${idx + 1}. ${d.name}</div>
-              <div class="member-card-flat">Flat / Unit: <strong>${d.unit}</strong></div>
+              <div class="card-title">${idx + 1}. ${d.name}</div>
+              <div class="card-subtitle">Flat / Unit: <strong>${d.unit}</strong></div>
             </div>
-            <span class="status-badge ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${d.originalIndex})" style="padding: 6px 12px; font-size: 12px;">
+            <span class="status-badge ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${d.originalIndex})">
               ${statusBadgeText}
             </span>
           </div>
-          <div class="member-card-mid">
-            <span style="font-size: 11.5px; color: var(--text-muted);">Pledged Amount:</span>
-            <span class="member-card-amt">₹${Number(d.amount).toLocaleString('en-IN')}</span>
+          <div class="card-mid">
+            <span style="font-size: 11.5px; color: var(--text-muted);">Pledged Amount</span>
+            <span class="card-amt-green">₹${Number(d.amount).toLocaleString('en-IN')}</span>
           </div>
-          <div class="member-card-actions">
-            <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})" style="padding: 6px 12px; font-size: 12px;">🧾 Slip</button>
-            <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})" style="padding: 6px 12px; font-size: 12px;">💬 WA</button>
-            <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})" style="padding: 6px 12px; font-size: 12px; background: #dc2626 !important; color: #fff !important;">🗑️ Delete</button>
+          <div class="card-actions">
+            <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})">🧾 Slip</button>
+            <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})">💬 WA</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})">🗑️ Delete</button>
           </div>
         `;
         donorsCardsList.appendChild(cardDiv);
@@ -1024,27 +1006,28 @@
           <td style="font-size: 10.5px; color: var(--text-muted);">${e.date}</td>
           <td style="font-weight: 800; color: var(--danger);">₹${Number(e.amount).toLocaleString('en-IN')}</td>
           <td style="text-align: center;">
-            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" style="padding: 5px 10px; background: #dc2626 !important; color: #fff !important;">🗑️ Delete</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})">🗑️ Delete</button>
           </td>
         `;
         expensesTableBody.appendChild(tr);
 
+        // Systematically formatted clean mobile card layout
         const cardDiv = document.createElement("div");
-        cardDiv.className = "member-card-item";
+        cardDiv.className = "record-card-item";
         cardDiv.innerHTML = `
-          <div class="member-card-top">
+          <div class="card-top">
             <div>
-              <div class="member-card-name">${idx + 1}. ${e.item}</div>
-              <div class="member-card-flat">Category: <strong>${e.category}</strong></div>
+              <div class="card-title">${idx + 1}. ${e.item}</div>
+              <div class="card-subtitle">Category: <strong>${e.category}</strong></div>
             </div>
-            <span style="font-size: 11px; color: var(--text-muted); font-weight: 700;">${e.date}</span>
+            <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700;">${e.date}</span>
           </div>
-          <div class="member-card-mid">
+          <div class="card-mid">
             <span style="font-size: 11.5px; color: var(--text-muted);">Paid to: <strong>${e.paidTo || "—"}</strong> (${e.mode})</span>
-            <span class="member-card-amt" style="color: var(--danger);">₹${Number(e.amount).toLocaleString('en-IN')}</span>
+            <span class="card-amt">₹${Number(e.amount).toLocaleString('en-IN')}</span>
           </div>
           <div class="member-card-actions">
-            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" style="padding: 6px 14px; font-size: 12px; background: #dc2626 !important; color: #fff !important;">🗑️ Delete Bill</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" style="width: 100%; justify-content: center;">🗑️ Delete Bill</button>
           </div>
         `;
         expensesCardsList.appendChild(cardDiv);
@@ -1196,6 +1179,27 @@
       calculateAll();
     };
 
+    document.getElementById("btnLoadSample").onclick = () => {
+      if (state.donors.length > 0 || state.expenses.length > 0) {
+        if (!confirm("Loading sample data will replace your current ledger. Do you want to proceed?")) return;
+      }
+
+      state.eventName = "Chauhan Family Ganesh Utsav 2026";
+      state.targetBudget = 20000;
+      state.totalFlats = 50;
+      state.donors = [
+        { name: "Rahul Chauhan", unit: "Flat 402", amount: 2500, status: "Paid", dateAdded: "11-Sep" },
+        { name: "Amitabh Verma", unit: "Flat 101", amount: 2000, status: "Paid", dateAdded: "11-Sep" }
+      ];
+      state.expenses = [
+        { item: "Pandal Structure", category: "Pandal & Decoration", amount: 450, paidTo: "Omkar Mandap", mode: "Cash", date: "10-Sep" },
+        { item: "Sound System", category: "Sound & Lighting", amount: 350, paidTo: "Vicky Sounds", mode: "Cash", date: "11-Sep" }
+      ];
+      populateFormFields();
+      saveState();
+      calculateAll();
+    };
+
     const exportExcelBoth = () => {
       if (typeof XLSX === "undefined") return alert("Excel library could not be loaded.");
       const wb = XLSX.utils.book_new();
@@ -1246,6 +1250,7 @@
     });
 
     loadSavedState();
+    switchMode('expenses');
   </script>
 </body>
 </html>
