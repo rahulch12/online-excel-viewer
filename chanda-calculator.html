@@ -23,10 +23,10 @@
   <link rel="icon" type="image/png" href="/logo.png" />
   <link rel="apple-touch-icon" href="/logo.png" />
 
-  <title>Chanda & Donation Contribution Calculator | SheetBox</title>
-  <meta name="title" content="Chanda & Donation Contribution Calculator | SheetBox" />
-  <meta name="description" content="Calculate festival chanda, society maintenance splits, and community contributions. Plan budgets, track paid vs pending, and export Excel registers." />
-  <meta name="keywords" content="chanda calculator, donation split calculator, ganesh chanda budget planner, society contribution calculator, event chanda collection excel, sheetbox" />
+  <title>Chanda, Donation & Expense Calculator | SheetBox</title>
+  <meta name="title" content="Chanda, Donation & Expense Calculator | SheetBox" />
+  <meta name="description" content="Manage festival chanda collections, track event expenses, calculate remaining balance/shortfall, and export complete audit registers to Excel." />
+  <meta name="keywords" content="chanda calculator, donation expense tracker, festival budget planner, ganesh chanda excel register, society maintenance expense ledger, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
 
   <style>
@@ -40,6 +40,7 @@
       --accent: #ea580c;
       --primary: #2563eb;
       --success: #16a34a;
+      --danger: #dc2626;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
@@ -55,7 +56,7 @@
     .hero-title { font-size: 24px; font-weight: 900; margin-bottom: 4px; }
     .hero-sub { font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; }
 
-    /* Summary Metric Cards */
+    /* Top Metric Summary Grid */
     .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 20px; }
     .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
     .metric-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
@@ -68,7 +69,12 @@
     .progress-bar-bg { height: 12px; width: 100%; background: #e2e8f0; border-radius: 6px; overflow: hidden; }
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #ea580c, #f97316); width: 0%; transition: width 0.3s ease; }
 
-    /* Form and Table Layout */
+    /* Mode Navigation Tabs */
+    .mode-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; background: #e2e8f0; padding: 5px; border-radius: 10px; }
+    .mode-tab-btn { flex: 1; padding: 10px 14px; border: none; background: transparent; font-size: 13.5px; font-weight: 800; color: #475569; border-radius: 8px; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.15s ease; }
+    .mode-tab-btn.active { background: #fff; color: var(--text); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+
+    /* Layout */
     .app-layout { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
 
     .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
@@ -84,18 +90,22 @@
     .btn-outline { background: #fff; border-color: #cbd5e1; color: #334155; }
     .btn-outline:hover { background: #f8fafc; }
     .btn-green { background: var(--success); color: #fff; }
+    .btn-red { background: var(--danger); color: #fff; }
 
-    /* Donor Table */
+    /* Tables */
     .table-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
     .table-container { overflow-x: auto; max-height: 480px; border: 1px solid var(--border); border-radius: 8px; }
-    table.chanda-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-    table.chanda-table th { position: sticky; top: 0; background: #0f172a; color: #fff; padding: 9px 10px; text-align: left; font-weight: 700; font-size: 11.5px; }
-    table.chanda-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: #334155; white-space: nowrap; }
-    table.chanda-table tr:nth-child(even) { background: #f8fafc; }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    table.data-table th { position: sticky; top: 0; background: #0f172a; color: #fff; padding: 9px 10px; text-align: left; font-weight: 700; font-size: 11.5px; }
+    table.data-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: #334155; white-space: nowrap; }
+    table.data-table tr:nth-child(even) { background: #f8fafc; }
     
     .status-pill { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 12px; display: inline-block; cursor: pointer; }
     .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+    /* Category Pill */
+    .cat-pill { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
 
     /* Editorial & FAQ */
     .editorial-content { margin-top: 36px; background: #fff; padding: 28px 24px; border-radius: 14px; border: 1px solid var(--border); font-size: 14px; line-height: 1.7; color: #334155; }
@@ -118,14 +128,12 @@
       .app-layout { grid-template-columns: 1fr; }
     }
 
-    /* Print Formatting */
     @media print {
-      header, footer, .back-link, .app-layout > div:first-child, .table-actions, .editorial-content { display: none !important; }
+      header, footer, .back-link, .mode-tab-bar, .app-layout > div:first-child, .table-actions, .editorial-content { display: none !important; }
       .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
       .panel { border: none !important; padding: 0 !important; }
       .table-container { max-height: none !important; overflow: visible !important; border: 1px solid #333 !important; }
-      table.chanda-table th { background: #222 !important; color: #fff !important; }
-      .status-pill { border: none !important; font-weight: 800 !important; }
+      table.data-table th { background: #222 !important; color: #fff !important; }
     }
   </style>
 </head>
@@ -145,10 +153,10 @@
   <main class="container">
     <a href="/" class="back-link">&larr; Back to SheetBox Tools</a>
 
-    <h1 class="hero-title">Chanda & Donation Contribution Calculator</h1>
-    <p class="hero-sub">Plan event budgets, split contributions fairly across members, track collections, and export complete registers.</p>
+    <h1 class="hero-title">Chanda, Donation & Expense Calculator</h1>
+    <p class="hero-sub">Plan budgets, collect member contributions, log event expenses, and track net surplus/shortfall in real time.</p>
 
-    <!-- Top Metric Overview Cards -->
+    <!-- Top High-Level Financial Metrics -->
     <div class="metric-grid">
       <div class="metric-card">
         <div class="metric-label">Target Budget</div>
@@ -161,21 +169,21 @@
         <div class="metric-sub" id="metricPaidCount">0 contributors paid</div>
       </div>
       <div class="metric-card">
-        <div class="metric-label">Shortfall / Deficit</div>
-        <div class="metric-val" id="metricDeficit" style="color: var(--accent);">₹0</div>
-        <div class="metric-sub" id="metricPendingCount">0 contributors pending</div>
+        <div class="metric-label">Total Spent</div>
+        <div class="metric-val" id="metricSpent" style="color: var(--danger);">₹0</div>
+        <div class="metric-sub" id="metricExpenseCount">0 expense entries</div>
       </div>
       <div class="metric-card">
-        <div class="metric-label">Shortfall Per Pending Member</div>
-        <div class="metric-val" id="metricPerHeadPending">₹0</div>
-        <div class="metric-sub">Needed to hit budget</div>
+        <div class="metric-label">Net Balance in Hand</div>
+        <div class="metric-val" id="metricNetBalance">₹0</div>
+        <div class="metric-sub" id="metricNetSub">Collected vs Spent</div>
       </div>
     </div>
 
     <!-- Live Progress Bar -->
     <div class="progress-wrapper">
       <div class="progress-header">
-        <span>Collection Progress</span>
+        <span>Collection Target Progress</span>
         <span id="progressPercentage">0%</span>
       </div>
       <div class="progress-bar-bg">
@@ -183,16 +191,25 @@
       </div>
     </div>
 
-    <!-- Form and Table Layout -->
-    <div class="app-layout">
-      
-      <!-- LEFT: Configuration & Donor Addition -->
+    <!-- Mode Navigation Tabs -->
+    <div class="mode-tab-bar">
+      <button class="mode-tab-btn active" id="tabDonors" onclick="switchMode('donors')">
+        👥 1. Member Collections (Chanda)
+      </button>
+      <button class="mode-tab-btn" id="tabExpenses" onclick="switchMode('expenses')">
+        💸 2. Event Expenses Ledger
+      </button>
+    </div>
+
+    <!-- 1. DONOR / CHANDA VIEW -->
+    <div id="viewDonors" class="app-layout">
+      <!-- LEFT: Donor Inputs -->
       <div>
         <div class="panel">
-          <h3 class="panel-title">1. Event / Budget Configuration</h3>
+          <h3 class="panel-title">1. Event Configuration</h3>
           <div class="form-group">
             <label>Event / Committee Name</label>
-            <input type="text" id="inEventName" class="input-field" placeholder="e.g. Bal Gopal Mitra Mandal / Wing A Maintenance" value="Ganesh Utsav Samiti" />
+            <input type="text" id="inEventName" class="input-field" placeholder="e.g. Bal Gopal Mitra Mandal" value="Ganesh Utsav Samiti" />
           </div>
           <div class="form-group">
             <label>Target Budget (₹)</label>
@@ -222,15 +239,14 @@
 
           <div style="display: flex; gap: 8px; margin-top: 12px;">
             <button type="button" class="btn btn-orange" style="flex: 1;" id="btnAddDonor">+ Add Member</button>
-            <button type="button" class="btn btn-outline" id="btnLoadSample">⚡ Sample Data</button>
+            <button type="button" class="btn btn-outline" id="btnLoadSample">⚡ Sample</button>
           </div>
         </div>
 
-        <!-- Quick Equal Split Generator -->
         <div class="panel" style="margin-top: 14px;">
           <h3 class="panel-title">Equal Split Estimator</h3>
           <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
-            Divide the target budget equally among all members:
+            Divide target budget equally among all members:
           </p>
           <div class="form-group">
             <label>Number of Flats / Families</label>
@@ -242,66 +258,150 @@
         </div>
       </div>
 
-      <!-- RIGHT: Register Table & Actions -->
+      <!-- RIGHT: Donor Table -->
       <div class="panel">
         <div class="table-actions">
           <strong style="font-size: 14px;">Collection Register (<span id="outDonorCount">0</span>)</strong>
           <div style="display: flex; gap: 6px;">
-            <button type="button" class="btn btn-green" id="btnExportExcel">📊 Export Excel</button>
-            <button type="button" class="btn btn-outline" id="btnPrintRegister">🖨️ Print List</button>
+            <button type="button" class="btn btn-green" id="btnExportExcel">📊 Export Full Excel</button>
+            <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
           </div>
         </div>
 
         <div class="table-container">
-          <table class="chanda-table">
+          <table class="data-table">
             <thead>
               <tr>
                 <th style="width: 40px;">#</th>
                 <th>Member / Donor</th>
                 <th>Flat / Unit</th>
+                <th style="width: 80px;">Date</th>
                 <th>Pledged (₹)</th>
                 <th>Status</th>
-                <th style="width: 80px; text-align: center;">Action</th>
+                <th style="width: 50px; text-align: center;">Action</th>
               </tr>
             </thead>
             <tbody id="donorsTableBody"></tbody>
           </table>
         </div>
-
         <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
-          💡 Tip: Click on any <strong>Status pill (Paid/Pending)</strong> to toggle it instantly.
+          💡 Tip: Click on any <strong>Status pill</strong> to toggle Paid vs. Pending immediately.
         </p>
       </div>
+    </div>
 
+    <!-- 2. EXPENSES VIEW -->
+    <div id="viewExpenses" class="app-layout" style="display: none;">
+      <!-- LEFT: Expense Inputs -->
+      <div>
+        <div class="panel">
+          <h3 class="panel-title">Log Event Expense</h3>
+          
+          <div class="form-group">
+            <label>Expense Description / Item</label>
+            <input type="text" id="inExpItem" class="input-field" placeholder="e.g. Pandal Setup, Sound System, Idol Advance" />
+          </div>
+
+          <div class="form-group">
+            <label>Category</label>
+            <select id="inExpCategory" class="input-field">
+              <option value="Pandal & Decoration">Pandal & Decoration</option>
+              <option value="Idol / Murti">Idol / Murti</option>
+              <option value="Sound & Lighting">Sound & Lighting</option>
+              <option value="Puja & Priest">Puja & Priest</option>
+              <option value="Prasad & Catering">Prasad & Catering</option>
+              <option value="Security & Police Permission">Security & Permissions</option>
+              <option value="Publicity & Banners">Publicity & Banners</option>
+              <option value="Miscellaneous">Miscellaneous</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Amount Spent (₹)</label>
+            <input type="number" id="inExpAmount" class="input-field" placeholder="5000" min="1" />
+          </div>
+
+          <div class="form-group">
+            <label>Paid To / Vendor Name</label>
+            <input type="text" id="inExpPaidTo" class="input-field" placeholder="e.g. Ramesh Decorators" />
+          </div>
+
+          <div class="form-group">
+            <label>Payment Mode</label>
+            <select id="inExpMode" class="input-field">
+              <option value="UPI / Online">UPI / Online</option>
+              <option value="Cash">Cash</option>
+              <option value="Cheque">Cheque</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-red" style="width: 100%; margin-top: 6px;" id="btnAddExpense">+ Log Expense</button>
+        </div>
+      </div>
+
+      <!-- RIGHT: Expense Table -->
+      <div class="panel">
+        <div class="table-actions">
+          <strong style="font-size: 14px;">Expense Register (<span id="outExpenseCount">0</span> entries)</strong>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn btn-green" id="btnExportExcelExp">📊 Export Full Excel</button>
+            <button type="button" class="btn btn-outline" onclick="window.print()">🖨️ Print</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 40px;">#</th>
+                <th>Expense Item</th>
+                <th>Category</th>
+                <th>Vendor / Paid To</th>
+                <th style="width: 75px;">Date</th>
+                <th>Amount (₹)</th>
+                <th style="width: 50px; text-align: center;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="expensesTableBody"></tbody>
+          </table>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; margin-top: 12px; gap: 10px;">
+          <button type="button" class="btn btn-outline" style="font-size: 11px;" onclick="clearAllData()">⚠️ Reset All Data</button>
+        </div>
+      </div>
     </div>
 
     <!-- Editorial Guide for SEO & AdSense Content Depth -->
     <article class="editorial-content">
-      <h2>How to Transparently Manage Festival & Society Chanda Collections</h2>
-      <p>Collecting festival funds for Ganesh Utsav, Navratri, Durga Puja, or managing housing society building repair contributions often leads to accounting friction. When paper registers or loose notebooks are used, discrepancies arise regarding who has paid, who is pending, and whether the targeted budget covers major expenses such as pandal decoration, idol procurement, lighting, and prasad distribution.</p>
+      <h2>Complete Financial Accounting for Community & Festival Committees</h2>
+      <p>Managing public contributions for festivals like Ganesh Utsav, Durga Puja, and Navratri, or collecting society repair funds, requires total accounting transparency. When committee members record cash collections and vendor payouts in physical notebooks, receipts get misplaced, leading to auditing disputes during annual general body meetings (AGM).</p>
 
-      <p>The SheetBox Chanda & Contribution Calculator replaces manual notebook record-keeping with a secure, browser-native budgeting system. All entries are calculated locally in your browser, guaranteeing member confidentiality while generating clear, shareable reports.</p>
+      <p>The SheetBox Chanda & Expense Calculator provides a complete, double-entry financial overview. It balances incoming member contributions directly against real outgoing vendor expenses (decorations, sound, idol procurement, priest honorarium, and catering) entirely in your browser.</p>
 
-      <h2>Key Features of the Chanda Calculator</h2>
+      <h2>Recommended Expense Breakdown for Festival Mandals</h2>
+      <p>Most community committees budget their funds across these core operational buckets:</p>
       <ul>
-        <li><strong>Dynamic Budget Deficit Tracking:</strong> Set your gross committee target. The system recalculates live collections, outstanding deficits, and per-head pending amounts with every entered donor.</li>
-        <li><strong>Equal Split & Flat-Wise Apportionment:</strong> Easily estimate per-flat contributions based on society flat counts or unit dimensions.</li>
-        <li><strong>Instant Excel Export:</strong> Download formatted <code>.xlsx</code> registers with a single click to share on society WhatsApp groups for complete fiscal transparency.</li>
+        <li><strong>Pandal & Mandap Setup (30%–40%):</strong> Structural frames, waterproofing, seating, and floral backdrops.</li>
+        <li><strong>Sound & Illumination (15%–20%):</strong> Lighting fixtures, generator sets, and PA audio systems.</li>
+        <li><strong>Murti & Puja Rituals (10%–15%):</strong> Clay idol procurement, flowers, priest fees, and daily aarti materials.</li>
+        <li><strong>Prasad & Mahaprasad (15%–20%):</strong> Sweets, community catering, and biodegradable plates.</li>
+        <li><strong>Contingency & Emergency Reserves (5%–10%):</strong> Municipal permits, security guards, and post-event cleanup.</li>
       </ul>
 
       <h2>Frequently Asked Questions (FAQ)</h2>
       <div class="faq-block">
         <details>
-          <summary>Does SheetBox store our society member names or amounts on a server?</summary>
-          <p>No. All calculations, tables, and Excel file generation happen 100% inside your local browser memory. No names, phone numbers, or contribution amounts are stored on remote servers.</p>
+          <summary>Does SheetBox store our financial records on a server?</summary>
+          <p>No. All calculations, member names, and vendor expenses remain stored strictly in your browser's private local storage. No data is ever transmitted to an external server.</p>
         </details>
         <details>
-          <summary>Can I print the collection list for the society notice board?</summary>
-          <p>Yes. Simply click <strong>Print List</strong>. The tool isolates the clean collection ledger into a print-ready A4 document without showing input buttons or website menus.</p>
+          <summary>How does the Excel export work?</summary>
+          <p>Clicking <strong>Export Full Excel</strong> creates a clean <code>.xlsx</code> workbook containing two distinct tabs: one for member collections and another for categorized expenses, ready to share on WhatsApp groups.</p>
         </details>
         <details>
-          <summary>Can I open the exported spreadsheet in Microsoft Excel or Google Sheets?</summary>
-          <p>Yes. The exported file is standard <code>.xlsx</code> format, fully compatible with MS Excel, LibreOffice, and Google Sheets.</p>
+          <summary>What does Net Balance in Hand indicate?</summary>
+          <p>It represents your true liquid balance: <code>Total Paid Collections minus Total Incurred Expenses</code>. If it turns red, the committee is in an operational deficit and must collect remaining pending pledges.</p>
         </details>
       </div>
     </article>
@@ -320,177 +420,328 @@
   </footer>
 
   <script>
-    let donors = [];
+    const STORAGE_KEY = "sheetbox_chanda_ledger_v2";
 
+    let state = {
+      eventName: "Ganesh Utsav Samiti",
+      targetBudget: 75000,
+      totalFlats: 50,
+      donors: [],
+      expenses: []
+    };
+
+    // DOM Elements
     const inEventName = document.getElementById("inEventName");
     const inTargetBudget = document.getElementById("inTargetBudget");
+    const inTotalFlats = document.getElementById("inTotalFlats");
     const inDonorName = document.getElementById("inDonorName");
     const inUnitNo = document.getElementById("inUnitNo");
     const inAmount = document.getElementById("inAmount");
     const inStatus = document.getElementById("inStatus");
-    const inTotalFlats = document.getElementById("inTotalFlats");
 
+    // Expense Inputs
+    const inExpItem = document.getElementById("inExpItem");
+    const inExpCategory = document.getElementById("inExpCategory");
+    const inExpAmount = document.getElementById("inExpAmount");
+    const inExpPaidTo = document.getElementById("inExpPaidTo");
+    const inExpMode = document.getElementById("inExpMode");
+
+    // Metrics
     const metricTarget = document.getElementById("metricTarget");
     const metricCollected = document.getElementById("metricCollected");
-    const metricDeficit = document.getElementById("metricDeficit");
-    const metricPerHeadPending = document.getElementById("metricPerHeadPending");
+    const metricSpent = document.getElementById("metricSpent");
+    const metricNetBalance = document.getElementById("metricNetBalance");
+    const metricNetSub = document.getElementById("metricNetSub");
     const metricPurpose = document.getElementById("metricPurpose");
     const metricPaidCount = document.getElementById("metricPaidCount");
-    const metricPendingCount = document.getElementById("metricPendingCount");
+    const metricExpenseCount = document.getElementById("metricExpenseCount");
 
     const progressBarFill = document.getElementById("progressBarFill");
     const progressPercentage = document.getElementById("progressPercentage");
     const outEqualShare = document.getElementById("outEqualShare");
     const outDonorCount = document.getElementById("outDonorCount");
+    const outExpenseCount = document.getElementById("outExpenseCount");
     const donorsTableBody = document.getElementById("donorsTableBody");
+    const expensesTableBody = document.getElementById("expensesTableBody");
 
-    function calculate() {
+    // 1. SWITCH TAB MODES
+    window.switchMode = (mode) => {
+      const isDonors = mode === 'donors';
+      document.getElementById("tabDonors").classList.toggle("active", isDonors);
+      document.getElementById("tabExpenses").classList.toggle("active", !isDonors);
+      document.getElementById("viewDonors").style.display = isDonors ? "grid" : "none";
+      document.getElementById("viewExpenses").style.display = !isDonors ? "grid" : "none";
+    };
+
+    // 2. LOAD FROM LOCAL STORAGE
+    function loadSavedState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === "object") {
+            state = Object.assign(state, parsed);
+          }
+        }
+      } catch (err) {
+        console.warn("Could not read localStorage:", err);
+      }
+
+      inEventName.value = state.eventName || "";
+      inTargetBudget.value = state.targetBudget || "";
+      inTotalFlats.value = state.totalFlats || "";
+      calculateAll();
+    }
+
+    // 3. SAVE TO LOCAL STORAGE
+    function saveState() {
+      state.eventName = inEventName.value.trim();
+      state.targetBudget = parseFloat(inTargetBudget.value) || 0;
+      state.totalFlats = parseInt(inTotalFlats.value) || 1;
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        console.warn("Could not save to localStorage:", err);
+      }
+    }
+
+    // 4. CORE CALCULATION ENGINE
+    function calculateAll() {
       const target = parseFloat(inTargetBudget.value) || 0;
       metricTarget.textContent = `₹${target.toLocaleString('en-IN')}`;
       metricPurpose.textContent = inEventName.value.trim() || "Event Fund";
 
-      let collected = 0;
+      let totalCollected = 0;
       let paidCount = 0;
-      let pendingCount = 0;
 
-      donors.forEach(d => {
+      state.donors.forEach(d => {
         if (d.status === "Paid") {
-          collected += d.amount;
+          totalCollected += d.amount;
           paidCount++;
-        } else {
-          pendingCount++;
         }
       });
 
-      const deficit = Math.max(0, target - collected);
-      const perHeadPending = pendingCount > 0 ? Math.ceil(deficit / pendingCount) : 0;
-      const pct = target > 0 ? Math.min(100, Math.round((collected / target) * 100)) : 0;
+      let totalSpent = 0;
+      state.expenses.forEach(e => {
+        totalSpent += e.amount;
+      });
 
-      metricCollected.textContent = `₹${collected.toLocaleString('en-IN')}`;
+      const netBalance = totalCollected - totalSpent;
+      const pct = target > 0 ? Math.min(100, Math.round((totalCollected / target) * 100)) : 0;
+
+      metricCollected.textContent = `₹${totalCollected.toLocaleString('en-IN')}`;
       metricPaidCount.textContent = `${paidCount} member${paidCount === 1 ? '' : 's'} paid`;
 
-      metricDeficit.textContent = `₹${deficit.toLocaleString('en-IN')}`;
-      metricPendingCount.textContent = `${pendingCount} member${pendingCount === 1 ? '' : 's'} pending`;
+      metricSpent.textContent = `₹${totalSpent.toLocaleString('en-IN')}`;
+      metricExpenseCount.textContent = `${state.expenses.length} expenses logged`;
 
-      metricPerHeadPending.textContent = `₹${perHeadPending.toLocaleString('en-IN')}`;
+      metricNetBalance.textContent = `₹${netBalance.toLocaleString('en-IN')}`;
+      if (netBalance >= 0) {
+        metricNetBalance.style.color = "var(--success)";
+        metricNetSub.textContent = "Surplus Cash in Hand";
+      } else {
+        metricNetBalance.style.color = "var(--danger)";
+        metricNetSub.textContent = "Deficit (Expenses exceed collected funds)";
+      }
 
       progressBarFill.style.width = `${pct}%`;
       progressPercentage.textContent = `${pct}% of target`;
 
-      // Equal Split
       const flats = parseInt(inTotalFlats.value) || 1;
       const equalShare = target > 0 ? Math.ceil(target / flats) : 0;
       outEqualShare.textContent = `₹${equalShare.toLocaleString('en-IN')}`;
 
-      renderTable();
+      renderDonorsTable();
+      renderExpensesTable();
+      saveState();
     }
 
-    function renderTable() {
-      outDonorCount.textContent = donors.length;
+    // 5. RENDER DONORS TABLE
+    function renderDonorsTable() {
+      outDonorCount.textContent = state.donors.length;
       donorsTableBody.innerHTML = "";
 
-      if (donors.length === 0) {
-        donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 18px;">No members added yet. Add a member above or click "Sample Data".</td></tr>`;
+      if (state.donors.length === 0) {
+        donorsTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 18px;">No members added yet.</td></tr>`;
         return;
       }
 
-      donors.forEach((d, idx) => {
+      state.donors.forEach((d, idx) => {
         const tr = document.createElement("tr");
         const isPaid = d.status === "Paid";
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td style="font-weight: 600; color: #0f172a;">${d.name}</td>
           <td>${d.unit}</td>
+          <td style="font-size: 11px; color: var(--text-muted);">${d.dateAdded || "—"}</td>
           <td style="font-weight: 700;">₹${d.amount.toLocaleString('en-IN')}</td>
           <td>
-            <span class="status-pill ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${idx})">
+            <span class="status-pill ${isPaid ? 'status-paid' : 'status-pending'}" onclick="toggleStatus(${idx})" title="Click to toggle">
               ${isPaid ? '✓ Paid' : '⏳ Pending'}
             </span>
           </td>
           <td style="text-align: center;">
-            <button type="button" style="background: none; border: none; color: #ef4444; font-weight: 700; cursor: pointer; font-size: 14px;" onclick="removeDonor(${idx})" title="Remove">&times;</button>
+            <button type="button" style="background: none; border: none; color: #ef4444; font-weight: 700; cursor: pointer; font-size: 14px;" onclick="removeDonor(${idx})">&times;</button>
           </td>
         `;
         donorsTableBody.appendChild(tr);
       });
     }
 
+    // 6. RENDER EXPENSES TABLE
+    function renderExpensesTable() {
+      outExpenseCount.textContent = state.expenses.length;
+      expensesTableBody.innerHTML = "";
+
+      if (state.expenses.length === 0) {
+        expensesTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 18px;">No expenses logged yet. Add your first vendor cost.</td></tr>`;
+        return;
+      }
+
+      state.expenses.forEach((e, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td style="font-weight: 600; color: #0f172a;">${e.item}</td>
+          <td><span class="cat-pill">${e.category}</span></td>
+          <td>${e.paidTo || "—"} <span style="font-size: 10px; color: var(--text-muted);">(${e.mode})</span></td>
+          <td style="font-size: 11px; color: var(--text-muted);">${e.date}</td>
+          <td style="font-weight: 700; color: var(--danger);">₹${e.amount.toLocaleString('en-IN')}</td>
+          <td style="text-align: center;">
+            <button type="button" style="background: none; border: none; color: #ef4444; font-weight: 700; cursor: pointer; font-size: 14px;" onclick="removeExpense(${idx})">&times;</button>
+          </td>
+        `;
+        expensesTableBody.appendChild(tr);
+      });
+    }
+
+    // Handlers
     window.toggleStatus = (idx) => {
-      donors[idx].status = donors[idx].status === "Paid" ? "Pending" : "Paid";
-      calculate();
+      state.donors[idx].status = state.donors[idx].status === "Paid" ? "Pending" : "Paid";
+      calculateAll();
     };
 
     window.removeDonor = (idx) => {
-      donors.splice(idx, 1);
-      calculate();
+      if (confirm(`Remove ${state.donors[idx].name}?`)) {
+        state.donors.splice(idx, 1);
+        calculateAll();
+      }
     };
 
+    window.removeExpense = (idx) => {
+      if (confirm(`Remove expense "${state.expenses[idx].item}"?`)) {
+        state.expenses.splice(idx, 1);
+        calculateAll();
+      }
+    };
+
+    // Add Donor
     document.getElementById("btnAddDonor").onclick = () => {
       const name = inDonorName.value.trim();
       const unit = inUnitNo.value.trim() || "—";
       const amount = parseFloat(inAmount.value) || 0;
       const status = inStatus.value;
+      const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
 
-      if (!name) {
-        alert("Please enter a donor / member name.");
-        return;
-      }
+      if (!name) return alert("Please enter donor name.");
 
-      donors.push({ name, unit, amount, status });
+      state.donors.push({ name, unit, amount, status, dateAdded: today });
       inDonorName.value = "";
       inUnitNo.value = "";
       inDonorName.focus();
-      calculate();
+      calculateAll();
     };
 
-    // Sample Dataset Generator
-    document.getElementById("btnLoadSampleRent")?.addEventListener("click", () => {});
+    // Add Expense
+    document.getElementById("btnAddExpense").onclick = () => {
+      const item = inExpItem.value.trim();
+      const category = inExpCategory.value;
+      const amount = parseFloat(inExpAmount.value) || 0;
+      const paidTo = inExpPaidTo.value.trim();
+      const mode = inExpMode.value;
+      const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+
+      if (!item) return alert("Please enter expense description.");
+      if (amount <= 0) return alert("Please enter a valid expense amount.");
+
+      state.expenses.push({ item, category, amount, paidTo, mode, date: today });
+      inExpItem.value = "";
+      inExpAmount.value = "";
+      inExpPaidTo.value = "";
+      inExpItem.focus();
+      calculateAll();
+    };
+
+    // Sample Data
     document.getElementById("btnLoadSample").onclick = () => {
       inEventName.value = "Ganesh Utsav Mandal 2026";
-      inTargetBudget.value = 50000;
-      inTotalFlats.value = 25;
-      donors = [
-        { name: "Rahul Chauhan", unit: "Flat 402", amount: 2000, status: "Paid" },
-        { name: "Amitabh Verma", unit: "Flat 101", amount: 2000, status: "Paid" },
-        { name: "Sachin Tendulkar", unit: "Penthouse", amount: 5000, status: "Paid" },
-        { name: "Pooja Hegde", unit: "Flat 203", amount: 2000, status: "Pending" },
-        { name: "Rajesh Iyer", unit: "Shop 1", amount: 3500, status: "Pending" },
-        { name: "Sunita Deshmukh", unit: "Flat 304", amount: 2000, status: "Paid" }
+      inTargetBudget.value = 85000;
+      inTotalFlats.value = 35;
+      state.donors = [
+        { name: "Rahul Chauhan", unit: "Flat 402", amount: 2500, status: "Paid", dateAdded: "Day 1" },
+        { name: "Amitabh Verma", unit: "Flat 101", amount: 2000, status: "Paid", dateAdded: "Day 1" },
+        { name: "Sachin Tendulkar", unit: "Penthouse", amount: 5000, status: "Paid", dateAdded: "Day 1" },
+        { name: "Pooja Hegde", unit: "Flat 203", amount: 2000, status: "Pending", dateAdded: "Day 2" },
+        { name: "Sunita Deshmukh", unit: "Flat 304", amount: 2000, status: "Paid", dateAdded: "Day 2" }
       ];
-      calculate();
+      state.expenses = [
+        { item: "Pandal Structure & Tarpaulin", category: "Pandal & Decoration", amount: 22000, paidTo: "Omkar Mandap", mode: "UPI / Online", date: "Day 1" },
+        { item: "Clay Ganpati Murti Advance", category: "Idol / Murti", amount: 8500, paidTo: "Pen Murti Arts", mode: "Cash", date: "Day 1" },
+        { item: "PA Sound & Mic System", category: "Sound & Lighting", amount: 7000, paidTo: "Vicky Sounds", mode: "UPI / Online", date: "Day 2" }
+      ];
+      calculateAll();
     };
 
-    // Excel (.xlsx) Register Export
-    document.getElementById("btnExportExcel").onclick = () => {
-      if (donors.length === 0) {
-        alert("No member data to export.");
-        return;
-      }
+    // Dual-Sheet Excel (.xlsx) Export
+    const exportExcelBoth = () => {
+      const wb = XLSX.utils.book_new();
 
-      const rows = donors.map((d, i) => ({
+      // Sheet 1: Collections
+      const donorRows = state.donors.map((d, i) => ({
         "Sr No": i + 1,
         "Member / Donor Name": d.name,
         "Flat / Unit No": d.unit,
+        "Date": d.dateAdded || "",
         "Contribution (INR)": d.amount,
-        "Payment Status": d.status
+        "Status": d.status
       }));
+      const wsDonors = XLSX.utils.json_to_sheet(donorRows);
+      XLSX.utils.book_append_sheet(wb, wsDonors, "Chanda Collections");
 
-      const ws = XLSX.utils.json_to_sheet(rows);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Chanda Register");
-      XLSX.writeFile(wb, `${inEventName.value.trim() || "Chanda"}-Collection-Register.xlsx`);
+      // Sheet 2: Expenses
+      const expRows = state.expenses.map((e, i) => ({
+        "Sr No": i + 1,
+        "Expense Item": e.item,
+        "Category": e.category,
+        "Paid To / Vendor": e.paidTo || "—",
+        "Mode": e.mode,
+        "Date": e.date,
+        "Amount (INR)": e.amount
+      }));
+      const wsExpenses = XLSX.utils.json_to_sheet(expRows);
+      XLSX.utils.book_append_sheet(wb, wsExpenses, "Event Expenses");
+
+      XLSX.writeFile(wb, `${(inEventName.value.trim() || "Event")}-Accounts-Register.xlsx`);
     };
 
-    // Print Register
-    document.getElementById("btnPrintRegister").onclick = () => {
-      window.print();
+    document.getElementById("btnExportExcel").onclick = exportExcelBoth;
+    document.getElementById("btnExportExcelExp").onclick = exportExcelBoth;
+
+    window.clearAllData = () => {
+      if (confirm("Reset both collections and expenses? This cannot be undone.")) {
+        state.donors = [];
+        state.expenses = [];
+        localStorage.removeItem(STORAGE_KEY);
+        calculateAll();
+      }
     };
 
     [inEventName, inTargetBudget, inTotalFlats].forEach(el => {
-      el.addEventListener("input", calculate);
+      el.addEventListener("input", calculateAll);
     });
 
-    calculate();
+    loadSavedState();
   </script>
 </body>
 </html>
