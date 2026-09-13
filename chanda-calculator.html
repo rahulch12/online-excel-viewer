@@ -35,7 +35,7 @@
   <!-- SEO Metadata -->
   <title>Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox</title>
   <meta name="title" content="Festival Chanda & Event Expense Tracker — Free Online Register | SheetBox" />
-  <meta name="description" content="Mobile-friendly festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Auto-backup, downloadable receipts, dark mode, and Excel export." />
+  <meta name="description" content="Free festival chanda collection register and expense tracker in English, Hindi, Marathi, and Gujarati. Auto-backup, downloadable receipts, and Excel export." />
   <meta name="keywords" content="festival chanda tracker, ganesh chanda collection register, navratri donation list, vargani hishob marathi, chanda register hindi, falo hisab gujarati, donation receipt maker, sheetbox" />
   <link rel="canonical" href="https://sheetbox.in/chanda-calculator.html" />
 
@@ -240,7 +240,7 @@
     .input-field:focus { border-color: var(--accent); }
 
     .quick-chips { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-    .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 14px; cursor: pointer; color: var(--text); }
+    .chip-btn { background: var(--tab-bg); border: 1px solid var(--border); font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 14px; cursor: pointer; color: var(--text); }
     .chip-btn:active { transform: scale(0.94); }
 
     .btn { padding: 9px 12px; font-size: 12.5px; font-weight: 800; border-radius: 7px; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 5px; justify-content: center; }
@@ -272,29 +272,38 @@
       display: block; 
     }
     table.data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 8px 9px; text-align: left; font-weight: 800; font-size: 11px; z-index: 10; }
-    table.data-table td { padding: 8px 9px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; }
+    table.data-table th { position: sticky; top: 0; background: var(--header-bg); color: #fff; padding: 9px 10px; text-align: left; font-weight: 800; font-size: 11px; z-index: 10; }
+    table.data-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--text); }
     table.data-table tr:nth-child(even) { background: rgba(0,0,0,0.015); }
 
     .status-badge { font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; user-select: none; }
     .status-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .status-pending { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
 
+    /* CLEAN MOBILE-FRIENDLY ACTION BUTTONS (NO CLIPPING) */
+    .row-actions-group {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
     .row-btn {
       background: var(--tab-bg);
       border: 1px solid var(--border);
       font-size: 11px;
       font-weight: 700;
-      padding: 3px 6px;
-      border-radius: 5px;
+      padding: 5px 8px;
+      border-radius: 6px;
       cursor: pointer;
       color: var(--text);
       display: inline-flex;
       align-items: center;
-      gap: 2px;
-      margin-right: 2px;
+      gap: 3px;
     }
-    .row-btn-danger { color: var(--danger); }
+    .row-btn:hover { background: var(--border); color: var(--text); }
+    .row-btn-danger { color: var(--danger); border-color: #fca5a5; background: var(--card-bg); }
+    .row-btn-danger:hover { background: #fee2e2; }
 
     /* Modals */
     .modal-backdrop {
@@ -342,7 +351,7 @@
       width: fit-content;
     }
 
-    /* Dedicated Receipt Slip Card */
+    /* Receipt Slip Card */
     .receipt-slip-card {
       background: #ffffff !important;
       color: #0f172a !important;
@@ -375,12 +384,10 @@
       .app-layout { grid-template-columns: 1fr; gap: 14px; }
       .container { padding: 0 8px; }
       
-      /* Pack summary cards tightly in 2x2 grid */
       .metric-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
       .metric-card { padding: 8px 10px; }
       .metric-val { font-size: 16.5px; }
 
-      /* Prevent header squeeze */
       .brand-sub { display: none; }
       .header-btns { gap: 4px; }
       .sync-btn span, .bmc-btn span { display: none; }
@@ -411,7 +418,6 @@
       </div>
     </a>
     <div class="header-btns">
-      <!-- Language Selector -->
       <select class="lang-select" id="langSelector" onchange="changeLanguage(this.value)">
         <option value="en">EN</option>
         <option value="hi">हिंदी</option>
@@ -419,15 +425,12 @@
         <option value="gu">ગુજરાતી</option>
       </select>
 
-      <!-- Dark Mode Button -->
       <button type="button" class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark">🌙</button>
 
-      <!-- Sync Button -->
       <button type="button" class="sync-btn" id="btnOpenSync" title="Sync Devices">
         📲 <span>Sync</span>
       </button>
 
-      <!-- Support Button -->
       <a href="https://buymeacoffee.com/SheetBox" target="_blank" rel="noopener noreferrer" class="bmc-btn" title="Support SheetBox">
         ☕ <span>Support</span>
       </a>
@@ -446,7 +449,7 @@
     <h1 class="hero-title" data-i18n="heroTitle">Festival Chanda & Event Expense Tracker</h1>
     <p class="hero-sub" data-i18n="heroSub">Collect contributions, record vendor bills, and monitor your cash-in-hand balance in real time.</p>
 
-    <!-- Top Key Metrics Strip (Responsive 2x2 on Mobile, 4x1 on Desktop) -->
+    <!-- Top Key Metrics Strip -->
     <div class="metric-grid">
       <div class="metric-card">
         <div class="metric-label" data-i18n="lblTarget">Target Budget</div>
@@ -587,7 +590,7 @@
                 <th data-i18n="thFlat">Flat</th>
                 <th data-i18n="thAmount">Amount (₹)</th>
                 <th data-i18n="thStatus">Status</th>
-                <th style="width: 140px; text-align: center;" data-i18n="thAction">Actions</th>
+                <th style="width: 150px; text-align: center;" data-i18n="thAction">Actions</th>
               </tr>
             </thead>
             <tbody id="donorsTableBody"></tbody>
@@ -670,7 +673,7 @@
                 <th data-i18n="thExpVendor">Vendor</th>
                 <th data-i18n="thExpDate">Date</th>
                 <th data-i18n="thExpAmount">Amount (₹)</th>
-                <th style="width: 50px; text-align: center;">Action</th>
+                <th style="width: 60px; text-align: center;">Action</th>
               </tr>
             </thead>
             <tbody id="expensesTableBody"></tbody>
@@ -1377,8 +1380,8 @@
       if (visibleList.length === 0) {
         let noFoundMsg = "No members found. Add from left.";
         if (currentLang === 'gu') noFoundMsg = "કોઈ સભ્ય મળ્યા નથી. ડાબી બાજુથી નવો ફાળો ઉમેરો.";
-        else if (currentLang === 'mr') noFoundMsg = "कोणतेही वर्गणीदार सापडले नाहीत. डाव्या बाजूने जोडा.";
-        else if (currentLang === 'hi') noFoundMsg = "कोई सदस्य नहीं मिला। बाईं ओर से जोड़ें।";
+        else if (currentLang === 'mr') noFoundMsg = "कोणतेही वर्गणीदार सापडले नाहीत. डाव्या बाजूने नवीन वर्गणीदार जोडा.";
+        else if (currentLang === 'hi') noFoundMsg = "कोई सदस्य नहीं मिला। बाईं ओर से सदस्य जोड़ें।";
 
         donorsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 22px;">${noFoundMsg}</td></tr>`;
         return;
@@ -1404,9 +1407,11 @@
             </span>
           </td>
           <td style="text-align: center; white-space: nowrap;">
-            <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})" title="Receipt">🧾 Slip</button>
-            <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})" title="WhatsApp">💬 WA</button>
-            <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})" title="Remove">&times;</button>
+            <div class="row-actions-group">
+              <button type="button" class="row-btn" onclick="openReceiptModal(${d.originalIndex})" title="View Slip">🧾 Slip</button>
+              <button type="button" class="row-btn" onclick="sendWhatsAppReceiptDirect(${d.originalIndex})" title="WhatsApp">💬 WA</button>
+              <button type="button" class="row-btn row-btn-danger" onclick="removeDonor(${d.originalIndex})" title="Delete">Delete</button>
+            </div>
           </td>
         `;
         donorsTableBody.appendChild(tr);
@@ -1437,7 +1442,7 @@
           <td style="font-size: 10.5px; color: var(--text-muted);">${e.date}</td>
           <td style="font-weight: 800; color: var(--danger);">₹${e.amount.toLocaleString('en-IN')}</td>
           <td style="text-align: center;">
-            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" title="Delete bill">&times;</button>
+            <button type="button" class="row-btn row-btn-danger" onclick="removeExpense(${idx})" title="Delete bill">Delete</button>
           </td>
         `;
         expensesTableBody.appendChild(tr);
